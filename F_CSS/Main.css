@@ -1,0 +1,268 @@
+﻿/* ==========================================================
+   COOKING LAH - MAIN PAGE ONLY  (Main.css)
+   Requires Style.css to be linked first.
+   ========================================================== */
+
+/* =========================
+   1. Hero
+   ========================= */
+.main-hero {
+    text-align: center;
+    padding: 36px 0 0;
+}
+
+    .main-hero h1 {
+        margin: 0 auto 22px;
+        max-width: 900px;
+    }
+
+.main-hero__text {
+    max-width: 520px;
+    margin: 0 auto 34px;
+}
+
+/* =========================
+   2. Hero stickers
+   ========================= */
+.main-stickers {
+    position: relative;
+    height: 250px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+    .main-stickers .sticker {
+        position: absolute;
+    }
+
+.main-sticker-a {
+    left: 4%;
+    top: 20px;
+    transform: rotate(-6deg);
+}
+
+.main-sticker-b {
+    left: 30%;
+    top: 130px;
+    transform: rotate(3deg);
+}
+
+.main-sticker-c {
+    right: 24%;
+    top: 30px;
+    transform: rotate(5deg);
+}
+
+.main-sticker-d {
+    right: 3%;
+    top: 140px;
+    transform: rotate(-4deg);
+}
+
+/* =========================
+   3. Map section (rounded sheet)
+   ========================= */
+.main-map-section {
+    background: transparent;
+    border: var(--border);
+    border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+    padding: 64px 0 80px;
+    margin-top: -1px;
+}
+
+.country-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 0 auto 22px;
+    max-width: 900px;
+}
+
+.map-stage {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    position: relative;
+}
+
+/* =========================
+   4. World map
+   ========================= */
+.world-map {
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg);
+    padding: 8px;
+    overflow: hidden;
+}
+
+    .world-map svg {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .world-map path {
+        fill: var(--color-bg);
+        stroke: var(--color-ink);
+        stroke-width: .8;
+        stroke-linejoin: round;
+        transition: fill .15s;
+    }
+
+        .world-map path.has {
+            fill: var(--color-tan);
+            cursor: pointer;
+        }
+
+            .world-map path.has:hover {
+                fill: var(--color-ink);
+            }
+
+        .world-map path.no:hover {
+            fill: var(--color-tan-light);
+        }
+
+        .world-map path.is-selected {
+            fill: var(--color-primary) !important;
+        }
+
+.map-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--color-ink);
+    color: var(--color-bg);
+    font: 700 12px var(--font-body);
+    padding: 4px 10px;
+    border-radius: 6px;
+    transform: translate(-50%, -140%);
+    display: none;
+    white-space: nowrap;
+}
+
+/* =========================
+   5. Selected-country card
+   ========================= */
+.country-card {
+    min-height: 200px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 28px;
+    align-items: center;
+}
+
+    .country-card .card-eyebrow {
+        margin: 0 0 8px;
+    }
+
+    .country-card .country-card__description {
+        margin: 8px 0 0;
+        max-width: 560px;
+    }
+
+/* =========================
+   6. Recipes
+   ========================= */
+.recipes-section {
+    padding: 80px 24px 20px;
+}
+
+.recipe-row {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: 22px 0;
+    border-top: var(--border-dashed);
+    text-decoration: none;
+    color: var(--color-ink);
+}
+
+    .recipe-row:last-child {
+        border-bottom: var(--border-dashed);
+    }
+
+.recipe-row__time {
+    font: 400 40px/1 var(--font-hand);
+    color: var(--color-primary);
+}
+
+.recipe-row__title {
+    font: 400 clamp(32px, 4.5vw, 44px)/1.05 var(--font-hand);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.recipe-row__desc {
+    margin: 2px 0 0;
+    color: var(--color-text-soft);
+    font-size: 13px;
+}
+
+.recipe-row:hover .recipe-row__title {
+    text-decoration: underline wavy var(--color-primary);
+    text-underline-offset: 6px;
+}
+
+/* =========================
+   7. Responsive
+   ========================= */
+@media (max-width: 760px) {
+    .main-stickers {
+        height: 300px;
+    }
+
+    .main-sticker-a {
+        left: 2%;
+    }
+
+    .main-sticker-b {
+        left: 8%;
+        top: 110px;
+    }
+
+    .main-sticker-c {
+        right: 2%;
+        top: 190px;
+    }
+
+    .main-sticker-d {
+        display: none;
+    }
+
+    .country-card {
+        grid-template-columns: 1fr;
+    }
+
+    .recipe-row {
+        grid-template-columns: 60px 1fr;
+    }
+
+    .recipe-row__time {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 420px) {
+    .main-hero h1 {
+        font-size: 52px;
+    }
+
+    .main-map-section {
+        padding: 44px 0 56px;
+        border-radius: 28px 28px 0 0;
+    }
+
+    .main-stickers {
+        height: 330px;
+    }
+
+    .main-sticker-c {
+        top: 210px;
+    }
+
+    .recipes-section {
+        padding-top: 56px;
+    }
+}

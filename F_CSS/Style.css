@@ -1,0 +1,351 @@
+﻿/* ==========================================================
+   COOKING LAH - GLOBAL DESIGN SYSTEM  (Style.css)
+   Link this file on EVERY page. Page-specific CSS goes in
+   its own file (Main.css, Login.css, ...).
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Caveat+Brush&family=Space+Mono:wght@400;700&display=swap');
+
+/* =========================
+   1. Design Tokens
+   ========================= */
+:root {
+    /* Colour */
+    --color-bg: #FFF9EB; /* main cream */
+    --color-primary: #F93209; /* red-orange highlight */
+    --color-ink: #35030C; /* all text, borders, shadows */
+    --color-text-soft: #555555;
+    --color-lime: #CDF58A;
+    --color-pink: #FBB8EE;
+    --color-yellow: #FFD24C;
+    --color-lavender: #B99CFF;
+    --color-grid: #F1E6CC; /* grid lines */
+    --color-tan: #F3E5C3; /* "available" surface */
+    --color-tan-light: #F7EFD9;
+    /* Typography */
+    --font-hand: 'Caveat Brush', 'Marker Felt', cursive;
+    --font-display: 'Archivo Black', 'Arial Black', sans-serif;
+    --font-body: 'Space Mono', ui-monospace, monospace;
+    /* Layout */
+    --content-width: 1120px;
+    --gutter: 24px;
+    --grid-size: 28px;
+    /* Borders & radius */
+    --border: 2px solid var(--color-ink);
+    --border-dashed: 2px dashed var(--color-ink);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-sheet: 36px;
+    --radius-pill: 999px;
+    /* Hard offset shadows (never blurred) */
+    --shadow-sm: 4px 4px 0 var(--color-ink);
+    --shadow-sm-hover: 2px 2px 0 var(--color-ink);
+    --shadow-md: 6px 6px 0 var(--color-ink);
+    color-scheme: light;
+}
+
+/* =========================
+   2. Reset & Base
+   ========================= */
+:root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+    scroll-behavior: smooth;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-bg);
+    background-image: linear-gradient(var(--color-grid) 1px, transparent 1px), linear-gradient(90deg, var(--color-grid) 1px, transparent 1px); /* background grid line */
+    background-size: var(--grid-size) var(--grid-size);
+    color: var(--color-ink);
+    font: 400 15px/1.65 var(--font-body);
+}
+
+img, svg {
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+}
+
+/* =========================
+   3. Typography
+   ========================= */
+h1, .display-title {
+    font: 400 clamp(58px, 10vw, 112px)/.92 var(--font-hand);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+h2, .section-title {
+    font: 400 clamp(46px, 6vw, 72px)/1 var(--font-hand);
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    text-align: center;
+}
+
+.section-description {
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto 30px;
+    color: var(--color-text-soft);
+}
+
+.text-muted {
+    color: var(--color-text-soft);
+}
+
+/* Highlighted phrase inside a heading */
+mark, .highlight {
+    background: var(--color-primary);
+    color: var(--color-bg);
+    padding: 0 .14em;
+    display: inline-block;
+    transform: rotate(-1.5deg);
+}
+
+/* =========================
+   4. Layout
+   ========================= */
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+
+.section {
+    padding: 80px 0;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px var(--gutter);
+    max-width: var(--content-width);
+    margin: 0 auto;
+}
+
+.site-logo {
+    display: inline-block;
+    line-height: 0;
+}
+
+    .site-logo img {
+        height: 68px;
+        width: auto;
+        display: block;
+    }
+
+.site-footer {
+    padding: 40px var(--gutter) 50px;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: var(--color-text-soft);
+    font-size: 13px;
+}
+
+    .site-footer .site-logo img {
+        height: 56px;
+    }
+
+/* =========================
+   5. Buttons
+   ========================= */
+.btn {
+    font: 400 14px var(--font-display);
+    letter-spacing: .5px;
+    color: var(--color-ink);
+    background: var(--color-bg);
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 22px;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    display: inline-block;
+    cursor: pointer;
+}
+
+    .btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: var(--shadow-sm-hover);
+    }
+
+.btn-primary {
+    background: var(--color-primary);
+}
+
+.btn-secondary {
+    background: var(--color-bg);
+}
+
+/* =========================
+   6. Cards
+   ========================= */
+.card {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    border: var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 24px 26px;
+}
+
+.card-tilt {
+    transform: rotate(-1deg);
+}
+
+.card-title {
+    font: 400 clamp(44px, 6vw, 68px)/1 var(--font-hand);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.card-eyebrow {
+    font: 700 13px var(--font-body);
+    margin: 0 0 8px;
+}
+
+/* Tilted note / sticker look (position it in the page CSS) */
+.sticker {
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font: 700 13px/1.35 var(--font-body);
+    color: var(--color-ink);
+    box-shadow: var(--shadow-sm);
+    max-width: 220px;
+    text-align: left;
+    background: var(--color-bg);
+}
+
+.sticker-ink {
+    background: var(--color-ink);
+    color: var(--color-bg);
+    box-shadow: 4px 4px 0 var(--color-primary);
+}
+
+.sticker-primary {
+    background: var(--color-primary);
+    color: var(--color-ink);
+}
+
+/* =========================
+   7. Pills & Tags
+   ========================= */
+.pill {
+    font: 400 12px var(--font-display);
+    color: var(--color-ink);
+    background: var(--color-bg);
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    padding: 6px 13px;
+    cursor: pointer;
+}
+
+    .pill:hover, .pill.is-active {
+        background: var(--color-primary);
+        color: var(--color-ink);
+    }
+
+.tag-list {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.tag {
+    background: var(--color-primary);
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    font: 700 11px var(--font-body);
+    padding: 2px 10px;
+}
+
+/* =========================
+   8. Utilities
+   ========================= */
+.text-center {
+    text-align: center;
+}
+
+.tilt-left {
+    transform: rotate(-3deg);
+}
+
+.tilt-right {
+    transform: rotate(3deg);
+}
+
+.dashed-top {
+    border-top: var(--border-dashed);
+}
+
+.dashed-bottom {
+    border-bottom: var(--border-dashed);
+}
+
+/* =========================
+   9. Accessibility
+   ========================= */
+:focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* =========================
+   10. Responsive
+   ========================= */
+@media (max-width: 420px) {
+    .site-header {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .site-logo img {
+        height: 56px;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+}
