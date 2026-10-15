@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SignupPage.aspx.cs" Inherits="CookingLah.Pages.Shared.SignupPage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminLoginPage.aspx.cs" Inherits="CookingLah.Pages.Admin.AdminLoginPage" %>
 
 <!DOCTYPE html>
 

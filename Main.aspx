@@ -18,7 +18,7 @@
             <a class="site-logo" href="<%= ResolveUrl("~/Main.aspx") %>" aria-label="Cooking Lah home">
                 <img src="<%= ResolveUrl("~/F_Assets/CookingLahLogo.png") %>" alt="Cooking Lah" />
             </a>
-            <a class="btn btn-primary" href="#join">Join Us Now!</a>
+            <asp:Button ID="btnJoin" runat="server" Text="Join Us Now!" CssClass="btn btn-primary" OnClick="btnJoin_Click" />
         </header>
 
         <main>

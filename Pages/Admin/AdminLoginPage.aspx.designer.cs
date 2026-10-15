@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CookingLah.Pages.Shared
+namespace CookingLah.Pages.Admin
 {
 
 
-    public partial class LoginPage
+    public partial class AdminLoginPage
     {
 
         /// <summary>

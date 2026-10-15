@@ -17,5 +17,9 @@ namespace CookingLah
                 // (e.g. load countries and recipes from a database).
             }
         }
+        protected void btnJoin_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Pages/Shared/LoginPage.aspx");
+        }
     }
 }

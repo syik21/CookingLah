@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace CookingLah.Pages.Shared
+namespace CookingLah.Pages.Admin
 {
-    public partial class SignupPage : System.Web.UI.Page
+    public partial class AdminLoginPage : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

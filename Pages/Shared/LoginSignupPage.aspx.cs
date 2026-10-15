@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -8,9 +8,9 @@ using System.Text.RegularExpressions;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 
-namespace CookingLah   // change to match your project's namespace
+namespace CookingLah.Pages.Shared
 {
-    public partial class Login : System.Web.UI.Page
+    public partial class LoginPage : System.Web.UI.Page
     {
         // Connection string name in Web.config
         static string ConnStr

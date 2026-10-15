@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="CookingLah.Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LoginSignupPage.aspx.cs" Inherits="CookingLah.Pages.Shared.LoginSignupPage" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,14 +9,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-    <link href="~/Content/login.css" rel="stylesheet" />
+    <link href="~/F_CSS/LoginSignupPage.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
 
         <header>
             <a class="logo" href="<%= ResolveUrl("~/Main.aspx") %>" aria-label="Cooking Lah home">
-                <img src="<%= ResolveUrl("~/F_Assets/logo.png") %>" alt="Cooking Lah" />
+                <img src="<%= ResolveUrl("~/F_Assets/CookingLahlogo.png") %>" alt="Cooking Lah" />
             </a>
             <a class="btn alt" href="<%= ResolveUrl("~/Main.aspx") %>">&larr; Back home</a>
         </header>
@@ -27,13 +27,13 @@
                 <p>Log in to pick up your lessons, quizzes and live classes right where you left off. New here? Join in a minute.</p>
 
                 <div class="stickers" aria-hidden="true">
-                    <div class="st a"><img src="F_Assets/LoginFood1.png" alt="" /></div>
-                    <div class="st b"><img src="F_Assets/LoginFood2.png" alt="" /></div>
-                    <div class="st c"><img src="F_Assets/LoginFood3.png" alt="" /></div>
-                    <div class="st d"><img src="F_Assets/LoginFood4.png" alt="" /></div>
-                    <div class="st e"><img src="F_Assets/LoginFood5.png" alt="" /></div>
-                    <div class="st f"><img src="F_Assets/LoginFood6.png" alt="" /></div>
-                    <div class="st g"><img src="F_Assets/LoginFood7.png" alt="" /></div>
+                    <div class="st a"><img src="<%= ResolveUrl("~/F_Assets/LoginFood1.png") %>" alt="" /></div>
+                    <div class="st b"><img src="<%= ResolveUrl("~/F_Assets/LoginFood2.png") %>" alt="" /></div>
+                    <div class="st c"><img src="<%= ResolveUrl("~/F_Assets/LoginFood3.png") %>" alt="" /></div>
+                    <div class="st d"><img src="<%= ResolveUrl("~/F_Assets/LoginFood4.png") %>" alt="" /></div>
+                    <div class="st e"><img src="<%= ResolveUrl("~/F_Assets/LoginFood5.png") %>" alt="" /></div>
+                    <div class="st f"><img src="<%= ResolveUrl("~/F_Assets/LoginFood6.png") %>" alt="" /></div>
+                    <div class="st g"><img src="<%= ResolveUrl("~/F_Assets/LoginFood7.png") %>" alt="" /></div>
                 </div>
             </section>
 
@@ -163,17 +163,17 @@
     </form>
 
     <script>
-        document.querySelectorAll('.eye').forEach(function (b) {
-            b.addEventListener('click', function () {
-                var i = document.getElementById(b.dataset.t);
-                var s = i.type === 'password';
+document.querySelectorAll('.eye').forEach(function(b) {
+    b.addEventListener('click', function() {
+        var i = document.getElementById(b.dataset.t);
+        var s = i.type === 'password';
 
-                i.type = s ? 'text' : 'password';
-                b.textContent = s ? 'Hide' : 'Show';
-            });
-        });
+        i.type = s ? 'text' : 'password';
+        b.textContent = s ? 'Hide' : 'Show';
+    });
+});
 
-        if (document.querySelector('.errbox'))
+if (document.querySelector('.errbox'))
             document.getElementById('card').classList.add('shake');
     </script>
 </body>
