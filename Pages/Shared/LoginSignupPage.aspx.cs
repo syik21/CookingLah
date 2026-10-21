@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace CookingLah.Pages.Shared
 {
-    public partial class LoginPage : System.Web.UI.Page
+    public partial class LoginSignupPage : System.Web.UI.Page
     {
         // Connection string name in Web.config
         static string ConnStr
@@ -22,22 +22,19 @@ namespace CookingLah.Pages.Shared
         static readonly Dictionary<string, string> DashUrl = new Dictionary<string, string>
         {
             { "Learner", "~/Learner/Dashboard.aspx" },
-            { "Chef",    "~/Chef/Dashboard.aspx" },
-            { "Admin",   "~/Admin/Dashboard.aspx" }
+            { "Chef",    "~/Chef/Dashboard.aspx" }
         };
 
         static readonly Dictionary<string, string> RoleLabel = new Dictionary<string, string>
         {
             { "Learner", "Learner" },
-            { "Chef", "Chef / Instructor" },
-            { "Admin", "Admin" }
+            { "Chef", "Chef / Instructor" }
         };
 
         static readonly Dictionary<string, string> Blurb = new Dictionary<string, string>
         {
             { "Learner", "Your lessons, quiz results and learning progress are ready." },
-            { "Chef",    "Manage your courses, recipes, videos and learner feedback." },
-            { "Admin",   "Review users, approve chef content and see platform stats." }
+            { "Chef",    "Manage your courses, recipes, videos and learner feedback." }
         };
 
         protected void Page_Load(object sender, EventArgs e)
@@ -83,6 +80,12 @@ namespace CookingLah.Pages.Shared
             string email = txtLoginEmail.Text.Trim();
             string pw = txtLoginPass.Text;
             string role = rblLoginRole.SelectedValue;
+
+            if (role != "Learner" && role != "Chef")
+            {
+                Err(lblLoginError, "Please choose Learner or Chef / Instructor.");
+                return;
+            }
 
             if (!IsEmail(email) || pw.Length == 0)
             {
@@ -171,18 +174,37 @@ namespace CookingLah.Pages.Shared
                 return;
             } // Admin can't self-register
 
+            string profession = null;
+            if (role == "Chef")
+            {
+                string selectedProfession = ddlProfession.SelectedValue;
+                if (string.IsNullOrEmpty(selectedProfession) || ddlProfession.Items.FindByValue(selectedProfession) == null)
+                {
+                    Err(lblSignupError, "Please choose your profession.");
+                    return;
+                }
+
+                profession = selectedProfession == "Others" ? txtOtherProfession.Text.Trim() : selectedProfession;
+                if (profession.Length == 0 || profession.Length > 100)
+                {
+                    Err(lblSignupError, "Please enter your profession (up to 100 characters).");
+                    return;
+                }
+            }
+
             int id;
 
             try
             {
                 using (var con = new SqlConnection(ConnStr))
                 using (var cmd = new SqlCommand(
-                    "INSERT INTO Users (FullName, Email, PasswordHash, Role) VALUES (@n, @e, @p, @r); SELECT CAST(SCOPE_IDENTITY() AS INT);", con))
+                    "INSERT INTO Users (FullName, Email, PasswordHash, Role, Profession) VALUES (@n, @e, @p, @r, @profession); SELECT CAST(SCOPE_IDENTITY() AS INT);", con))
                 {
                     cmd.Parameters.AddWithValue("@n", name);
                     cmd.Parameters.AddWithValue("@e", email);
                     cmd.Parameters.AddWithValue("@p", Hash(pw));
                     cmd.Parameters.AddWithValue("@r", role);
+                    cmd.Parameters.Add("@profession", System.Data.SqlDbType.NVarChar, 100).Value = (object)profession ?? DBNull.Value;
                     con.Open();
                     id = (int)cmd.ExecuteScalar();
                 }

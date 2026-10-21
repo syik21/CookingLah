@@ -204,6 +204,24 @@ namespace CookingLah.Pages.Shared
         protected global::System.Web.UI.WebControls.TextBox txtSignPass;
 
         /// <summary>
+        /// ddlProfession control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlProfession;
+
+        /// <summary>
+        /// txtOtherProfession control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOtherProfession;
+
+        /// <summary>
         /// btnSignup control.
         /// </summary>
         /// <remarks>

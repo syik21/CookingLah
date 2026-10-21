@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="~/F_CSS/Style.css" rel="stylesheet" />
     <link href="~/F_CSS/LoginSignupPage.css" rel="stylesheet" />
 </head>
 <body>
@@ -57,7 +58,6 @@
                             <asp:RadioButtonList ID="rblLoginRole" runat="server" CssClass="roles" RepeatLayout="Flow" RepeatDirection="Horizontal">
                                 <asp:ListItem Value="Learner" Selected="True">Learner</asp:ListItem>
                                 <asp:ListItem Value="Chef">Chef / Instructor</asp:ListItem>
-                                <asp:ListItem Value="Admin">Admin</asp:ListItem>
                             </asp:RadioButtonList>
 
                             <div class="f">
@@ -91,7 +91,7 @@
                             <asp:Label ID="lblSignupError" runat="server" CssClass="errbox" Visible="false" />
 
                             <span class="lab">I want to join as</span>
-                            <asp:RadioButtonList ID="rblSignupRole" runat="server" CssClass="roles" RepeatLayout="Flow" RepeatDirection="Horizontal">
+                            <asp:RadioButtonList ID="rblSignupRole" runat="server" ClientIDMode="Static" CssClass="roles" RepeatLayout="Flow" RepeatDirection="Horizontal">
                                 <asp:ListItem Value="Learner" Selected="True">Learner</asp:ListItem>
                                 <asp:ListItem Value="Chef">Chef / Instructor</asp:ListItem>
                             </asp:RadioButtonList>
@@ -110,6 +110,24 @@
                                 <label class="l" for="txtSignPass">Password</label>
                                 <asp:TextBox ID="txtSignPass" runat="server" ClientIDMode="Static" TextMode="Password" placeholder="At least 8 characters" autocomplete="new-password" />
                                 <button type="button" class="eye" data-t="txtSignPass">Show</button>
+                            </div>
+
+                            <div id="professionFields">
+                                <div class="f">
+                                    <label class="l" for="ddlProfession">Profession</label>
+                                    <asp:DropDownList ID="ddlProfession" runat="server" ClientIDMode="Static" CssClass="form-select">
+                                        <asp:ListItem Value="">Choose your profession</asp:ListItem>
+                                        <asp:ListItem Value="Chef">Chef</asp:ListItem>
+                                        <asp:ListItem Value="Experienced Cooker">Experienced Cooker</asp:ListItem>
+                                        <asp:ListItem Value="Pastry Chef">Pastry Chef</asp:ListItem>
+                                        <asp:ListItem Value="Culinary Instructor">Culinary Instructor</asp:ListItem>
+                                        <asp:ListItem Value="Others">Others</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                                <div class="f" id="otherProfessionField">
+                                    <label class="l" for="txtOtherProfession">Your profession</label>
+                                    <asp:TextBox ID="txtOtherProfession" runat="server" ClientIDMode="Static" placeholder="Enter your profession" MaxLength="100" />
+                                </div>
                             </div>
 
                             <asp:Button ID="btnSignup" runat="server" Text="Create account" CssClass="btn full" OnClick="btnSignup_Click" />
@@ -172,6 +190,26 @@ document.querySelectorAll('.eye').forEach(function(b) {
         b.textContent = s ? 'Hide' : 'Show';
     });
 });
+
+var signupRoles = document.getElementById('rblSignupRole');
+if (signupRoles) {
+    var profession = document.getElementById('ddlProfession');
+    var otherProfession = document.getElementById('txtOtherProfession');
+    function updateProfessionFields() {
+        var selectedRole = signupRoles.querySelector('input:checked');
+        var isChef = selectedRole && selectedRole.value === 'Chef';
+        var isOther = isChef && profession.value === 'Others';
+        document.getElementById('professionFields').hidden = !isChef;
+        document.getElementById('otherProfessionField').hidden = !isOther;
+        profession.disabled = !isChef;
+        otherProfession.disabled = !isOther;
+        profession.required = !!isChef;
+        otherProfession.required = !!isOther;
+    }
+    signupRoles.addEventListener('change', updateProfessionFields);
+    profession.addEventListener('change', updateProfessionFields);
+    updateProfessionFields();
+}
 
 if (document.querySelector('.errbox'))
             document.getElementById('card').classList.add('shake');

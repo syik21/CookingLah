@@ -19,7 +19,7 @@ namespace CookingLah
         }
         protected void btnJoin_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Pages/Shared/LoginPage.aspx");
+            Response.Redirect("~/Pages/Shared/LoginSignupPage.aspx");
         }
     }
 }

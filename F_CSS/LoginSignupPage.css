@@ -117,7 +117,7 @@ header {
 main {
     max-width: 1120px;
     margin: 0 auto;
-    padding: 10px 24px 70px;
+    padding: 100px 24px 70px;
     display: grid;
     grid-template-columns: 1.05fr .95fr;
     gap: 48px;
@@ -146,32 +146,46 @@ mark {
 /* Food stickers */
 
 .stickers {
-    position: relative;
-    height: 230px;
+    display: grid;
+    /* Half-width tracks center the second row beneath the first. */
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 24px 10px;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    padding: 18px 10px 12px;
     max-width: 460px;
 }
 
-.st img {
+.stickers .st img {
+    position: absolute;
+    inset: 12%;
     display: block;
-    width: 60px;
-    height: auto;
+    width: 76%;
+    height: 76%;
+    object-fit: contain;
 }
 
-.st {
-    position: absolute;
+.stickers .st {
+    --r: 0deg;
+    position: relative;
+    grid-column: span 2;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 1;
+    min-width: 0;
     border: 2px solid var(--ink);
     border-radius: 10px;
-    padding: 10px 14px;
+    padding: 0;
     font: 700 13px/1.35 var(--mono);
     box-shadow: 4px 4px 0 var(--ink);
-    max-width: 230px;
+    transform: rotate(var(--r));
     animation: fl 5s ease-in-out infinite;
 }
 
 .st.a {
     background: var(--lime);
-    left: 0;
-    top: 6px;
     --r: -5deg;
 }
 
@@ -179,26 +193,39 @@ mark {
     background: var(--ink);
     color: var(--bg);
     box-shadow: 4px 4px 0 var(--hot);
-    left: 34%;
-    top: 86px;
     --r: 3deg;
     animation-delay: -1.5s;
 }
 
 .st.c {
     background: var(--pink);
-    left: 4%;
-    top: 158px;
     --r: -2deg;
     animation-delay: -3s;
 }
 
 .st.d {
     background: var(--sun);
-    right: 0;
-    top: 20px;
     --r: 5deg;
     animation-delay: -2s;
+}
+
+.stickers .st.e {
+    grid-column: 2 / span 2;
+    background: var(--lav);
+    --r: -4deg;
+    animation-delay: -4s;
+}
+
+.st.f {
+    background: var(--lime);
+    --r: 4deg;
+    animation-delay: -2.5s;
+}
+
+.st.g {
+    background: var(--pink);
+    --r: -3deg;
+    animation-delay: -.5s;
 }
 
 /* Login card */
@@ -260,6 +287,7 @@ mark {
 /* Form headings and fields */
 
 h2 {
+    text-align: left;
     font: 400 clamp(38px,5vw,52px)/1 var(--serif);
     text-transform: uppercase;
     margin: 0 0 6px;
@@ -474,14 +502,6 @@ a.lk, button.lk {
     main {
         grid-template-columns: 1fr;
         gap: 28px;
-    }
-
-    .stickers {
-        height: 210px;
-    }
-
-    .st.d {
-        display: none;
     }
 
     h1 {
