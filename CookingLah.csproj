@@ -65,9 +65,9 @@
     <Content Include="Pages\Chef\CSS\ChefMaster.css" />
     <Content Include="Pages\Learner\Learner.Master" />
     <Content Include="Pages\Learner\LearnerDashboard.aspx" />
-    <Content Include="Pages\Learner\CSS\Master.css" />
+    <Content Include="F_CSS\Master.css" />
     <Content Include="Pages\Learner\CSS\learnerDashboard.css" />
-    <Content Include="Pages\Learner\JS\LearnerMaster.js" />
+    <Content Include="F_JavaScripts\Master.js" />
     <Content Include="Pages\Learner\JS\learnerDashboard.js" />
     <Compile Include="F_Helpers\NavigationHelper.cs" />
     <Compile Include="F_Services\UserManager.cs" />
@@ -406,4 +406,67 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <ItemGroup>
+    <Content Include="Pages\Chef\CreateCourse\Activities\ActivityForm.ascx" />
+    <Compile Include="Pages\Chef\CreateCourse\Activities\ActivityForm.ascx.cs">
+      <DependentUpon>ActivityForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\CreateCourse\Activities\ActivityForm.ascx.designer.cs">
+      <DependentUpon>ActivityForm.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\CreateCourse\Activities\ActivityForm.css" />
+    <Content Include="Pages\Chef\CreateCourse\Activities\ActivityForm.js" />
+    <Compile Include="Pages\Chef\CreateCourse\CourseBuilderData.cs" />
+    <Content Include="Pages\Chef\CreateCourse\CreateCoursePage.aspx" />
+    <Compile Include="Pages\Chef\CreateCourse\CreateCoursePage.aspx.cs">
+      <DependentUpon>CreateCoursePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\CreateCourse\CreateCoursePage.aspx.designer.cs">
+      <DependentUpon>CreateCoursePage.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\CreateCourse\CreateCoursePage.css" />
+    <Content Include="Pages\Chef\CreateCourse\CreateCoursePage.js" />
+    <Content Include="Pages\Chef\CreateCourse\Lesson\LessonForm.ascx" />
+    <Compile Include="Pages\Chef\CreateCourse\Lesson\LessonForm.ascx.cs">
+      <DependentUpon>LessonForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\CreateCourse\Lesson\LessonForm.ascx.designer.cs">
+      <DependentUpon>LessonForm.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\CreateCourse\Lesson\LessonForm.css" />
+    <Content Include="Pages\Chef\CreateCourse\Lesson\LessonForm.js" />
+    <Content Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.ascx" />
+    <Compile Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.ascx.cs">
+      <DependentUpon>CoursePreview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.ascx.designer.cs">
+      <DependentUpon>CoursePreview.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.css" />
+    <Content Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.js" />
+    <Content Include="Pages\Chef\CreateCourse\Quiz\QuizForm.ascx" />
+    <Compile Include="Pages\Chef\CreateCourse\Quiz\QuizForm.ascx.cs">
+      <DependentUpon>QuizForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\CreateCourse\Quiz\QuizForm.ascx.designer.cs">
+      <DependentUpon>QuizForm.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\CreateCourse\Quiz\QuizForm.css" />
+    <Content Include="Pages\Chef\CreateCourse\Quiz\QuizForm.js" />
+    <Content Include="Pages\Chef\CreateCourse\Recipes\RecipeForm.ascx" />
+    <Compile Include="Pages\Chef\CreateCourse\Recipes\RecipeForm.ascx.cs">
+      <DependentUpon>RecipeForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\CreateCourse\Recipes\RecipeForm.ascx.designer.cs">
+      <DependentUpon>RecipeForm.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\CreateCourse\Recipes\RecipeForm.css" />
+    <Content Include="Pages\Chef\CreateCourse\Recipes\RecipeForm.js" />
+  </ItemGroup>
 </Project>

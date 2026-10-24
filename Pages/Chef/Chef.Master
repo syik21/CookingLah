@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
     <link runat="server" href="~/F_CSS/Style.css" rel="stylesheet" />
-    <link runat="server" href="~/Pages/Learner/CSS/Master.css" rel="stylesheet" />
+    <link runat="server" href="~/F_CSS/Master.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="ChefHead" runat="server" />
     <asp:ContentPlaceHolder ID="ProfileHead" runat="server" />
 </head>
@@ -14,7 +14,9 @@
 <form id="chefForm" runat="server">
     <a class="master-skip" href="#masterMain">Skip to content</a>
     <header class="master-header" id="masterHeader">
-        <button type="button" class="btn sidebar-toggle" id="sidebarToggle" aria-controls="masterSidebar" aria-expanded="false">Menu</button>
+        <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-controls="masterSidebar" aria-expanded="false" aria-label="Expand navigation" title="Expand navigation">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="3" /><path d="M9 4v16" /><path class="sidebar-toggle-arrow" d="m15 9-3 3 3 3" /></svg>
+        </button>
         <a runat="server" href="~/Pages/Chef/ChefDashboard.aspx" class="site-logo"><img runat="server" src="~/F_Assets/CookingLahLogo.png" alt="Cooking LAH dashboard" /></a>
         <div class="master-header-caption">Your teaching notebook<span>Share your skills. Inspire a cook.</span></div>
         <div class="master-profile">
@@ -35,7 +37,7 @@
                 <%-- Placeholder destinations are intentionally disabled until those pages exist. --%>
                 <p class="master-nav-label">COURSE MANAGEMENT</p>
                 <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v16M12 5C8 2 4 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-2-1-6-2-10 1Z" /></svg><span>My Courses</span></a>
-                <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" /></svg><span>Create Course</span></a>
+                <a runat="server" href="~/Pages/Chef/CreateCourse/CreateCoursePage.aspx" class="master-nav-item" data-page="CreateCoursePage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" /></svg><span>Create Course</span></a>
                 <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 4H4v17h16V4h-4M8 2h8v5H8ZM8 13l3 3 5-5" /></svg><span>Content Status</span></a>
                 <p class="master-nav-label">LEARNERS</p>
                 <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h4l2-3h6l2 3h4v15H3Z" /><circle cx="12" cy="13" r="4" /></svg><span>Activity Submissions</span></a>
@@ -52,7 +54,7 @@
             <asp:ContentPlaceHolder ID="ProfileContent" runat="server" />
         </main>
     </div>
-    <script src="<%= ResolveUrl("~/Pages/Learner/JS/LearnerMaster.js") %>" defer></script>
+    <script src="<%= ResolveUrl("~/F_JavaScripts/Master.js") %>" defer></script>
     <asp:ContentPlaceHolder ID="ChefScripts" runat="server" />
     <asp:ContentPlaceHolder ID="ProfileScripts" runat="server" />
 </form>

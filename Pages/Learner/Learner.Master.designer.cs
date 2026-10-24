@@ -24,6 +24,15 @@ namespace CookingLah.Pages.Learner
         protected global::System.Web.UI.WebControls.ContentPlaceHolder LearnerHead;
 
         /// <summary>
+        /// ProfileHead control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ProfileHead;
+
+        /// <summary>
         /// learnerForm control.
         /// </summary>
         /// <remarks>
@@ -78,6 +87,15 @@ namespace CookingLah.Pages.Learner
         protected global::System.Web.UI.WebControls.ContentPlaceHolder LearnerContent;
 
         /// <summary>
+        /// ProfileContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ProfileContent;
+
+        /// <summary>
         /// LearnerScripts control.
         /// </summary>
         /// <remarks>
@@ -94,7 +112,5 @@ namespace CookingLah.Pages.Learner
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder ProfileScripts;
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ProfileHead;
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ProfileContent;
     }
 }

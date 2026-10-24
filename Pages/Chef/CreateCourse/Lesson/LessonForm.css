@@ -1,0 +1,6 @@
+.lesson-card { margin-bottom: 24px; box-shadow: 3px 3px 0 var(--color-tan); }
+.lesson-media { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.lesson-media a { font-size: 12px; }
+.lesson-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.lesson-delete { margin-left: auto; }
+@media (max-width: 760px) { .lesson-media { grid-template-columns: minmax(0, 1fr); gap: 0; } .lesson-card { padding: 20px 14px; } .lesson-delete { margin-left: 0; } }

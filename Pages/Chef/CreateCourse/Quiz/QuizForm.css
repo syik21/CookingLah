@@ -1,0 +1,11 @@
+.quiz-score { max-width: 220px; }
+.question-card { margin: 24px 0; box-shadow: 3px 3px 0 var(--color-tan); }
+.question-options { min-width: 0; border: 0; padding: 0; margin: 0 0 20px; }
+.question-options legend { font-size: 13px; margin-bottom: 16px; }
+.question-option { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 12px; align-items: center; margin-bottom: 16px; }
+.question-option .builder-field { margin: 0; }
+.option-answer { display: grid; place-items: center; min-width: 44px; min-height: 48px; cursor: pointer; }
+.option-answer input { width: 20px; height: 20px; accent-color: var(--color-ink); }
+.option-remove { align-self: end; }
+.question-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 760px) { .question-card { padding: 20px 14px; } .question-option { grid-template-columns: 44px minmax(0, 1fr); } .option-remove { grid-column: 2; justify-self: start; } }

@@ -12,7 +12,7 @@
 <body class="admin-login">
     <form id="form1" runat="server">
         <header>
-            <div class="logo"><img src="<%= ResolveUrl("~/F_Assets/CookingLahLogo.png") %>" alt="Cooking LAH" /></div>
+            <a class="logo" href="<%= ResolveUrl("~/Main.aspx") %>" aria-label="Cooking LAH home"><img src="<%= ResolveUrl("~/F_Assets/CookingLahLogo.png") %>" alt="Cooking LAH" /></a>
             <span class="admin-badge">Admin access</span>
         </header>
         <main>
