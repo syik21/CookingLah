@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System;
 
 namespace CookingLah
 {
@@ -11,15 +6,6 @@ namespace CookingLah
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                // Initial server-side setup can go here later
-                // (e.g. load countries and recipes from a database).
-            }
-        }
-        protected void btnJoin_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Pages/Shared/LoginSignupPage.aspx");
         }
     }
 }

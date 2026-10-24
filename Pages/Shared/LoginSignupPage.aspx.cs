@@ -1,7 +1,13 @@
-﻿using System;
+using CookingLah.F_Helpers;
+using CookingLah.F_Services;
+using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -18,27 +24,40 @@ namespace CookingLah.Pages.Shared
             get { return ConfigurationManager.ConnectionStrings["CookingLahDB"].ConnectionString; }
         }
 
-        // Where each role goes after login. Change these to your real pages.
-        static readonly Dictionary<string, string> DashUrl = new Dictionary<string, string>
-        {
-            { "Learner", "~/Learner/Dashboard.aspx" },
-            { "Chef",    "~/Chef/Dashboard.aspx" }
-        };
 
         static readonly Dictionary<string, string> RoleLabel = new Dictionary<string, string>
         {
             { "Learner", "Learner" },
-            { "Chef", "Chef / Instructor" }
+            { "Instructor", "Chef / Instructor" }
         };
 
         static readonly Dictionary<string, string> Blurb = new Dictionary<string, string>
         {
             { "Learner", "Your lessons, quiz results and learning progress are ready." },
-            { "Chef",    "Manage your courses, recipes, videos and learner feedback." }
+            { "Instructor", "Manage your courses, recipes, videos and learner feedback." }
         };
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            if (Session["SignupViewStateKey"] == null)
+                Session["SignupViewStateKey"] = Guid.NewGuid().ToString("N");
+            ViewStateUserKey = (string)Session["SignupViewStateKey"];
+            ddlCountry.Items.Clear();
+            ddlCountry.Items.Add(new ListItem("Select your country", ""));
+            var regions = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+                .Select(c => new RegionInfo(c.Name))
+                .Where(r => r.TwoLetterISORegionName.Length == 2)
+                .GroupBy(r => r.TwoLetterISORegionName)
+                .Select(g => g.First()).OrderBy(r => r.EnglishName, StringComparer.Ordinal);
+            foreach (var region in regions)
+                ddlCountry.Items.Add(new ListItem(region.EnglishName, region.TwoLetterISORegionName));
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            lblLoginError.Visible = false;
+            lblSignupError.Visible = false;
             if (!IsPostBack)
                 ShowView(Request.QueryString["tab"] == "signup" ? 1 : 0);
         }
@@ -77,45 +96,77 @@ namespace CookingLah.Pages.Shared
         {
             lblLoginError.Visible = false;
 
-            string email = txtLoginEmail.Text.Trim();
+            string login = txtLoginEmail.Text.Trim();
             string pw = txtLoginPass.Text;
-            string role = rblLoginRole.SelectedValue;
 
-            if (role != "Learner" && role != "Chef")
+            if (login.Length == 0 || login.Length > 100 || pw.Length == 0)
             {
-                Err(lblLoginError, "Please choose Learner or Chef / Instructor.");
+                Err(lblLoginError, "Please enter your username or email and your password.");
                 return;
             }
-
-            if (!IsEmail(email) || pw.Length == 0)
-            {
-                Err(lblLoginError, "Please enter a valid email and your password.");
-                return;
-            }
-
-            int id = 0;
-            string name = null;
-            string hash = null;
-            string dbRole = null;
-            bool active = false;
 
             try
             {
-                using (var con = new SqlConnection(ConnStr))
-                using (var cmd = new SqlCommand("SELECT UserId, FullName, PasswordHash, Role, IsActive FROM Users WHERE Email = @e", con))
+                int userId;
+                string username;
+                string email;
+                string accountStatus;
+                string role;
+                string password;
+                using (var con = DatabaseManager.ConnectDB())
+                using (var cmd = new SqlCommand(
+                    "SELECT TOP (1) UserID, Password, AccountStatus, Role, Username, Email FROM dbo.Users " +
+                    "WHERE Username = @login OR Email = @email " +
+                    "ORDER BY CASE WHEN Email = @email THEN 0 ELSE 1 END;", con))
                 {
-                    cmd.Parameters.AddWithValue("@e", email);
+                    cmd.Parameters.Add("@login", SqlDbType.NVarChar, 100).Value = login;
+                    cmd.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = login.ToLowerInvariant();
                     con.Open();
-
-                    using (var r = cmd.ExecuteReader())
-                        if (r.Read())
+                    using (var userData = cmd.ExecuteReader())
+                    {
+                        if (!userData.Read())
                         {
-                            id = r.GetInt32(0);
-                            name = r.GetString(1);
-                            hash = r.GetString(2);
-                            dbRole = r.GetString(3);
-                            active = r.GetBoolean(4);
+                            Err(lblLoginError, "Username or Email is not registered.");
+                            return;
                         }
+                        userId = Convert.ToInt32(userData["UserID"]);
+                        password = userData["Password"].ToString();
+                        username = userData["Username"].ToString().Trim();
+                        email = userData["Email"].ToString().Trim();
+                        accountStatus = userData["AccountStatus"].ToString().Trim();
+                        role = userData["Role"].ToString().Trim();
+                    }
+                }
+
+                if (!PasswordManager.isPasswordValid(pw, password))
+                {
+                    Err(lblLoginError, "Incorrect  password.");
+                    return;
+                }
+                // Check Account Status. Only Active User can Login.
+                if (!UserManager.isAccActive(accountStatus))
+                {
+                    Err(lblLoginError, "Your Account is Inactive.");
+                    return;
+                }
+
+                // Session User.
+                Session["UserId"] = userId;
+                Session["Username"] = username;
+                Session["Email"] = email;
+                Session["Role"] = role;
+                FormsAuthentication.SetAuthCookie(email, chkRemember.Checked);
+
+                // Navigate to user dashboard.
+                if (role == "Learner")
+                {
+                    Response.Redirect(NavigationHelper.GetUrl("Learner"), false);
+                    Context.ApplicationInstance.CompleteRequest();
+                }
+                else if (role == "Instructor")
+                {
+                    Response.Redirect(NavigationHelper.GetUrl("Instructor"), false);
+                    Context.ApplicationInstance.CompleteRequest();
                 }
             }
             catch (Exception)
@@ -123,21 +174,6 @@ namespace CookingLah.Pages.Shared
                 Err(lblLoginError, "Something went wrong. Please try again.");
                 return;
             }
-
-            if (hash == null || !Verify(pw, hash) || dbRole != role)
-            {
-                Err(lblLoginError, "Email, password or role is incorrect.");
-                return;
-            }
-
-            if (!active)
-            {
-                Err(lblLoginError, "This account is disabled. Please contact an admin.");
-                return;
-            }
-
-            SignIn(id, name, email, dbRole, chkRemember.Checked);
-            Success(dbRole, "You're in!", Blurb[dbRole]);
         }
 
         // ---------- SIGN UP ----------
@@ -146,13 +182,20 @@ namespace CookingLah.Pages.Shared
             lblSignupError.Visible = false;
 
             string name = txtSignName.Text.Trim();
-            string email = txtSignEmail.Text.Trim();
+            string fullName = txtSignFullName.Text.Trim();
+            string email = txtSignEmail.Text.Trim().ToLowerInvariant();
             string pw = txtSignPass.Text;
             string role = rblSignupRole.SelectedValue;
 
-            if (name.Length < 2)
+            if (name.Length < 2 || name.Length > 50)
             {
-                Err(lblSignupError, "Tell us what to call you.");
+                Err(lblSignupError, "Use a username between 2 and 50 characters.");
+                return;
+            }
+
+            if (fullName.Length == 0 || fullName.Length > 100)
+            {
+                Err(lblSignupError, "Please enter your full name (up to 100 characters).");
                 return;
             }
 
@@ -162,9 +205,9 @@ namespace CookingLah.Pages.Shared
                 return;
             }
 
-            if (pw.Length < 8)
+            if (pw.Length < 8 || Encoding.UTF8.GetByteCount(pw) > 72)
             {
-                Err(lblSignupError, "Use at least 8 characters for your password.");
+                Err(lblSignupError, "Use at least 8 characters and at most 72 UTF-8 bytes for your password.");
                 return;
             }
 
@@ -173,6 +216,13 @@ namespace CookingLah.Pages.Shared
                 Err(lblSignupError, "Please choose Learner or Chef / Instructor.");
                 return;
             } // Admin can't self-register
+
+            ListItem country = ddlCountry.Items.FindByValue(ddlCountry.SelectedValue);
+            if (country == null || string.IsNullOrEmpty(country.Value))
+            {
+                Err(lblSignupError, "Please select your country.");
+                return;
+            }
 
             string profession = null;
             if (role == "Chef")
@@ -192,26 +242,62 @@ namespace CookingLah.Pages.Shared
                 }
             }
 
+            string databaseRole = role == "Chef" ? "Instructor" : "Learner";
             int id;
 
             try
             {
-                using (var con = new SqlConnection(ConnStr))
-                using (var cmd = new SqlCommand(
-                    "INSERT INTO Users (FullName, Email, PasswordHash, Role, Profession) VALUES (@n, @e, @p, @r, @profession); SELECT CAST(SCOPE_IDENTITY() AS INT);", con))
+                string passwordHash = PasswordManager.HashPassword(pw);
+                using (var con = DatabaseManager.ConnectDB())
                 {
-                    cmd.Parameters.AddWithValue("@n", name);
-                    cmd.Parameters.AddWithValue("@e", email);
-                    cmd.Parameters.AddWithValue("@p", Hash(pw));
-                    cmd.Parameters.AddWithValue("@r", role);
-                    cmd.Parameters.Add("@profession", System.Data.SqlDbType.NVarChar, 100).Value = (object)profession ?? DBNull.Value;
                     con.Open();
-                    id = (int)cmd.ExecuteScalar();
+                    // Both records must succeed; a failed profession insert rolls back the account.
+                    using (var transaction = con.BeginTransaction())
+                    {
+                        using (var check = new SqlCommand(
+                            "SELECT CASE WHEN EXISTS (SELECT 1 FROM dbo.Users WHERE Username = @username) THEN 1 " +
+                            "WHEN EXISTS (SELECT 1 FROM dbo.Users WHERE Email = @email) THEN 2 ELSE 0 END;", con, transaction))
+                        {
+                            check.Parameters.Add("@username", SqlDbType.NVarChar, 50).Value = name;
+                            check.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = email;
+                            int duplicate = (int)check.ExecuteScalar();
+                            if (duplicate != 0)
+                            {
+                                Err(lblSignupError, duplicate == 1
+                                    ? "That username is already taken. Please choose another username."
+                                    : "That email is already registered. Try logging in.");
+                                return;
+                            }
+                        }
+
+                        using (var cmd = new SqlCommand(
+                            "INSERT INTO dbo.Users (Username, FullName, Email, Password, Role, Country) VALUES (@n, @fullName, @e, @p, @r, @country); SELECT CAST(SCOPE_IDENTITY() AS INT);", con, transaction))
+                        {
+                            cmd.Parameters.Add("@n", SqlDbType.NVarChar, 50).Value = name;
+                            cmd.Parameters.Add("@fullName", SqlDbType.NVarChar, 100).Value = fullName;
+                            cmd.Parameters.Add("@e", SqlDbType.NVarChar, 100).Value = email;
+                            cmd.Parameters.Add("@p", SqlDbType.NVarChar, 255).Value = passwordHash;
+                            cmd.Parameters.Add("@r", SqlDbType.NVarChar, 20).Value = databaseRole;
+                            cmd.Parameters.Add("@country", SqlDbType.NVarChar, 100).Value = country.Text;
+                            id = (int)cmd.ExecuteScalar();
+                        }
+                        if (role == "Chef")
+                        {
+                            using (var cmd = new SqlCommand(
+                                "INSERT INTO dbo.ChefProfession (ChefID, Profession) VALUES (@id, @profession)", con, transaction))
+                            {
+                                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                                cmd.Parameters.Add("@profession", SqlDbType.NVarChar, 100).Value = profession;
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                        transaction.Commit();
+                    }
                 }
             }
             catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
             {
-                Err(lblSignupError, "That email is already registered. Try logging in.");
+                Err(lblSignupError, "That username or email is already registered. Choose another username or try logging in.");
                 return;
             }
             catch (Exception)
@@ -220,11 +306,9 @@ namespace CookingLah.Pages.Shared
                 return;
             }
 
-            SignIn(id, name, email, role, false);
-
-            string first = name.Split(' ')[0];
-            Success(role, "Welcome, " + first + "!",
-                (role == "Chef" ? "Account created. Your content will be reviewed before it goes live. " : "Account created. ") + Blurb[role]);
+            string first = fullName.Split(' ')[0];
+            Success(databaseRole, "Hi, " + first + "!",
+                (role == "Chef" ? "Account created. Your content will be reviewed before it goes live. " : "Account created. ") + Blurb[databaseRole]);
         }
 
         // ---------- FORGOT PASSWORD ----------
@@ -299,16 +383,17 @@ namespace CookingLah.Pages.Shared
         {
             Session["UserId"] = id;
             Session["UserName"] = name;
+            Session["Username"] = name;
             Session["Role"] = role;
             FormsAuthentication.SetAuthCookie(email, remember);
         }
 
         void Success(string role, string title, string msg)
         {
-            lblOkTitle.Text = title;
+            lblOkTitle.Text = Server.HtmlEncode(title);
             lblOkMsg.Text = Server.HtmlEncode(msg);
-            hlDash.NavigateUrl = DashUrl[role];
-            hlDash.Text = "Go to my " + RoleLabel[role].ToLower() + " dashboard";
+            hlDash.NavigateUrl = "~/Pages/Shared/LoginSignupPage.aspx";
+            hlDash.Text = "Back to Login Page";
             hlDash.Visible = true;
             ShowView(3);
         }
@@ -321,7 +406,7 @@ namespace CookingLah.Pages.Shared
 
         static bool IsEmail(string s)
         {
-            return s.Length <= 256 && Regex.IsMatch(s, @"^\S+@\S+\.\S+$");
+            return s.Length <= 100 && Regex.IsMatch(s, @"^\S+@\S+\.\S+$");
         }
 
         static string Sha256(string s)
@@ -330,45 +415,6 @@ namespace CookingLah.Pages.Shared
                 return Convert.ToBase64String(h.ComputeHash(Encoding.UTF8.GetBytes(s)));
         }
 
-        // Passwords are stored as "iterations.salt.hash" (PBKDF2), never as plain text.
-        static string Hash(string pw)
-        {
-            const int it = 100000;
-            var salt = new byte[16];
 
-            using (var rng = RandomNumberGenerator.Create())
-                rng.GetBytes(salt);
-
-            return it + "." + Convert.ToBase64String(salt) + "." + Convert.ToBase64String(Pbkdf2(pw, salt, it, 32));
-        }
-
-        static bool Verify(string pw, string stored)
-        {
-            try
-            {
-                var p = stored.Split('.');
-                if (p.Length != 3)
-                    return false;
-
-                var expected = Convert.FromBase64String(p[2]);
-                var actual = Pbkdf2(pw, Convert.FromBase64String(p[1]), int.Parse(p[0]), expected.Length);
-
-                uint diff = (uint)expected.Length ^ (uint)actual.Length;
-                for (int i = 0; i < expected.Length && i < actual.Length; i++)
-                    diff |= (uint)(expected[i] ^ actual[i]);
-
-                return diff == 0;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        static byte[] Pbkdf2(string pw, byte[] salt, int it, int len)
-        {
-            using (var d = new Rfc2898DeriveBytes(pw, salt, it))
-                return d.GetBytes(len);
-        }
     }
 }

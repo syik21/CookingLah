@@ -1,23 +1,5 @@
-<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Mobile.master.cs" Inherits="CookingLah.Site_Mobile" %>
-<%@ Register Src="~/ViewSwitcher.ascx" TagPrefix="friendlyUrls" TagName="ViewSwitcher" %>
-
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
-        <h1>Mobile Master Page</h1>
-        <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
-        <section class="content-wrapper main-content clear-fix">
-            <asp:ContentPlaceHolder runat="server" ID="MainContent" />
-        </section>
-        <friendlyUrls:ViewSwitcher runat="server" />
-    </div>
-    </form>
-</body>
-</html>
+<%@ Master Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Site.Mobile.Master.cs" Inherits="CookingLah.Site_Mobile" %>
+<asp:Content ContentPlaceHolderID="HeadContent" runat="server"><asp:ContentPlaceHolder ID="HeadContent" runat="server" /><asp:ContentPlaceHolder ID="ProfileHead" runat="server" /></asp:Content>
+<asp:Content ContentPlaceHolderID="MainContent" runat="server"><asp:ContentPlaceHolder ID="FeaturedContent" runat="server" /><asp:ContentPlaceHolder ID="MainContent" runat="server" /><asp:ContentPlaceHolder ID="ProfileContent" runat="server" /></asp:Content>
+<asp:Content ContentPlaceHolderID="FooterContent" runat="server"><asp:ContentPlaceHolder ID="FooterContent" runat="server" /></asp:Content>
+<asp:Content ContentPlaceHolderID="ScriptsContent" runat="server"><asp:ContentPlaceHolder ID="ScriptsContent" runat="server" /><asp:ContentPlaceHolder ID="ProfileScripts" runat="server" /></asp:Content>

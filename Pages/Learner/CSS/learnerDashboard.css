@@ -1,0 +1,710 @@
+/* Cooking notebook dashboard; reusable paper components live in Style.css. */
+
+/* Main dashboard layout */
+.learner-dashboard {
+    display: grid;
+    gap: 38px;
+    padding: 0 4px 8px 0;
+}
+
+/* Welcome message and mascot */
+.dashboard-welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.dashboard-welcome-copy {
+    max-width: 680px;
+}
+
+.dashboard-welcome h1 {
+    font-size: clamp(38px, 4.5vw, 62px);
+    line-height: 1.05;
+    text-transform: none;
+    text-wrap: balance;
+}
+
+.dashboard-welcome p {
+    margin: 12px 0 0;
+}
+
+.dashboard-welcome .dashboard-preview {
+    font-size: 12px;
+    margin-top: 16px;
+}
+
+.dashboard-mascot {
+    display: grid;
+    justify-items: center;
+    flex: 0 0 150px;
+    transform: rotate(4deg);
+}
+
+    .dashboard-mascot img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+    }
+
+    .dashboard-mascot span {
+        font: 400 21px/1.05 var(--font-hand);
+        text-align: center;
+    }
+
+.learner-dashboard h2 {
+    font-size: clamp(30px, 3vw, 40px);
+    text-align: left;
+    text-transform: none;
+    line-height: 1.1;
+    margin: 0 0 22px;
+}
+
+.learner-dashboard h3 {
+    font: 400 17px/1.45 var(--font-display);
+    margin: 0;
+}
+
+/* Summary statistic cards */
+.dashboard-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.summary-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    border-width: 1.5px;
+    box-shadow: 2px 3px 0 var(--color-tan);
+}
+
+    .summary-card:nth-child(1) {
+        background: #FFF0B6;
+        transform: rotate(-1deg);
+    }
+
+    .summary-card:nth-child(2) {
+        background: #E5F4CB;
+        transform: rotate(.7deg);
+    }
+
+    .summary-card:nth-child(3) {
+        background: #FBE1ED;
+        transform: rotate(-.6deg);
+    }
+
+    .summary-card:nth-child(4) {
+        background: #EAE0FB;
+        transform: rotate(1deg);
+    }
+
+.summary-value {
+    font: 400 42px/1 var(--font-hand);
+    flex-shrink: 0;
+}
+
+.summary-card p {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Continue-learning image and course information */
+.continue-photo-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.notebook-caption {
+    align-self: flex-start;
+    margin: 0;
+    transform: rotate(-3deg);
+}
+
+.continue-image {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    filter: drop-shadow(3px 5px 0 #35030C18);
+}
+
+.continue-photo-page .handwritten-note {
+    font-size: 22px;
+    margin-top: 12px;
+}
+
+.cooking-doodle {
+    width: 65px;
+    height: 40px;
+    margin-top: 12px;
+    transform: rotate(-8deg);
+}
+
+.continue-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    .continue-details .scrap-label {
+        align-self: flex-start;
+        margin: 0 0 16px;
+        transform: rotate(-2deg);
+    }
+
+    .continue-details h3 {
+        font: 400 clamp(30px, 3vw, 42px)/1.1 var(--font-hand);
+    }
+
+    .continue-details > .text-muted {
+        font-size: 12px;
+        margin: 14px 0;
+    }
+
+    .continue-details .btn {
+        align-self: flex-start;
+        margin-top: 6px;
+    }
+
+/* Course progress bar */
+.course-progress-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
+    margin-top: 18px;
+}
+
+    .course-progress-label > :last-child {
+        font-weight: 700;
+    }
+
+.course-progress {
+    display: block;
+    width: 100%;
+    height: 13px;
+    margin: 8px 0 16px;
+    appearance: none;
+    border: 1.5px solid var(--color-ink);
+    border-radius: 5px 3px 6px 3px;
+    overflow: hidden;
+    background: var(--color-paper);
+}
+
+    .course-progress::-webkit-progress-bar {
+        background: var(--color-paper);
+    }
+
+    .course-progress::-webkit-progress-value {
+        background: var(--color-lime);
+        border-right: 1.5px solid var(--color-ink);
+    }
+
+    .course-progress::-moz-progress-bar {
+        background: var(--color-lime);
+        border-right: 1.5px solid var(--color-ink);
+    }
+
+/* Course section and course cards */
+.dashboard-section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 16px;
+}
+
+    .dashboard-section-heading > span {
+        font-size: 12px;
+        margin-bottom: 22px;
+    }
+
+.dashboard-course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 22px;
+    padding-top: 8px;
+}
+
+.dashboard-course-card {
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+    border-style: dashed;
+}
+
+    .dashboard-course-card:nth-child(2) {
+        --tape-color: #CDF58AC9;
+    }
+
+    .dashboard-course-card:nth-child(3) {
+        --tape-color: #FBB8EEC9;
+    }
+
+.course-thumbnail {
+    width: 100%;
+    height: 155px;
+    object-fit: contain;
+    background: #F6EDD8;
+    border-radius: 10px 4px 12px 5px;
+    margin-bottom: 18px;
+}
+
+.learner-dashboard .card-eyebrow {
+    font: 400 12px/1.5 var(--font-body);
+    text-transform: none;
+    letter-spacing: 0;
+    margin: 0 0 8px;
+}
+
+.dashboard-course-card h3 {
+    margin-bottom: 12px;
+}
+
+.dashboard-course-card > .text-muted {
+    font-size: 12px;
+}
+
+.dashboard-course-card .btn {
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+/* Quiz results, activity history, and notes */
+.dashboard-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 24px;
+}
+
+.dashboard-notes {
+    padding: 26px;
+    box-shadow: 0 4px 0 var(--color-paper), 0 6px 0 var(--color-ink);
+}
+
+    .dashboard-notes h2 {
+        font-size: 32px;
+    }
+
+.quiz-results, .activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .quiz-results li, .activity-list li {
+        padding: 18px 0;
+        border-top: 1px dashed #AC998C;
+    }
+
+        .quiz-results li:last-child, .activity-list li:last-child {
+            padding-bottom: 0;
+        }
+
+    .quiz-results li {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .quiz-results h3, .activity-list h3 {
+        font: 700 14px/1.5 var(--font-body);
+    }
+
+    .quiz-results time, .activity-list p {
+        font-size: 12px;
+    }
+
+.quiz-result-score {
+    display: grid;
+    gap: 6px;
+    justify-items: end;
+}
+
+    .quiz-result-score strong {
+        font: 400 27px/1 var(--font-hand);
+    }
+
+.activity-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Status colors */
+.dashboard-status {
+    display: inline-block;
+    white-space: nowrap;
+    border: 1px solid var(--color-ink);
+}
+
+    .dashboard-status.status-success {
+        background: #E5F4CB;
+    }
+
+    .dashboard-status.status-danger {
+        background: #FBE1ED;
+        border-style: dashed;
+    }
+
+    .dashboard-status.status-pending {
+        background: #FFF0B6;
+    }
+
+/* Food map banner and dashboard buttons */
+.food-map-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    background: #E5F4CB;
+    border-style: dashed;
+}
+
+    .food-map-cta h2 {
+        margin-bottom: 12px;
+    }
+
+    .food-map-cta p {
+        max-width: 560px;
+        font-size: 13px;
+    }
+
+    .food-map-cta .handwritten-note {
+        font-size: 23px;
+        margin: 0 0 10px;
+    }
+
+    .food-map-cta .btn {
+        flex-shrink: 0;
+    }
+
+.learner-dashboard .btn {
+    min-height: 44px;
+    font-size: 12px;
+    border-radius: 12px 5px 14px 5px;
+}
+
+    .learner-dashboard .btn:disabled {
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+        opacity: 1;
+        background: var(--color-tan-light);
+        color: #6B574D;
+        border-color: #8E7A69;
+        border-style: dashed;
+        white-space: normal;
+        max-width: 100%;
+    }
+/* Reference-inspired book styling; original continue-course content is preserved. */
+
+/* Notebook-style continue-course card */
+.course-book {
+    padding: 28px 24px 36px;
+    background: #FFF;
+    box-shadow: 7px 8px 0 var(--color-tan), 9px 10px 0 var(--color-ink);
+}
+
+    .course-book .notebook-spread {
+        gap: 20px;
+    }
+
+    .course-book .notebook-page {
+        position: relative;
+        padding: 32px 24px 40px;
+        background-image: repeating-linear-gradient(transparent 0 33px, #BCD9E9 33px 34px);
+    }
+
+        .course-book .notebook-page::after {
+            content: "";
+            position: absolute;
+            inset: 12px 0 12px auto;
+            width: 18px;
+            background: repeating-linear-gradient(115deg, transparent 0 6px, #35030C25 6px 7px, transparent 7px 10px);
+            pointer-events: none;
+        }
+
+        .course-book .notebook-page + .notebook-page::after {
+            right: auto;
+            left: 0;
+        }
+
+    .course-book .course-book-card {
+        --tape-color: #DDDAD0D9;
+        padding: 28px 22px;
+        background: #FFF;
+        border: 2px dashed var(--color-ink);
+        border-radius: 9px 5px 7px 12px / 6px 12px 5px 9px;
+        box-shadow: 4px 5px 0 #35030C1A;
+        transform: rotate(-1deg);
+    }
+
+.course-book-card.scrap-tape::before {
+    width: 86px;
+    left: calc(50% - 43px);
+}
+
+.course-book .scrap-label {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: #C52A08;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.course-book .course-progress {
+    height: 17px;
+    border: 2px solid var(--color-ink);
+    border-radius: 12px;
+    background: #FFF;
+}
+
+    .course-book .course-progress::-webkit-progress-bar {
+        background: #FFF;
+    }
+
+    .course-book .course-progress::-webkit-progress-value {
+        background: var(--color-primary);
+        border-right: 2px solid var(--color-ink);
+    }
+
+    .course-book .course-progress::-moz-progress-bar {
+        background: var(--color-primary);
+        border-right: 2px solid var(--color-ink);
+    }
+
+.learner-dashboard .course-book .btn {
+    border-radius: 3px 5px 2px 4px;
+}
+
+    .learner-dashboard .course-book .btn:disabled {
+        background: var(--color-primary);
+        color: var(--color-ink);
+        border: 2px solid var(--color-ink);
+        box-shadow: 4px 5px 0 var(--color-ink);
+    }
+
+/* Responsive styles: tablets and smaller screens */
+@media (max-width: 1000px) {
+
+    /* Notebook-style continue-course card */
+    .course-book {
+        padding: 20px 16px 32px;
+    }
+
+        .course-book .notebook-spread {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 28px;
+        }
+}
+
+@media (max-width: 480px) {
+
+    /* Notebook-style continue-course card */
+    .course-book {
+        padding: 20px 10px 30px;
+    }
+
+        .course-book .notebook-page {
+            padding: 28px 14px;
+        }
+
+        .course-book .course-book-card {
+            padding: 24px 16px;
+            transform: none;
+        }
+
+        .course-book .notebook-page::after {
+            width: 10px;
+        }
+}
+
+@media (max-width: 1200px) {
+    .notebook-page {
+        padding: 24px;
+    }
+
+    .dashboard-course-grid {
+        gap: 16px;
+    }
+
+    .dashboard-course-card {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 1100px) {
+
+    /* Summary statistic cards */
+    .dashboard-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 1000px) {
+    .dashboard-mascot {
+        flex-basis: 110px;
+    }
+
+    /* Food map banner and dashboard buttons */
+    .food-map-cta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 760px) {
+    .dashboard-course-grid {
+        gap: 28px 16px;
+    }
+
+    /* Summary statistic cards */
+    .dashboard-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .summary-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .continue-image {
+        height: 200px;
+    }
+
+    .course-thumbnail {
+        height: 190px;
+    }
+
+    /* Continue-learning image and course information */
+    .continue-photo-page {
+        padding-bottom: 20px;
+    }
+
+    .cooking-doodle {
+        display: none;
+    }
+
+    /* Welcome message and mascot */
+    .dashboard-welcome {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Main dashboard layout */
+    .learner-dashboard {
+        gap: 30px;
+    }
+
+    .dashboard-mascot {
+        display: none;
+    }
+
+    .summary-card {
+        padding: 14px 12px;
+        gap: 10px;
+    }
+
+    .summary-value {
+        font-size: 35px;
+    }
+
+    .summary-card p {
+        font-size: 12px;
+    }
+
+    .dashboard-notes, .food-map-cta, .notebook-page {
+        padding: 20px;
+    }
+
+    .quiz-results li {
+        gap: 10px;
+    }
+}
+
+/* Roughen decorative outlines only: never distort card text, photos or controls.
+Keep native border widths to preserve the existing layout and tape placement. */
+
+/* Decorative hand-drawn borders (SVG filter) */
+.dashboard-ink-filters {
+    position: absolute;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.learner-dashboard .scrap-paper,
+.learner-dashboard .course-book,
+.learner-dashboard .course-book .notebook-page {
+    position: relative;
+    isolation: isolate;
+    border-color: transparent;
+    background-clip: padding-box;
+}
+
+    .learner-dashboard .scrap-paper::after,
+    .learner-dashboard .course-book::before,
+    .learner-dashboard .course-book .notebook-page::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        z-index: -1;
+        border: inherit;
+        border-color: var(--color-ink);
+        border-radius: inherit;
+        filter: url(#dashboardRoughInk);
+        pointer-events: none;
+    }
+
+.learner-dashboard .course-book {
+    box-shadow: none;
+}
+
+    .learner-dashboard .course-book::before {
+        inset: -3px;
+        border-width: 3px;
+        background: #FFF;
+    }
+
+    .learner-dashboard .course-book::after {
+        content: "";
+        position: absolute;
+        inset: -3px;
+        z-index: -2;
+        border-radius: inherit;
+        transform: translate(9px, 10px);
+        background: repeating-linear-gradient(135deg, var(--color-ink) 0 2px, transparent 2px 7px);
+        filter: url(#dashboardRoughInk);
+        pointer-events: none;
+    }
+
+    .learner-dashboard .course-book .notebook-page {
+        box-shadow: none;
+    }
+
+        .learner-dashboard .course-book .notebook-page::before {
+            background-color: var(--color-paper);
+            background-image: repeating-linear-gradient(transparent 0 33px, #BCD9E9 33px 34px);
+            background-position: 0 20px;
+            box-shadow: 0 5px 0 var(--color-paper), 0 7px 0 var(--color-ink), 0 11px 0 var(--color-paper), 0 13px 0 var(--color-ink);
+        }
+
+.learner-dashboard .summary-card::after {
+    inset: -1.5px;
+}

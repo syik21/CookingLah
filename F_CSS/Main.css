@@ -1,6 +1,6 @@
 ﻿/* ==========================================================
    COOKING LAH - MAIN PAGE ONLY  (Main.css)
-   Requires Style.css to be linked first.
+   Requires Style.css first (including shared map components).
    ========================================================== */
 
 /* =========================
@@ -58,108 +58,6 @@
     top: 140px;
     transform: rotate(-4deg);
 }
-
-/* =========================
-   3. Map section (rounded sheet)
-   ========================= */
-.main-map-section {
-    background: transparent;
-    border: var(--border);
-    border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
-    padding: 64px 0 80px;
-    margin-top: -1px;
-}
-
-.country-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    margin: 0 auto 22px;
-    max-width: 900px;
-}
-
-.map-stage {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    position: relative;
-}
-
-/* =========================
-   4. World map
-   ========================= */
-.world-map {
-    border: var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--color-bg);
-    padding: 8px;
-    overflow: hidden;
-}
-
-    .world-map svg {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    .world-map path {
-        fill: var(--color-bg);
-        stroke: var(--color-ink);
-        stroke-width: .8;
-        stroke-linejoin: round;
-        transition: fill .15s;
-    }
-
-        .world-map path.has {
-            fill: var(--color-tan);
-            cursor: pointer;
-        }
-
-            .world-map path.has:hover {
-                fill: var(--color-ink);
-            }
-
-        .world-map path.no:hover {
-            fill: var(--color-tan-light);
-        }
-
-        .world-map path.is-selected {
-            fill: var(--color-primary) !important;
-        }
-
-.map-tooltip {
-    position: absolute;
-    pointer-events: none;
-    background: var(--color-ink);
-    color: var(--color-bg);
-    font: 700 12px var(--font-body);
-    padding: 4px 10px;
-    border-radius: 6px;
-    transform: translate(-50%, -140%);
-    display: none;
-    white-space: nowrap;
-}
-
-/* =========================
-   5. Selected-country card
-   ========================= */
-.country-card {
-    min-height: 200px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 8px 28px;
-    align-items: center;
-}
-
-    .country-card .card-eyebrow {
-        margin: 0 0 8px;
-    }
-
-    .country-card .country-card__description {
-        margin: 8px 0 0;
-        max-width: 560px;
-    }
 
 /* =========================
    6. Recipes
@@ -231,10 +129,6 @@
         display: none;
     }
 
-    .country-card {
-        grid-template-columns: 1fr;
-    }
-
     .recipe-row {
         grid-template-columns: 60px 1fr;
     }
@@ -249,11 +143,6 @@
         font-size: 52px;
     }
 
-    .main-map-section {
-        padding: 44px 0 56px;
-        border-radius: 28px 28px 0 0;
-    }
-
     .main-stickers {
         height: 330px;
     }
@@ -264,5 +153,33 @@
 
     .recipes-section {
         padding-top: 56px;
+    }
+}
+
+/* About the cooking community; linked from the public master header. */
+.main-about { 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px; 
+    padding-top:160px; 
+    padding-bottom: 48px;
+}
+.main-about h2 { 
+    font-size: clamp(38px, 4.5vw, 56px);
+    line-height: 1.08; 
+    text-align: left; 
+    text-transform: none; 
+}
+.main-about p { 
+    margin: 0 0 16px; 
+}
+.main-about p:last-child { 
+    color: var(--color-text-soft); 
+}
+@media (max-width: 760px) {
+    .main-about { 
+        grid-template-columns: 1fr; 
+        gap: 12px; 
+        padding-top: 56px; 
     }
 }

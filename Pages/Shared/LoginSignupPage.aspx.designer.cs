@@ -87,15 +87,6 @@ namespace CookingLah.Pages.Shared
         protected global::System.Web.UI.WebControls.Label lblLoginError;
 
         /// <summary>
-        /// rblLoginRole control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblLoginRole;
-
-        /// <summary>
         /// txtLoginEmail control.
         /// </summary>
         /// <remarks>
@@ -177,6 +168,15 @@ namespace CookingLah.Pages.Shared
         protected global::System.Web.UI.WebControls.RadioButtonList rblSignupRole;
 
         /// <summary>
+        /// txtSignFullName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSignFullName;
+
+        /// <summary>
         /// txtSignName control.
         /// </summary>
         /// <remarks>
@@ -202,6 +202,15 @@ namespace CookingLah.Pages.Shared
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSignPass;
+
+        /// <summary>
+        /// ddlCountry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCountry;
 
         /// <summary>
         /// ddlProfession control.

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Log in - Cooking Lah</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <link href="~/F_CSS/Style.css" rel="stylesheet" />
     <link href="~/F_CSS/LoginSignupPage.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
     <form id="form1" runat="server">
 
         <header>
-            <a class="logo" href="<%= ResolveUrl("~/Main.aspx") %>" aria-label="Cooking Lah home">
+            <a class="logo" id="loginLogo" href="<%= ResolveUrl("~/Main.aspx") %>" data-admin-login-url="<%= ResolveUrl("~/Pages/Admin/LoginPage/AdminLoginPage.aspx") %>" aria-label="Cooking Lah home">
                 <img src="<%= ResolveUrl("~/F_Assets/CookingLahlogo.png") %>" alt="Cooking Lah" />
             </a>
             <a class="btn alt" href="<%= ResolveUrl("~/Main.aspx") %>">&larr; Back home</a>
@@ -50,19 +50,13 @@
                     <asp:View ID="vLogin" runat="server">
                         <asp:Panel ID="pnlLogin" runat="server" DefaultButton="btnLogin" CssClass="view on">
                             <h2>Welcome back</h2>
-                            <p class="sub">Log in with your registered email and password.</p>
+                            <p class="sub">Log in with your username or email and password.</p>
 
-                            <asp:Label ID="lblLoginError" runat="server" CssClass="errbox" Visible="false" />
-
-                            <span class="lab">Log in as</span>
-                            <asp:RadioButtonList ID="rblLoginRole" runat="server" CssClass="roles" RepeatLayout="Flow" RepeatDirection="Horizontal">
-                                <asp:ListItem Value="Learner" Selected="True">Learner</asp:ListItem>
-                                <asp:ListItem Value="Chef">Chef / Instructor</asp:ListItem>
-                            </asp:RadioButtonList>
+                            <asp:Label ID="lblLoginError" runat="server" CssClass="errbox" role="alert" Visible="false" />
 
                             <div class="f">
-                                <label class="l" for="txtLoginEmail">Email</label>
-                                <asp:TextBox ID="txtLoginEmail" runat="server" ClientIDMode="Static" TextMode="Email" placeholder="you@email.com" autocomplete="email" />
+                                <label class="l" for="txtLoginEmail">Username or email</label>
+                                <asp:TextBox ID="txtLoginEmail" runat="server" ClientIDMode="Static" placeholder="Your username or email" autocomplete="username" MaxLength="100" />
                             </div>
 
                             <div class="f">
@@ -78,7 +72,7 @@
 
                             <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn full" OnClick="btnLogin_Click" />
 
-                            <p class="alt-line">Just browsing? <a class="lk" href="<%= ResolveUrl("~/Maint.aspx") %>">Continue as guest</a></p>
+                            <p class="alt-line">Just browsing? <a class="lk" href="<%= ResolveUrl("~/Main.aspx") %>">Continue as guest</a></p>
                         </asp:Panel>
                     </asp:View>
 
@@ -88,7 +82,7 @@
                             <h2>Join the kitchen</h2>
                             <p class="sub">Create a free account. It takes under a minute.</p>
 
-                            <asp:Label ID="lblSignupError" runat="server" CssClass="errbox" Visible="false" />
+                            <asp:Label ID="lblSignupError" runat="server" CssClass="errbox" role="alert" Visible="false" />
 
                             <span class="lab">I want to join as</span>
                             <asp:RadioButtonList ID="rblSignupRole" runat="server" ClientIDMode="Static" CssClass="roles" RepeatLayout="Flow" RepeatDirection="Horizontal">
@@ -97,19 +91,33 @@
                             </asp:RadioButtonList>
 
                             <div class="f">
-                                <label class="l" for="txtSignName">Name</label>
-                                <asp:TextBox ID="txtSignName" runat="server" ClientIDMode="Static" placeholder="Your name" autocomplete="name" MaxLength="100" />
+                                <label class="l" for="txtSignFullName">Full name (required)</label>
+                                <asp:TextBox ID="txtSignFullName" runat="server" ClientIDMode="Static" placeholder="Your full name" autocomplete="name" MaxLength="100" aria-required="true" />
+                            </div>
+
+                            <div class="f">
+                                <label class="l" for="txtSignName">Username</label>
+                                <asp:TextBox ID="txtSignName" runat="server" ClientIDMode="Static" placeholder="Your username" autocomplete="username" MaxLength="50" />
                             </div>
 
                             <div class="f">
                                 <label class="l" for="txtSignEmail">Email</label>
-                                <asp:TextBox ID="txtSignEmail" runat="server" ClientIDMode="Static" TextMode="Email" placeholder="you@email.com" autocomplete="email" MaxLength="256" />
+                                <asp:TextBox ID="txtSignEmail" runat="server" ClientIDMode="Static" TextMode="Email" placeholder="you@email.com" autocomplete="email" MaxLength="100" />
                             </div>
 
                             <div class="f">
                                 <label class="l" for="txtSignPass">Password</label>
                                 <asp:TextBox ID="txtSignPass" runat="server" ClientIDMode="Static" TextMode="Password" placeholder="At least 8 characters" autocomplete="new-password" />
                                 <button type="button" class="eye" data-t="txtSignPass">Show</button>
+                            </div>
+
+                            <div class="f country-field">
+                                <label class="l" id="countryFieldLabel" for="ddlCountry">Country</label>
+                                <asp:DropDownList ID="ddlCountry" runat="server" ClientIDMode="Static" CssClass="form-select" EnableViewState="false" />
+                                <button type="button" id="countryPickerOpen" class="country-trigger" aria-haspopup="true" aria-controls="countryDialog" aria-labelledby="countryFieldLabel countrySelected" hidden>
+                                    <span id="countrySelected">Select your country</span>
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg>
+                                </button>
                             </div>
 
                             <div id="professionFields">
@@ -142,7 +150,7 @@
                             <h2>Forgot it?</h2>
                             <p class="sub">Enter your email and we'll send a link to reset your password.</p>
 
-                            <asp:Label ID="lblForgotError" runat="server" CssClass="errbox" Visible="false" />
+                            <asp:Label ID="lblForgotError" runat="server" CssClass="errbox" role="alert" Visible="false" />
 
                             <div class="f">
                                 <label class="l" for="txtForgotEmail">Email</label>
@@ -178,41 +186,20 @@
                 </asp:MultiView>
             </section>
         </main>
+        <dialog id="countryDialog" class="country-dialog" aria-labelledby="countryDialogTitle" aria-describedby="countryDialogDescription">
+            <div class="country-dialog-heading">
+                <h2 id="countryDialogTitle">Select your country</h2>
+                <button type="button" id="countryPickerClose" class="country-close" aria-label="Close country selection">&times;</button>
+            </div>
+            <p id="countryDialogDescription">Choose the country you call home.</p>
+            <label class="l" for="countrySearch">Search countries</label>
+            <input type="search" id="countrySearch" placeholder="Search by country name or code" autocomplete="off" />
+            <p id="countryResultsCount" class="country-result-count" role="status" aria-live="polite"></p>
+            <div id="countryResults" class="country-results" role="group" aria-label="Countries"></div>
+            <p id="countryNoResults" class="country-empty" hidden>No countries found. Try another name or country code.</p>
+        </dialog>
     </form>
 
-    <script>
-document.querySelectorAll('.eye').forEach(function(b) {
-    b.addEventListener('click', function() {
-        var i = document.getElementById(b.dataset.t);
-        var s = i.type === 'password';
-
-        i.type = s ? 'text' : 'password';
-        b.textContent = s ? 'Hide' : 'Show';
-    });
-});
-
-var signupRoles = document.getElementById('rblSignupRole');
-if (signupRoles) {
-    var profession = document.getElementById('ddlProfession');
-    var otherProfession = document.getElementById('txtOtherProfession');
-    function updateProfessionFields() {
-        var selectedRole = signupRoles.querySelector('input:checked');
-        var isChef = selectedRole && selectedRole.value === 'Chef';
-        var isOther = isChef && profession.value === 'Others';
-        document.getElementById('professionFields').hidden = !isChef;
-        document.getElementById('otherProfessionField').hidden = !isOther;
-        profession.disabled = !isChef;
-        otherProfession.disabled = !isOther;
-        profession.required = !!isChef;
-        otherProfession.required = !!isOther;
-    }
-    signupRoles.addEventListener('change', updateProfessionFields);
-    profession.addEventListener('change', updateProfessionFields);
-    updateProfessionFields();
-}
-
-if (document.querySelector('.errbox'))
-            document.getElementById('card').classList.add('shake');
-    </script>
+    <script src="<%= ResolveUrl("~/F_JavaScripts/LoginSignupPage.js") %>?v=admin-shortcut-2" defer></script>
 </body>
 </html>
