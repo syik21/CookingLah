@@ -1,0 +1,446 @@
+.course-back-link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 22px;
+    color: var(--color-ink);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+}
+
+.course-back-icon {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.course-overview {
+    overflow: hidden;
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    background: #fffdf7;
+    box-shadow: var(--shadow-md);
+}
+
+.course-overview-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+    gap: clamp(24px, 5vw, 64px);
+    align-items: center;
+    padding: clamp(26px, 5vw, 60px);
+    background: var(--color-tan-light);
+}
+
+.overview-hero-copy h1 {
+    margin: 0;
+    font: 400 clamp(42px, 6vw, 70px)/.98 var(--font-hand);
+    text-align: left;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+}
+
+.course-overview-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 14px 0 6px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.course-overview-chef,
+.course-overview-rating {
+    margin: 8px 0;
+    font-size: 13px;
+}
+
+.course-overview-rating {
+    font-weight: 700;
+}
+
+.course-overview-description {
+    max-width: 680px;
+    margin: 20px 0 0;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+.course-overview-image-wrap {
+    overflow: hidden;
+    min-height: 230px;
+    aspect-ratio: 4 / 3;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: var(--color-tan);
+    box-shadow: var(--shadow-sm);
+    transform: rotate(1deg);
+}
+
+.course-overview-image,
+.course-overview-placeholder {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    min-height: 230px;
+    place-items: center;
+    object-fit: cover;
+}
+
+.course-overview-placeholder {
+    background: repeating-linear-gradient(135deg, var(--color-tan-light), var(--color-tan-light) 18px, var(--color-tan) 18px, var(--color-tan) 36px);
+    font: 400 34px/1 var(--font-hand);
+}
+
+.course-overview-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: var(--border);
+    border-bottom: var(--border);
+    background: var(--color-lime);
+}
+
+.course-overview-stats article {
+    display: grid;
+    min-height: 96px;
+    align-content: center;
+    justify-items: center;
+    gap: 2px;
+    border-right: 1px solid var(--color-ink);
+}
+
+.course-overview-stats article:last-child {
+    border-right: 0;
+}
+
+.course-overview-stats strong {
+    font: 400 36px/1 var(--font-hand);
+}
+
+.course-overview-stats span {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.course-overview-sections {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+}
+
+.overview-section {
+    min-width: 0;
+    padding: clamp(24px, 4vw, 42px);
+    border-bottom: 1px solid var(--color-grid);
+}
+
+.overview-section:nth-child(odd) {
+    border-right: 1px solid var(--color-grid);
+}
+
+.overview-section-heading {
+    margin-bottom: 20px;
+}
+
+.overview-section-heading h2 {
+    margin: 0;
+    font: 400 clamp(32px, 4vw, 44px)/1 var(--font-hand);
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.overview-section-heading .course-overview-kicker {
+    color: var(--color-text-soft);
+}
+
+.recipe-preview {
+    display: grid;
+    grid-template-columns: minmax(120px, .7fr) minmax(0, 1.3fr);
+    gap: 18px;
+}
+
+.recipe-preview-image {
+    width: 100%;
+    min-height: 140px;
+    aspect-ratio: 1;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+}
+
+.recipe-preview-details {
+    min-width: 0;
+}
+
+.recipe-preview-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.recipe-preview-facts p {
+    display: grid;
+    gap: 3px;
+    margin: 0;
+    font-size: 12px;
+}
+
+.recipe-preview-facts span {
+    color: var(--color-text-soft);
+}
+
+.recipe-preview h3,
+.overview-quiz-card h3,
+.overview-activity-card h3 {
+    margin: 0 0 8px;
+    font: 400 26px/1.1 var(--font-hand);
+}
+
+.recipe-ingredients {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font: 400 13px/1.8 var(--font-body);
+    white-space: pre-wrap;
+}
+
+.lesson-preview-list {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lesson-preview-list li {
+    display: flex;
+    min-height: 54px;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--color-grid);
+    font-size: 14px;
+}
+
+.lesson-preview-list li:last-child {
+    border-bottom: 0;
+}
+
+.lesson-preview-order {
+    display: grid;
+    flex: 0 0 32px;
+    width: 32px;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid var(--color-ink);
+    border-radius: 50%;
+    background: var(--color-yellow);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.overview-quiz-card,
+.overview-activity-card {
+    padding: 18px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    background: var(--color-tan-light);
+}
+
+.overview-quiz-card + .overview-quiz-card,
+.overview-activity-card + .overview-activity-card {
+    margin-top: 12px;
+}
+
+.overview-quiz-card p,
+.overview-activity-card p {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-size: 13px;
+    line-height: 1.75;
+}
+
+.overview-quiz-card > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.overview-quiz-card > div span {
+    padding: 5px 9px;
+    border-radius: var(--radius-pill);
+    background: var(--color-bg);
+    font-size: 11px;
+}
+
+.overview-empty {
+    padding: 16px;
+    border: var(--border-dashed);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-soft);
+    font-size: 13px;
+}
+
+.course-start-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 24px clamp(24px, 4vw, 42px);
+    border-top: var(--border);
+    background: var(--color-pink);
+}
+
+.course-start-footer .course-overview-kicker,
+.course-start-note {
+    margin: 0;
+}
+
+.course-start-note {
+    font-size: 14px;
+}
+
+.course-start-button {
+    min-width: 180px;
+    min-height: 52px;
+}
+
+.course-action-message {
+    margin: 0 0 18px;
+    padding: 14px 18px;
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    background: var(--color-lime);
+    font-size: 13px;
+}
+
+.course-login-backdrop {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgb(53 3 12 / 68%);
+}
+
+.course-login-dialog {
+    position: relative;
+    width: min(100%, 480px);
+    padding: 34px;
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg);
+    box-shadow: 8px 8px 0 var(--color-ink);
+}
+
+.course-login-dialog h2 {
+    margin: 0;
+    font: 400 42px/1 var(--font-hand);
+    text-align: left;
+}
+
+.course-login-dialog > p:not(.course-overview-kicker) {
+    margin: 12px 0 22px;
+    font-size: 14px;
+}
+
+.course-dialog-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    min-width: 44px;
+    min-height: 44px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.course-login-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.course-login-actions .btn {
+    min-height: 46px;
+}
+
+.course-overview :is(button, a):focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+    .course-overview-hero {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .course-overview-image-wrap {
+        max-width: 600px;
+        width: 100%;
+        min-height: 190px;
+        aspect-ratio: 16 / 9;
+    }
+
+    .course-overview-image,
+    .course-overview-placeholder {
+        min-height: 190px;
+    }
+
+    .course-overview-sections {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .overview-section:nth-child(odd) {
+        border-right: 0;
+    }
+
+    .recipe-preview {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .recipe-preview-image {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .course-overview-stats article {
+        min-height: 82px;
+    }
+
+    .course-overview-stats strong {
+        font-size: 30px;
+    }
+
+    .course-start-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .course-start-button {
+        width: 100%;
+    }
+
+    .course-login-dialog {
+        padding: 30px 22px 24px;
+    }
+
+    .course-login-actions {
+        display: grid;
+    }
+}
+

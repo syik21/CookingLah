@@ -1,0 +1,13 @@
+.quiz-summary { margin-bottom: 12px; }
+.course-quiz > .mc-link { margin-bottom: 24px; }
+.question-card { margin-bottom: 20px; }
+.quiz-options { padding-left: 22px; }
+.quiz-options li { padding: 6px 0; overflow-wrap: anywhere; }
+.quiz-correct { margin-left: 12px; font-size: 12px; font-weight: 700; }
+.question-options-editor { padding: 0; border: 0; min-width: 0; }
+.question-options-editor legend { font-weight: 700; }
+.quiz-option-editor { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--color-tan); }
+.quiz-answer-choice { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; }
+.quiz-answer-choice input { width: 20px; height: 20px; accent-color: var(--color-ink); }
+.quiz-option-editor .mc-field { margin: 0; }
+@media (max-width: 600px) { .quiz-option-editor { grid-template-columns: minmax(0,1fr); } }

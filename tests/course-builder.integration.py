@@ -97,7 +97,7 @@ browser.post('Save & next', {'txtCourseTitle': 'Integration course', 'txtDescrip
 assert 'recipe-form' in browser.html
 course_id = re.search(r'data-course-id="(\d+)"', browser.html).group(1)
 assert int(course_id) > 0
-browser.post('Save & next', {'txtRecipeName': 'Test dish', 'txtIngredients': 'Fish\nSalt', 'txtCookingTime': '30', 'txtServingSize': '2'})
+browser.post('Save & next', {'txtIngredients': '[{"name":"Fish","amount":"1 whole"},{"name":"Salt","amount":"1 tsp"}]', 'txtCookingTime': '30', 'txtServingSize': '2'})
 assert 'No lessons added yet.' in browser.html
 browser.post('+ Add first lesson')
 for index in range(1, 7):

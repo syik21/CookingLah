@@ -206,12 +206,61 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
-    <Content Include="F_Assets\**\*" />
+    <Content Include="F_Assets\CookingLahLogo.png" />
+    <Content Include="F_Assets\CourseMedia\0db45885988842edbcb3a75f549a2fed.jpg" />
+    <Content Include="F_Assets\CourseMedia\0e38091af82f45ef9c0e7af2945ad3f5.jpg" />
+    <Content Include="F_Assets\CourseMedia\956bf9efcb1843a0b921c7daefecee81.jpg" />
+    <Content Include="F_Assets\CourseMedia\9d8e7a954f5949518a3bdce14df80b3d.mp4" />
+    <Content Include="F_Assets\CourseMedia\d086fc2717d544d7825995b090813c1e.jpg" />
+    <Content Include="F_Assets\CourseMedia\e0abd0b055ee4197a9e5849cbd468abc.jpg" />
+    <Content Include="F_Assets\Food\burger.png" />
+    <Content Include="F_Assets\Food\dashboard-54e82617ac54f66b.png" />
+    <Content Include="F_Assets\Food\dashboard-5fade5a8da7cf59f.png" />
+    <Content Include="F_Assets\Food\dashboard-6bebec025c22edd8.gif" />
+    <Content Include="F_Assets\Food\dashboard-a404f8c398373c81.png" />
+    <Content Include="F_Assets\Food\dashboard-eda0afe269fb608b.gif" />
+    <Content Include="F_Assets\Food\nasi lemak.png" />
+    <Content Include="F_Assets\LoginFood1.png" />
+    <Content Include="F_Assets\LoginFood2.png" />
+    <Content Include="F_Assets\LoginFood3.png" />
+    <Content Include="F_Assets\LoginFood4.png" />
+    <Content Include="F_Assets\LoginFood5.png" />
+    <Content Include="F_Assets\LoginFood6.png" />
+    <Content Include="F_Assets\LoginFood7.png" />
+    <Content Include="F_Assets\mascot.png" />
+    <Content Include="Pages\Learner\MyCourse\LearnerMyCourse.js" />
+    <Content Include="Pages\Learner\MyCourse\LearnerMyCourse.aspx" />
+    <Content Include="Pages\Learner\MyCourse\LearnerMyCourse.css" />
     <Content Include="Pages\Shared\Profile\ProfilePage.aspx" />
     <Content Include="Pages\Shared\Profile\Profile.js" />
     <Content Include="Pages\Shared\Profile\Profile.css" />
+    <Content Include="Pages\Shared\CountryPicker\CountryPicker.ascx" />
+    <Content Include="Pages\Shared\CountryPicker\CountryPicker.css" />
+    <Content Include="Pages\Shared\CountryPicker\CountryPicker.js" />
+    <Content Include="Pages\Shared\CourseSearch\SearchCourse.ascx" />
+    <Content Include="Pages\Shared\CourseSearch\SearchCourse.css" />
+    <Content Include="Pages\Shared\CourseSearch\SearchCourse.js" />
+    <Content Include="Pages\Shared\CourseSearch\ViewCourseOverivew.ascx" />
+    <Content Include="Pages\Shared\CourseSearch\ViewCourseOverivew.css" />
+    <Content Include="Pages\Shared\CourseSearch\ViewCourseOverivew.js" />
+    <Content Include="Pages\Guest\SearchCourse\SearchCoursePage.aspx" />
+    <Content Include="Pages\Learner\SearchCourse\SearchCoursePage.aspx" />
+    <Content Include="Pages\Learner\CourseLearning\CourseLearningPage.aspx" />
+    <Content Include="Pages\Learner\CourseLearning\CourseLearningPage.css" />
+    <Content Include="Pages\Learner\CourseLearning\CourseLearningPage.js" />
+    <Content Include="Pages\Learner\CourseLearning\Lesson\LessonContent.ascx" />
+    <Content Include="Pages\Learner\CourseLearning\Lesson\LessonContent.css" />
+    <Content Include="Pages\Learner\CourseLearning\Lesson\LessonContent.js" />
+    <Content Include="Pages\Learner\CourseLearning\QuizSection\QuizSection.ascx" />
+    <Content Include="Pages\Learner\CourseLearning\QuizSection\QuizSection.css" />
+    <Content Include="Pages\Learner\CourseLearning\QuizSection\QuizSection.js" />
+    <Content Include="Pages\Learner\CourseLearning\SubmitActivity\SubmitActivity.ascx" />
+    <Content Include="Pages\Learner\CourseLearning\SubmitActivity\SubmitActivity.css" />
+    <Content Include="Pages\Learner\CourseLearning\SubmitActivity\SubmitActivity.js" />
     <Content Include="Pages\Shared\WorldMap\WorldMap.js" />
     <Content Include="F_CSS\Style.css" />
+    <Content Include="F_JavaScripts\IngredientEditor.js" />
+    <Content Include="F_JavaScripts\UploadValidation.js" />
     <Content Include="F_CSS\Main.css" />
     <Content Include="F_CSS\SiteMaster.css" />
     <Content Include="F_JavaScripts\SiteMaster.js" />
@@ -306,12 +355,26 @@
     <Compile Include="Pages\Admin\LoginPage\AdminLoginPage.aspx.designer.cs">
       <DependentUpon>AdminLoginPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Learner\MyCourse\LearnerMyCourse.aspx.cs">
+      <DependentUpon>LearnerMyCourse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Learner\MyCourse\LearnerMyCourse.aspx.designer.cs">
+      <DependentUpon>LearnerMyCourse.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Shared\LoginSignupPage.aspx.cs">
       <DependentUpon>LoginSignupPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\Shared\LoginSignupPage.aspx.designer.cs">
       <DependentUpon>LoginSignupPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Shared\CountryPicker\CountryPicker.ascx.cs">
+      <DependentUpon>CountryPicker.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Shared\CountryPicker\CountryPicker.ascx.designer.cs">
+      <DependentUpon>CountryPicker.ascx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Shared\Profile\ProfilePage.aspx.cs">
       <DependentUpon>ProfilePage.aspx</DependentUpon>
@@ -326,6 +389,62 @@
     </Compile>
     <Compile Include="Pages\Shared\WorldMap\WorldMap.ascx.designer.cs">
       <DependentUpon>WorldMap.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Shared\CourseSearch\SearchCourse.ascx.cs">
+      <DependentUpon>SearchCourse.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Shared\CourseSearch\SearchCourse.ascx.designer.cs">
+      <DependentUpon>SearchCourse.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Shared\CourseSearch\ViewCourseOverivew.ascx.cs">
+      <DependentUpon>ViewCourseOverivew.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Shared\CourseSearch\ViewCourseOverivew.ascx.designer.cs">
+      <DependentUpon>ViewCourseOverivew.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Guest\SearchCourse\SearchCoursePage.aspx.cs">
+      <DependentUpon>SearchCoursePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Guest\SearchCourse\SearchCoursePage.aspx.designer.cs">
+      <DependentUpon>SearchCoursePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Learner\SearchCourse\SearchCoursePage.aspx.cs">
+      <DependentUpon>SearchCoursePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Learner\SearchCourse\SearchCoursePage.aspx.designer.cs">
+      <DependentUpon>SearchCoursePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Learner\CourseLearning\CourseLearningPage.aspx.cs">
+      <DependentUpon>CourseLearningPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Learner\CourseLearning\CourseLearningPage.aspx.designer.cs">
+      <DependentUpon>CourseLearningPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Learner\CourseLearning\Lesson\LessonContent.ascx.cs">
+      <DependentUpon>LessonContent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Learner\CourseLearning\Lesson\LessonContent.ascx.designer.cs">
+      <DependentUpon>LessonContent.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Learner\CourseLearning\QuizSection\QuizSection.ascx.cs">
+      <DependentUpon>QuizSection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Learner\CourseLearning\QuizSection\QuizSection.ascx.designer.cs">
+      <DependentUpon>QuizSection.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Learner\CourseLearning\SubmitActivity\SubmitActivity.ascx.cs">
+      <DependentUpon>SubmitActivity.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Learner\CourseLearning\SubmitActivity\SubmitActivity.ascx.designer.cs">
+      <DependentUpon>SubmitActivity.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
@@ -353,7 +472,6 @@
   <ItemGroup>
     <Folder Include="F_Assets\ProfilePicture\" />
     <Folder Include="F_Controllers\" />
-    <Folder Include="Pages\Guest\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -468,5 +586,115 @@
     </Compile>
     <Content Include="Pages\Chef\CreateCourse\Recipes\RecipeForm.css" />
     <Content Include="Pages\Chef\CreateCourse\Recipes\RecipeForm.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Admin\ManageCategories\ManagerCategoriesPage.aspx" />
+    <Content Include="Pages\Admin\ManageCategories\ManagerCategoriesPage.css" />
+    <Content Include="Pages\Admin\ManageCategories\ManagerCategoriesPage.js" />
+    <Compile Include="Pages\Admin\ManageCategories\ManagerCategoriesPage.aspx.cs">
+      <DependentUpon>ManagerCategoriesPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Admin\ManageCategories\ManagerCategoriesPage.aspx.designer.cs">
+      <DependentUpon>ManagerCategoriesPage.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\Chef\ManageCourse\Activity\CourseActivity.ascx" />
+    <Compile Include="Pages\Chef\ManageCourse\Activity\CourseActivity.ascx.cs">
+      <DependentUpon>CourseActivity.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ManageCourse\Activity\CourseActivity.ascx.designer.cs">
+      <DependentUpon>CourseActivity.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ManageCourse\Activity\CourseActivity.css" />
+    <Content Include="Pages\Chef\ManageCourse\Activity\CourseActivity.js" />
+    <Compile Include="Pages\Chef\ManageCourse\CourseManagementData.cs" />
+    <Content Include="Pages\Chef\ManageCourse\Lessons\CourseLessons.ascx" />
+    <Compile Include="Pages\Chef\ManageCourse\Lessons\CourseLessons.ascx.cs">
+      <DependentUpon>CourseLessons.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ManageCourse\Lessons\CourseLessons.ascx.designer.cs">
+      <DependentUpon>CourseLessons.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ManageCourse\Lessons\CourseLessons.css" />
+    <Content Include="Pages\Chef\ManageCourse\Lessons\CourseLessons.js" />
+    <Content Include="Pages\Chef\ManageCourse\ManageCoursePage.aspx" />
+    <Compile Include="Pages\Chef\ManageCourse\ManageCoursePage.aspx.cs">
+      <DependentUpon>ManageCoursePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ManageCourse\ManageCoursePage.aspx.designer.cs">
+      <DependentUpon>ManageCoursePage.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ManageCourse\ManageCoursePage.css" />
+    <Content Include="Pages\Chef\ManageCourse\ManageCoursePage.js" />
+    <Content Include="Pages\Chef\ManageCourse\Overview\CourseOverview.ascx" />
+    <Compile Include="Pages\Chef\ManageCourse\Overview\CourseOverview.ascx.cs">
+      <DependentUpon>CourseOverview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ManageCourse\Overview\CourseOverview.ascx.designer.cs">
+      <DependentUpon>CourseOverview.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ManageCourse\Overview\CourseOverview.css" />
+    <Content Include="Pages\Chef\ManageCourse\Overview\CourseOverview.js" />
+    <Content Include="Pages\Chef\ManageCourse\Preview\CoursePreview.ascx" />
+    <Compile Include="Pages\Chef\ManageCourse\Preview\CoursePreview.ascx.cs">
+      <DependentUpon>CoursePreview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ManageCourse\Preview\CoursePreview.ascx.designer.cs">
+      <DependentUpon>CoursePreview.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ManageCourse\Preview\CoursePreview.css" />
+    <Content Include="Pages\Chef\ManageCourse\Quiz\CourseQuiz.ascx" />
+    <Compile Include="Pages\Chef\ManageCourse\Quiz\CourseQuiz.ascx.cs">
+      <DependentUpon>CourseQuiz.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ManageCourse\Quiz\CourseQuiz.ascx.designer.cs">
+      <DependentUpon>CourseQuiz.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ManageCourse\Quiz\CourseQuiz.css" />
+    <Content Include="Pages\Chef\ManageCourse\Quiz\CourseQuiz.js" />
+    <Content Include="Pages\Chef\ManageCourse\Recipe\CourseRecipe.ascx" />
+    <Compile Include="Pages\Chef\ManageCourse\Recipe\CourseRecipe.ascx.cs">
+      <DependentUpon>CourseRecipe.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ManageCourse\Recipe\CourseRecipe.ascx.designer.cs">
+      <DependentUpon>CourseRecipe.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ManageCourse\Recipe\CourseRecipe.css" />
+    <Content Include="Pages\Chef\ManageCourse\Recipe\CourseRecipe.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Pages\Chef\ManageCourse\CourseReviewDraft.cs">
+      <DependentUpon>CourseManagementData.cs</DependentUpon>
+    </Compile>
+    <Content Include="F_JavaScripts\LessonVideoDialog.js" />
+    <Content Include="Pages\Admin\CourseContentReview\ReviewCoursesPage.aspx" />
+    <Compile Include="Pages\Admin\CourseContentReview\ReviewCoursesPage.aspx.cs">
+      <DependentUpon>ReviewCoursesPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Admin\CourseContentReview\ReviewCoursesPage.aspx.designer.cs">
+      <DependentUpon>ReviewCoursesPage.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Admin\CourseContentReview\ReviewCoursesPage.css" />
+    <Content Include="Pages\Admin\CourseContentReview\ReviewCoursesPage.js" />
+    <Content Include="Pages\Admin\CourseContentReview\ViewCourse\ViewCourse.ascx" />
+    <Compile Include="Pages\Admin\CourseContentReview\ViewCourse\ViewCourse.ascx.cs">
+      <DependentUpon>ViewCourse.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Admin\CourseContentReview\ViewCourse\ViewCourse.ascx.designer.cs">
+      <DependentUpon>ViewCourse.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Admin\CourseContentReview\ViewCourse\ViewCourse.css" />
+    <Content Include="Pages\Admin\CourseContentReview\ViewCourse\ViewCourse.js" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,2 @@
+.recipe-image { max-width: 100%; width: 420px; max-height: 300px; object-fit: contain; border-radius: var(--radius-sm); }
+.recipe-measures { display: flex; flex-wrap: wrap; gap: 20px; padding: 16px 0; border-block: 1px solid var(--color-tan); }

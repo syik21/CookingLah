@@ -4,8 +4,10 @@
 <%@ Register Src="~/Pages/Chef/CreateCourse/Quiz/QuizForm.ascx" TagPrefix="course" TagName="QuizForm" %>
 <%@ Register Src="~/Pages/Chef/CreateCourse/Activities/ActivityForm.ascx" TagPrefix="course" TagName="ActivityForm" %>
 <%@ Register Src="~/Pages/Chef/CreateCourse/PreviewPage/CoursePreview.ascx" TagPrefix="course" TagName="CoursePreview" %>
+<%@ Register Src="~/Pages/Shared/CountryPicker/CountryPicker.ascx" TagPrefix="shared" TagName="CountryPicker" %>
 <asp:Content ID="HeadContent" ContentPlaceHolderID="ChefHead" runat="server">
     <link href="<%= ResolveUrl("~/Pages/Chef/CreateCourse/CreateCoursePage.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Pages/Shared/CountryPicker/CountryPicker.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Chef/CreateCourse/Recipes/RecipeForm.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Chef/CreateCourse/Lesson/LessonForm.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Chef/CreateCourse/Quiz/QuizForm.css") %>" rel="stylesheet" />
@@ -14,7 +16,7 @@
 </asp:Content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="ChefContent" runat="server">
 <div class="course-builder" data-course-id="<%= CourseID %>" data-step="<%= CurrentStep %>" data-unsaved="<%= HasUnsavedChanges ? "true" : "false" %>">
-    <header class="builder-heading"><div><h1>Create course</h1><p>Build your cooking course step by step.</p></div><span class="builder-status" role="status"><span class="builder-status-label">Status</span><asp:Literal ID="litCourseStatus" runat="server" Text="New draft" Mode="Encode" /></span></header>
+    <header class="builder-heading"><div><h1>Create course</h1><p>Build your cooking course step by step.</p></div><span class="builder-status" role="status"><span class="builder-status-label">Status</span><span class="dCourseStatus"><asp:Literal ID="litCourseStatus" runat="server" Text="New draft" Mode="Encode"/></span></span></header>
     <nav aria-label="Course creation progress"><ol class="builder-steps">
         <li class="<%= StepClass(0) %>"><asp:LinkButton ID="btnStep0" runat="server" CommandArgument="0" OnCommand="Step_Command" CausesValidation="false"><span class="step-number" aria-hidden="true"><%= StepMarker(0) %></span><span>Basic info</span><span class="visually-hidden"><%= StepState(0) %></span></asp:LinkButton></li>
         <li class="<%= StepClass(1) %>"><asp:LinkButton ID="btnStep1" runat="server" CommandArgument="1" OnCommand="Step_Command" CausesValidation="false"><span class="step-number" aria-hidden="true"><%= StepMarker(1) %></span><span>Recipe</span><span class="visually-hidden"><%= StepState(1) %></span></asp:LinkButton></li>
@@ -37,7 +39,39 @@
                     <div class="builder-field"><asp:Label runat="server" AssociatedControlID="ddlCategory" Text="Category *" /><asp:DropDownList ID="ddlCategory" runat="server" CssClass="form-select" /></div>
                     <div class="builder-field"><asp:Label runat="server" AssociatedControlID="ddlDifficulty" Text="Difficulty *" /><asp:DropDownList ID="ddlDifficulty" runat="server" CssClass="form-select"><asp:ListItem Text="Select difficulty" Value="" /><asp:ListItem Text="Beginner" /><asp:ListItem Text="Intermediate" /><asp:ListItem Text="Advanced" /></asp:DropDownList></div>
                 </div>
-                <div class="builder-field builder-thumbnail"><asp:Label runat="server" AssociatedControlID="fuCourseThumbnail" Text="Course thumbnail" /><span class="builder-hint">Choose a clear photo of the finished dish. JPG or PNG, up to 3 MB.</span><asp:FileUpload ID="fuCourseThumbnail" runat="server" accept="image/jpeg,image/png" /><asp:Image ID="imgThumbnail" runat="server" AlternateText="Course thumbnail preview" /></div>
+                <section class="traditional-food-section" data-category-food-section hidden="hidden" aria-labelledby="traditionalFoodTitle">
+                    <div class="traditional-food-heading">
+                        <span class="traditional-food-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false"><path d="M4 11.5h16l-1.2 6.1a2 2 0 0 1-2 1.6H7.2a2 2 0 0 1-2-1.6L4 11.5Z"/><path d="M3 11.5h18M8 8.5c0-1.2 1-1.5 1-2.7M12 8.5c0-1.2 1-1.5 1-2.7M16 8.5c0-1.2 1-1.5 1-2.7"/></svg>
+                        </span>
+                        <div><h3 id="traditionalFoodTitle">Traditional Food</h3><p>Choose the dish this course teaches.</p></div>
+                    </div>
+                    <div class="traditional-food-fields" data-traditional-food-fields>
+                        <div class="builder-field">
+                            <asp:Label runat="server" AssociatedControlID="rblFoodCultureMode" Text="How would you like to continue?" />
+                            <asp:RadioButtonList ID="rblFoodCultureMode" runat="server" CssClass="traditional-food-options"
+                                RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                <asp:ListItem Text="Select existing Traditional Food" Value="Existing" Selected="True" />
+                                <asp:ListItem Text="Add new Traditional Food" Value="New" />
+                            </asp:RadioButtonList>
+                        </div>
+                        <div class="builder-field" data-food-existing-fields>
+                            <asp:Label runat="server" AssociatedControlID="ddlFoodCulture" Text="Traditional Food *" />
+                            <asp:DropDownList ID="ddlFoodCulture" runat="server" CssClass="form-select" />
+                        </div>
+                        <div class="traditional-food-new-fields" data-food-new-fields hidden="hidden">
+                            <div class="builder-field">
+                                <asp:Label runat="server" AssociatedControlID="txtNewDishName" Text="Dish Name *" />
+                                <asp:TextBox ID="txtNewDishName" runat="server" MaxLength="150" />
+                            </div>
+                            <div class="builder-field">
+                                <shared:CountryPicker ID="foodCountryPicker" runat="server" LabelText="Country *" />
+                            </div>
+                            <p class="builder-hint">A new Traditional Food will be added to the Food Map when this course is saved.</p>
+                        </div>
+                    </div>
+                </section>
+                <div class="builder-field builder-thumbnail"><asp:Label runat="server" AssociatedControlID="fuCourseThumbnail" Text="Course thumbnail" /><span class="builder-hint">Choose a clear photo of the finished dish. JPG or PNG, up to 3 MB.</span><asp:FileUpload ID="fuCourseThumbnail" runat="server" accept="image/jpeg,image/png" data-max-file-mb="3" /><asp:Image ID="imgThumbnail" runat="server" AlternateText="Course thumbnail preview" /></div>
             </asp:Panel>
             <asp:Panel ID="pnlRecipe" runat="server"><course:RecipeForm ID="RecipeForm1" runat="server" /></asp:Panel>
             <asp:Panel ID="pnlLessons" runat="server"><course:LessonForm ID="LessonForm1" runat="server" /></asp:Panel>
@@ -54,6 +88,9 @@
 </div>
 </asp:Content>
 <asp:Content ID="ScriptsContent" ContentPlaceHolderID="ChefScripts" runat="server">
+    <script src="<%= ResolveUrl("~/Pages/Shared/CountryPicker/CountryPicker.js") %>" defer></script>
+    <script src="<%= ResolveUrl("~/F_JavaScripts/UploadValidation.js") %>" defer></script>
+    <script src="<%= ResolveUrl("~/F_JavaScripts/IngredientEditor.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/Pages/Chef/CreateCourse/CreateCoursePage.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/Pages/Chef/CreateCourse/Recipes/RecipeForm.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/Pages/Chef/CreateCourse/Lesson/LessonForm.js") %>" defer></script>

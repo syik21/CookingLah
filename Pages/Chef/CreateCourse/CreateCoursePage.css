@@ -1,6 +1,6 @@
 /* ===== Course Builder Layout ===== */
 .course-builder {
-    max-width: 1040px;
+    max-width: var(--content-width);
     margin: 0 auto;
 }
 
@@ -35,6 +35,16 @@
         margin-bottom: 2px;
         color: var(--color-text-soft);
         font-size: 12px;
+    }
+
+    .dCourseStatus {
+        display: inline-block;
+        padding: 6px 12px;
+        border: 1px solid #f0cf79;
+        border-radius: 8px;
+        background-color: #fff3cd;
+        color: #664d03;
+        font-weight: 600;
     }
 
 /* ===== Six-Step Navigation ===== */
@@ -236,7 +246,7 @@ p.builder-hint {
 }
 
 .builder-errors {
-    background: var(--color-bg);
+    background: var(--color-error);
     border-left: 6px solid var(--color-primary);
 }
 
@@ -276,6 +286,87 @@ p.builder-hint {
     gap: 16px;
     margin: 24px 0;
     font-size: 12px;
+}
+
+.traditional-food-section {
+    margin: 24px 0;
+    padding: 20px;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--color-tan-light), var(--color-bg));
+    box-shadow: 0 4px 0 var(--color-ink);
+}
+
+.traditional-food-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.traditional-food-heading h3 {
+    margin: 0;
+    text-align: left;
+}
+
+.traditional-food-heading p {
+    margin: 4px 0 0;
+    color: var(--color-text-soft);
+    font-size: 13px;
+}
+
+.traditional-food-icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    place-items: center;
+    border: var(--border);
+    border-radius: 14px;
+    background: var(--color-yellow);
+    color: var(--color-ink);
+}
+
+.traditional-food-icon svg {
+    width: 27px;
+    height: 27px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.traditional-food-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+}
+
+.traditional-food-options label {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.traditional-food-fields,
+.traditional-food-new-fields {
+    display: grid;
+    gap: 8px;
+}
+
+.traditional-food-section [hidden] {
+    display: none !important;
+}
+
+.traditional-food-section .builder-field {
+    margin-bottom: 14px;
+}
+
+.traditional-food-section .builder-field:last-child {
+    margin-bottom: 0;
 }
 
 /* ===== Buttons ===== */

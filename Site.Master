@@ -24,9 +24,8 @@
         </button>
         <nav class="public-nav" id="publicNavigation" aria-label="Main navigation">
             <a runat="server" href="~/Main.aspx" class="public-nav-link" data-section="home">Home</a>
-            <a runat="server" href="~/Main.aspx#map" class="public-nav-link" data-section="map">Food Map</a>
-            <a runat="server" href="~/Main.aspx#recipes" class="public-nav-link" data-section="recipes">Cooking Basics</a>
-            <a runat="server" href="~/Main.aspx#about" class="public-nav-link" data-section="about">About</a>
+            <a runat="server" href="~/Pages/Guest/SearchCourse/SearchCoursePage.aspx" class="public-nav-link">Course</a>
+            <a runat="server" href="~/Pages/Guest/WorldMap/WorldMapPage.aspx" class="public-nav-link">World Map</a>
         </nav>
         <a runat="server" href="~/Pages/Shared/LoginSignupPage.aspx" class="btn btn-primary public-join">Join Us!</a>
     </header>

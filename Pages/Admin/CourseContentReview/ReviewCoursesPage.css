@@ -1,0 +1,306 @@
+﻿/* ===== Review Page Layout ===== */
+.review-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-width: 0;
+}
+
+    /* Page headings */
+    .review-page h1 {
+        font-size: clamp(38px, 5vw, 64px);
+        line-height: 1.05;
+        overflow-wrap: anywhere;
+    }
+
+    .review-page h2 {
+        font: 400 30px/1.2 var(--font-hand);
+        text-align: left;
+        margin: 0 0 16px;
+    }
+
+    .review-page h3 {
+        font: 400 19px/1.5 var(--font-display);
+        margin: 0 0 10px;
+        overflow-wrap: anywhere;
+    }
+
+/* ===== Page Header ===== */
+.review-page-header {
+    margin-bottom: 28px;
+}
+
+    .review-page-header p {
+        margin: 12px 0 0;
+    }
+
+.review-page .review-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 0 12px;
+}
+
+/* ===== Search and Chef Filter ===== */
+.review-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(190px, 260px);
+    align-items: end;
+    gap: 24px;
+}
+
+    .review-toolbar label {
+        display: block;
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+.review-search-input {
+    display: flex;
+    gap: 12px;
+}
+
+    .review-search-input input[type=text] {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        padding: 12px;
+        border: var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--color-bg);
+        font: inherit;
+        font-size: 16px;
+        color: var(--color-ink);
+    }
+
+.review-toolbar .form-select {
+    appearance: auto;
+    padding-right: 12px;
+}
+
+/* ===== Course Status Filters ===== */
+.review-status-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 28px 0;
+    margin-bottom: 24px;
+    border-bottom: var(--border-dashed);
+}
+
+.review-status-filter {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    padding: 8px 16px;
+    text-decoration: none;
+    background: var(--color-bg);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+    .review-status-filter span {
+        border-radius: var(--radius-pill);
+        padding: 1px 8px;
+        background: var(--color-tan);
+        color: var(--color-ink);
+    }
+
+    .review-status-filter:hover {
+        background: var(--color-tan-light);
+    }
+
+    /* Highlight the selected filter */
+    .review-status-filter.active {
+        background: var(--color-ink);
+        color: var(--color-bg);
+    }
+
+        .review-status-filter.active span {
+            background: var(--color-lime);
+        }
+
+/* ===== Course List ===== */
+.review-list-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.review-course-list {
+    display: grid;
+    gap: 18px;
+}
+
+/* Individual course card */
+.review-course-card {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr) auto;
+    gap: 22px;
+    padding: 22px;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+}
+
+/* Course thumbnail */
+.review-course-thumbnail {
+    min-height: 140px;
+    background: var(--color-tan-light);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    text-align: center;
+}
+
+    .review-course-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        max-height: 200px;
+    }
+
+/* Course information */
+.review-course-info p {
+    margin: 5px 0;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.review-course-info .review-content-counts {
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+.review-course-info .review-updated {
+    color: var(--color-text-soft);
+    font-size: 12px;
+}
+
+/* Course actions */
+.review-course-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+/* ===== Course Status Badges ===== */
+.review-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 12px;
+}
+
+    .review-badge.pending {
+        background: var(--color-yellow);
+    }
+
+    .review-badge.approved {
+        background: var(--color-lime);
+    }
+
+    .review-badge.rejected {
+        background: var(--color-pink);
+    }
+
+/* ===== Pagination ===== */
+.review-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    font-size: 13px;
+}
+
+.review-page .aspNetDisabled {
+    opacity: .45;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* ===== Messages and Empty State ===== */
+.review-message, .review-empty {
+    background: var(--color-tan-light);
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    margin-bottom: 24px;
+    overflow-wrap: anywhere;
+}
+
+.review-empty {
+    text-align: center;
+    padding: 48px 20px;
+}
+
+/* ===== Buttons and Hidden Elements ===== */
+.review-page .btn {
+    min-height: 44px;
+    text-align: center;
+}
+
+.review-page [hidden] {
+    display: none !important;
+}
+
+/* ===== Responsive Layout: Tablet ===== */
+@media (max-width: 1000px) {
+    .review-course-card {
+        grid-template-columns: 120px minmax(0, 1fr);
+    }
+
+    .review-course-actions {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* ===== Responsive Layout: Mobile ===== */
+@media (max-width: 600px) {
+    .review-toolbar {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .review-course-card {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .review-course-thumbnail {
+        height: 180px;
+    }
+
+        .review-course-thumbnail img {
+            max-height: none;
+        }
+
+    .review-status-filters {
+        gap: 8px;
+    }
+
+    .review-status-filter {
+        padding: 8px 12px;
+    }
+
+    .review-pagination {
+        gap: 12px;
+    }
+}

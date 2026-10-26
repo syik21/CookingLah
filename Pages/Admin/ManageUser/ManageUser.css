@@ -1,6 +1,6 @@
 /* ===== Page layout and headings ===== */
 .manage-users {
-    max-width: 1200px;
+    max-width: var(--content-width);
     margin: 0 auto;
     padding: 12px 0 40px;
 }

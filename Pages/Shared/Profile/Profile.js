@@ -4,6 +4,30 @@
     const byId = id => document.getElementById(id);
     const profile = byId('profileMain');
     let submitting = false;
+
+    // Keep the viewport where the user started during password partial postbacks.
+    if (window.Sys && Sys.WebForms && Sys.WebForms.PageRequestManager) {
+        const pageRequestManager = Sys.WebForms.PageRequestManager.getInstance();
+        let savedScrollPosition = null;
+
+        pageRequestManager.add_beginRequest(() => {
+            savedScrollPosition = {
+                left: window.pageXOffset,
+                top: window.pageYOffset
+            };
+        });
+
+        pageRequestManager.add_endRequest(() => {
+            if (!savedScrollPosition) return;
+
+            const position = savedScrollPosition;
+            savedScrollPosition = null;
+            window.requestAnimationFrame(() => {
+                window.scrollTo(position.left, position.top);
+            });
+        });
+    }
+
     function submitAction(action, button) {
         if (submitting) return;
         const form = profile.closest('form');
@@ -14,12 +38,45 @@
         form.appendChild(actionField);
         // Submit only the fields belonging to this action.
         byId('personalDetailsFields').disabled = action !== 'details';
-        byId('passwordFields').disabled = action !== 'password';
         if (action !== 'upload') byId('profilePhoto').value = '';
         submitting = true;
         button.disabled = true;
-        button.textContent = 'Saving...';
+        button.textContent = action === 'delete' ? 'Closing account...' : 'Saving...';
         HTMLFormElement.prototype.submit.call(form);
+    }
+    const deleteDialog = byId('deleteProfileDialog');
+    if (deleteDialog) {
+        const deletePassword = byId('deletePassword');
+        const confirmation = byId('confirmDeleteProfile');
+        const error = byId('deleteProfileError');
+        byId('openDeleteProfile').addEventListener('click', () => deleteDialog.showModal());
+        byId('cancelDeleteProfile').addEventListener('click', () => deleteDialog.close());
+        deleteDialog.addEventListener('close', () => {
+            deletePassword.value = '';
+            confirmation.checked = false;
+            error.textContent = '';
+            byId('openDeleteProfile').focus();
+        });
+        byId('confirmDeleteButton').addEventListener('click', () => {
+            if (!deletePassword.value) {
+                error.textContent = 'Enter your current password to confirm.';
+                deletePassword.focus();
+                return;
+            }
+            if (!confirmation.checked) {
+                error.textContent = 'Please confirm that you understand before continuing.';
+                confirmation.focus();
+                return;
+            }
+            submitAction('delete', byId('confirmDeleteButton'));
+        });
+        deletePassword.addEventListener('keydown', event => {
+            if (event.key === 'Enter') { event.preventDefault(); byId('confirmDeleteButton').click(); }
+        });
+        if (deleteDialog.dataset.reopen === 'true') {
+            deleteDialog.showModal();
+            deletePassword.focus();
+        }
     }
     const fields = ['fullName', 'username', 'email'].map(byId);
     let initial = fields.map(field => field.value);
@@ -150,46 +207,5 @@
             const label = document.querySelector('label[for="' + input.id + '"]').textContent;
             button.setAttribute('aria-label', (show ? 'Hide ' : 'Show ') + label.toLowerCase());
         });
-    });
-    const passwords = ['currentPassword', 'newPassword', 'confirmPassword'].map(byId);
-    function setPasswordEditing(editing) {
-        byId('passwordFields').disabled = !editing;
-        byId('editPassword').hidden = editing;
-        byId('cancelPassword').hidden = !editing;
-        byId('checkPassword').hidden = !editing;
-        passwords.forEach(input => {
-            input.value = '';
-            input.type = 'password';
-            input.setCustomValidity('');
-        });
-        document.querySelectorAll('[data-password]').forEach(button => {
-            button.textContent = 'Show';
-            button.setAttribute('aria-pressed', 'false');
-            const label = document.querySelector('label[for="' + button.dataset.password + '"]').textContent;
-            button.setAttribute('aria-label', 'Show ' + label.toLowerCase());
-        });
-        (editing ? passwords[0] : byId('editPassword')).focus();
-    }
-    byId('editPassword').addEventListener('click', () => {
-        setPasswordEditing(true);
-        byId('passwordFeedback').textContent = '';
-    });
-    byId('cancelPassword').addEventListener('click', () => {
-        setPasswordEditing(false);
-        byId('passwordFeedback').textContent = 'Password edits cancelled.';
-    });
-    passwords.forEach(input => input.addEventListener('input', () => {
-        passwords.forEach(field => field.setCustomValidity(''));
-        byId('passwordFeedback').textContent = '';
-    }));
-    byId('checkPassword').addEventListener('click', () => {
-        if (byId('passwordFields').disabled) return;
-        passwords.forEach(input => input.setCustomValidity(input.value ? '' : 'Please fill in this password field.'));
-        if (new TextEncoder().encode(passwords[1].value).length > 72) passwords[1].setCustomValidity('Use at most 72 UTF-8 bytes.');
-        if (passwords[1].value && passwords[1].value.length < 8) passwords[1].setCustomValidity('Use at least 8 characters.');
-        if (passwords[1].value && passwords[1].value === passwords[0].value) passwords[1].setCustomValidity('Choose a different new password.');
-        if (passwords[2].value && passwords[2].value !== passwords[1].value) passwords[2].setCustomValidity('The new passwords do not match.');
-        for (const input of passwords) { if (!input.reportValidity()) return; }
-        submitAction('password', byId('checkPassword'));
     });
 }());

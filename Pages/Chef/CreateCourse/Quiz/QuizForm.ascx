@@ -16,12 +16,12 @@
                             <div class="question-option">
                                 <label class="option-answer"><input type="radio" name='<%# AnswerGroup(Eval("QuestionKey")) %>' value='<%# Eval("OptionKey") %>' <%# Convert.ToBoolean(Eval("IsCorrect")) ? "checked" : "" %> /><span class="visually-hidden">Mark option <%# Container.ItemIndex + 1 %> as correct</span></label>
                                 <div class="builder-field"><asp:Label runat="server" AssociatedControlID="txtOptionText" Text='<%# "Option " + (Container.ItemIndex + 1) %>' /><asp:TextBox ID="txtOptionText" runat="server" MaxLength="500" Text='<%# Eval("OptionText") %>' /></div>
-                                <asp:Button runat="server" Text="Remove" CssClass="btn option-remove" CommandName="RemoveOption" CommandArgument='<%# Eval("OptionKey") %>' CausesValidation="false" OnClientClick="return CookingQuiz.confirmOption();" />
+                                <asp:Button runat="server" Text="Remove" CssClass="btn option-remove" CommandName="RemoveOption" CommandArgument='<%# Eval("OptionKey") %>' CausesValidation="false" />
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>
                 </fieldset>
-                <div class="question-actions"><asp:Button runat="server" Text="+ Add option" CssClass="btn" CommandName="AddOption" CausesValidation="false" /><asp:Button runat="server" Text="Delete question" CssClass="btn" CommandName="DeleteQuestion" data-order='<%# Eval("QuestionOrder") %>' CausesValidation="false" OnClientClick="return CookingQuiz.confirmQuestion(this);" /></div>
+                <div class="question-actions"><asp:Button runat="server" Text="+ Add option" CssClass="btn" CommandName="AddOption" CausesValidation="false" /><asp:Button runat="server" Text="Delete question" CssClass="btn" CommandName="DeleteQuestion" data-order='<%# Eval("QuestionOrder") %>' CausesValidation="false" data-delete-question="" /></div>
             </article>
         </ItemTemplate>
     </asp:Repeater>
@@ -30,5 +30,13 @@
         <asp:Label ID="lblQuestionPage" runat="server" />
         <asp:Button ID="btnNextQuestions" runat="server" Text="Next" CssClass="btn" OnClick="btnNextQuestions_Click" CausesValidation="false" />
     </asp:Panel>
+    <dialog class="quiz-delete-dialog" data-question-delete-dialog="" aria-labelledby="quizDeleteTitle" aria-describedby="quizDeleteDescription">
+        <h2 id="quizDeleteTitle">Delete question?</h2>
+        <p id="quizDeleteDescription">Delete <strong data-question-delete-name=""></strong> and all its options? This cannot be undone after saving the draft.</p>
+        <div class="quiz-delete-actions">
+            <button type="button" class="btn" data-question-delete-cancel="" autofocus>Cancel</button>
+            <button type="button" class="btn quiz-delete-confirm" data-question-delete-confirm="">Delete question</button>
+        </div>
+    </dialog>
     <asp:Button ID="btnAddQuestion" runat="server" Text="+ Add first question" CssClass="btn" OnClick="btnAddQuestion_Click" CausesValidation="false" />
 </div>

@@ -17,6 +17,7 @@
     --color-text-soft: #555555;
     --color-lime: #CDF58A;
     --color-pink: #FBB8EE;
+    --color-error: #C4453C; /* error text and validation messages */
     --color-yellow: #FFD24C;
     --color-lavender: #B99CFF;
     --color-grid: #F1E6CC; /* grid lines */
@@ -27,7 +28,7 @@
     --font-display: 'Archivo Black', 'Arial Black', sans-serif;
     --font-body: 'Space Mono', ui-monospace, monospace;
     /* Layout */
-    --content-width: 1120px;
+    --content-width: 1500px;
     --gutter: 24px;
     --grid-size: 28px;
     /* Borders & radius */
@@ -119,6 +120,23 @@ mark, .highlight {
 /* =========================
    4. Layout
    ========================= */
+.upload-size-error { color: var(--color-error); font-size: 13px; line-height: 1.6; margin: 8px 0; }
+.ingredient-editor { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
+.ingredient-editor legend { font-size: 13px; font-weight: 700; }
+.ingredient-editor > p { font-size: 12px; margin: 8px 0 16px; }
+.ingredient-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; align-items: end; gap: 12px; margin-bottom: 14px; }
+.ingredient-row label { display: grid; gap: 6px; min-width: 0; font-size: 12px; font-weight: 700; }
+.ingredient-row input { width: 100%; min-width: 0; min-height: 44px; padding: 10px; border: var(--border); border-radius: var(--radius-sm); background: var(--color-bg); color: var(--color-ink); font: inherit; font-size: 16px; }
+.ingredient-remove { min-height: 44px; padding: 8px; border: 0; background: transparent; color: var(--color-error); font: inherit; font-size: 12px; cursor: pointer; }
+.ingredient-remove:hover:not(:disabled) { text-decoration: underline; }
+.ingredient-remove:disabled { opacity: .45; cursor: not-allowed; }
+.ingredient-editor .ingredient-add { margin-top: 4px; min-height: 44px; font-size: 12px; box-shadow: none; }
+.ingredient-editor :is(input, button):focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
+@media (max-width: 480px) {
+    .ingredient-row { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 8px; }
+    .ingredient-remove { grid-column: 1 / -1; justify-self: end; }
+}
+
 .container {
     max-width: var(--content-width);
     margin: 0 auto;

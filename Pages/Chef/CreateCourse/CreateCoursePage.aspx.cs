@@ -2,6 +2,7 @@ using CookingLah.F_Helpers;
 using CookingLah.F_Services;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Web;
@@ -34,7 +35,7 @@ namespace CookingLah.Pages.Chef.CreateCourse
             int userId;
             string role = Convert.ToString(Session["Role"]);
             if (!int.TryParse(Convert.ToString(Session["UserId"]), out userId) || userId <= 0 ||
-                (!role.Equals("Instructor", StringComparison.OrdinalIgnoreCase) && !role.Equals("Chef", StringComparison.OrdinalIgnoreCase)))
+                !role.Equals("Instructor", StringComparison.OrdinalIgnoreCase))
             {
                 Response.Redirect(NavigationHelper.GetUrl("Main"));
                 return;
@@ -47,6 +48,7 @@ namespace CookingLah.Pages.Chef.CreateCourse
                 if (!IsPostBack)
                 {
                     LoadCategories();
+                    LoadTraditionalFoodOptions();
                     InitializeCourseBuilder();
                 }
                 if (CourseID > 0) EnsureOwnedDraft();
@@ -68,6 +70,11 @@ namespace CookingLah.Pages.Chef.CreateCourse
                 SetFeedback("No course categories are available yet. Ask an administrator to add a category before saving.");
         }
 
+        private void LoadTraditionalFoodOptions()
+        {
+            LoadFoodCultures(ddlFoodCulture);
+        }
+
         private void InitializeCourseBuilder()
         {
             if (Request.QueryString["courseId"] == null) return;
@@ -81,6 +88,12 @@ namespace CookingLah.Pages.Chef.CreateCourse
             txtDescription.Text = Convert.ToString(course["Description"]);
             ddlCategory.SelectedValue = Convert.ToString(course["CategoryID"]);
             ddlDifficulty.SelectedValue = Convert.ToString(course["DifficultyLevel"]);
+            bool hasFoodCulture = course["FoodCultureID"] != DBNull.Value;
+            if (hasFoodCulture)
+            {
+                rblFoodCultureMode.SelectedValue = "Existing";
+                ddlFoodCulture.SelectedValue = Convert.ToString(course["FoodCultureID"]);
+            }
             Thumbnail = Convert.ToString(course["Thumbnail"]);
             RecipeForm1.LoadRecipe(CourseID);
             LessonForm1.LoadLessons(CourseID);
@@ -159,29 +172,74 @@ namespace CookingLah.Pages.Chef.CreateCourse
             Thumbnail = SaveUpload(fuCourseThumbnail, Thumbnail);
             if (CourseID == 0)
             {
+                int newCourseId;
+                int? foodCultureId;
                 using (var connection = DatabaseManager.ConnectDB())
                 {
                     connection.Open();
-                    CourseID = Convert.ToInt32(Execute(connection, null,
-                        "INSERT INTO Courses (InstructorID,CategoryID,Title,Description,DifficultyLevel,Thumbnail,Status,CreatedAt,UpdatedAt) " +
-                        "OUTPUT INSERTED.CourseID SELECT @user,@category,@title,@description,@difficulty,@thumbnail,'Draft',GETDATE(),GETDATE() " +
-                        "WHERE EXISTS (SELECT 1 FROM Users WHERE UserID=@user AND Role='Instructor' AND AccountStatus='Active')",
-                        BasicParameters()));
-                    if (CourseID == 0) throw new InvalidOperationException("Your account cannot create a draft right now.");
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        foodCultureId = ResolveFoodCultureId(
+                            connection,
+                            transaction,
+                            int.Parse(ddlCategory.SelectedValue),
+                            rblFoodCultureMode.SelectedValue,
+                            ddlFoodCulture.SelectedValue,
+                            txtNewDishName.Text,
+                            foodCountryPicker.SelectedCountryName);
+
+                        newCourseId = Convert.ToInt32(Execute(connection, transaction,
+                            "INSERT INTO Courses (InstructorID,CategoryID,FoodCultureID,Title,Description,DifficultyLevel,Thumbnail,Status,CreatedAt,UpdatedAt) " +
+                            "OUTPUT INSERTED.CourseID SELECT @user,@category,@foodCultureId,@title,@description,@difficulty,@thumbnail,'Draft',GETDATE(),GETDATE() " +
+                            "WHERE EXISTS (SELECT 1 FROM Users WHERE UserID=@user AND Role='Instructor' AND AccountStatus='Active')",
+                            BasicParameters(foodCultureId)));
+                        if (newCourseId == 0) throw new InvalidOperationException("Your account cannot create a draft right now.");
+
+                        transaction.Commit();
+                    }
                 }
+
+                CourseID = newCourseId;
+                RefreshFoodCultureSelection(foodCultureId);
                 return;
             }
+            int? savedFoodCultureId = null;
             EditDraft(CourseID, (connection, transaction) => {
-                var parameters = new List<SqlParameter>(BasicParameters()) { Parameter("@id", CourseID) };
-                Execute(connection, transaction, "UPDATE Courses SET CategoryID=@category,Title=@title,Description=@description,DifficultyLevel=@difficulty,Thumbnail=@thumbnail WHERE CourseID=@id", parameters.ToArray());
+                savedFoodCultureId = ResolveFoodCultureId(
+                    connection,
+                    transaction,
+                    int.Parse(ddlCategory.SelectedValue),
+                    rblFoodCultureMode.SelectedValue,
+                    ddlFoodCulture.SelectedValue,
+                    txtNewDishName.Text,
+                    foodCountryPicker.SelectedCountryName);
+
+                var parameters = new List<SqlParameter>(BasicParameters(savedFoodCultureId)) { Parameter("@id", CourseID) };
+                Execute(connection, transaction, "UPDATE Courses SET CategoryID=@category,FoodCultureID=@foodCultureId,Title=@title,Description=@description,DifficultyLevel=@difficulty,Thumbnail=@thumbnail WHERE CourseID=@id", parameters.ToArray());
             });
+            RefreshFoodCultureSelection(savedFoodCultureId);
         }
 
-        private SqlParameter[] BasicParameters()
+        private SqlParameter[] BasicParameters(int? foodCultureId)
         {
             return new[] { Parameter("@user", InstructorID), Parameter("@category", int.Parse(ddlCategory.SelectedValue)),
+                Parameter("@foodCultureId", foodCultureId),
                 Parameter("@title", txtCourseTitle.Text.Trim()), Parameter("@description", txtDescription.Text.Trim()),
                 Parameter("@difficulty", ddlDifficulty.SelectedValue), Parameter("@thumbnail", Thumbnail) };
+        }
+
+        private void RefreshFoodCultureSelection(int? foodCultureId)
+        {
+            if (rblFoodCultureMode.SelectedValue != "New") return;
+
+            LoadFoodCultures(ddlFoodCulture);
+            rblFoodCultureMode.SelectedValue = "Existing";
+            txtNewDishName.Text = "";
+            foodCountryPicker.ClearSelection();
+            if (foodCultureId.HasValue)
+            {
+                ddlFoodCulture.SelectedValue = Convert.ToString(foodCultureId.Value);
+            }
         }
 
         private void SaveCurrentStep()

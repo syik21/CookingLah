@@ -100,3 +100,33 @@ test('photo removal saves only after confirmation and closing cancels', () => {
     assert.equal(form.children[0].value, 'remove');
     assert.equal(form.submissions, 1);
 });
+
+test('delete profile requires password and explicit confirmation', () => {
+    const { element: el, form } = setup();
+    el('openDeleteProfile').click();
+    assert.equal(el('deleteProfileDialog').open, true);
+    el('confirmDeleteButton').click();
+    assert.equal(form.submissions, 0);
+    el('deletePassword').value = 'current-password';
+    el('confirmDeleteButton').click();
+    assert.equal(form.submissions, 0);
+    el('confirmDeleteProfile').checked = true;
+    el('confirmDeleteButton').click();
+    el('confirmDeleteButton').click();
+    assert.equal(form.submissions, 1);
+    assert.equal(form.children[0].value, 'delete');
+    assert.equal(el('personalDetailsFields').disabled, true);
+    assert.equal(el('passwordFields').disabled, true);
+});
+
+test('cancel delete clears confirmation and password without submitting', () => {
+    const { element: el, form } = setup();
+    el('openDeleteProfile').click();
+    el('deletePassword').value = 'secret';
+    el('confirmDeleteProfile').checked = true;
+    el('cancelDeleteProfile').click();
+    assert.equal(el('deleteProfileDialog').open, false);
+    assert.equal(el('deletePassword').value, '');
+    assert.equal(el('confirmDeleteProfile').checked, false);
+    assert.equal(form.submissions, 0);
+});

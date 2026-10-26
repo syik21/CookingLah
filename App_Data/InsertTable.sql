@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    COOKING LAH DATABASE
    ASP.NET Web Forms + SQL Server
    ============================================================ */
@@ -92,6 +92,7 @@ CREATE TABLE Courses
 
     InstructorID INT NOT NULL,
     CategoryID INT NOT NULL,
+    FoodCultureID INT NULL,
 
     Title NVARCHAR(150) NOT NULL,
 
@@ -100,6 +101,8 @@ CREATE TABLE Courses
     DifficultyLevel NVARCHAR(20) NOT NULL,
 
     Thumbnail NVARCHAR(500) NULL,
+
+    RejectionReason NVARCHAR(500) NULL,
 
     Status NVARCHAR(20) NOT NULL
         CONSTRAINT DF_Courses_Status
@@ -155,10 +158,6 @@ CREATE TABLE CourseRecipes
     RecipeID INT IDENTITY(1,1) PRIMARY KEY,
 
     CourseID INT NOT NULL UNIQUE,
-
-    RecipeName NVARCHAR(150) NOT NULL,
-
-    Description NVARCHAR(MAX) NULL,
 
     Ingredients NVARCHAR(MAX) NOT NULL,
 
@@ -401,6 +400,10 @@ CREATE TABLE CourseProgress
 
     ProgressPercentage INT NOT NULL
         CONSTRAINT DF_CourseProgress_Percentage
+        DEFAULT 0,
+
+    LastCompletedLessonOrder INT NOT NULL
+        CONSTRAINT DF_CourseProgress_LastCompletedLessonOrder
         DEFAULT 0,
 
     Status NVARCHAR(20) NOT NULL
@@ -652,41 +655,18 @@ CREATE TABLE CourseReports
 
 
 /* ============================================================
-   15. COUNTRIES
-   ------------------------------------------------------------
-   Used for the 2D Interactive Food Culture Map.
-   ============================================================ */
-
-CREATE TABLE Countries
-(
-    CountryID INT IDENTITY(1,1) PRIMARY KEY,
-
-    CountryName NVARCHAR(100) NOT NULL UNIQUE,
-
-    CountryCode NVARCHAR(10) NOT NULL UNIQUE,
-
-    MapPositionX FLOAT NULL,
-
-    MapPositionY FLOAT NULL,
-
-    FlagImage NVARCHAR(500) NULL
-);
-
-
-/* ============================================================
    16. FOOD CULTURES
    ------------------------------------------------------------
-   Delete Country:
-   -> its FoodCulture records are deleted.
+   Country is stored as text on the FoodCulture record.
    ============================================================ */
 
 CREATE TABLE FoodCultures
 (
     FoodCultureID INT IDENTITY(1,1) PRIMARY KEY,
 
-    CountryID INT NOT NULL,
-
     DishName NVARCHAR(150) NOT NULL,
+
+    Country NVARCHAR(150) NOT NULL,
 
     Description NVARCHAR(MAX) NULL,
 
@@ -694,10 +674,11 @@ CREATE TABLE FoodCultures
 
     CookingMethod NVARCHAR(MAX) NULL,
 
-    DishImage NVARCHAR(500) NULL,
-
-    CONSTRAINT FK_FoodCultures_Country
-        FOREIGN KEY (CountryID)
-        REFERENCES Countries(CountryID)
-        ON DELETE CASCADE
+    DishImage NVARCHAR(500) NULL
 );
+
+ALTER TABLE Courses
+ADD CONSTRAINT FK_Courses_FoodCulture
+    FOREIGN KEY (FoodCultureID)
+    REFERENCES FoodCultures(FoodCultureID)
+    ON DELETE NO ACTION;

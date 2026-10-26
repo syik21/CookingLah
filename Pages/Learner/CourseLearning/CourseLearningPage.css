@@ -1,0 +1,407 @@
+.course-learning-page {
+    width: min(100%, 1420px);
+    margin: 0 auto;
+    padding: clamp(20px, 3vw, 38px) clamp(14px, 2.4vw, 30px) 56px;
+}
+
+.learning-back {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    color: var(--color-ink);
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+}
+
+.learning-back svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.learning-course-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(270px, .8fr);
+    gap: clamp(20px, 4vw, 48px);
+    align-items: center;
+    margin-bottom: 24px;
+    padding: clamp(20px, 3.4vw, 36px);
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--color-tan-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.learning-course-heading {
+    min-width: 0;
+}
+
+.learning-eyebrow {
+    margin: 0 0 7px;
+    color: var(--color-text-soft);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+.learning-course-heading h1 {
+    margin: 0;
+    font: 400 clamp(40px, 6vw, 68px)/.98 var(--font-hand);
+    text-align: left;
+    text-transform: none;
+    overflow-wrap: anywhere;
+}
+
+.learning-course-meta {
+    margin: 12px 0 0;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.learning-chef-line {
+    margin: 5px 0 0;
+    color: var(--color-text-soft);
+    font-size: 10px;
+}
+
+.learning-chef-line strong {
+    color: var(--color-ink);
+}
+
+.learning-progress {
+    min-width: 0;
+    padding: 19px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-md);
+    background: #fffdf7;
+}
+
+.learning-progress-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 13px;
+}
+
+.learning-progress-heading .learning-eyebrow {
+    margin-bottom: 3px;
+}
+
+.learning-progress-heading h2 {
+    margin: 0;
+    font: 400 25px/1.1 var(--font-hand);
+    text-align: left;
+}
+
+.learning-progress-value {
+    flex: 0 0 auto;
+    color: var(--color-primary);
+    font: 700 20px/1 var(--font-body);
+}
+
+.learning-progress-track {
+    height: 16px;
+    overflow: hidden;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    background: var(--color-tan-light);
+    box-shadow: inset 0 1px 2px rgb(53 3 12 / 12%);
+}
+
+.learning-progress-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--color-primary);
+    transition: width 240ms ease;
+}
+
+.learning-progress-summary {
+    margin: 9px 0 0;
+    color: var(--color-text-soft);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+.learning-course-complete {
+    display: grid;
+    gap: 4px;
+    margin-top: 13px;
+    padding: 10px 12px;
+    border-left: 5px solid #376332;
+    border-radius: var(--radius-sm);
+    background: var(--color-lime);
+    font-size: 10px;
+}
+
+.learning-course-complete span {
+    font-size: 9px;
+}
+
+.learning-layout {
+    display: grid;
+    grid-template-columns: minmax(230px, 290px) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.learning-curriculum {
+    position: sticky;
+    top: 18px;
+    min-width: 0;
+    padding: 20px 16px;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: #fffdf7;
+    box-shadow: var(--shadow-sm);
+}
+
+.curriculum-heading {
+    padding: 0 5px 13px;
+    border-bottom: 2px solid var(--color-ink);
+}
+
+.curriculum-heading h2 {
+    margin: 0;
+    font: 400 28px/1.1 var(--font-hand);
+    text-align: left;
+}
+
+.curriculum-heading > span {
+    display: block;
+    margin-top: 4px;
+    color: var(--color-text-soft);
+    font-size: 9px;
+}
+
+.curriculum-section {
+    margin-top: 17px;
+}
+
+.curriculum-section h3 {
+    margin: 0 5px 7px;
+    color: var(--color-text-soft);
+    font-size: 9px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.curriculum-item,
+.curriculum-special-item {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 7px;
+    border-top: 1px dashed var(--color-grid);
+    border-radius: 6px;
+}
+
+.curriculum-item.is-active,
+.curriculum-special-item.is-active {
+    border-left: 3px solid var(--color-primary);
+    background: #fff0e9;
+}
+
+.curriculum-item.is-completed .curriculum-state,
+.curriculum-special-item.is-completed .curriculum-state {
+    background: var(--color-lime);
+}
+
+.curriculum-state {
+    display: grid;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    place-items: center;
+    border: 1px solid var(--color-ink);
+    border-radius: 50%;
+    background: var(--color-bg);
+    font-size: 12px;
+    line-height: 1;
+}
+
+.curriculum-item.is-active .curriculum-state,
+.curriculum-special-item.is-active .curriculum-state {
+    background: var(--color-yellow);
+}
+
+.curriculum-lesson-copy {
+    display: grid;
+    min-width: 0;
+    gap: 2px;
+}
+
+.curriculum-lesson-order {
+    color: var(--color-text-soft);
+    font-size: 8px;
+}
+
+.curriculum-lesson-title,
+.curriculum-special-item a {
+    min-width: 0;
+    color: var(--color-ink);
+    font-size: 10px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+}
+
+.curriculum-lesson-title:hover,
+.curriculum-special-item a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.curriculum-item.is-active .curriculum-lesson-title,
+.curriculum-special-item.is-active a {
+    font-weight: 700;
+}
+
+.curriculum-empty {
+    padding: 10px 5px;
+    color: var(--color-text-soft);
+    font-size: 9px;
+}
+
+.learning-workspace {
+    min-width: 0;
+}
+
+.learning-workspace > div {
+    min-width: 0;
+}
+
+.learning-workspace .btn-primary {
+    min-height: 50px;
+    border: 2px solid var(--color-ink);
+    box-shadow: 4px 4px 0 var(--color-ink);
+    font-weight: 700;
+}
+
+.learning-workspace .btn-primary:hover {
+    box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+.learning-mobile-curriculum-toggle {
+    display: none;
+    margin-bottom: 12px;
+}
+
+.learning-mobile-curriculum-toggle button {
+    display: flex;
+    width: 100%;
+    min-height: 48px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    font-size: 11px;
+}
+
+.learning-mobile-curriculum-toggle svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.learning-feedback,
+.learning-unavailable {
+    margin-bottom: 20px;
+    padding: 18px;
+    border: var(--border-dashed);
+    border-radius: var(--radius-md);
+    background: #fffdf7;
+    font-size: 12px;
+}
+
+.learning-unavailable {
+    margin: 40px auto;
+    max-width: 680px;
+    text-align: center;
+}
+
+.learning-unavailable h1 {
+    margin: 0;
+    font: 400 42px/1 var(--font-hand);
+}
+
+.learning-unavailable p {
+    margin: 12px 0 20px;
+    color: var(--color-text-soft);
+    font-size: 12px;
+}
+
+.learning-empty {
+    padding: 30px;
+    border: var(--border-dashed);
+    border-radius: var(--radius-md);
+    background: #fffdf7;
+}
+
+.learning-empty h2 {
+    margin: 0;
+    font: 400 34px/1.1 var(--font-hand);
+}
+
+.learning-empty p {
+    margin: 8px 0 0;
+    color: var(--color-text-soft);
+    font-size: 11px;
+}
+
+.course-learning-page :is(a, button, input, textarea):focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+@media (max-width: 940px) {
+    .learning-course-header {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .learning-layout {
+        grid-template-columns: minmax(210px, 250px) minmax(0, 1fr);
+        gap: 14px;
+    }
+}
+
+@media (max-width: 720px) {
+    .learning-mobile-curriculum-toggle {
+        display: block;
+    }
+
+    .learning-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .learning-curriculum {
+        display: none;
+        position: static;
+        margin-bottom: 14px;
+    }
+
+    .learning-curriculum.is-open {
+        display: block;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .learning-progress-fill {
+        transition: none;
+    }
+}
