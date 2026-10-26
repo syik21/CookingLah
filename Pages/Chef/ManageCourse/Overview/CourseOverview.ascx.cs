@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Web.UI.WebControls;
 using static CookingLah.Pages.Chef.CreateCourse.CourseBuilderData;
@@ -10,7 +10,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Overview
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Visible && !IsPostBack && Request.QueryString["edit"] == "1") Run(OpenEditor);
+            if (Visible && CanEdit && !IsPostBack && Request.QueryString["edit"] == "1") Run(OpenEditor);
         }
         public void LoadCourse(int courseId)
         {

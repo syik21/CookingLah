@@ -83,24 +83,8 @@ namespace CookingLah.Pages.Chef.CreateCourse
                 throw new InvalidOperationException("This draft link is not valid.");
             CourseID = courseId;
             EnsureOwnedDraft();
-            var course = Read("SELECT * FROM Courses WHERE CourseID=@id AND InstructorID=@user", Parameter("@id", CourseID), Parameter("@user", InstructorID)).Rows[0];
-            txtCourseTitle.Text = Convert.ToString(course["Title"]);
-            txtDescription.Text = Convert.ToString(course["Description"]);
-            ddlCategory.SelectedValue = Convert.ToString(course["CategoryID"]);
-            ddlDifficulty.SelectedValue = Convert.ToString(course["DifficultyLevel"]);
-            bool hasFoodCulture = course["FoodCultureID"] != DBNull.Value;
-            if (hasFoodCulture)
-            {
-                rblFoodCultureMode.SelectedValue = "Existing";
-                ddlFoodCulture.SelectedValue = Convert.ToString(course["FoodCultureID"]);
-            }
-            Thumbnail = Convert.ToString(course["Thumbnail"]);
-            RecipeForm1.LoadRecipe(CourseID);
-            LessonForm1.LoadLessons(CourseID);
-            QuizForm1.LoadQuiz(CourseID);
-            ActivityForm1.LoadActivity(CourseID);
-            HighestStep = 5;
-            SetFeedback("Draft loaded. Continue editing, then save your changes.");
+            // Existing courses are maintained by the dedicated course builder.
+            Response.Redirect("~/Pages/Chef/ManageCourse/ManageCoursePage.aspx?courseId=" + courseId);
         }
 
         private void EnsureOwnedDraft()

@@ -1,4 +1,4 @@
-using CookingLah.F_Helpers;
+﻿using CookingLah.F_Helpers;
 using System;
 using System.Collections.Generic;
 using System.Web.UI;
@@ -72,7 +72,7 @@ namespace CookingLah.Pages.Learner
 
         protected void ExploreFoodMap_Click(object sender, EventArgs e)
         {
-            // TODO: Redirect to Food Culture Map. Connect navigation when the destination is available.
+            Response.Redirect("~/Pages/Learner/Map/Map.aspx");
         }
     }
 }

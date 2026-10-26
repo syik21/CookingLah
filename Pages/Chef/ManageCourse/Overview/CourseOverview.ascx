@@ -1,7 +1,7 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CourseOverview.ascx.cs" Inherits="CookingLah.Pages.Chef.ManageCourse.Overview.CourseOverview" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CourseOverview.ascx.cs" Inherits="CookingLah.Pages.Chef.ManageCourse.Overview.CourseOverview" %>
 <%@ Register Src="~/Pages/Shared/CountryPicker/CountryPicker.ascx" TagPrefix="shared" TagName="CountryPicker" %>
 <section class="course-overview">
-    <div class="mc-section-heading"><h2>Course Overview</h2><asp:Button ID="btnEdit" runat="server" Text="Edit Course" CssClass="btn" OnClick="btnEdit_Click" /></div>
+    <div class="mc-section-heading"><h2>Course Overview</h2><asp:Button ID="btnEdit" runat="server" Text="Edit Information" CssClass="btn" OnClick="btnEdit_Click" /></div>
     <asp:Repeater ID="rptOverview" runat="server"><ItemTemplate>
         <article class="card overview-details">
             <asp:Image runat="server" CssClass="overview-image" ImageUrl='<%# CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail"))) %>' Visible='<%# !string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>' AlternateText="Course thumbnail" />
@@ -58,13 +58,13 @@
                     <div class="mc-field">
                         <shared:CountryPicker ID="foodCountryPicker" runat="server" LabelText="Country *" />
                     </div>
-                    <p class="text-muted">A new Traditional Food will be added to the Food Map when you submit the course for review.</p>
+                    <p class="text-muted">A new Traditional Food will be added to the Food Map when you save the course.</p>
                 </div>
             </div>
         </section>
         <p class="text-muted">Images: JPG or PNG, up to 3 MB.</p><img class="mc-image-preview" data-image-preview="" alt="Selected course thumbnail" hidden />
         <div class="mc-actions">
         <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancel_Click" data-cancel="" />
-        <asp:Button ID="btnSaveCourse" runat="server" Text="Save Changes" CssClass="btn btn-primary" OnClick="btnSaveCourse_Click" /></div>
+        <asp:Button ID="btnSaveCourse" runat="server" Text="Apply Changes" CssClass="btn btn-primary" OnClick="btnSaveCourse_Click" /></div>
     </asp:Panel>
 </section>

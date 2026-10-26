@@ -137,7 +137,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
         private bool LoadCourseHeader()
         {
             DataTable rows = Read(@"
-                SELECT c.Title,cat.CategoryName,c.DifficultyLevel,chef.FullName AS ChefName,
+                SELECT c.Title,c.Thumbnail,cat.CategoryName,c.DifficultyLevel,chef.FullName AS ChefName,
                        cp.ProgressPercentage,cp.Status AS ProgressStatus,
                        cp.LastCompletedLessonOrder
                 FROM Courses c
@@ -157,6 +157,10 @@ namespace CookingLah.Pages.Learner.CourseLearning
             DataRow course = rows.Rows[0];
             LastCompletedLessonOrder = Convert.ToInt32(course["LastCompletedLessonOrder"]);
             litCourseTitle.Text = Convert.ToString(course["Title"]);
+            string thumbnail = MediaUrl(Convert.ToString(course["Thumbnail"]));
+            imgCourseThumbnail.ImageUrl = thumbnail;
+            imgCourseThumbnail.AlternateText = Convert.ToString(course["Title"]) + " course thumbnail";
+            imgCourseThumbnail.Visible = thumbnail.Length > 0;
             litCourseMeta.Text = Convert.ToString(course["CategoryName"]) + " · " + Convert.ToString(course["DifficultyLevel"]);
             litChefName.Text = Convert.ToString(course["ChefName"]);
 
@@ -385,7 +389,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
         protected string LessonItemClass(object lessonId)
         {
             int id = Convert.ToInt32(lessonId);
-            if (id == SelectedLessonId) return "curriculum-item is-active";
+            if (CurrentSection == "Lesson" && id == SelectedLessonId) return "curriculum-item is-active";
             return IsLessonComplete(id)
                 ? "curriculum-item is-completed"
                 : "curriculum-item";
@@ -395,7 +399,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
         {
             int id = Convert.ToInt32(lessonId);
             if (IsLessonComplete(id)) return "\u2713";
-            return id == SelectedLessonId ? "\u25CF" : "\u25CB";
+            return CurrentSection == "Lesson" && id == SelectedLessonId ? "\u25CF" : "\u25CB";
         }
 
         private bool ContainsLesson(int lessonId)
@@ -559,6 +563,9 @@ namespace CookingLah.Pages.Learner.CourseLearning
 
         private void UpdateCurriculumStatus()
         {
+            rptCourseLessons.DataSource = CourseLessons;
+            rptCourseLessons.DataBind();
+
             litQuizState.Text = QuizSection1.HasPassed
                 ? "\u2713"
                 : CurrentSection == "Quiz" ? "\u25CF" : "\u25CB";

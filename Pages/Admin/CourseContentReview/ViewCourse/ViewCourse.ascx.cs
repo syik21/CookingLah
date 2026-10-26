@@ -31,6 +31,17 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
             set { ViewState["QuestionPage"] = value; }
         }
         private DataTable questionOptions;
+        private DataTable lessonBlocks;
+
+        protected void Lesson_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+            var lesson = (DataRowView)e.Item.DataItem;
+            var blocks = (CookingLah.Pages.Shared.LessonBlocks.LessonBlocks)e.Item.FindControl("LessonBlocks");
+            blocks.BindBlocks(lessonBlocks, Convert.ToInt32(lesson["LessonID"]));
+        }
+
+
         private DataRow course;
 
         // Reset the selected course and review form.
@@ -140,6 +151,7 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         // Load lessons with pagination.
         private void LoadLessons()
         {
+            lessonBlocks = ReadCourse("SELECT lc.* FROM LessonContent lc JOIN Lessons l ON l.LessonID=lc.LessonID WHERE l.CourseID=@id");
             var rows = ReadCourse("SELECT * FROM Lessons WHERE CourseID=@id ORDER BY LessonOrder,LessonID");
             litLessonsEmpty.Visible = rows.Rows.Count == 0;
             LessonPage = BindPage(rptLessons, rows, LessonPage, pnlLessonPager, btnLessonPrevious, btnLessonNext, litLessonPage);

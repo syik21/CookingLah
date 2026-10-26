@@ -1,4 +1,4 @@
-namespace CookingLah.Pages.Learner.CourseLearning.Lesson
+﻿namespace CookingLah.Pages.Learner.CourseLearning.Lesson
 {
     public partial class LessonContent
     {
@@ -7,10 +7,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.Lesson
         protected global::System.Web.UI.WebControls.Literal litLessonOrder;
         protected global::System.Web.UI.WebControls.Literal litLessonTitle;
         protected global::System.Web.UI.WebControls.Literal litLessonDescription;
-        protected global::System.Web.UI.WebControls.Image imgLesson;
-        protected global::System.Web.UI.WebControls.Panel pnlLessonVideo;
-        protected global::System.Web.UI.WebControls.Literal litLessonVideoSource;
-        protected global::System.Web.UI.WebControls.Literal litInstructions;
+        protected global::CookingLah.Pages.Shared.LessonBlocks.LessonBlocks LessonBlocks;
         protected global::System.Web.UI.WebControls.Panel pnlLessonCompletionNote;
         protected global::System.Web.UI.WebControls.LinkButton btnPreviousLesson;
         protected global::System.Web.UI.WebControls.Button btnMarkComplete;

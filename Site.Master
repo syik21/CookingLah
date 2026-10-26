@@ -1,4 +1,4 @@
-<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="CookingLah.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="CookingLah.SiteMaster" %>
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
@@ -24,8 +24,8 @@
         </button>
         <nav class="public-nav" id="publicNavigation" aria-label="Main navigation">
             <a runat="server" href="~/Main.aspx" class="public-nav-link" data-section="home">Home</a>
-            <a runat="server" href="~/Pages/Guest/SearchCourse/SearchCoursePage.aspx" class="public-nav-link">Course</a>
-            <a runat="server" href="~/Pages/Guest/WorldMap/WorldMapPage.aspx" class="public-nav-link">World Map</a>
+            <a runat="server" href="~/Pages/Guest/SearchCourse/SearchCoursePage.aspx" class="public-nav-link" data-section="course">Course</a>
+            <a runat="server" href="~/Pages/Guest/Map.aspx" class="public-nav-link" data-section="map">World Map</a>
         </nav>
         <a runat="server" href="~/Pages/Shared/LoginSignupPage.aspx" class="btn btn-primary public-join">Join Us!</a>
     </header>

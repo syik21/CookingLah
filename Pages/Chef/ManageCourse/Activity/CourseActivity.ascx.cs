@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using static CookingLah.Pages.Chef.CreateCourse.CourseBuilderData;
 using static CookingLah.Pages.Chef.ManageCourse.CourseManagementData;
@@ -89,6 +89,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Activity
             if (!pnlDelete.Visible || RecordId == 0) return;
             Run(() =>
             {
+                EnsureEditable();
                 if (CanEdit)
                 {
                     var draft = GetReviewDraft(CourseId, true);

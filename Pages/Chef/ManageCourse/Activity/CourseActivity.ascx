@@ -12,7 +12,7 @@
 <div class="mc-field"><asp:Label runat="server" AssociatedControlID="txtInstructions" Text="Instructions *" /><asp:TextBox ID="txtInstructions" runat="server" TextMode="MultiLine" Rows="4" /></div>
         <div class="mc-actions">
         <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancel_Click" data-cancel="" />
-        <asp:Button ID="btnSave" runat="server" Text="Save Changes" CssClass="btn btn-primary" OnClick="btnSave_Click" /></div>
+        <asp:Button ID="btnSave" runat="server" Text="Apply Changes" CssClass="btn btn-primary" OnClick="btnSave_Click" /></div>
     </asp:Panel>
     <asp:Panel ID="pnlDelete" runat="server" Visible="false" CssClass="card mc-modal mc-delete" data-title="Delete Practical Activity?">
         <h2>Delete Practical Activity?</h2><p>Are you sure you want to delete <strong><asp:Literal ID="litDeleteName" runat="server" Mode="Encode" /></strong>?</p><p>Learner submissions related to this activity will also be removed. This action cannot be undone.</p>

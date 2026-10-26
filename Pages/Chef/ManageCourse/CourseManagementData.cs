@@ -1,4 +1,4 @@
-using CookingLah.F_Services;
+﻿using CookingLah.F_Services;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -39,7 +39,7 @@ namespace CookingLah.Pages.Chef.ManageCourse
                     int references = Convert.ToInt32(Read(@"
                         SELECT (SELECT COUNT(*) FROM Courses WHERE Thumbnail=@path)
                              + (SELECT COUNT(*) FROM CourseRecipes WHERE RecipeImage=@path)
-                             + (SELECT COUNT(*) FROM Lessons WHERE LessonImage=@path OR LessonVideo=@path)", Parameter("@path", path)).Rows[0][0]);
+                             + (SELECT COUNT(*) FROM LessonContent WHERE MediaPath=@path)", Parameter("@path", path)).Rows[0][0]);
                     if (references != 0) continue;
                     string mediaRoot = Path.GetFullPath(HttpContext.Current.Server.MapPath("~/F_Assets/CourseMedia/"));
                     string fullPath = Path.GetFullPath(HttpContext.Current.Server.MapPath(path));
@@ -59,6 +59,16 @@ namespace CookingLah.Pages.Chef.ManageCourse
 
         public static CourseReviewDraft GetReviewDraft(int courseId, bool create)
         {
+            if (create)
+            {
+                int instructorId;
+                if (!int.TryParse(Convert.ToString(HttpContext.Current.Session["UserId"]), out instructorId) ||
+                    HttpContext.Current.Session["BuilderEditing_" + courseId] == null ||
+                    Read(@"SELECT c.CourseID FROM Courses c JOIN Users u ON u.UserID=c.InstructorID
+                        WHERE c.CourseID=@id AND c.InstructorID=@user AND c.Status<>'Pending'
+                        AND u.Role='Instructor' AND u.AccountStatus='Active'", Parameter("@id", courseId), Parameter("@user", instructorId)).Rows.Count == 0)
+                    throw new InvalidOperationException("This course is not editable. Reload it and click Edit Course.");
+            }
             string key = ReviewChangesKey(courseId);
             var draft = HttpContext.Current.Session[key] as CourseReviewDraft;
             if (draft == null && create)
@@ -71,7 +81,7 @@ namespace CookingLah.Pages.Chef.ManageCourse
 
         public static DataTable ReadDraftSection(int courseId, string section, string sql, params SqlParameter[] parameters)
         {
-            var draft = GetReviewDraft(courseId, false);
+            var draft = HttpContext.Current.Session["BuilderEditing_" + courseId] == null ? null : GetReviewDraft(courseId, false);
             if (draft != null)
             {
                 switch (section)
@@ -79,6 +89,7 @@ namespace CookingLah.Pages.Chef.ManageCourse
                     case "Courses": return draft.Courses.Copy();
                     case "CourseRecipes": return draft.Recipes.Copy();
                     case "Lessons": return draft.Lessons.Copy();
+                    case "LessonContent": return draft.LessonContent.Copy();
                     case "Quizzes": return draft.Quizzes.Copy();
                     case "QuizQuestions": return draft.Questions.Copy();
                     case "QuizOptions": return draft.Options.Copy();
@@ -133,6 +144,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
 
         public static void EditCourse(int courseId, Action<SqlConnection, SqlTransaction> save, bool submittingForReview = false)
         {
+            if (!submittingForReview && HttpContext.Current.Session["BuilderEditing_" + courseId] == null)
+                throw new InvalidOperationException("Click Edit Course before saving.");
             int instructorId = Convert.ToInt32(HttpContext.Current.Session["UserId"]);
             using (var connection = DatabaseManager.ConnectDB())
             {

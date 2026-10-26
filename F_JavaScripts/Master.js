@@ -101,7 +101,7 @@
     // Supports both .aspx and FriendlyUrls extensionless page routes.
     var current = window.location.pathname.replace(/\/$/, "").split("/").pop().replace(/\.aspx$/i, "").toLowerCase();
     sidebar.querySelectorAll("a[data-page]").forEach(function (link) {
-        var active = link.dataset.page.toLowerCase() === current;
+        var active = link.dataset.page.toLowerCase().split(",").includes(current);
         link.classList.toggle("active", active);
         if (active) { link.setAttribute("aria-current", "page"); }
         else { link.removeAttribute("aria-current"); }

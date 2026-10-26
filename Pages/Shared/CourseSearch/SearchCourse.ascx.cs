@@ -24,6 +24,18 @@ namespace CookingLah.Pages.Shared.CourseSearch
 
         public bool IsLearner { get; set; }
 
+        private int SelectedFoodCultureId
+        {
+            get { return (int?)ViewState["SelectedFoodCultureId"] ?? 0; }
+            set { ViewState["SelectedFoodCultureId"] = value; }
+        }
+
+        protected string SelectedDishName
+        {
+            get { return (string)ViewState["SelectedDishName"] ?? ""; }
+            set { ViewState["SelectedDishName"] = value; }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -49,6 +61,16 @@ namespace CookingLah.Pages.Shared.CourseSearch
             if (!IsPostBack)
             {
                 LoadCategories();
+                int foodCultureId;
+                if (int.TryParse(Request.QueryString["foodCultureId"], out foodCultureId) && foodCultureId > 0)
+                {
+                    SelectedFoodCultureId = foodCultureId;
+                    DataTable dish = Read("SELECT DishName FROM FoodCultures WHERE FoodCultureID=@foodCultureId",
+                        Parameter("@foodCultureId", foodCultureId));
+                    SelectedDishName = dish.Rows.Count > 0
+                        ? Convert.ToString(dish.Rows[0]["DishName"])
+                        : "Unavailable traditional dish";
+                }
             }
 
             // Rebind so Repeater commands are available on postback.
@@ -100,6 +122,7 @@ namespace CookingLah.Pages.Shared.CourseSearch
                 INNER JOIN Users u ON u.UserID=c.InstructorID
                  LEFT JOIN CourseProgress cp ON cp.CourseID=c.CourseID AND cp.LearnerID=@learnerId
                 WHERE c.Status='Published'
+                  AND (@foodCultureId=0 OR c.FoodCultureID=@foodCultureId)
                   AND (@categoryId=0 OR c.CategoryID=@categoryId)
                   AND (@difficulty='' OR c.DifficultyLevel=@difficulty)
                   AND (@searchText='' OR c.Title LIKE '%' + @searchText + '%'
@@ -107,12 +130,13 @@ namespace CookingLah.Pages.Shared.CourseSearch
                        OR cat.CategoryName LIKE '%' + @searchText + '%')
                 ORDER BY c.UpdatedAt DESC,c.CourseID DESC",
                  Parameter("@learnerId", learnerId),
+                 Parameter("@foodCultureId", SelectedFoodCultureId),
                  Parameter("@categoryId", categoryId),
                 Parameter("@difficulty", difficulty),
                 Parameter("@searchText", searchText));
 
             int totalCourses = courses.Rows.Count;
-            btnClearSearch.Visible = searchText.Length > 0 || categoryId > 0 || difficulty.Length > 0;
+            btnClearSearch.Visible = searchText.Length > 0 || categoryId > 0 || difficulty.Length > 0 || SelectedFoodCultureId > 0;
             int pageCount = Math.Max(1, (totalCourses + PageSize - 1) / PageSize);
             CurrentPage = Math.Min(CurrentPage, pageCount - 1);
 
@@ -202,6 +226,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
 
         protected void btnClearSearch_Click(object sender, EventArgs e)
         {
+            SelectedFoodCultureId = 0;
+            SelectedDishName = "";
             txtSearch.Text = "";
             ddlCategory.SelectedIndex = 0;
             ddlDifficulty.SelectedIndex = 0;

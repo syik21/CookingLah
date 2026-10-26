@@ -1,4 +1,4 @@
-<%@ Page Title="Learner Dashboard | Cooking LAH" Language="C#" MasterPageFile="~/Pages/Learner/Learner.Master" AutoEventWireup="true" CodeBehind="LearnerDashboard.aspx.cs" Inherits="CookingLah.Pages.Learner.LearnerDashboard" %>
+﻿<%@ Page Title="Learner Dashboard | Cooking LAH" Language="C#" MasterPageFile="~/Pages/Learner/Learner.Master" AutoEventWireup="true" CodeBehind="LearnerDashboard.aspx.cs" Inherits="CookingLah.Pages.Learner.LearnerDashboard" %>
 <asp:Content ID="DashboardHead" ContentPlaceHolderID="LearnerHead" runat="server">
     <link href="<%= ResolveUrl("~/Pages/Learner/CSS/learnerDashboard.css") %>" rel="stylesheet" />
 </asp:Content>
@@ -113,7 +113,7 @@
     </section>
     <section class="scrap-paper food-map-cta" aria-labelledby="foodMapTitle">
         <div><p class="handwritten-note">For your next kitchen adventure...</p><h2 id="foodMapTitle">A world of flavour awaits</h2><p>Discover traditional dishes, ingredients, and cooking methods from different countries.</p></div>
-        <asp:Button ID="btnExploreFoodMap" runat="server" Text="Explore Food Map" CssClass="btn btn-primary" OnClick="ExploreFoodMap_Click" CausesValidation="false" ToolTip="Food Culture Map page coming soon" />
+        <asp:Button ID="btnExploreFoodMap" runat="server" Text="Explore Food Map" CssClass="btn btn-primary" OnClick="ExploreFoodMap_Click" CausesValidation="false" />
     </section>
 </div>
 <%-- FRONTEND PREVIEW ONLY. Inline XML keeps sample data out of backend loaders.

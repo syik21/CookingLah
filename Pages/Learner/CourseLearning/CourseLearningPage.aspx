@@ -5,7 +5,7 @@
 <%@ Import Namespace="System.Web" %>
 
 <asp:Content ID="LearningHead" ContentPlaceHolderID="LearnerHead" runat="server">
-    <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.css?v=20261027b") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/Lesson/LessonContent.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/QuizSection/QuizSection.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/SubmitActivity/SubmitActivity.css") %>" rel="stylesheet" />
@@ -25,7 +25,9 @@
                 Back to My Courses
             </a>
 
+            <asp:Image ID="imgCourseThumbnail" runat="server" CssClass="learning-course-thumbnail" />
             <header class="learning-course-header">
+                
                 <div class="learning-course-heading">
                     <p class="learning-eyebrow">Your learning kitchen</p>
                     <h1><asp:Literal ID="litCourseTitle" runat="server" Mode="Encode" /></h1>

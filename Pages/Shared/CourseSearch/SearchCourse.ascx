@@ -59,6 +59,9 @@
         <div class="results-heading">
             <div>
                 <h2 id="courseResultsTitle">Courses to cook through</h2>
+                <% if (!string.IsNullOrEmpty(SelectedDishName)) { %>
+                    <p>Traditional dish: <strong><%= Server.HtmlEncode(SelectedDishName) %></strong></p>
+                <% } %>
                 <asp:Label ID="lblResultCount" runat="server" CssClass="results-count" aria-live="polite" />
             </div>
         </div>

@@ -1,0 +1,66 @@
+.food-map-shell { display:grid; grid-template-columns:minmax(260px,320px) minmax(0,1fr); gap:20px; align-items:stretch; width:100%; padding:20px; margin:0 auto; max-width:1500px; color:var(--color-ink); }
+.master-main .food-map-shell { padding:0; }
+.food-map-canvas { grid-column:2; grid-row:1; min-width:0; }
+.food-map-canvas .cl-world-map { height:600px; }
+.food-map-panel { grid-column:1; grid-row:1; display:flex; flex-direction:column; min-width:0; min-height:0; height:600px; padding:20px; border:2px solid var(--color-ink); border-radius:18px; background:#fffdf7; }
+.food-map-panel__header { margin-bottom:18px; }
+.food-map-panel__eyebrow { margin:0 0 8px; font-size:11px; font-weight:700; color:var(--color-text-soft); }
+.food-map-panel__title { margin:0; font:400 30px/1.15 var(--font-hand); }
+.food-map-panel__controls { display:grid; gap:8px; }
+.food-map-label { font-size:12px; font-weight:700; margin-top:4px; }
+.food-map-select,.food-map-search__input { width:100%; min-width:0; min-height:44px; border:1px solid var(--color-ink); border-radius:6px; padding:10px; background:white; color:var(--color-ink); font:inherit; font-size:12px; }
+.food-map-search { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
+.food-map-search__button { min-height:44px; padding:10px; font-size:12px; box-shadow:none; }
+.food-map-panel__summary { margin:20px 0 12px; padding-top:16px; border-top:1px solid var(--color-tan); }
+.food-map-country-name { display:block; font-weight:700; font-size:16px; }
+.food-map-dish-count { display:block; font-size:11px; color:var(--color-text-soft); margin-top:4px; }
+.food-map-results { display:flex; flex-direction:column; flex:1; min-height:0; overflow:auto; gap:10px; padding-right:4px; scrollbar-width:thin; }
+.food-dish-card { display:grid; grid-template-columns:68px minmax(0,1fr); gap:12px; flex-shrink:0; padding:10px; border:1px solid var(--color-tan); border-radius:8px; background:#fff; }
+.food-dish-card__image-wrap { height:74px; overflow:hidden; border-radius:5px; background:var(--color-tan-light); }
+.food-dish-card__image { display:block; width:100%; height:100%; object-fit:cover; }
+.food-dish-card__body { min-width:0; }
+.food-dish-card__title { margin:0 0 6px; font:400 22px/1.1 var(--font-hand); text-transform:none; overflow-wrap:anywhere; }
+.food-dish-card__description { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; margin:0; color:var(--color-text-soft); font-size:11px; line-height:1.6; }
+.food-map-empty { padding:24px 8px; text-align:center; }
+.food-map-empty__icon { display:none; }
+.food-map-empty h2 { font:400 28px/1.2 var(--font-hand); margin:0 0 10px; }
+.food-map-empty p { font-size:12px; color:var(--color-text-soft); }
+.food-map-pagination { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding-top:14px; margin-top:14px; border-top:1px solid var(--color-tan); }
+.food-map-pagination__button { font-size:11px; padding:8px 10px; min-height:44px; border-width:1px; box-shadow:none; }
+.food-map-pagination__info { font-size:11px; }
+.food-map-shell :is(input,select,a):focus-visible { outline:3px solid var(--color-ink); outline-offset:3px; }
+
+
+/* Keep the page stationary; only the dish list scrolls. */
+body.food-map-page-active { overflow:hidden; }
+.food-map-page-active #siteMain,
+.food-map-page-active .master-main { padding:0; margin:0; max-width:none; }
+.food-map-page-active .master-layout { min-height:0; }
+.food-map-shell { position:relative; display:block; max-width:none; padding:0; height:calc(100vh - var(--food-map-top, 100px)); height:calc(100dvh - var(--food-map-top, 100px)); overflow:hidden; }
+.food-map-canvas { position:absolute; inset:0; }
+.food-map-canvas .cl-world-map { height:100%; border:0; border-radius:0; grid-template-rows:minmax(0,1fr); }
+.food-map-canvas .cl-world-map__heading { display:none; }
+.food-map-canvas .cl-world-map__footer { position:absolute; right:16px; bottom:12px; padding:0; border:0; }
+.food-map-canvas .cl-world-map__footer p { display:none; }
+.food-map-panel-toggle { position:absolute; top:16px; left:16px; min-height:44px; padding:8px 14px; box-shadow:none; }
+.food-map-panel { position:absolute; top:68px; bottom:76px; left:16px; width:320px; max-width:calc(100% - 32px); height:auto; padding:16px; }
+.food-map-panel__header { margin-bottom:10px; }
+.food-map-panel__title { font-size:26px; }
+.food-map-panel__summary { margin:12px 0 10px; padding-top:10px; }
+.food-map-results { overflow:auto; overscroll-behavior:contain; }
+.food-map-dish-list { display:flex; flex-direction:column; gap:10px; }
+.food-map-shell [hidden] { display:none !important; }
+.food-map-shell :is(input,select,button):focus-visible { outline:3px solid var(--color-ink); outline-offset:3px; }
+.food-map-pagination__button:disabled { opacity:.45; cursor:not-allowed; }
+
+
+@media(max-width:700px) {
+    .food-map-panel-toggle { top:10px; left:10px; }
+    .food-map-panel { top:62px; left:10px; bottom:auto; max-height:calc(58% - 52px); width:290px; max-width:calc(100% - 20px); padding:12px; }
+    .food-map-panel__header { display:none; }
+    .food-map-panel__controls { gap:4px; }
+    .food-map-panel__summary { margin:8px 0; padding-top:8px; }
+    .food-map-pagination { margin-top:8px; padding-top:8px; }
+}
+.food-dish-card__explore { display:inline-flex; align-items:center; min-height:44px; margin-top:4px; color:var(--color-ink); font-size:12px; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.food-dish-card__explore:hover { text-decoration-thickness:2px; }

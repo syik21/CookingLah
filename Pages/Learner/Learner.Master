@@ -1,4 +1,4 @@
-<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Learner.Master.cs" Inherits="CookingLah.Pages.Learner.LearnerMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Learner.Master.cs" Inherits="CookingLah.Pages.Learner.LearnerMaster" %>
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
@@ -36,7 +36,7 @@
                 <a runat="server" href="~/Pages/Learner/LearnerDashboard.aspx" class="master-nav-item" data-page="LearnerDashboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10H3ZM9 20v-7h6v7" /></svg><span>Dashboard</span></a>
                 <%-- Placeholder destinations are intentionally disabled until those pages exist. --%>
                 <p class="master-nav-label">Explore</p>
-                <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m2 5 7-3 6 3 7-3v17l-7 3-6-3-7 3ZM9 2v17M15 5v17" /></svg><span>Food culture map</span></a>
+                <a runat="server" href="~/Pages/Learner/Map/Map.aspx" class="master-nav-item" data-page="Map"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m2 5 7-3 6 3 7-3v17l-7 3-6-3-7 3ZM9 2v17M15 5v17" /></svg><span>Food culture map</span></a>
                 <a runat="server" class="master-nav-item" data-page="SearchCoursePage" href="~/Pages/Learner/SearchCourse/SearchCoursePage.aspx"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6" /><path d="m15 15 6 6" /></svg><span>Explore courses</span></a>
                 <p class="master-nav-label">Learning</p>
                 <a runat="server" class="master-nav-item" data-page="LearnerMyCourse" href="~/Pages/Learner/MyCourse/LearnerMyCourse.aspx"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v16M12 5C8 2 4 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-2-1-6-2-10 1Z" /></svg><span>My courses</span></a>

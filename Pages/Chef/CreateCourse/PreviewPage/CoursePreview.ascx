@@ -1,4 +1,5 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CoursePreview.ascx.cs" Inherits="CookingLah.Pages.Chef.CreateCourse.PreviewPage.CoursePreview" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CoursePreview.ascx.cs" Inherits="CookingLah.Pages.Chef.CreateCourse.PreviewPage.CoursePreview" %>
+<%@ Register Src="~/Pages/Shared/LessonBlocks/LessonBlocks.ascx" TagPrefix="shared" TagName="LessonBlocks" %>
 <div class="course-preview">
     <p class="builder-hint">Review the saved version of your course. Go back to a step to make changes.</p>
     <section class="preview-section">
@@ -18,10 +19,8 @@
     </section>
     <section class="preview-section"><div class="preview-section-heading"><h3>Lessons</h3><button type="button" class="btn preview-expand" hidden>Expand lesson details</button></div>
         <asp:Literal ID="litLessonsEmpty" runat="server" Text="No lessons saved yet." Mode="Encode" />
-        <asp:Repeater ID="rptPreviewLessons" runat="server"><ItemTemplate>
-            <details class="preview-lesson"><summary><%#: Eval("LessonOrder") %>. <%#: Eval("Title") %></summary><p class="preview-copy"><%#: Eval("Description") %></p><p class="preview-copy"><%#: Eval("Instructions") %></p>
-            <asp:Image runat="server" CssClass="preview-photo" ImageUrl='<%# CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("LessonImage"))) %>' Visible='<%# !string.IsNullOrEmpty(Convert.ToString(Eval("LessonImage"))) %>' AlternateText="Lesson photo" />
-            <asp:HyperLink runat="server" NavigateUrl='<%# CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("LessonVideo"))) %>' Visible='<%# !string.IsNullOrEmpty(Convert.ToString(Eval("LessonVideo"))) %>' Text="View lesson video" Target="_blank" rel="noopener" /></details>
+        <asp:Repeater ID="rptPreviewLessons" runat="server" OnItemDataBound="Lesson_ItemDataBound"><ItemTemplate>
+            <details class="preview-lesson"><summary><%#: Eval("LessonOrder") %>. <%#: Eval("Title") %></summary><p class="preview-copy"><%#: Eval("Description") %></p><shared:LessonBlocks ID="LessonBlocks" runat="server" /></details>
         </ItemTemplate></asp:Repeater>
     </section>
     <section class="preview-section"><h3>Quiz</h3><asp:Literal ID="litQuizEmpty" runat="server" Text="No quiz included." Mode="Encode" />

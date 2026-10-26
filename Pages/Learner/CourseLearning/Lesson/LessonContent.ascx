@@ -1,4 +1,5 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LessonContent.ascx.cs" Inherits="CookingLah.Pages.Learner.CourseLearning.Lesson.LessonContent" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LessonContent.ascx.cs" Inherits="CookingLah.Pages.Learner.CourseLearning.Lesson.LessonContent" %>
+<%@ Register Src="~/Pages/Shared/LessonBlocks/LessonBlocks.ascx" TagPrefix="shared" TagName="LessonBlocks" %>
 
 <asp:Panel ID="pnlLessonUnavailable" runat="server" Visible="false" CssClass="lesson-empty">
     <h2>Lesson unavailable</h2>
@@ -12,19 +13,7 @@
         <p class="lesson-description"><asp:Literal ID="litLessonDescription" runat="server" Mode="Encode" /></p>
     </header>
 
-    <asp:Image ID="imgLesson" runat="server" CssClass="lesson-image" Visible="false" />
-
-    <asp:Panel ID="pnlLessonVideo" runat="server" CssClass="lesson-video" Visible="false">
-        <video controls preload="metadata" aria-label="Lesson video">
-            <asp:Literal ID="litLessonVideoSource" runat="server" />
-            Your browser does not support video playback.
-        </video>
-    </asp:Panel>
-
-    <section class="lesson-instructions" aria-labelledby="lessonInstructionsTitle">
-        <h3 id="lessonInstructionsTitle">What to do</h3>
-        <asp:Literal ID="litInstructions" runat="server" Mode="Encode" />
-    </section>
+    <shared:LessonBlocks ID="LessonBlocks" runat="server" />
 
     <asp:Panel ID="pnlLessonCompletionNote" runat="server" Visible="false" CssClass="lesson-completion-note" role="status">
         This lesson is complete. Your progress is saved to your account.

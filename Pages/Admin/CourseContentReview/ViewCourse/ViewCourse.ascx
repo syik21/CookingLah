@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ViewCourse.ascx.cs" Inherits="CookingLah.Pages.Admin.CourseContentReview.ViewCourse.ViewCourse" %>
+<%@ Register Src="~/Pages/Shared/LessonBlocks/LessonBlocks.ascx" TagPrefix="shared" TagName="LessonBlocks" %>
 
 <div class="course-review">
 
@@ -110,23 +111,13 @@
             <h2>Lessons</h2>
             <asp:Literal ID="litLessonsEmpty" runat="server" Text="No lessons have been added." />
 
-            <asp:Repeater ID="rptLessons" runat="server">
+            <asp:Repeater ID="rptLessons" runat="server" OnItemDataBound="Lesson_ItemDataBound">
                 <ItemTemplate>
                     <article class="review-content-item">
                         <p class="review-eyebrow">Lesson <%#: Eval("LessonOrder") %></p>
                         <h3><%#: Eval("Title") %></h3>
                         <p class="review-copy"><%#: Eval("Description") %></p>
-                        <h4>Instructions</h4>
-                        <p class="review-copy"><%#: Eval("Instructions") %></p>
-                        <asp:Image runat="server" CssClass="review-photo"
-                            ImageUrl='<%# MediaUrl(Eval("LessonImage")) %>'
-                            Visible='<%# MediaUrl(Eval("LessonImage")).Length > 0 %>'
-                            AlternateText="Lesson photo" />
-                        <asp:PlaceHolder runat="server" Visible='<%# MediaUrl(Eval("LessonVideo")).Length > 0 %>'>
-                            <button type="button" class="btn review-video" data-video-open=""
-                                data-video-url='<%#: MediaUrl(Eval("LessonVideo")) %>'
-                                data-video-title='<%#: Eval("Title") %>'>Watch lesson video</button>
-                        </asp:PlaceHolder>
+                        <shared:LessonBlocks ID="LessonBlocks" runat="server" />
                     </article>
                 </ItemTemplate>
             </asp:Repeater>

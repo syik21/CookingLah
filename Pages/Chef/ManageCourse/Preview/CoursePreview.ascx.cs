@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Web.UI.WebControls;
 using static CookingLah.Pages.Chef.CreateCourse.CourseBuilderData;
@@ -9,6 +9,17 @@ namespace CookingLah.Pages.Chef.ManageCourse.Preview
     public partial class CoursePreview : System.Web.UI.UserControl
     {
         private DataTable previewOptions;
+        private DataTable lessonBlocks;
+
+        protected void Lesson_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+            var lesson = (DataRowView)e.Item.DataItem;
+            var blocks = (CookingLah.Pages.Shared.LessonBlocks.LessonBlocks)e.Item.FindControl("LessonBlocks");
+            blocks.BindBlocks(lessonBlocks, Convert.ToInt32(lesson["LessonID"]));
+        }
+
+
 
         public void LoadPreview(int courseId)
         {
@@ -31,6 +42,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Preview
             imgCourse.ImageUrl = MediaUrl(Convert.ToString(course["Thumbnail"]));
             imgCourse.Visible = imgCourse.ImageUrl.Length > 0;
             BindSection(rptRecipe, litRecipeEmpty, ReadDraftSection(courseId, "CourseRecipes", "SELECT * FROM CourseRecipes WHERE CourseID=@id", Parameter("@id", courseId)));
+            lessonBlocks = ReadDraftSection(courseId, "LessonContent", "SELECT lc.* FROM LessonContent lc JOIN Lessons l ON l.LessonID=lc.LessonID WHERE l.CourseID=@id", Parameter("@id", courseId));
             BindSection(rptPreviewLessons, litLessonsEmpty, ReadDraftSection(courseId, "Lessons", "SELECT * FROM Lessons WHERE CourseID=@id ORDER BY LessonOrder", Parameter("@id", courseId)));
             var quizzes = ReadDraftSection(courseId, "Quizzes", "SELECT * FROM Quizzes WHERE CourseID=@id", Parameter("@id", courseId));
             if (!quizzes.Columns.Contains("QuestionCount")) quizzes.Columns.Add("QuestionCount", typeof(int));

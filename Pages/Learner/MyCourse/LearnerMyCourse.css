@@ -387,7 +387,7 @@
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: var(--color-lime);
+    background: var(--color-primary);
 }
 
 .my-course-facts {

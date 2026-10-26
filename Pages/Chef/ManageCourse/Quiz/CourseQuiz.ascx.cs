@@ -1,409 +1,308 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
-using static CookingLah.Pages.Chef.CreateCourse.CourseBuilderData;
 using static CookingLah.Pages.Chef.ManageCourse.CourseManagementData;
 
 namespace CookingLah.Pages.Chef.ManageCourse.Quiz
 {
     public partial class CourseQuiz : CourseManagementControl
     {
-        private int QuizId { get { return (int?)ViewState["QuizId"] ?? 0; } set { ViewState["QuizId"] = value; } }
-        private int QuestionId { get { return (int?)ViewState["QuestionId"] ?? 0; } set { ViewState["QuestionId"] = value; } }
-        private int CurrentPage { get { return (int?)ViewState["CurrentPage"] ?? 0; } set { ViewState["CurrentPage"] = value; } }
-        private bool DeleteWholeQuiz { get { return (bool?)ViewState["DeleteWholeQuiz"] ?? false; } set { ViewState["DeleteWholeQuiz"] = value; } }
-        private DataTable Options { get { return (DataTable)ViewState["Options"]; } set { ViewState["Options"] = value; } }
+        public int SelectionId { get; private set; }
+        protected int QuestionCount { get; private set; }
+        protected int OptionCount { get; private set; }
         protected string AnswerGroup { get { return UniqueID + "_correct"; } }
+        private CourseReviewDraft draft;
+        private int quizId;
+        private string structure;
 
-        private DataTable GetQuiz()
+        protected override void OnInit(EventArgs e)
         {
-            var quizzes = ReadDraftSection(CourseId, "Quizzes", "SELECT * FROM Quizzes WHERE CourseID=@course ORDER BY QuizID", Parameter("@course", CourseId));
-            if (!HasChangesAwaitingReview(CourseId))
-                return Read("SELECT TOP 1 q.*,(SELECT COUNT(*) FROM QuizQuestions WHERE QuizID=q.QuizID) AS QuestionCount FROM Quizzes q WHERE CourseID=@course ORDER BY QuizID", Parameter("@course", CourseId));
-            var result = quizzes.Clone();
-            if (!result.Columns.Contains("QuestionCount")) result.Columns.Add("QuestionCount", typeof(int));
-            if (quizzes.Rows.Count > 0)
-            {
-                var quiz = quizzes.Rows[0];
-                var row = result.NewRow();
-                foreach (DataColumn column in quizzes.Columns) row[column.ColumnName] = quiz[column.ColumnName];
-                row["QuestionCount"] = GetDraftQuestions(Convert.ToInt32(quiz["QuizID"])).Rows.Count;
-                result.Rows.Add(row);
-            }
-            return result;
-        }
-        private DataTable GetDraftQuestions(int quizId)
-        {
-            if (!HasChangesAwaitingReview(CourseId))
-                return Read("SELECT qq.* FROM QuizQuestions qq WHERE qq.QuizID=@quiz ORDER BY qq.QuestionOrder,qq.QuestionID", Parameter("@quiz", quizId));
-            var all = ReadDraftSection(CourseId, "QuizQuestions", "", new System.Data.SqlClient.SqlParameter[0]);
-            var result = all.Clone();
-            foreach (DataRow row in all.Rows)
-                if (Convert.ToInt32(row["QuizID"]) == quizId) result.ImportRow(row);
-            return result;
-        }
-        public void LoadQuiz(int courseId)
-        {
-            var quiz = GetQuiz();
-            rptQuiz.DataSource = quiz;
-            rptQuiz.DataBind();
-            pnlEmpty.Visible = quiz.Rows.Count == 0;
-            pnlQuestions.Visible = quiz.Rows.Count > 0;
-            btnEditQuiz.Visible = btnDeleteQuiz.Visible = CanEdit && quiz.Rows.Count > 0;
-            btnAddQuiz.Visible = btnAddQuestion.Visible = CanEdit;
-            if (quiz.Rows.Count > 0) BindQuestions(Convert.ToInt32(quiz.Rows[0]["QuizID"]));
-        }
-        private void BindQuestions(int quizId)
-        {
-            var rows = GetDraftQuestions(quizId);
-            int count = rows.Rows.Count;
-            int pages = Math.Max(1, (count + 4) / 5);
-            CurrentPage = Math.Min(CurrentPage, pages - 1);
-            rptQuestions.DataSource = new PagedDataSource { DataSource = rows.DefaultView, AllowPaging = true, PageSize = 5, CurrentPageIndex = CurrentPage };
-            rptQuestions.DataBind();
-            pnlEmptyQuestions.Visible = count == 0;
-            pnlPager.Visible = count > 5;
-            btnPrevious.Enabled = CurrentPage > 0;
-            btnNext.Enabled = CurrentPage < pages - 1;
-            lblPage.Text = string.Format("Showing Questions {0}-{1} of {2}. Page {3} of {4}", CurrentPage * 5 + 1, Math.Min(count, (CurrentPage + 1) * 5), count, CurrentPage + 1, pages);
-        }
-        protected void rptQuestions_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
-            int questionId = Convert.ToInt32(((DataRowView)e.Item.DataItem)["QuestionID"]);
-            var repeater = (Repeater)e.Item.FindControl("rptQuestionOptions");
-            DataTable options;
-            if (HasChangesAwaitingReview(CourseId))
-            {
-                var all = ReadDraftSection(CourseId, "QuizOptions", "", new System.Data.SqlClient.SqlParameter[0]);
-                options = all.Clone();
-                foreach (DataRow row in all.Rows) if (Convert.ToInt32(row["QuestionID"]) == questionId) options.ImportRow(row);
-            }
-            else options = Read("SELECT * FROM QuizOptions WHERE QuestionID=@question ORDER BY OptionID", Parameter("@question", questionId));
-            repeater.DataSource = options;
-            repeater.DataBind();
-        }
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!Visible || IsPostBack) return;
-            int page;
-            if (int.TryParse(Request.QueryString["page"], out page)) CurrentPage = Math.Max(0, page);
-        }
-
-        protected override void OnPreRender(EventArgs e)
-        {
-            if (Visible) Run(() =>
-            {
-                LoadQuiz(CourseId);
-                if (pnlQuestionEditor.Visible) BindOptions();
-            });
-            base.OnPreRender(e);
-        }
-        private void BindOptions() { rptEditOptions.DataSource = Options; rptEditOptions.DataBind(); }
-        protected void btnCancel_Click(object sender, EventArgs e) { pnlQuizEditor.Visible = pnlQuestionEditor.Visible = pnlDelete.Visible = false; }
-        protected void btnEditQuiz_Click(object sender, EventArgs e)
-        {
-            Run(() =>
-            {
-                EnsureEditable();
-                var rows = GetQuiz();
-                DataRow quiz = rows.Rows.Count == 0 ? null : rows.Rows[0];
-                QuizId = quiz == null ? 0 : Convert.ToInt32(quiz["QuizID"]);
-                txtQuizTitle.Text = quiz == null ? "" : Convert.ToString(quiz["Title"]);
-                txtQuizDescription.Text = quiz == null ? "" : Convert.ToString(quiz["Description"]);
-                txtPassingScore.Text = quiz == null ? "60" : Convert.ToString(quiz["PassingScore"]);
-                litQuizEditorTitle.Text = QuizId == 0 ? "Add Quiz" : "Edit Quiz";
-                pnlQuizEditor.Visible = true;
-            });
-        }
-        protected void btnSaveQuiz_Click(object sender, EventArgs e)
-        {
-            if (!pnlQuizEditor.Visible) return;
-            Run(() =>
-            {
-                EnsureEditable();
-                string title = Required(txtQuizTitle.Text, "a quiz title", 150);
-                string description = Optional(txtQuizDescription.Text, "the quiz description", 500);
-                int score;
-                if (!int.TryParse(txtPassingScore.Text, out score) || score < 0 || score > 100) throw new InvalidOperationException("Enter a passing score between 0 and 100.");
-                if (CanEdit)
-                {
-                    var draft = GetReviewDraft(CourseId, true);
-                    DataRow quiz = QuizId == 0 ? null : CourseReviewDraft.FindRow(draft.Quizzes, "QuizID", QuizId);
-                    if (QuizId != 0 && quiz == null) throw new InvalidOperationException("This quiz no longer exists. Reload the page to edit it.");
-                    if (quiz == null)
-                    {
-                        if (draft.Quizzes.Rows.Count > 0)
-                            throw new InvalidOperationException("A quiz already exists. Reload the page to edit it.");
-                        quiz = draft.Quizzes.NewRow(); quiz["QuizID"] = CourseReviewDraft.NewId(draft.Quizzes, "QuizID"); quiz["CourseID"] = CourseId; draft.Quizzes.Rows.Add(quiz);
-                    }
-                    quiz["Title"] = title; quiz["Description"] = description; quiz["PassingScore"] = score;
-                    Saved("Quiz changes saved.", CurrentPage);
-                    return;
-                }
-                EditCourse(CourseId, (connection, transaction) =>
-                {
-                    if (QuizId == 0 && Execute(connection, transaction, "SELECT TOP 1 QuizID FROM Quizzes WHERE CourseID=@course", Parameter("@course", CourseId)) != null)
-                        throw new InvalidOperationException("A quiz already exists. Reload the page to edit it.");
-                    if (QuizId > 0) EnsureQuiz(connection, transaction);
-                    string sql = QuizId == 0
-                        ? "INSERT INTO Quizzes (CourseID,Title,Description,PassingScore) VALUES (@course,@title,@description,@score)"
-                        : "UPDATE Quizzes SET Title=@title,Description=@description,PassingScore=@score WHERE QuizID=@quiz AND CourseID=@course";
-                    Execute(connection, transaction, sql, Parameter("@course", CourseId), Parameter("@quiz", QuizId), Parameter("@title", title), Parameter("@description", description), Parameter("@score", score));
+            base.OnInit(e);
+            Page.InitComplete += delegate {
+                Run(() => {
+                    draft = (CanEdit ? GetReviewDraft(CourseId, false) : null) ?? CourseReviewDraft.Load(CourseId);
+                    int selected;
+                    int.TryParse(Request.Form[hfQuestion.UniqueID] ?? Request.QueryString["questionId"], out selected);
+                    SelectionId = selected;
+                    BindBuilder();
                 });
-                Saved("Quiz saved successfully.", CurrentPage);
+            };
+            Page.Load += delegate {
+                if (!IsPostBack || !CanEdit) return;
+                string target = Request.Form["__EVENTTARGET"] ?? "";
+                bool ownAction = target.StartsWith(UniqueID + "$", StringComparison.Ordinal) ||
+                    Request.Form.AllKeys.Any(key => key != null && key.StartsWith(UniqueID + "$btn", StringComparison.Ordinal));
+                bool courseAction = Request.Form.AllKeys.Any(key => key != null &&
+                    (key.EndsWith("$btnCancel", StringComparison.Ordinal) || key.EndsWith("$btnSaveChanges", StringComparison.Ordinal)));
+                if (!ownAction && !courseAction) Run(() => CaptureQuiz(false));
+            };
+        }
+
+        protected string QuestionTitle(object value)
+        {
+            string text = Convert.ToString(value);
+            return string.IsNullOrWhiteSpace(text) ? "New question" : text;
+        }
+
+        private void BindBuilder()
+        {
+            var quiz = draft.Quizzes.Rows.Count == 0 ? null : draft.Quizzes.Rows[0];
+            quizId = quiz == null ? 0 : (int)quiz["QuizID"];
+            var questions = draft.Questions.Select("QuizID=" + quizId, "QuestionOrder ASC");
+            var question = questions.FirstOrDefault(row => (int)row["QuestionID"] == SelectionId);
+            if (question == null) SelectionId = 0;
+            var options = SelectedOptions();
+            structure = quizId + "|" + string.Join(",", questions.Select(row => row["QuestionID"].ToString())) + "|" +
+                string.Join(",", options.Select(row => row["OptionID"].ToString()));
+            hfStructure.Value = structure;
+            hfQuestion.Value = SelectionId.ToString();
+            QuestionCount = questions.Length;
+            rptQuestions.DataSource = new DataView(draft.Questions) { RowFilter = "QuizID=" + quizId, Sort = "QuestionOrder ASC" };
+            rptQuestions.DataBind();
+            pnlEmpty.Visible = quiz == null;
+            btnAddQuiz.Visible = CanEdit && quiz == null;
+            btnQuizInfo.Visible = quiz != null;
+            btnQuizInfo.CssClass = "qb-info" + (SelectionId == 0 ? " is-selected" : "");
+            btnAddQuestion.Visible = CanEdit && quiz != null;
+            pnlEmptyQuestions.Visible = quiz != null && questions.Length == 0;
+            pnlQuizInfo.Visible = quiz != null && question == null;
+            pnlQuestion.Visible = question != null;
+            pnlQuizFields.Visible = pnlQuestionFields.Visible = btnSave.Visible = CanEdit && quiz != null;
+            pnlQuizView.Visible = pnlQuestionView.Visible = !CanEdit;
+            btnDeleteQuiz.Visible = CanEdit;
+            btnSave.Text = SelectionId == 0 ? "Save Quiz" : "Save Question";
+            if (quiz != null)
+            {
+                txtQuizTitle.Text = litQuizTitle.Text = Convert.ToString(quiz["Title"]);
+                txtQuizDescription.Text = litQuizDescription.Text = Convert.ToString(quiz["Description"]);
+                txtPassingScore.Text = litPassingScore.Text = Convert.ToString(quiz["PassingScore"]);
+            }
+            if (question == null) return;
+            litQuestionNumber.Text = "Question " + question["QuestionOrder"];
+            txtQuestionText.Text = litQuestionText.Text = Convert.ToString(question["QuestionText"]);
+            var view = draft.Options.Clone();
+            foreach (DataRow option in options) view.ImportRow(option);
+            OptionCount = options.Length;
+            rptEditOptions.DataSource = view;
+            rptEditOptions.DataBind();
+            rptViewOptions.DataSource = view;
+            rptViewOptions.DataBind();
+        }
+
+        private DataRow[] SelectedOptions()
+        {
+            // Keep existing answer order; append new temporary options at the end.
+            return draft.Options.Select("QuestionID=" + SelectionId)
+                .OrderBy(row => (int)row["OptionID"] < 0 ? 1 : 0)
+                .ThenBy(row => Math.Abs((int)row["OptionID"]))
+                .ToArray();
+        }
+
+        private void CheckStructure()
+        {
+            if (IsPostBack && Request.Form[hfStructure.UniqueID] != structure)
+                throw new InvalidOperationException("The quiz changed in another tab. Reload before editing.");
+        }
+
+        private void Edit(Action action)
+        {
+            Run(() => {
+                EnsureEditable();
+                CheckStructure();
+                draft = GetReviewDraft(CourseId, true);
+                action();
             });
         }
-        private void EnsureQuiz(System.Data.SqlClient.SqlConnection connection, System.Data.SqlClient.SqlTransaction transaction)
+
+        private void FieldError(Label label, string message)
         {
-            if (Execute(connection, transaction, "SELECT QuizID FROM Quizzes WHERE QuizID=@quiz AND CourseID=@course", Parameter("@quiz", QuizId), Parameter("@course", CourseId)) == null)
-                throw new InvalidOperationException("This quiz no longer exists. Reload the page.");
+            label.Text = message;
+            pnlValidation.Visible = true;
         }
+
+        public bool CaptureQuiz(bool validate)
+        {
+            if (!CanEdit || quizId == 0) return true;
+            EnsureEditable();
+            CheckStructure();
+            draft = GetReviewDraft(CourseId, true);
+            var quiz = CourseReviewDraft.FindRow(draft.Quizzes, "QuizID", quizId);
+            if (quiz == null) throw new InvalidOperationException("Quiz not found in this course.");
+            pnlValidation.Visible = false;
+            errQuizTitle.Text = errQuizDescription.Text = errScore.Text = errQuestion.Text = errOptions.Text = "";
+            if (SelectionId == 0)
+            {
+                string title = txtQuizTitle.Text.Trim(), description = txtQuizDescription.Text.Trim();
+                int score;
+                if ((validate && title.Length == 0) || title.Length > 150) FieldError(errQuizTitle, "Enter a quiz title within 150 characters.");
+                if (description.Length > 500) FieldError(errQuizDescription, "Keep the description within 500 characters.");
+                if (!int.TryParse(txtPassingScore.Text, out score) || score < 0 || score > 100) FieldError(errScore, "Enter a passing score between 0 and 100.");
+                if (pnlValidation.Visible) return false;
+                quiz["Title"] = title;
+                quiz["Description"] = description;
+                quiz["PassingScore"] = score;
+            }
+            else
+            {
+                var question = CourseReviewDraft.FindRow(draft.Questions, "QuestionID", SelectionId);
+                if (question == null || (int)question["QuizID"] != quizId) throw new InvalidOperationException("Question not found in this quiz.");
+                string text = txtQuestionText.Text.Trim();
+                var options = SelectedOptions();
+                string correct = Request.Form[AnswerGroup];
+                if (validate && text.Length == 0) FieldError(errQuestion, "Question text is required.");
+                if (validate && (options.Length < 2 || options.Count(row => row["OptionID"].ToString() == correct) != 1))
+                    FieldError(errOptions, "Provide at least two options and select one correct answer.");
+                var texts = new string[options.Length];
+                foreach (RepeaterItem item in rptEditOptions.Items)
+                {
+                    texts[item.ItemIndex] = ((TextBox)item.FindControl("txtOptionText")).Text.Trim();
+                    var error = (Label)item.FindControl("errOption");
+                    error.Text = "";
+                    if ((validate && texts[item.ItemIndex].Length == 0) || texts[item.ItemIndex].Length > 500)
+                        FieldError(error, "Enter an answer within 500 characters.");
+                }
+                if (pnlValidation.Visible) return false;
+                question["QuestionText"] = text;
+                for (int i = 0; i < options.Length; i++)
+                {
+                    options[i]["OptionText"] = texts[i];
+                    options[i]["IsCorrect"] = options[i]["OptionID"].ToString() == correct;
+                }
+            }
+            return true;
+        }
+
+        protected void btnAddQuiz_Click(object sender, EventArgs e)
+        {
+            Edit(() => {
+                if (draft.Quizzes.Rows.Count != 0) throw new InvalidOperationException("A quiz already exists.");
+                var row = draft.Quizzes.NewRow();
+                row["QuizID"] = CourseReviewDraft.NewId(draft.Quizzes, "QuizID");
+                row["CourseID"] = CourseId;
+                row["Title"] = "";
+                row["Description"] = "";
+                row["PassingScore"] = 60;
+                draft.Quizzes.Rows.Add(row);
+                SelectionId = 0;
+                BindBuilder();
+            });
+        }
+
+        protected void btnQuizInfo_Click(object sender, EventArgs e)
+        {
+            Run(() => {
+                CheckStructure();
+                if (CanEdit && !CaptureQuiz(false)) return;
+                SelectionId = 0;
+                BindBuilder();
+            });
+        }
+
         protected void btnAddQuestion_Click(object sender, EventArgs e)
         {
-            Run(() =>
-            {
-                EnsureEditable();
-                var quiz = GetQuiz();
-                if (quiz.Rows.Count == 0) throw new InvalidOperationException("Add a quiz before adding questions.");
-                QuizId = Convert.ToInt32(quiz.Rows[0]["QuizID"]);
-                QuestionId = 0;
-                txtQuestionText.Text = "";
-                Options = new DataTable();
-                Options.Columns.Add("OptionID", typeof(int));
-                Options.Columns.Add("OptionText", typeof(string));
-                Options.Columns.Add("IsCorrect", typeof(bool));
-                AddBlankOption();
-                AddBlankOption();
-                litQuestionEditorTitle.Text = "Add Question";
-                pnlQuestionEditor.Visible = true;
-                BindOptions();
+            Edit(() => {
+                if (quizId == 0 || !CaptureQuiz(false)) return;
+                var row = draft.Questions.NewRow();
+                SelectionId = CourseReviewDraft.NewId(draft.Questions, "QuestionID");
+                row["QuestionID"] = SelectionId;
+                row["QuizID"] = quizId;
+                row["QuestionText"] = "";
+                row["QuestionOrder"] = draft.Questions.Select("QuizID=" + quizId).Length + 1;
+                draft.Questions.Rows.Add(row);
+                AddOption();
+                AddOption();
+                BindBuilder();
+                litState.Text = "New question - unsaved changes";
             });
         }
-        private void AddBlankOption()
+
+        private void AddOption()
         {
-            int key = Options.Rows.Count == 0 ? -1 : Math.Min(-1, Options.AsEnumerable().Min(row => (int)row["OptionID"]) - 1);
-            Options.Rows.Add(key, "", false);
-            Options = Options;
+            var row = draft.Options.NewRow();
+            row["OptionID"] = CourseReviewDraft.NewId(draft.Options, "OptionID");
+            row["QuestionID"] = SelectionId;
+            row["OptionText"] = "";
+            row["IsCorrect"] = false;
+            draft.Options.Rows.Add(row);
         }
-        protected void rptQuestions_ItemCommand(object source, RepeaterCommandEventArgs e)
+
+        protected void rptQuestions_ItemCommand(object sender, RepeaterCommandEventArgs e)
         {
-            Run(() =>
-            {
-                EnsureEditable();
-                int questionId = Convert.ToInt32(e.CommandArgument);
-                DataTable rows;
-                if (HasChangesAwaitingReview(CourseId))
-                {
-                    rows = GetDraftQuestions(QuizId == 0 ? Convert.ToInt32(GetQuiz().Rows[0]["QuizID"]) : QuizId);
-                    var selected = CourseReviewDraft.FindRow(rows, "QuestionID", questionId);
-                    var one = rows.Clone(); if (selected != null) one.ImportRow(selected); rows = one;
-                }
-                else rows = Read("SELECT qq.* FROM QuizQuestions qq JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE qq.QuestionID=@question AND q.CourseID=@course", Parameter("@question", questionId), Parameter("@course", CourseId));
-                if (rows.Rows.Count == 0) throw new InvalidOperationException("This question no longer exists.");
-                QuestionId = questionId;
-                QuizId = Convert.ToInt32(rows.Rows[0]["QuizID"]);
-                if (e.CommandName == "EditQuestion")
-                {
-                    txtQuestionText.Text = Convert.ToString(rows.Rows[0]["QuestionText"]);
-                    if (HasChangesAwaitingReview(CourseId))
-                    {
-                        var allOptions = ReadDraftSection(CourseId, "QuizOptions", "", new System.Data.SqlClient.SqlParameter[0]);
-                        Options = allOptions.Clone();
-                        foreach (DataRow option in allOptions.Rows) if (Convert.ToInt32(option["QuestionID"]) == questionId) Options.ImportRow(option);
-                    }
-                    else Options = Read("SELECT OptionID,OptionText,IsCorrect FROM QuizOptions WHERE QuestionID=@question ORDER BY OptionID", Parameter("@question", questionId));
-                    litQuestionEditorTitle.Text = "Edit Question";
-                    pnlQuestionEditor.Visible = true;
-                    BindOptions();
-                }
+            Run(() => {
+                CheckStructure();
+                if (CanEdit && !CaptureQuiz(false)) return;
+                int id = Convert.ToInt32(e.CommandArgument);
+                var question = CourseReviewDraft.FindRow(draft.Questions, "QuestionID", id);
+                if (question == null || (int)question["QuizID"] != quizId) throw new InvalidOperationException("Question not found in this quiz.");
+                if (e.CommandName == "SelectQuestion") SelectionId = id;
                 else if (e.CommandName == "DeleteQuestion")
                 {
-                    DeleteWholeQuiz = false;
-                    litDeleteTitle.Text = "Delete Question?";
-                    litDeleteDescription.Text = "Delete this question and all its answer options? " + Convert.ToString(rows.Rows[0]["QuestionText"]);
-                    pnlDelete.Visible = true;
+                    EnsureEditable();
+                    draft = GetReviewDraft(CourseId, true);
+                    RemoveQuestion(id);
+                    var remaining = draft.Questions.Select("QuizID=" + quizId, "QuestionOrder ASC");
+                    for (int i = 0; i < remaining.Length; i++) remaining[i]["QuestionOrder"] = i + 1;
+                    if (SelectionId == id) SelectionId = 0;
+                    litState.Text = "Question removed from working copy.";
                 }
+                BindBuilder();
             });
         }
-        private void CaptureOptions()
+
+        private void RemoveQuestion(int id)
         {
-            string correct = Request.Form[AnswerGroup];
-            foreach (RepeaterItem item in rptEditOptions.Items)
-            {
-                DataRow option = Options.Rows[item.ItemIndex];
-                option["OptionText"] = ((TextBox)item.FindControl("txtOptionText")).Text.Trim();
-                option["IsCorrect"] = correct == Convert.ToString(option["OptionID"]);
-            }
-            Options = Options;
+            foreach (DataRow option in draft.Options.Select("QuestionID=" + id)) draft.Options.Rows.Remove(option);
+            draft.Questions.Rows.Remove(CourseReviewDraft.FindRow(draft.Questions, "QuestionID", id));
         }
+
         protected void btnAddOption_Click(object sender, EventArgs e)
         {
-            if (!pnlQuestionEditor.Visible) return;
-            Run(() => { EnsureEditable(); CaptureOptions(); AddBlankOption(); BindOptions(); });
+            Edit(() => { if (SelectionId == 0 || !CaptureQuiz(false)) return; AddOption(); BindBuilder(); });
         }
-        protected void rptEditOptions_ItemCommand(object source, RepeaterCommandEventArgs e)
+
+        protected void rptEditOptions_ItemCommand(object sender, RepeaterCommandEventArgs e)
         {
-            if (!pnlQuestionEditor.Visible) return;
-            Run(() =>
-            {
-                EnsureEditable();
-                CaptureOptions();
-                int key = Convert.ToInt32(e.CommandArgument);
-                var row = Options.AsEnumerable().FirstOrDefault(option => (int)option["OptionID"] == key);
-                if (row != null) Options.Rows.Remove(row);
-                Options = Options;
-                BindOptions();
+            Edit(() => {
+                if (!CaptureQuiz(false)) return;
+                var option = CourseReviewDraft.FindRow(draft.Options, "OptionID", Convert.ToInt32(e.CommandArgument));
+                if (option == null || (int)option["QuestionID"] != SelectionId) throw new InvalidOperationException("Option not found in this question.");
+                if (draft.Options.Select("QuestionID=" + SelectionId).Length <= 2) throw new InvalidOperationException("Keep at least two answer options.");
+                draft.Options.Rows.Remove(option);
+                BindBuilder();
             });
         }
-        protected void btnSaveQuestion_Click(object sender, EventArgs e)
+
+        protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (!pnlQuestionEditor.Visible) return;
-            Run(() =>
-            {
-                EnsureEditable();
-                CaptureOptions();
-                string question = Required(txtQuestionText.Text, "the question text");
-                if (Options.Rows.Count < 2) throw new InvalidOperationException("A question must contain at least two answer options.");
-                if (Options.AsEnumerable().Count(row => (bool)row["IsCorrect"]) != 1) throw new InvalidOperationException("Please select one correct answer.");
-                foreach (DataRow option in Options.Rows) Required(Convert.ToString(option["OptionText"]), "each answer option", 500);
-                if (CanEdit)
-                {
-                    var draft = GetReviewDraft(CourseId, true);
-                    var quiz = CourseReviewDraft.FindRow(draft.Quizzes, "QuizID", QuizId);
-                    if (quiz == null) throw new InvalidOperationException("This quiz no longer exists.");
-                    DataRow questionRow = QuestionId == 0 ? null : CourseReviewDraft.FindRow(draft.Questions, "QuestionID", QuestionId);
-                    if (QuestionId != 0 && questionRow == null) throw new InvalidOperationException("This question no longer exists. Reload the page.");
-                    if (questionRow == null)
-                    {
-                        questionRow = draft.Questions.NewRow();
-                        questionRow["QuestionID"] = CourseReviewDraft.NewId(draft.Questions, "QuestionID");
-                        questionRow["QuizID"] = QuizId;
-                        questionRow["QuestionOrder"] = draft.Questions.Select("QuizID=" + QuizId).Length + 1;
-                        draft.Questions.Rows.Add(questionRow);
-                    }
-                    questionRow["QuestionText"] = question;
-                    var previousOptions = new System.Collections.Generic.List<DataRow>();
-                    foreach (DataRow option in draft.Options.Rows)
-                        if (Convert.ToInt32(option["QuestionID"]) == Convert.ToInt32(questionRow["QuestionID"])) previousOptions.Add(option);
-                    foreach (DataRow previous in previousOptions) draft.Options.Rows.Remove(previous);
-                    foreach (DataRow option in Options.Rows)
-                    {
-                        var stagedOption = draft.Options.NewRow();
-                        stagedOption["OptionID"] = CourseReviewDraft.NewId(draft.Options, "OptionID");
-                        stagedOption["QuestionID"] = questionRow["QuestionID"];
-                        stagedOption["OptionText"] = option["OptionText"];
-                        stagedOption["IsCorrect"] = option["IsCorrect"];
-                        draft.Options.Rows.Add(stagedOption);
-                    }
-                    Saved("Question changes saved.", CurrentPage);
-                    return;
-                }
-                EditCourse(CourseId, (connection, transaction) =>
-                {
-                    EnsureQuiz(connection, transaction);
-                    int questionId = QuestionId;
-                    if (questionId == 0)
-                    {
-                        questionId = Convert.ToInt32(Execute(connection, transaction,
-                            "INSERT INTO QuizQuestions (QuizID,QuestionText,QuestionOrder) OUTPUT INSERTED.QuestionID SELECT @quiz,@text,ISNULL(MAX(QuestionOrder),0)+1 FROM QuizQuestions WHERE QuizID=@quiz",
-                            Parameter("@quiz", QuizId), Parameter("@text", question)));
-                    }
-                    else
-                    {
-                        if (Execute(connection, transaction, "SELECT QuestionID FROM QuizQuestions WHERE QuestionID=@id AND QuizID=@quiz", Parameter("@id", questionId), Parameter("@quiz", QuizId)) == null)
-                            throw new InvalidOperationException("This question no longer exists.");
-                        Execute(connection, transaction, "UPDATE QuizQuestions SET QuestionText=@text WHERE QuestionID=@id AND QuizID=@quiz", Parameter("@text", question), Parameter("@id", questionId), Parameter("@quiz", QuizId));
-                    }
-                    // Keep existing question and option IDs; editing must not remove quiz attempts.
-                    var existingIds = new System.Collections.Generic.List<int>();
-                    using (var command = new System.Data.SqlClient.SqlCommand("SELECT OptionID FROM QuizOptions WHERE QuestionID=@id", connection, transaction))
-                    {
-                        command.Parameters.AddWithValue("@id", questionId);
-                        using (var reader = command.ExecuteReader()) while (reader.Read()) existingIds.Add(reader.GetInt32(0));
-                    }
-                    foreach (int optionId in existingIds)
-                        if (!Options.AsEnumerable().Any(row => (int)row["OptionID"] == optionId))
-                            Execute(connection, transaction, "DELETE FROM QuizOptions WHERE OptionID=@id AND QuestionID=@question", Parameter("@id", optionId), Parameter("@question", questionId));
-                    foreach (DataRow option in Options.Rows)
-                    {
-                        int optionId = (int)option["OptionID"];
-                        if (optionId > 0 && !existingIds.Contains(optionId)) throw new InvalidOperationException("These answer options have changed. Reload the page.");
-                        string sql = optionId > 0
-                            ? "UPDATE QuizOptions SET OptionText=@text,IsCorrect=@correct WHERE OptionID=@id AND QuestionID=@question"
-                            : "INSERT INTO QuizOptions (QuestionID,OptionText,IsCorrect) VALUES (@question,@text,@correct)";
-                        Execute(connection, transaction, sql, Parameter("@question", questionId), Parameter("@id", optionId), Parameter("@text", option["OptionText"]), Parameter("@correct", option["IsCorrect"]));
-                    }
-                });
-                Saved("Question saved successfully.", CurrentPage);
+            Edit(() => {
+                if (!CaptureQuiz(true)) return;
+                BindBuilder();
+                litState.Text = "Saved to working copy. Save Changes saves the course.";
             });
         }
+
         protected void btnDeleteQuiz_Click(object sender, EventArgs e)
         {
-            Run(() =>
-            {
-                EnsureEditable();
-                var rows = GetQuiz();
-                if (rows.Rows.Count == 0) throw new InvalidOperationException("This quiz no longer exists.");
-                QuizId = Convert.ToInt32(rows.Rows[0]["QuizID"]);
-                DeleteWholeQuiz = true;
-                litDeleteTitle.Text = "Delete Quiz?";
-                litDeleteDescription.Text = "This permanently deletes the quiz information, all questions, answer options and learner quiz attempts for " + Convert.ToString(rows.Rows[0]["Title"]) + ".";
-                pnlDelete.Visible = true;
+            Edit(() => {
+                var quiz = CourseReviewDraft.FindRow(draft.Quizzes, "QuizID", quizId);
+                if (quiz == null) throw new InvalidOperationException("Quiz not found in this course.");
+                foreach (DataRow question in draft.Questions.Select("QuizID=" + quizId)) RemoveQuestion((int)question["QuestionID"]);
+                draft.Quizzes.Rows.Remove(quiz);
+                SelectionId = 0;
+                BindBuilder();
+                litState.Text = "Quiz removed from working copy. Save Changes confirms deletion.";
             });
         }
-        protected void btnConfirmDelete_Click(object sender, EventArgs e)
+
+        protected void btnSaveOrder_Click(object sender, EventArgs e)
         {
-            if (!pnlDelete.Visible) return;
-            Run(() =>
-            {
-                if (CanEdit)
-                {
-                    var draft = GetReviewDraft(CourseId, true);
-                    var quiz = CourseReviewDraft.FindRow(draft.Quizzes, "QuizID", QuizId);
-                    if (quiz == null) throw new InvalidOperationException("This quiz no longer exists.");
-                    if (DeleteWholeQuiz)
-                    {
-                        var questionIds = new System.Collections.Generic.List<int>();
-                        foreach (DataRow question in draft.Questions.Rows)
-                            if (Convert.ToInt32(question["QuizID"]) == QuizId) questionIds.Add(Convert.ToInt32(question["QuestionID"]));
-                        foreach (int questionId in questionIds) RemoveDraftQuestion(draft, questionId);
-                        draft.Quizzes.Rows.Remove(quiz);
-                    }
-                    else
-                    {
-                        RemoveDraftQuestion(draft, QuestionId);
-                        var remaining = draft.Questions.Select("QuizID=" + QuizId, "QuestionOrder ASC,QuestionID ASC");
-                        for (int i = 0; i < remaining.Length; i++) remaining[i]["QuestionOrder"] = i + 1;
-                    }
-                    Saved(DeleteWholeQuiz ? "Quiz changes saved." : "Question changes saved.", CurrentPage);
-                    return;
-                }
-                EditCourse(CourseId, (connection, transaction) =>
-                {
-                    EnsureQuiz(connection, transaction);
-                    if (DeleteWholeQuiz)
-                        Execute(connection, transaction, "DELETE FROM Quizzes WHERE QuizID=@quiz AND CourseID=@course", Parameter("@quiz", QuizId), Parameter("@course", CourseId));
-                    else
-                    {
-                        Execute(connection, transaction, "DELETE FROM QuizQuestions WHERE QuestionID=@question AND QuizID=@quiz", Parameter("@question", QuestionId), Parameter("@quiz", QuizId));
-                        NormalizeQuestions(connection, transaction, QuizId);
-                    }
-                });
-                Saved(DeleteWholeQuiz ? "Quiz deleted successfully." : "Question deleted successfully.", CurrentPage);
+            Edit(() => {
+                if (!CaptureQuiz(false)) return;
+                draft.Reorder("questions", quizId, hfOrderIds.Value);
+                BindBuilder();
+                litState.Text = "Question order saved to working copy.";
             });
         }
-        private static void RemoveDraftQuestion(CourseReviewDraft draft, int questionId)
-        {
-            var options = new System.Collections.Generic.List<DataRow>();
-            foreach (DataRow option in draft.Options.Rows)
-                if (Convert.ToInt32(option["QuestionID"]) == questionId) options.Add(option);
-            foreach (DataRow option in options) draft.Options.Rows.Remove(option);
-            var question = CourseReviewDraft.FindRow(draft.Questions, "QuestionID", questionId);
-            if (question != null) draft.Questions.Rows.Remove(question);
-        }
-        protected void btnPrevious_Click(object sender, EventArgs e) { CurrentPage = Math.Max(0, CurrentPage - 1); }
-        protected void btnNext_Click(object sender, EventArgs e) { CurrentPage++; }
     }
 }

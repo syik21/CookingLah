@@ -47,6 +47,38 @@
         });
     }
     window.CookingLahManage = { initSection: initSection };
+    var tabField = document.getElementById("hfActiveTab");
+    var tabs = Array.from(document.querySelectorAll("[data-course-tab]"));
+    var sections = Array.from(document.querySelectorAll("[data-course-section]"));
+    function selectTab(name, moveFocus) {
+        if (!tabs.some(function (tab) { return tab.dataset.courseTab === name; })) return;
+        tabField.value = name;
+        tabs.forEach(function (tab) {
+            var selected = tab.dataset.courseTab === name;
+            tab.setAttribute("aria-selected", String(selected));
+            tab.tabIndex = selected ? 0 : -1;
+            if (selected && moveFocus) tab.focus();
+        });
+        sections.forEach(function (section) {
+            section.hidden = section.dataset.courseSection !== name;
+            if (section.hidden) section.querySelectorAll("video").forEach(function (video) { video.pause(); });
+        });
+        document.dispatchEvent(new CustomEvent("course:tabchange", { detail: name }));
+    }
+    tabs.forEach(function (tab, index) {
+        tab.addEventListener("click", function () { selectTab(tab.dataset.courseTab, false); });
+        tab.addEventListener("keydown", function (event) {
+            var destination;
+            if (event.key === "ArrowRight") destination = (index + 1) % tabs.length;
+            else if (event.key === "ArrowLeft") destination = (index + tabs.length - 1) % tabs.length;
+            else if (event.key === "Home") destination = 0;
+            else if (event.key === "End") destination = tabs.length - 1;
+            else return;
+            event.preventDefault();
+            selectTab(tabs[destination].dataset.courseTab, true);
+        });
+    });
+    if (tabField) selectTab(tabField.value || "overview", false);
     initSection("[id$='pnlDeleteCourse']");
     var feedback = document.getElementById("pnlMessage");
     if (feedback) feedback.focus();
@@ -80,33 +112,51 @@
         updateFoodFields();
     }
 
-    var workspace = document.querySelector("[id$='pnlWorkspace']");
-    var reviewDialog = document.getElementById("publishedChangesDialog");
-    if (workspace && reviewDialog && workspace.dataset.reviewRequired === "true") {
-        var destination = null;
-        var stayButton = reviewDialog.querySelector("[data-review-stay]");
-        reviewDialog.querySelector("[data-review-stay]").addEventListener("click", function () {
-            reviewDialog.close();
+    var preview = document.getElementById("btnPreviewLearner");
+    if (preview) preview.addEventListener("click", function () {
+        document.getElementById("builderFeedback").textContent = "Learner preview will be available later.";
+    });
+    document.querySelectorAll("[data-order-group]").forEach(function (group) {
+        var dragged;
+        function save() {
+            document.getElementById("hfOrderKind").value = group.dataset.orderGroup;
+            document.getElementById("hfOrderParent").value = group.dataset.orderParent || "0";
+            document.getElementById("hfOrderIds").value = Array.from(group.querySelectorAll(":scope > [data-order-id]")).map(function (row) { return row.dataset.orderId; }).join(",");
+            document.getElementById("btnReorder").click();
+        }
+        group.addEventListener("dragstart", function (event) {
+            if (!event.target.matches(".drag-handle") || event.target.hidden) { event.preventDefault(); return; }
+            dragged = event.target.closest("[data-order-id]");
+            event.dataTransfer.setData("text/plain", dragged.dataset.orderId);
+            event.dataTransfer.effectAllowed = "move";
         });
-        var leaveDestination = document.getElementById("reviewLeaveDestination");
-        reviewDialog.querySelector("[data-review-submit]").addEventListener("click", function () {
-            reviewDialog.close();
-            var submitButton = workspace.querySelector("[id$='btnSubmitReview']");
-            if (submitButton) submitButton.click();
-        });
-        document.addEventListener("click", function (event) {
-            var link = event.target.closest("a[href]");
-            if (!link || link.closest(".course-tabs") || link.classList.contains("mc-preview-action") ||
-                link.target === "_blank" || link.hasAttribute("download")) return;
-            var target;
-            try { target = new URL(link.href, document.baseURI); } catch (_) { return; }
-            if (target.origin !== window.location.origin ||
-                (target.pathname === window.location.pathname && target.search === window.location.search && !link.classList.contains("mc-back"))) return;
+        group.addEventListener("dragover", function (event) { if (dragged) event.preventDefault(); });
+        group.addEventListener("drop", function (event) {
+            var target = event.target.closest("[data-order-id]");
+            if (!dragged || !target || target.parentNode !== group) return;
             event.preventDefault();
-            destination = target.pathname + target.search + target.hash;
-            leaveDestination.value = destination;
-            if (!reviewDialog.open) reviewDialog.showModal();
-            stayButton.focus();
-        }, true);
-    }
+            if (target !== dragged) {
+                var after = event.clientY > target.getBoundingClientRect().top + target.offsetHeight / 2;
+                group.insertBefore(dragged, after ? target.nextSibling : target);
+                save();
+            }
+            dragged = null;
+        });
+        group.addEventListener("dragend", function () { dragged = null; });
+        group.addEventListener("click", function (event) {
+            var button = event.target.closest("[data-move]");
+            if (!button) return;
+            var row = button.closest("[data-order-id]");
+            var next = button.dataset.move === "-1" ? row.previousElementSibling : row.nextElementSibling;
+            if (!next) return;
+            group.insertBefore(row, button.dataset.move === "-1" ? next : next.nextSibling);
+            save();
+        });
+    });
+    var dirty = false;
+    document.querySelectorAll(".mc-modal input, .mc-modal textarea, .mc-modal select").forEach(function (input) {
+        input.addEventListener("change", function () { dirty = true; document.getElementById("builderFeedback").textContent = "Unsaved changes"; });
+    });
+    document.querySelector("form").addEventListener("submit", function () { dirty = false; });
+    window.addEventListener("beforeunload", function (event) { if (dirty) { event.preventDefault(); event.returnValue = ""; } });
 }());

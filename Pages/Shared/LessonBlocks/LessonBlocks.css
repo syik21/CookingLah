@@ -1,0 +1,5 @@
+.lesson-content-block { min-width: 0; margin: 24px 0; }
+.lesson-content-block h4 { margin: 0 0 12px; overflow-wrap: anywhere; }
+.lesson-block-text, .lesson-block-caption { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.8; }
+.lesson-block-media { display: block; max-width: 100%; max-height: 520px; width: 100%; object-fit: contain; border-radius: 12px; }
+.lesson-block-caption { margin-top: 10px; }

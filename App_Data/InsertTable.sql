@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    COOKING LAH DATABASE
    ASP.NET Web Forms + SQL Server
    ============================================================ */
@@ -150,7 +150,7 @@ CREATE TABLE Courses
    ------------------------------------------------------------
    One Course has one main Recipe.
 
-   Actual step-by-step instructions are stored in Lessons.
+   Actual learning material is stored in LessonContent blocks.
    ============================================================ */
 
 CREATE TABLE CourseRecipes
@@ -207,13 +207,9 @@ CREATE TABLE Lessons
 
     Description NVARCHAR(500) NULL,
 
-    Instructions NVARCHAR(MAX) NOT NULL,
-
-    LessonImage NVARCHAR(500) NULL,
-
-    LessonVideo NVARCHAR(500) NULL,
-
     LessonOrder INT NOT NULL,
+
+    UpdatedAt DATETIME NOT NULL DEFAULT GETDATE(),
 
     CreatedAt DATETIME NOT NULL
         CONSTRAINT DF_Lessons_CreatedAt
@@ -238,6 +234,22 @@ CREATE TABLE Lessons
 /* ============================================================
    6. QUIZZES
    ============================================================ */
+
+    CREATE TABLE dbo.LessonContent
+    (
+        LessonContentID INT IDENTITY(1,1) PRIMARY KEY,
+        LessonID INT NOT NULL REFERENCES dbo.Lessons(LessonID) ON DELETE CASCADE,
+        ContentType NVARCHAR(10) NOT NULL CHECK (ContentType IN ('Article','Image','Video')),
+        ContentTitle NVARCHAR(150) NULL,
+        ContentText NVARCHAR(MAX) NULL,
+        MediaPath NVARCHAR(500) NULL,
+        Caption NVARCHAR(500) NULL,
+        ContentOrder INT NOT NULL CHECK (ContentOrder > 0),
+        CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
+        UpdatedAt DATETIME NOT NULL DEFAULT GETDATE(),
+        CONSTRAINT UQ_LessonContent_Order UNIQUE (LessonID, ContentOrder)
+    );
+
 
 CREATE TABLE Quizzes
 (

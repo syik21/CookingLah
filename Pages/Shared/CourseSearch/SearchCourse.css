@@ -323,7 +323,7 @@
 .course-card-image-wrap {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 2 / 1;
     border-bottom: 2px solid var(--color-ink);
     background: var(--color-tan);
 }
@@ -378,7 +378,7 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: 18px 18px 20px;
+    padding: 14px;
 }
 
 .course-category {
@@ -389,25 +389,25 @@
 
 .course-card-body h3 {
     margin: 0;
-    font: 400 30px/1.03 var(--font-hand);
+    font: 400 26px/1.05 var(--font-hand);
     overflow-wrap: anywhere;
 }
 
 .course-chef {
-    margin: 8px 0 10px;
+    margin: 5px 0 7px;
     font-size: 12px;
 }
 
 .course-card-description {
     display: -webkit-box;
-    min-height: 4.8em;
-    margin: 0 0 16px;
+    min-height: 0;
+    margin: 0 0 10px;
     overflow: hidden;
     color: var(--color-text-soft);
     font-size: 11px;
     line-height: 1.6;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
 }
 
 .course-card-facts {
@@ -427,11 +427,11 @@
 
 .course-learning-status,
 .course-not-started {
-    margin-top: 16px;
+    margin-top: 10px;
 }
 
 .course-learning-status {
-    padding: 12px 13px;
+    padding: 9px 10px;
     border: 1px solid var(--color-grid);
     border-radius: var(--radius-md);
     background: #fffaf0;
@@ -442,7 +442,7 @@
     justify-content: space-between;
     align-items: baseline;
     gap: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-size: 11px;
 }
 
@@ -462,7 +462,7 @@
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: var(--color-lime);
+    background: var(--color-primary);
     transition: width 220ms ease;
 }
 
@@ -490,8 +490,8 @@
 }
 
 .course-rating {
-    min-height: 18px;
-    margin: 12px 0 16px;
+    min-height: 0;
+    margin: 8px 0 10px;
     font-size: 11px;
     font-weight: 700;
 }
@@ -505,7 +505,7 @@
 
 .course-card-actions .btn {
     display: grid;
-    min-height: 46px;
+    min-height: 44px;
     align-items: center;
     padding: 9px 7px;
     font-size: 11px;
@@ -679,15 +679,15 @@
     }
 
     .course-card-image-wrap {
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 2 / 1;
     }
 
     .course-card-body {
-        padding: 17px;
+        padding: 14px;
     }
 
     .course-card-actions .btn {
-        min-height: 48px;
+        min-height: 44px;
         font-size: 12px;
     }
 

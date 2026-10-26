@@ -1,4 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CourseRecipe.ascx.cs" Inherits="CookingLah.Pages.Chef.ManageCourse.Recipe.CourseRecipe" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CourseRecipe.ascx.cs" Inherits="CookingLah.Pages.Chef.ManageCourse.Recipe.CourseRecipe" %>
 <section class="course-recipe">
     <div class="mc-section-heading"><h2>Recipe</h2><asp:Button ID="btnEdit" runat="server" Text="Edit Recipe" CssClass="btn" OnClick="btnEdit_Click" /></div>
     <asp:Panel ID="pnlEmpty" runat="server" CssClass="card mc-empty"><p>No Recipe currently exists for this course.</p>
@@ -22,7 +22,7 @@
 <asp:FileUpload ID="fuRecipeImage" runat="server" accept="image/png,image/jpeg" data-image-input="" data-max-file-mb="3" /></div><p class="text-muted">Images: JPG or PNG, up to 3 MB.</p><img data-image-preview="" class="mc-image-preview" alt="Selected recipe photo" hidden />
         <div class="mc-actions">
         <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancel_Click" data-cancel="" />
-        <asp:Button ID="btnSave" runat="server" Text="Save Changes" CssClass="btn btn-primary" OnClick="btnSave_Click" /></div>
+        <asp:Button ID="btnSave" runat="server" Text="Apply Changes" CssClass="btn btn-primary" OnClick="btnSave_Click" /></div>
     </asp:Panel>
     <asp:Panel ID="pnlDelete" runat="server" Visible="false" CssClass="card mc-modal mc-delete" data-title="Delete Recipe?">
         <h2>Delete Recipe?</h2><p>Are you sure you want to delete this course?s recipe?</p><p>The course will remain, but its recipe will be removed.</p>

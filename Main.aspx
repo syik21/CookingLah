@@ -1,5 +1,12 @@
-<%@ Page Title="Cooking LAH | Cook your way around the world" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="CookingLah.Main" %>
+﻿<%@ Page Title="Cooking LAH | Cook your way around the world" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="CookingLah.Main" %>
 <%@ Register Src="~/Pages/Shared/WorldMap/WorldMap.ascx" TagPrefix="uc" TagName="WorldMap" %>
+<asp:Content ID="MapNavigation" ContentPlaceHolderID="ScriptsContent" runat="server">
+    <script>
+        document.addEventListener('worldmap:countrychange', function (event) {
+            window.location.href = '<%= ResolveUrl("~/Pages/Guest/Map.aspx") %>?country=' + encodeURIComponent(event.detail.country);
+        });
+    </script>
+</asp:Content>
 <asp:Content ID="MainHead" ContentPlaceHolderID="HeadContent" runat="server">
     <link href="<%= ResolveUrl("~/F_CSS/Main.css") %>" rel="stylesheet" />
 </asp:Content>
@@ -17,7 +24,7 @@
                 </div>
             </section>
 
-            <uc:WorldMap ID="WorldMapControl" runat="server" />
+            <section class="main-food-map" aria-label="Explore food around the world"><uc:WorldMap ID="WorldMapControl" runat="server" /></section>
 
             <section class="container recipes-section" id="recipes">
                 <h2 class="section-title">Cooking basics: start with these</h2>

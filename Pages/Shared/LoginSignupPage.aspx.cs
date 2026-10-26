@@ -24,13 +24,6 @@ namespace CookingLah.Pages.Shared
             get { return ConfigurationManager.ConnectionStrings["CookingLahDB"].ConnectionString; }
         }
 
-
-        static readonly Dictionary<string, string> RoleLabel = new Dictionary<string, string>
-        {
-            { "Learner", "Learner" },
-            { "Instructor", "Chef / Instructor" }
-        };
-
         static readonly Dictionary<string, string> Blurb = new Dictionary<string, string>
         {
             { "Learner", "Your lessons, quiz results and learning progress are ready." },

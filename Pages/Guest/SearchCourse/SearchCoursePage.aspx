@@ -2,7 +2,7 @@
 <%@ Register Src="~/Pages/Shared/CourseSearch/SearchCourse.ascx" TagPrefix="course" TagName="SearchCourse" %>
 
 <asp:Content ID="SearchHead" ContentPlaceHolderID="HeadContent" runat="server">
-    <link href="<%= ResolveUrl("~/Pages/Shared/CourseSearch/SearchCourse.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Pages/Shared/CourseSearch/SearchCourse.css?v=20261027b") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Shared/CourseSearch/ViewCourseOverivew.css") %>" rel="stylesheet" />
 </asp:Content>
 
