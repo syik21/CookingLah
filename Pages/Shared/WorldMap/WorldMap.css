@@ -59,6 +59,11 @@
 .cl-world-map__controls button:disabled { opacity:.35; cursor:not-allowed; }
 .cl-world-map__controls output { min-width:48px; font-size:12px; text-align:center; }
 .cl-world-map button:focus-visible,.cl-world-map__viewport:focus-visible { outline:3px solid var(--color-ink); outline-offset:-4px; }
+.map-container {
+    background-color: #fffaf0;
+    background-image: linear-gradient(rgba(90, 30, 30, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(90, 30, 30, 0.1) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
 .main-food-map { max-width:1240px; margin:0 auto; padding:0 24px; }
 @media(max-width:700px) {
     .cl-world-map { height:430px; border-radius:12px; }

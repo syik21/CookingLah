@@ -41,6 +41,8 @@ namespace CookingLah.Pages.Learner.CourseLearning
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlLearningContent;
 
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl courseStatusBadge;
+
         /// <summary>
         /// imgCourseThumbnail control.
         /// </summary>
@@ -113,6 +115,8 @@ namespace CookingLah.Pages.Learner.CourseLearning
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litProgressSummary;
 
+        protected global::System.Web.UI.WebControls.Panel pnlCourseSubmitted;
+
         /// <summary>
         /// pnlCourseComplete control.
         /// </summary>
@@ -121,6 +125,12 @@ namespace CookingLah.Pages.Learner.CourseLearning
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlCourseComplete;
+
+        protected global::System.Web.UI.WebControls.Literal litCompletionCourse;
+
+        protected global::System.Web.UI.WebControls.HyperLink lnkBackToOverview;
+
+        protected global::System.Web.UI.WebControls.HyperLink lnkCompletionReview;
 
         /// <summary>
         /// pnlLearningFeedback control.

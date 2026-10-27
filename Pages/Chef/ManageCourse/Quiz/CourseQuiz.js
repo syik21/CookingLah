@@ -2,7 +2,6 @@
     'use strict';
     var builder = document.querySelector('[data-quiz-builder]');
     if (!builder) return;
-    if (window.matchMedia('(max-width:700px)').matches) builder.querySelector('.lb-sidebar').open = false;
     if (builder.dataset.editing !== 'true') return;
     var dirty = false;
     var state = builder.querySelector('.lb-state');

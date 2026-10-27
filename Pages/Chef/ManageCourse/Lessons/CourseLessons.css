@@ -88,3 +88,51 @@
     .lb-sidebar-body { max-height:320px; overflow:auto; }
     .lb-footer .btn { width:100%; }
 }
+
+/* Clear, always-open navigation and stronger builder hierarchy. */
+.lb-sidebar {
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+    overflow: hidden;
+    box-shadow: 0 3px 0 var(--color-grid);
+}
+
+.lb-sidebar-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex: 0 0 auto;
+    min-height: 58px;
+    padding: 16px;
+    border-bottom: 1px solid var(--color-grid);
+    background: var(--color-tan-light);
+}
+
+.lb-sidebar-heading strong { font-size: 16px; }
+.lb-count { display: inline-flex; align-items: center; min-height: 26px; margin: 0; padding: 3px 9px; border: 1px solid var(--color-tan); border-radius: var(--radius-pill); background: #fff; white-space: nowrap; }
+.lb-sidebar-body { min-height: 0; padding: 12px 10px; overflow-y: auto; scrollbar-gutter: stable; }
+.lb-lesson { margin: 5px 0; border-radius: 7px; transition: background-color 120ms ease, border-color 120ms ease; }
+.lb-lesson:hover:not(.is-selected) { border-color: var(--color-tan); background: var(--color-tan-light); }
+.lb-lesson.is-selected { background: var(--color-yellow); box-shadow: inset 4px 0 0 var(--color-ink); }
+.lb-readiness { display: grid; width: 26px; height: 26px; padding: 0; place-items: center; border-radius: 50%; background: var(--color-tan-light); font-weight: 700; }
+.lb-lesson.is-selected .lb-readiness { background: #fff; }
+.lb-middle { padding: 26px; box-shadow: 0 3px 0 var(--color-grid); }
+.lb-heading { margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--color-grid); }
+.lb-information { padding: 18px; border: 1px solid var(--color-grid); border-radius: var(--radius-sm); background: #fff; }
+.lb-content-heading { margin-top: 28px; padding-bottom: 10px; border-bottom: 1px solid var(--color-grid); }
+.lb-block { border-radius: 8px; box-shadow: 0 2px 0 var(--color-grid); }
+.lb-toolbox { padding: 20px 16px; box-shadow: 0 3px 0 var(--color-grid); }
+
+@media (max-width: 700px) {
+    .lb-sidebar { position: static; max-height: none; }
+    .lb-middle { padding: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lb-lesson { transition: none; }
+}

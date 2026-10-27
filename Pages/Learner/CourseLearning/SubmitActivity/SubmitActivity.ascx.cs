@@ -69,6 +69,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
             if (!HasSubmission)
             {
                 litSubmissionFormTitle.Text = "Submit your work";
+                pnlSubmissionForm.Visible = true;
                 return;
             }
 
@@ -88,7 +89,9 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
                 ? ""
                 : Convert.ToDateTime(submission["ReviewedAt"]).ToString("dd MMM yyyy");
 
-            litSubmissionFormTitle.Text = "Update your submission";
+            string status = Convert.ToString(submission["Status"]);
+            pnlSubmissionForm.Visible = status == "Resubmit Required";
+            litSubmissionFormTitle.Text = "Resubmit your work";
             if (!Page.IsPostBack)
             {
                 txtActivityDescription.Text = Convert.ToString(submission["Description"]);
@@ -256,6 +259,37 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
                             Parameter("@submissionId", submissionId),
                             Parameter("@activityId", ActivityId),
                             Parameter("@learnerId", LearnerId));
+                    }
+
+                    object updatedProgress = Execute(connection, transaction, @"
+                        UPDATE cp
+                        SET cp.Status='Submitted',
+                            cp.CompletedAt=NULL,
+                            cp.LastAccessedAt=GETDATE()
+                        FROM CourseProgress cp
+                        WHERE cp.LearnerID=@learnerId
+                          AND cp.CourseID=@courseId
+                          AND cp.Status<>'Completed'
+                          AND NOT EXISTS (
+                              SELECT 1 FROM Lessons l
+                              WHERE l.CourseID=cp.CourseID
+                                AND l.LessonOrder>cp.LastCompletedLessonOrder)
+                          AND NOT EXISTS (
+                              SELECT 1 FROM Quizzes q
+                              WHERE q.CourseID=cp.CourseID
+                                AND NOT EXISTS (
+                                    SELECT 1 FROM QuizAttempts qa
+                                    WHERE qa.QuizID=q.QuizID
+                                      AND qa.LearnerID=cp.LearnerID
+                                      AND qa.Passed=1));
+                        SELECT @@ROWCOUNT;",
+                        Parameter("@learnerId", LearnerId),
+                        Parameter("@courseId", CourseId));
+
+                    if (Convert.ToInt32(updatedProgress) != 1)
+                    {
+                        transaction.Rollback();
+                        return false;
                     }
 
                     transaction.Commit();

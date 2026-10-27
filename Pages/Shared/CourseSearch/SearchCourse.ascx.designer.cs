@@ -7,6 +7,7 @@ namespace CookingLah.Pages.Shared.CourseSearch
         protected global::System.Web.UI.WebControls.TextBox txtSearch;
         protected global::System.Web.UI.WebControls.DropDownList ddlCategory;
         protected global::System.Web.UI.WebControls.DropDownList ddlDifficulty;
+        protected global::System.Web.UI.WebControls.DropDownList ddlRating;
         protected global::System.Web.UI.WebControls.Button btnSearch;
         protected global::System.Web.UI.WebControls.LinkButton btnClearSearch;
         protected global::System.Web.UI.WebControls.Label lblResultCount;

@@ -5,7 +5,7 @@
 <%@ Import Namespace="System.Web" %>
 
 <asp:Content ID="LearningHead" ContentPlaceHolderID="LearnerHead" runat="server">
-    <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.css?v=20261027b") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.css?v=20261027d") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/Lesson/LessonContent.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/QuizSection/QuizSection.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/SubmitActivity/SubmitActivity.css") %>" rel="stylesheet" />
@@ -20,10 +20,13 @@
         </asp:Panel>
 
         <asp:Panel ID="pnlLearningContent" runat="server" Visible="false">
-            <a class="learning-back" href="<%= ResolveUrl("~/Pages/Learner/MyCourse/LearnerMyCourse.aspx") %>">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7 7-7-7 7-7" /></svg>
-                Back to My Courses
-            </a>
+            <div class="learning-page-bar">
+                <a class="learning-back" href="<%= ResolveUrl("~/Pages/Learner/MyCourse/LearnerMyCourse.aspx") %>">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7 7-7-7 7-7" /></svg>
+                    Back to My Courses
+                </a>
+                <span id="courseStatusBadge" runat="server" class="learning-course-status" aria-label="Course status"></span>
+            </div>
 
             <asp:Image ID="imgCourseThumbnail" runat="server" CssClass="learning-course-thumbnail" />
             <header class="learning-course-header">
@@ -36,24 +39,45 @@
                     </p>
                     <p class="learning-chef-line">Created by <strong><asp:Literal ID="litChefName" runat="server" Mode="Encode" /></strong></p>
                 </div>
-                <section class="learning-progress" aria-labelledby="progressTitle">
-                    <div class="learning-progress-heading">
-                        <div>
-                            <p class="learning-eyebrow">Keep going</p>
-                            <h2 id="progressTitle">Your progress</h2>
+                <div class="learning-status-column">
+                    <section class="learning-progress" aria-labelledby="progressTitle">
+                        <div class="learning-progress-heading">
+                            <div>
+                                <p class="learning-eyebrow">Keep going</p>
+                                <h2 id="progressTitle">Your progress</h2>
+                            </div>
+                            <strong class="learning-progress-value"><asp:Literal ID="litProgressPercent" runat="server" Mode="Encode" />%</strong>
                         </div>
-                        <strong class="learning-progress-value"><asp:Literal ID="litProgressPercent" runat="server" Mode="Encode" />%</strong>
-                    </div>
-                    <div id="courseProgressBar" runat="server" class="learning-progress-track" role="progressbar"
-                        aria-label="Course progress" aria-valuemin="0" aria-valuemax="100">
-                        <span id="courseProgressFill" runat="server" class="learning-progress-fill"></span>
-                    </div>
-                    <p class="learning-progress-summary"><asp:Literal ID="litProgressSummary" runat="server" Mode="Encode" /></p>
-                    <asp:Panel ID="pnlCourseComplete" runat="server" Visible="false" CssClass="learning-course-complete">
-                        <strong>✓ Course completed</strong>
-                        <span>Great work! You have completed this course.</span>
+                        <div id="courseProgressBar" runat="server" class="learning-progress-track" role="progressbar"
+                            aria-label="Course progress" aria-valuemin="0" aria-valuemax="100">
+                            <span id="courseProgressFill" runat="server" class="learning-progress-fill"></span>
+                        </div>
+                        <p class="learning-progress-summary"><asp:Literal ID="litProgressSummary" runat="server" Mode="Encode" /></p>
+                    </section>
+
+                    <asp:Panel ID="pnlCourseSubmitted" runat="server" Visible="false" CssClass="learning-course-complete">
+                        <div class="learning-complete-message">
+                            <div>
+                                <strong>Course submitted</strong>
+                                <span>You have completed the learning requirements. Your Practical Activity is waiting for Chef approval.</span>
+                            </div>
+                        </div>
                     </asp:Panel>
-                </section>
+
+                    <asp:Panel ID="pnlCourseComplete" runat="server" Visible="false" CssClass="learning-course-complete">
+                        <div class="learning-complete-message">
+                            <span class="learning-complete-icon" aria-hidden="true">&#10003;</span>
+                            <div>
+                                <strong>Course completed!</strong>
+                                <span>Your Practical Activity has been approved. <asp:Literal ID="litCompletionCourse" runat="server" Mode="Encode" /></span>
+                            </div>
+                        </div>
+                        <div class="learning-complete-actions">
+                            <asp:HyperLink ID="lnkBackToOverview" runat="server" CssClass="btn btn-secondary">Back to Course Overview</asp:HyperLink>
+                            <asp:HyperLink ID="lnkCompletionReview" runat="server" CssClass="btn btn-primary" />
+                        </div>
+                    </asp:Panel>
+                </div>
             </header>
 
             <asp:Panel ID="pnlLearningFeedback" runat="server" Visible="false" CssClass="learning-feedback" role="status">

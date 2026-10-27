@@ -101,12 +101,12 @@ namespace CookingLah.Pages.Learner.MyCourse
         {
             DataTable counts = Read(@"
                 SELECT COUNT(*) AS AllCount,
-                       ISNULL(SUM(CASE WHEN cp.Status='In Progress' THEN 1 ELSE 0 END),0) AS InProgressCount,
+                       ISNULL(SUM(CASE WHEN cp.Status IN ('In Progress','Submitted') THEN 1 ELSE 0 END),0) AS InProgressCount,
                        ISNULL(SUM(CASE WHEN cp.Status='Completed' THEN 1 ELSE 0 END),0) AS CompletedCount
                 FROM CourseProgress cp
                 INNER JOIN Courses c ON c.CourseID=cp.CourseID
                 WHERE cp.LearnerID=@learnerId
-                  AND cp.Status IN ('In Progress','Completed')
+                  AND cp.Status IN ('In Progress','Submitted','Completed')
                   AND c.Status='Published'",
                 Parameter("@learnerId", LearnerId));
 
@@ -148,9 +148,11 @@ namespace CookingLah.Pages.Learner.MyCourse
                 INNER JOIN Categories cat ON cat.CategoryID=c.CategoryID
                 INNER JOIN Users chef ON chef.UserID=c.InstructorID
                 WHERE cp.LearnerID=@learnerId
-                  AND cp.Status IN ('In Progress','Completed')
+                  AND cp.Status IN ('In Progress','Submitted','Completed')
                   AND c.Status='Published'
-                  AND (@status='' OR cp.Status=@status)
+                  AND (@status=''
+                       OR (@status='In Progress' AND cp.Status IN ('In Progress','Submitted'))
+                       OR cp.Status=@status)
                   AND (@categoryId=0 OR c.CategoryID=@categoryId)
                   AND (@searchText='' OR c.Title LIKE '%' + @searchText + '%'
                        OR c.Description LIKE '%' + @searchText + '%'
@@ -236,9 +238,9 @@ namespace CookingLah.Pages.Learner.MyCourse
 
         protected string CourseActionText(object progressStatus)
         {
-            return Convert.ToString(progressStatus) == "Completed"
-                ? "Review course"
-                : "Continue learning";
+            string status = Convert.ToString(progressStatus);
+            if (status == "Completed") return "Review course";
+            return status == "Submitted" ? "View submission status" : "Continue learning";
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -318,7 +320,7 @@ namespace CookingLah.Pages.Learner.MyCourse
                 INNER JOIN Courses c ON c.CourseID=cp.CourseID
                 WHERE cp.LearnerID=@learnerId
                   AND cp.CourseID=@courseId
-                  AND cp.Status IN ('In Progress','Completed')
+                  AND cp.Status IN ('In Progress','Submitted','Completed')
                   AND c.Status='Published'",
                 Parameter("@learnerId", LearnerId),
                 Parameter("@courseId", courseId));

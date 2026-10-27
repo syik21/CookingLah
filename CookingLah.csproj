@@ -235,6 +235,12 @@
     <Content Include="Pages\Learner\MyCourse\LearnerMyCourse.js" />
     <Content Include="Pages\Learner\MyCourse\LearnerMyCourse.aspx" />
     <Content Include="Pages\Learner\MyCourse\LearnerMyCourse.css" />
+    <Content Include="Pages\Learner\LearnerReview\LearnerMyReviewPage.aspx" />
+    <Content Include="Pages\Learner\LearnerReview\LearnerMyReviewPage.css" />
+    <Content Include="Pages\Learner\LearnerReview\LearnerMyReviewPage.js" />
+    <Content Include="Pages\Learner\LearnMyActivity\LearnerMyActivityPage.aspx" />
+    <Content Include="Pages\Learner\LearnMyActivity\LearnerMyActivityPage.css" />
+    <Content Include="Pages\Learner\LearnMyActivity\LearnerMyActivityPage.js" />
     <Content Include="Pages\Shared\FoodMap\FoodMapView.ascx" />
     <Content Include="Pages\Shared\FoodMap\FoodMapView.js" />
     <Content Include="Pages\Shared\FoodMap\FoodMapView.css" />
@@ -310,6 +316,7 @@
     <Content Include="Rules\DESIGN_GUIDELINES.md" />
     <Content Include="Pages\Chef\Chef.Master" />
     <Content Include="Pages\Admin\Admin.Master" />
+    <Content Include=".editorconfig" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -376,6 +383,20 @@
     </Compile>
     <Compile Include="Pages\Learner\MyCourse\LearnerMyCourse.aspx.designer.cs">
       <DependentUpon>LearnerMyCourse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Learner\LearnerReview\LearnerMyReviewPage.aspx.cs">
+      <DependentUpon>LearnerMyReviewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Learner\LearnerReview\LearnerMyReviewPage.aspx.designer.cs">
+      <DependentUpon>LearnerMyReviewPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Learner\LearnMyActivity\LearnerMyActivityPage.aspx.cs">
+      <DependentUpon>LearnerMyActivityPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Learner\LearnMyActivity\LearnerMyActivityPage.aspx.designer.cs">
+      <DependentUpon>LearnerMyActivityPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Shared\FoodMap\FoodMapView.ascx.cs">
       <DependentUpon>FoodMapView.ascx</DependentUpon>
@@ -492,6 +513,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\Migrations\" />
     <Folder Include="F_Assets\CourseMedia\" />
     <Folder Include="F_Assets\ProfilePicture\" />
     <Folder Include="F_Controllers\" />
@@ -524,8 +546,16 @@
     </Compile>
     <Content Include="Pages\Chef\MyCourse\ChefMyCourse.css" />
     <Content Include="Pages\Chef\MyCourse\ChefMyCourse.js" />
-    <Content Include="App_Data\Migrations\20261026_LessonContent.sql" />
-    <Content Include="App_Data\Migrations\README.md" />
+    <Content Include="Pages\Chef\ChefReviewSubmission\ChefReviewSubmissionPage.aspx" />
+    <Compile Include="Pages\Chef\ChefReviewSubmission\ChefReviewSubmissionPage.aspx.cs">
+      <DependentUpon>ChefReviewSubmissionPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ChefReviewSubmission\ChefReviewSubmissionPage.aspx.designer.cs">
+      <DependentUpon>ChefReviewSubmissionPage.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ChefReviewSubmission\ChefReviewSubmissionPage.css" />
+    <Content Include="Pages\Chef\ChefReviewSubmission\ChefReviewSubmissionPage.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pages\Shared\LessonBlocks\LessonBlocks.ascx" />

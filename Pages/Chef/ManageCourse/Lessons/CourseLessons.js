@@ -4,8 +4,6 @@
     if (!builder) return;
     var editing = builder.dataset.editing === 'true';
     var state = builder.querySelector('.lb-state');
-    var sidebar = builder.querySelector('.lb-sidebar');
-    if (window.matchMedia('(max-width:700px)').matches) sidebar.open = false;
     if (!editing) return;
     var dirty = false;
     function markDirty() { dirty = true; state.textContent = 'Unsaved changes'; }

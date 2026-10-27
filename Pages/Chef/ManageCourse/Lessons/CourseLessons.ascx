@@ -2,8 +2,8 @@
 <section class="lesson-builder <%= CanEdit ? "is-editing" : "is-viewing" %>" data-lesson-builder data-editing="<%= CanEdit ? "true" : "false" %>">
     <asp:HiddenField ID="hfSelectedLesson" runat="server" />
     <asp:HiddenField ID="hfStructure" runat="server" />
-    <details class="lb-sidebar" open>
-        <summary>Lessons <span class="lb-count"><%= LessonCount %></span></summary>
+    <aside class="lb-sidebar" aria-label="Course lessons">
+        <div class="lb-sidebar-heading"><strong>Lessons</strong><span class="lb-count"><%= LessonCount %></span></div>
         <div class="lb-sidebar-body">
             <asp:Button ID="btnAddLesson" runat="server" Text="+ Add Lesson" OnClick="btnAddLesson_Click" CssClass="btn lb-add-lesson" CausesValidation="false" />
             <asp:Panel ID="pnlNoLessons" runat="server" CssClass="lb-empty"><p>No lessons yet.</p><p><%= CanEdit ? "Add your first Lesson to begin building the Course." : "No Lessons have been added to this Course yet." %></p></asp:Panel>
@@ -22,7 +22,7 @@
                 </ItemTemplate></asp:Repeater>
             </div>
         </div>
-    </details>
+    </aside>
     <main class="lb-middle">
         <asp:Panel ID="pnlNoSelection" runat="server" CssClass="lb-empty lb-select-empty"><h2>Select a Lesson</h2><p>Choose a Lesson from the left to view its content.</p></asp:Panel>
         <asp:Panel ID="pnlSelectedLesson" runat="server">

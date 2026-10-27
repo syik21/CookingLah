@@ -42,3 +42,18 @@
     .qb-option { grid-template-columns:48px minmax(0,1fr); gap:10px; padding:12px; }
     .qb-option>.lb-delete { grid-column:2; justify-self:end; }
 }
+
+/* Match the lesson builder's visual hierarchy without changing its layout. */
+.qb-info { min-height: 46px; padding: 13px 12px; border-color: var(--color-tan); background: #fff; font-weight: 700; }
+.qb-info:hover { background: var(--color-tan-light); }
+.qb-info.is-selected,
+.qb-question.is-selected { background: var(--color-yellow); box-shadow: inset 4px 0 0 var(--color-ink); }
+.qb-question { border-radius: 7px; transition: background-color 120ms ease, border-color 120ms ease; }
+.qb-question:hover:not(.is-selected) { border-color: var(--color-tan); background: var(--color-tan-light); }
+.qb-heading { padding-bottom: 18px; border-bottom: 1px solid var(--color-grid); }
+.qb-options { padding-top: 22px; border-top: 1px solid var(--color-grid); }
+.qb-option { border-radius: 8px; background: #fff; box-shadow: 0 2px 0 var(--color-grid); }
+
+@media (prefers-reduced-motion: reduce) {
+    .qb-question { transition: none; }
+}

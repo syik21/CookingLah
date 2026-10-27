@@ -1,13 +1,19 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CourseActivity.ascx.cs" Inherits="CookingLah.Pages.Chef.ManageCourse.Activity.CourseActivity" %>
 <section class="course-activity">
-    <div class="mc-section-heading"><h2>Practical Activity</h2><asp:Button ID="btnEdit" runat="server" Text="Edit Practical Activity" CssClass="btn" OnClick="btnEdit_Click" /></div>
-    <asp:Panel ID="pnlEmpty" runat="server" CssClass="card mc-empty"><p>No Practical Activity currently exists for this course.</p>
-    <asp:Button ID="btnAdd" runat="server" Text="+ Add Practical Activity" CssClass="btn btn-primary" OnClick="btnEdit_Click" /></asp:Panel>
-    <asp:Repeater ID="rptDetails" runat="server"><ItemTemplate><article class="card"><h3><%#: Eval("Title") %></h3><h4>Instructions</h4><p class="mc-copy"><%#: Eval("Instructions") %></p></article>
+    <div class="mc-section-heading activity-heading">
+        <div><h2>Practical Activity</h2><p>Define the hands-on task learners must submit for Chef review.</p></div>
+        <asp:Button ID="btnEdit" runat="server" Text="Edit Practical Activity" CssClass="btn" OnClick="btnEdit_Click" />
+    </div>
+    <asp:Panel ID="pnlEmpty" runat="server" CssClass="card mc-empty activity-empty">
+        <div class="activity-empty-mark" aria-hidden="true">+</div><h3>No practical activity added yet</h3><p>Add one clear task so learners know what to prepare and submit.</p>
+        <asp:Button ID="btnAdd" runat="server" Text="+ Add Practical Activity" CssClass="btn btn-primary" OnClick="btnEdit_Click" />
+    </asp:Panel>
+    <asp:Repeater ID="rptDetails" runat="server"><ItemTemplate><article class="card activity-card"><header class="activity-card-heading"><span class="activity-label">Learner task</span><h3><%#: Eval("Title") %></h3></header><section class="activity-instructions" aria-labelledby="activityInstructionsTitle"><h4 id="activityInstructionsTitle">Instructions</h4><p class="mc-copy"><%#: Eval("Instructions") %></p></section></article>
     </ItemTemplate></asp:Repeater>
     <asp:Button ID="btnDelete" runat="server" Text="Delete Practical Activity" CssClass="mc-link mc-danger-link" OnClick="btnDelete_Click" />
     <asp:Panel ID="pnlEditor" runat="server" Visible="false" CssClass="card mc-modal" data-title="Practical Activity">
         <h2><asp:Literal ID="litEditorTitle" runat="server" Mode="Encode" /></h2>
+        <p class="activity-editor-intro">Use a specific title and step-by-step instructions so learners understand what evidence to submit.</p>
         <div class="mc-field"><asp:Label runat="server" AssociatedControlID="txtTitle" Text="Activity Title *" /><asp:TextBox ID="txtTitle" runat="server" MaxLength="150" /></div>
 <div class="mc-field"><asp:Label runat="server" AssociatedControlID="txtInstructions" Text="Instructions *" /><asp:TextBox ID="txtInstructions" runat="server" TextMode="MultiLine" Rows="4" /></div>
         <div class="mc-actions">

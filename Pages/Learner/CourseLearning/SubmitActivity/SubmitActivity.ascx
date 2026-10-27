@@ -38,7 +38,7 @@
         </asp:Panel>
     </asp:Panel>
 
-    <section class="activity-submit-form" aria-labelledby="activitySubmitTitle">
+    <asp:Panel ID="pnlSubmissionForm" runat="server" CssClass="activity-submit-form" aria-labelledby="activitySubmitTitle">
         <h3 id="activitySubmitTitle"><asp:Literal ID="litSubmissionFormTitle" runat="server" Mode="Encode" /></h3>
         <p class="activity-form-hint">Upload a clear JPG or PNG image of your finished dish. Your latest submission will replace the previous one.</p>
 
@@ -65,5 +65,5 @@
 
         <asp:Button ID="btnSubmitActivity" runat="server" Text="Submit activity"
             CssClass="btn btn-primary activity-submit-button" OnClick="btnSubmitActivity_Click" CausesValidation="false" />
-    </section>
+    </asp:Panel>
 </asp:Panel>

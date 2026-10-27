@@ -1,0 +1,474 @@
+.my-reviews-page {
+    --review-ink: #351010;
+    --review-red: #6d1b1b;
+    --review-yellow: #f7bd3d;
+    --review-paper: #fffdf7;
+    --muted: #715b55;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 38px 28px 56px;
+    color: var(--review-ink);
+}
+
+.my-reviews-heading h1 {
+    margin: 0;
+    font-family: var(--font-hand);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1;
+}
+
+.my-reviews-heading p {
+    max-width: 650px;
+    margin: 12px 0 0;
+    color: var(--muted);
+}
+
+.review-statistics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 260px));
+    gap: 16px;
+    margin-top: 28px;
+}
+
+.review-stat-card {
+    min-height: 120px;
+    padding: 20px 22px;
+    border: 2px solid var(--review-ink);
+    border-radius: 16px;
+    background: var(--review-paper);
+}
+
+.review-stat-card > span,
+.review-rating-label,
+.review-edit-form h4 {
+    display: block;
+    color: var(--muted);
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.review-stat-card strong {
+    display: block;
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+}
+
+.review-stat-card strong span {
+    color: #a96300;
+    font-size: 1.35rem;
+}
+
+.review-page-message {
+    margin-top: 20px;
+    padding: 13px 16px;
+    border: 1px solid #a86c17;
+    border-radius: 10px;
+    background: #fff3cc;
+    font-weight: 700;
+}
+
+.review-filters {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) 190px 190px auto;
+    align-items: end;
+    gap: 14px;
+    margin-top: 28px;
+    padding: 20px;
+    border: 1px solid rgba(53, 16, 16, .35);
+    border-radius: 16px;
+    background: rgba(255, 253, 247, .9);
+}
+
+.review-search-field > label,
+.review-filter-field > label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.review-search-field input,
+.review-filter-field select,
+.review-edit-form textarea {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 1.5px solid rgba(53, 16, 16, .55);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--review-ink);
+    font: inherit;
+}
+
+.review-search-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+}
+
+.review-search-input {
+    position: relative;
+}
+
+.review-search-input svg {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.review-search-input input {
+    padding-left: 42px;
+}
+
+.review-clear-filters {
+    min-height: 44px;
+    padding: 12px 2px;
+    color: var(--review-red);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.review-results-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin: 28px 0 14px;
+}
+
+.review-result-count {
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+}
+
+.review-view-toggle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--muted);
+    font-size: .88rem;
+    font-weight: 700;
+}
+
+.review-view-button {
+    display: inline-grid;
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+    place-items: center;
+    border: 1.5px solid var(--review-ink);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--review-ink);
+    cursor: pointer;
+}
+
+.review-view-button svg {
+    width: 21px;
+    fill: currentColor;
+}
+
+.review-view-button.is-active {
+    background: var(--review-ink);
+    color: #fff;
+}
+
+.review-card-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.review-card-grid.view-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.review-card-grid.view-one {
+    grid-template-columns: 1fr;
+}
+
+.review-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid var(--review-ink);
+    border-radius: 16px;
+    background: var(--review-paper);
+    box-shadow: 4px 4px 0 rgba(53, 16, 16, .12);
+}
+
+.review-card.is-editing {
+    grid-column: 1 / -1;
+}
+
+.review-course-image-wrap {
+    aspect-ratio: 16 / 8;
+    overflow: hidden;
+    border-bottom: 2px solid var(--review-ink);
+    background: #efe4c8;
+}
+
+.review-course-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.review-course-image-empty {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    color: var(--review-red);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+}
+
+.review-card-content {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    padding: 21px;
+}
+
+.review-card-display {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.review-course-heading h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    line-height: 1.15;
+}
+
+.review-course-heading p,
+.review-date {
+    color: var(--muted);
+    font-size: .88rem;
+    font-weight: 700;
+}
+
+.review-course-heading p {
+    margin: 8px 0 0;
+}
+
+.review-rating-label,
+.review-edit-form h4 {
+    margin: 20px 0 7px;
+}
+
+.review-rating {
+    color: #a96300;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+}
+
+.review-comment {
+    display: -webkit-box;
+    margin: 16px 0 0;
+    overflow: hidden;
+    line-height: 1.65;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.view-one .review-comment {
+    display: block;
+    overflow: visible;
+}
+
+.review-date {
+    margin: 15px 0 0;
+}
+
+.review-card time {
+    margin-top: 15px;
+    color: var(--muted);
+    font-size: .84rem;
+}
+
+.review-card-actions,
+.review-edit-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.review-card-actions .btn:first-child {
+    margin-right: auto;
+}
+
+.review-text-action {
+    align-self: center;
+    min-height: 44px;
+    padding: 11px 5px;
+    color: var(--review-red);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.review-text-action.is-delete {
+    color: #9b1c1c;
+}
+
+.review-edit-form label {
+    display: block;
+    margin: 16px 0 7px;
+    font-weight: 800;
+}
+
+.review-edit-form textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.review-star-options {
+    border-collapse: separate;
+    border-spacing: 5px 0;
+}
+
+.review-star-options input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--review-red);
+}
+
+.review-star-options label {
+    display: inline;
+    margin: 0 8px 0 3px;
+    color: #a96300;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.review-field-error {
+    display: block;
+    margin-top: 6px;
+    color: #a30000;
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.review-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 28px;
+}
+
+.review-page-status {
+    min-width: 100px;
+    text-align: center;
+    font-weight: 800;
+}
+
+.review-empty-state {
+    margin-top: 28px;
+    padding: 46px 24px;
+    border: 2px dashed rgba(53, 16, 16, .65);
+    border-radius: 16px;
+    background: rgba(255, 253, 247, .8);
+    text-align: center;
+}
+
+.review-empty-state h2 {
+    margin: 0;
+    font-family: var(--font-hand);
+    font-size: 1.8rem;
+}
+
+.review-empty-state p {
+    max-width: 520px;
+    margin: 12px auto 22px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.review-search-field input:focus-visible,
+.review-filter-field select:focus-visible,
+.review-edit-form textarea:focus-visible,
+.review-view-button:focus-visible,
+.review-card .btn:focus-visible {
+    outline: 3px solid var(--review-yellow);
+    outline-offset: 2px;
+}
+
+@media (min-width: 861px) {
+    .view-one .review-card:not(.is-editing) {
+        display: grid;
+        grid-template-columns: minmax(220px, 31%) 1fr;
+    }
+
+    .view-one .review-course-image-wrap {
+        height: 100%;
+        border-right: 2px solid var(--review-ink);
+        border-bottom: 0;
+    }
+}
+
+@media (max-width: 980px) {
+    .review-filters {
+        grid-template-columns: minmax(260px, 1fr) repeat(2, minmax(160px, .55fr));
+    }
+
+    .review-clear-filters {
+        grid-column: 1 / -1;
+        justify-self: start;
+    }
+}
+
+@media (max-width: 760px) {
+    .my-reviews-page {
+        padding: 28px 16px 44px;
+    }
+
+    .review-statistics,
+    .review-filters,
+    .review-card-grid.view-two {
+        grid-template-columns: 1fr;
+    }
+
+    .review-stat-card {
+        min-height: 0;
+    }
+
+    .review-view-toggle {
+        display: none;
+    }
+}
+
+@media (max-width: 460px) {
+    .review-search-row {
+        grid-template-columns: 1fr;
+    }
+
+    .review-pagination {
+        gap: 8px;
+    }
+
+    .review-pagination .btn {
+        padding-inline: 10px;
+    }
+}

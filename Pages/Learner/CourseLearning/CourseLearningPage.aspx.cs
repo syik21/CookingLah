@@ -157,6 +157,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
             DataRow course = rows.Rows[0];
             LastCompletedLessonOrder = Convert.ToInt32(course["LastCompletedLessonOrder"]);
             litCourseTitle.Text = Convert.ToString(course["Title"]);
+            litCompletionCourse.Text = "You've completed " + Convert.ToString(course["Title"]) + ".";
             string thumbnail = MediaUrl(Convert.ToString(course["Thumbnail"]));
             imgCourseThumbnail.ImageUrl = thumbnail;
             imgCourseThumbnail.AlternateText = Convert.ToString(course["Title"]) + " course thumbnail";
@@ -166,7 +167,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
 
             int progressPercentage = Convert.ToInt32(course["ProgressPercentage"]);
             if (Convert.ToString(course["ProgressStatus"]) == "Completed") progressPercentage = 100;
-            DisplayProgress(progressPercentage, 0, 0);
+            DisplayProgress(progressPercentage, Convert.ToString(course["ProgressStatus"]), 0, 0);
 
             return true;
         }
@@ -254,7 +255,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
         private void RecalculateCourseProgress()
         {
             DataTable progressData = Read(@"
-                SELECT cp.LastCompletedLessonOrder,
+                SELECT cp.LastCompletedLessonOrder,cp.Status AS ExistingStatus,cp.ProgressPercentage AS ExistingPercentage,
                        (SELECT COUNT(*)
                         FROM Lessons l
                         WHERE l.CourseID=cp.CourseID) AS TotalLessons,
@@ -281,7 +282,8 @@ namespace CookingLah.Pages.Learner.CourseLearning
                               SELECT 1
                               FROM ActivitySubmissions s
                               WHERE s.ActivityID=a.ActivityID
-                                AND s.LearnerID=cp.LearnerID)) AS SubmittedActivities
+                                AND s.LearnerID=cp.LearnerID
+                                AND s.Status='Approved')) AS ApprovedActivities
                 FROM CourseProgress cp
                 INNER JOIN Courses c ON c.CourseID=cp.CourseID
                 INNER JOIN Users u ON u.UserID=cp.LearnerID
@@ -303,19 +305,25 @@ namespace CookingLah.Pages.Learner.CourseLearning
                 + Convert.ToInt32(row["TotalActivities"]);
             int completedSteps = Convert.ToInt32(row["CompletedLessons"])
                 + Convert.ToInt32(row["PassedQuizzes"])
-                + Convert.ToInt32(row["SubmittedActivities"]);
+                + Convert.ToInt32(row["ApprovedActivities"]);
 
+            bool wasCompleted = Convert.ToString(row["ExistingStatus"]) == "Completed";
             int percentage = totalSteps == 0
                 ? 0
                 : (int)Math.Round(completedSteps * 100.0 / totalSteps);
-            bool isCompleted = totalSteps > 0 && completedSteps >= totalSteps;
+            bool isCompleted = wasCompleted;
+            if (wasCompleted) percentage = 100;
 
             using (SqlConnection connection = DatabaseManager.ConnectDB())
             {
                 using (SqlCommand command = new SqlCommand(@"
                 UPDATE CourseProgress
                 SET ProgressPercentage=@percentage,
-                    Status=CASE WHEN @isCompleted=1 THEN 'Completed' ELSE 'In Progress' END,
+                    Status=CASE
+                        WHEN @isCompleted=1 THEN 'Completed'
+                        WHEN Status='Submitted' THEN 'Submitted'
+                        ELSE 'In Progress'
+                    END,
                     CompletedAt=CASE
                         WHEN @isCompleted=1 THEN COALESCE(CompletedAt,GETDATE())
                         ELSE NULL
@@ -354,16 +362,32 @@ namespace CookingLah.Pages.Learner.CourseLearning
             int savedPercentage = Convert.ToInt32(progress.Rows[0]["ProgressPercentage"]);
             if (Convert.ToString(progress.Rows[0]["Status"]) == "Completed") savedPercentage = 100;
 
-            DisplayProgress(savedPercentage, completedSteps, totalSteps);
+            DisplayProgress(savedPercentage, Convert.ToString(progress.Rows[0]["Status"]), completedSteps, totalSteps);
         }
 
-        private void DisplayProgress(int percentage, int completedSteps, int totalSteps)
+        private void DisplayProgress(int percentage, string status, int completedSteps, int totalSteps)
         {
             percentage = Math.Max(0, Math.Min(100, percentage));
             litProgressPercent.Text = Convert.ToString(percentage);
+            bool isCompleted = status == "Completed";
+            bool isSubmitted = status == "Submitted";
+            courseStatusBadge.InnerText = isSubmitted ? "Submitted" : (isCompleted ? "Completed" : "In progress");
+            courseStatusBadge.Attributes["class"] = isCompleted
+                ? "learning-course-status is-completed"
+                : "learning-course-status is-in-progress";
             courseProgressBar.Attributes["aria-valuenow"] = Convert.ToString(percentage);
             courseProgressFill.Style["width"] = percentage + "%";
-            pnlCourseComplete.Visible = percentage >= 100;
+            pnlCourseSubmitted.Visible = isSubmitted;
+            pnlCourseComplete.Visible = isCompleted;
+            if (isCompleted)
+            {
+                string overviewUrl = ResolveUrl("~/Pages/Learner/SearchCourse/SearchCoursePage.aspx?courseId=" + CourseId);
+                lnkBackToOverview.NavigateUrl = overviewUrl;
+                lnkCompletionReview.NavigateUrl = overviewUrl + "#your-review";
+                DataTable review = Read("SELECT ReviewID FROM Reviews WHERE CourseID=@courseId AND LearnerID=@learnerId",
+                    Parameter("@courseId", CourseId), Parameter("@learnerId", LearnerId));
+                lnkCompletionReview.Text = review.Rows.Count > 0 ? "View My Review" : "Leave a Review";
+            }
 
             if (totalSteps > 0)
             {

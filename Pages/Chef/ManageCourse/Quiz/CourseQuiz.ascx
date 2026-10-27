@@ -2,8 +2,8 @@
 <section class="lesson-builder quiz-builder" data-quiz-builder data-editing="<%= CanEdit ? "true" : "false" %>">
     <asp:HiddenField ID="hfQuestion" runat="server" />
     <asp:HiddenField ID="hfStructure" runat="server" />
-    <details class="lb-sidebar" open>
-        <summary>Quiz structure <span class="lb-count"><%= QuestionCount %> questions</span></summary>
+    <aside class="lb-sidebar" aria-label="Quiz questions">
+        <div class="lb-sidebar-heading"><strong>Quiz structure</strong><span class="lb-count"><%= QuestionCount %> questions</span></div>
         <div class="lb-sidebar-body">
             <asp:LinkButton ID="btnQuizInfo" runat="server" Text="Quiz information" OnClick="btnQuizInfo_Click" CausesValidation="false" />
             <asp:Button ID="btnAddQuestion" runat="server" Text="+ Add Question" CssClass="btn lb-add-lesson" OnClick="btnAddQuestion_Click" CausesValidation="false" />
@@ -18,7 +18,7 @@
                 </ItemTemplate></asp:Repeater>
             </div>
         </div>
-    </details>
+    </aside>
     <div class="lb-middle qb-main">
         <asp:Panel ID="pnlEmpty" runat="server" CssClass="lb-empty qb-empty"><h2>Build your course quiz</h2><p>No quiz has been added to this course yet.</p><asp:Button ID="btnAddQuiz" runat="server" Text="+ Add Quiz" CssClass="btn btn-primary" OnClick="btnAddQuiz_Click" CausesValidation="false" /></asp:Panel>
         <asp:Panel ID="pnlQuizInfo" runat="server">

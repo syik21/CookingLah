@@ -14,6 +14,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
         protected global::System.Web.UI.WebControls.Image imgSubmittedWork;
         protected global::System.Web.UI.WebControls.Literal litSubmissionNotes;
         protected global::System.Web.UI.WebControls.Panel pnlInstructorFeedback;
+
+        protected global::System.Web.UI.WebControls.Panel pnlSubmissionForm;
         protected global::System.Web.UI.WebControls.Literal litInstructorFeedback;
         protected global::System.Web.UI.WebControls.Literal litReviewedDate;
         protected global::System.Web.UI.WebControls.Literal litSubmissionFormTitle;

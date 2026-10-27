@@ -94,7 +94,7 @@ namespace CookingLah.Pages.Shared.CourseSearch
             ddlCategory.DataTextField = "CategoryName";
             ddlCategory.DataValueField = "CategoryID";
             ddlCategory.DataBind();
-            ddlCategory.Items.Insert(0, new ListItem("All categories", "0"));
+            ddlCategory.Items.Insert(0, new ListItem("All Categories", "0"));
         }
 
         private void LoadCourses()
@@ -102,41 +102,42 @@ namespace CookingLah.Pages.Shared.CourseSearch
             int categoryId;
             if (!int.TryParse(ddlCategory.SelectedValue, out categoryId)) categoryId = 0;
 
-            int learnerId = GetLearnerIdForSearch();
             string searchText = txtSearch.Text.Trim();
             string difficulty = ddlDifficulty.SelectedValue;
+            int minimumRating;
+            if (!int.TryParse(ddlRating.SelectedValue, out minimumRating) || minimumRating < 1 || minimumRating > 4)
+                minimumRating = 0;
 
             DataTable courses = Read(@"
                 SELECT c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,
                        LEFT(c.Description,180) AS ShortDescription,
-                       cat.CategoryName,u.FullName AS ChefName,
-                       (SELECT COUNT(*) FROM Lessons l WHERE l.CourseID=c.CourseID) AS LessonCount,
-                       (SELECT COUNT(*) FROM Quizzes q WHERE q.CourseID=c.CourseID) AS QuizCount,
-                       (SELECT COUNT(*) FROM PracticalActivities a WHERE a.CourseID=c.CourseID) AS ActivityCount,
-                       (SELECT AVG(CAST(r.Rating AS DECIMAL(5,2))) FROM Reviews r WHERE r.CourseID=c.CourseID) AS AverageRating,
-                        (SELECT COUNT(*) FROM Reviews r WHERE r.CourseID=c.CourseID) AS ReviewCount,
-                        cp.ProgressPercentage,
-                        cp.Status AS ProgressStatus
+                       cat.CategoryName,u.FullName AS ChefName,fc.DishName,
+                       ratings.AverageRating,COALESCE(ratings.ReviewCount,0) AS ReviewCount
                 FROM Courses c
                 INNER JOIN Categories cat ON cat.CategoryID=c.CategoryID
                 INNER JOIN Users u ON u.UserID=c.InstructorID
-                 LEFT JOIN CourseProgress cp ON cp.CourseID=c.CourseID AND cp.LearnerID=@learnerId
+                LEFT JOIN FoodCultures fc ON fc.FoodCultureID=c.FoodCultureID
+                LEFT JOIN (
+                    SELECT CourseID,AVG(CAST(Rating AS DECIMAL(5,2))) AS AverageRating,COUNT(ReviewID) AS ReviewCount
+                    FROM Reviews GROUP BY CourseID
+                ) ratings ON ratings.CourseID=c.CourseID
                 WHERE c.Status='Published'
                   AND (@foodCultureId=0 OR c.FoodCultureID=@foodCultureId)
                   AND (@categoryId=0 OR c.CategoryID=@categoryId)
                   AND (@difficulty='' OR c.DifficultyLevel=@difficulty)
+                  AND (@minimumRating=0 OR ratings.AverageRating>=@minimumRating)
                   AND (@searchText='' OR c.Title LIKE '%' + @searchText + '%'
                        OR c.Description LIKE '%' + @searchText + '%'
                        OR cat.CategoryName LIKE '%' + @searchText + '%')
                 ORDER BY c.UpdatedAt DESC,c.CourseID DESC",
-                 Parameter("@learnerId", learnerId),
                  Parameter("@foodCultureId", SelectedFoodCultureId),
                  Parameter("@categoryId", categoryId),
                 Parameter("@difficulty", difficulty),
+                Parameter("@minimumRating", minimumRating),
                 Parameter("@searchText", searchText));
 
             int totalCourses = courses.Rows.Count;
-            btnClearSearch.Visible = searchText.Length > 0 || categoryId > 0 || difficulty.Length > 0 || SelectedFoodCultureId > 0;
+            btnClearSearch.Visible = searchText.Length > 0 || categoryId > 0 || difficulty.Length > 0 || minimumRating > 0 || SelectedFoodCultureId > 0;
             int pageCount = Math.Max(1, (totalCourses + PageSize - 1) / PageSize);
             CurrentPage = Math.Min(CurrentPage, pageCount - 1);
 
@@ -151,7 +152,7 @@ namespace CookingLah.Pages.Shared.CourseSearch
             rptCourses.DataSource = page;
             rptCourses.DataBind();
 
-            lblResultCount.Text = totalCourses == 1 ? "1 course found" : totalCourses + " courses found";
+            lblResultCount.Text = totalCourses == 1 ? "1 Course Found" : totalCourses + " Courses Found";
             pnlEmpty.Visible = totalCourses == 0;
             pnlPager.Visible = totalCourses > PageSize;
             btnPrevious.Enabled = CurrentPage > 0;
@@ -218,6 +219,13 @@ namespace CookingLah.Pages.Shared.CourseSearch
             LoadCourses();
         }
 
+        protected string FormatCourseRating(object averageRating, object reviewCount)
+        {
+            int count = Convert.ToInt32(reviewCount);
+            if (count == 0 || averageRating == DBNull.Value) return "No reviews yet";
+            return "★ " + Convert.ToDecimal(averageRating).ToString("0.0") + " • " + count + (count == 1 ? " review" : " reviews");
+        }
+
         protected void FilterChanged(object sender, EventArgs e)
         {
             CurrentPage = 0;
@@ -231,6 +239,7 @@ namespace CookingLah.Pages.Shared.CourseSearch
             txtSearch.Text = "";
             ddlCategory.SelectedIndex = 0;
             ddlDifficulty.SelectedIndex = 0;
+            ddlRating.SelectedIndex = 0;
             CurrentPage = 0;
             LoadCourses();
         }
@@ -255,6 +264,11 @@ namespace CookingLah.Pages.Shared.CourseSearch
             SelectedCourseId = courseId;
             ViewCourseOverivew1.IsLearner = IsLearner;
             ViewCourseOverivew1.LoadCourse(courseId);
+        }
+
+        public void OpenCourse(int courseId)
+        {
+            if (courseId > 0) ShowCourseOverview(courseId);
         }
 
         private void ShowCourseSearch()
