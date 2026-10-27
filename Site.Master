@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link runat="server" href="~/F_CSS/Style.css" rel="stylesheet" />
-    <link runat="server" href="~/F_CSS/SiteMaster.css" rel="stylesheet" />
+    <link runat="server" href="~/F_CSS/SiteMaster.css?v=2" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
     <asp:ContentPlaceHolder ID="ProfileHead" runat="server" />
 </head>

@@ -114,6 +114,7 @@ mark, .highlight {
     padding: 0 .14em;
     display: inline-block;
     transform: rotate(-1.5deg);
+    font-size: 80px;
 }
 
 /* =========================
