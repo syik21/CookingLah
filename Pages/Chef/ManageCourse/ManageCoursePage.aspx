@@ -4,6 +4,7 @@
 <%@ Register Src="Lessons/CourseLessons.ascx" TagPrefix="course" TagName="Lessons" %>
 <%@ Register Src="Quiz/CourseQuiz.ascx" TagPrefix="course" TagName="Quiz" %>
 <%@ Register Src="Activity/CourseActivity.ascx" TagPrefix="course" TagName="Activity" %>
+<%@ Register Src="Review/CourseReview.ascx" TagPrefix="course" TagName="Review" %>
 <asp:Content ID="Head" ContentPlaceHolderID="ChefHead" runat="server">
     <link href="ManageCoursePage.css" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Shared/CountryPicker/CountryPicker.css") %>" rel="stylesheet" />
@@ -12,6 +13,7 @@
     <link href="Lessons/CourseLessons.css" rel="stylesheet" />
     <link href="Quiz/CourseQuiz.css" rel="stylesheet" />
     <link href="Activity/CourseActivity.css" rel="stylesheet" />
+    <link href="Review/CourseReview.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content" ContentPlaceHolderID="ChefContent" runat="server">
 <div class="manage-course course-builder" data-builder="">
@@ -41,6 +43,7 @@
             <button type="button" id="tab-lessons" class="course-section-tab" role="tab" data-course-tab="lessons" aria-controls="section-lessons" aria-selected='<%= CurrentTab == "lessons" ? "true" : "false" %>' tabindex='<%= CurrentTab == "lessons" ? "0" : "-1" %>'>Lessons</button>
             <button type="button" id="tab-quiz" class="course-section-tab" role="tab" data-course-tab="quiz" aria-controls="section-quiz" aria-selected='<%= CurrentTab == "quiz" ? "true" : "false" %>' tabindex='<%= CurrentTab == "quiz" ? "0" : "-1" %>'>Quiz</button>
             <button type="button" id="tab-activity" class="course-section-tab" role="tab" data-course-tab="activity" aria-controls="section-activity" aria-selected='<%= CurrentTab == "activity" ? "true" : "false" %>' tabindex='<%= CurrentTab == "activity" ? "0" : "-1" %>'>Activity</button>
+            <button type="button" id="tab-review" class="course-section-tab" role="tab" data-course-tab="review" aria-controls="section-review" aria-selected='<%= CurrentTab == "review" ? "true" : "false" %>' tabindex='<%= CurrentTab == "review" ? "0" : "-1" %>'>Review</button>
         </nav>
     </div>
     <asp:HiddenField ID="hfActiveTab" runat="server" ClientIDMode="Static" />
@@ -65,6 +68,9 @@
         </section>
         <section id="section-activity" class="course-section" data-course-section="activity" role="tabpanel" aria-labelledby="tab-activity" tabindex="0" <%= CurrentTab == "activity" ? "" : "hidden" %>>
             <course:Activity ID="Activity" runat="server" />
+        </section>
+        <section id="section-review" class="course-section" data-course-section="review" role="tabpanel" aria-labelledby="tab-review" tabindex="0" <%= CurrentTab == "review" ? "" : "hidden" %>>
+            <course:Review ID="Review" runat="server" />
         </section>
     </div>
     <asp:Panel ID="pnlReadiness" runat="server" CssClass="card builder-readiness"><h2>Ready to Submit?</h2>

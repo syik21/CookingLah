@@ -4,6 +4,12 @@
     background-size: 28px 28px;
 }
 .public-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: transparent;
+    
+
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
@@ -11,7 +17,6 @@
     max-width: none;
     min-height: 124px;
     padding: 24px clamp(24px, 3vw, 52px);
-
 }
 .public-logo { grid-column: 1; grid-row: 1; justify-self: start; }
 .public-header .public-logo img { width: auto; height: 70px; }
@@ -26,8 +31,20 @@
     border: 1.5px solid var(--color-ink);
     border-radius: 14px 18px 13px 16px / 16px 13px 17px 14px;
     background: var(--color-bg);
-
+    
 }
+
+.site-header.public-header {
+    position: static;
+    border-bottom: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    transition: min-height .2s ease, padding .2s ease;
+}
+
+
 .public-nav-link {
     display: inline-flex;
     align-items: center;
@@ -64,7 +81,7 @@
 .public-skip { position: absolute; top: -100px; left: 16px; z-index: 10; padding: 12px 18px; background: var(--color-yellow); border: var(--border); }
 .public-skip:focus { top: 12px; }
 .public-site :is(a, button):focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
-.public-site :is(#map, #recipes, #about) { scroll-margin-top: 24px; }
+.public-site :is(#map, #recipes, #about) { scroll-margin-top: 110px; }
 @media (max-width: 1200px) {
     .public-header { gap: 20px; }
     .public-header .public-logo img { height: 62px; }
@@ -89,4 +106,25 @@
 }
 @media (prefers-reduced-motion: reduce) {
     .public-nav-link { transition: none; }
+}
+
+
+@media (min-width: 1001px) {
+    .public-nav {
+        position: fixed;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 50;
+    }
+}
+
+.public-nav {
+    transition: background-color .2s ease, backdrop-filter .2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.public-header.is-scrolled .public-nav {
+    background: rgba(255, 249, 235, 0.35);
+    backdrop-filter: blur(6px);
 }

@@ -37,10 +37,10 @@
                 <label for="<%= ddlRating.ClientID %>">Rating</label>
                 <asp:DropDownList ID="ddlRating" runat="server" CssClass="search-select" AutoPostBack="true" OnSelectedIndexChanged="FilterChanged">
                     <asp:ListItem Text="All Ratings" Value="0" />
-                    <asp:ListItem Text="4★ &amp; above" Value="4" />
-                    <asp:ListItem Text="3★ &amp; above" Value="3" />
-                    <asp:ListItem Text="2★ &amp; above" Value="2" />
-                    <asp:ListItem Text="1★ &amp; above" Value="1" />
+                    <asp:ListItem Text="4 Star &amp; above" Value="4" />
+                    <asp:ListItem Text="3 Star &amp; above" Value="3" />
+                    <asp:ListItem Text="2 Star &amp; above" Value="2" />
+                    <asp:ListItem Text="1 Star &amp; above" Value="1" />
                 </asp:DropDownList>
             </div>
             <div class="search-filter-actions"><asp:LinkButton ID="btnClearSearch" runat="server" Text="Clear Filters" CssClass="search-clear" OnClick="btnClearSearch_Click" CausesValidation="false" /></div>
@@ -68,7 +68,7 @@
                 <article class="course-search-card">
                     <div class="course-card-image-wrap">
                         <asp:Image runat="server" CssClass="course-card-image" ImageUrl='<%# CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail"))) %>' Visible='<%# !string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>' AlternateText='<%# Convert.ToString(Eval("Title")) + " course thumbnail" %>' loading="lazy" />
-                        <asp:Panel runat="server" CssClass="course-card-image-empty" Visible='<%# string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>'><svg viewBox="0 0 120 90" fill="none" aria-hidden="true"><path d="M17 45c2 23 20 36 43 36s41-13 43-36H17Zm86 8h11c8 0 11 4 11 9s-3 9-11 9H99M14 43c18-6 67-6 91 0M39 34c-6-9 6-11 1-19m21 19c-6-9 6-11 1-19m20 19c-6-9 6-11 1-19" /><circle cx="60" cy="46" r="9" /></svg><span>Ready to cook</span></asp:Panel>
+                        <asp:Panel runat="server" CssClass="course-card-image-empty course-image-placeholder" Visible='<%# string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                     </div>
                     <div class="course-card-body">
                         <div class="course-card-labels"><span class="course-level"><%#: Eval("DifficultyLevel") %></span><span class="course-category"><%#: Eval("CategoryName") %></span></div>

@@ -29,6 +29,7 @@
             </div>
 
             <asp:Image ID="imgCourseThumbnail" runat="server" CssClass="learning-course-thumbnail" />
+            <asp:Panel ID="pnlCourseImagePlaceholder" runat="server" CssClass="learning-course-thumbnail course-image-placeholder" Visible="false"><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
             <header class="learning-course-header">
                 
                 <div class="learning-course-heading">

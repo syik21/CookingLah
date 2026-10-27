@@ -57,7 +57,8 @@
             <asp:Repeater ID="rptCurrentCourses" runat="server" DataSourceID="previewCurrentCourses">
                 <ItemTemplate>
                     <article class="scrap-paper scrap-tape dashboard-course-card">
-                        <asp:Image runat="server" ImageUrl='<%# XPath("@image") %>' AlternateText='<%# XPath("@title") %>' CssClass="course-thumbnail" />
+                        <asp:Image runat="server" ImageUrl='<%# XPath("@image") %>' Visible='<%# !string.IsNullOrWhiteSpace(Convert.ToString(XPath("@image"))) %>' AlternateText='<%# XPath("@title") %>' CssClass="course-thumbnail" />
+                        <asp:Panel runat="server" CssClass="course-thumbnail course-image-placeholder" Visible='<%# string.IsNullOrWhiteSpace(Convert.ToString(XPath("@image"))) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                         <p class="card-eyebrow"><%#: XPath("@difficulty") %></p>
                         <h3><%#: XPath("@title") %></h3>
                         <div class="course-progress-label"><span>Progress</span><span><%#: XPath("@progress") %>%</span></div>
@@ -101,7 +102,8 @@
             <asp:Repeater ID="rptExploreCourses" runat="server" DataSourceID="previewExploreCourses">
                 <ItemTemplate>
                     <article class="scrap-paper scrap-tape dashboard-course-card">
-                        <asp:Image runat="server" ImageUrl='<%# XPath("@image") %>' AlternateText='<%# XPath("@title") %>' CssClass="course-thumbnail" />
+                        <asp:Image runat="server" ImageUrl='<%# XPath("@image") %>' Visible='<%# !string.IsNullOrWhiteSpace(Convert.ToString(XPath("@image"))) %>' AlternateText='<%# XPath("@title") %>' CssClass="course-thumbnail" />
+                        <asp:Panel runat="server" CssClass="course-thumbnail course-image-placeholder" Visible='<%# string.IsNullOrWhiteSpace(Convert.ToString(XPath("@image"))) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                         <p class="card-eyebrow"><%#: XPath("@difficulty") %> &bull; <%#: XPath("@category") %></p>
                         <h3><%#: XPath("@title") %></h3>
                         <p class="text-muted">Rated <%#: XPath("@rating") %> / 5</p>

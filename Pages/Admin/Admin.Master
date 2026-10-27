@@ -20,10 +20,9 @@
         <a runat="server" href="~/Pages/Admin/AdminDashboard.aspx" class="site-logo"><img runat="server" src="~/F_Assets/CookingLahLogo.png" alt="Cooking LAH dashboard" /></a>
         <div class="master-header-caption">Your admin notebook<span>Keep the Cooking LAH community growing.</span></div>
         <div class="master-profile">
-            <%-- Shared placeholder avatar until profile photo loading is connected. --%>
             <a href='<%= ResolveUrl("~/Pages/Shared/Profile/ProfilePage.aspx") %>' class="master-profile-link">
-                <asp:Image ID="imgLearnerProfile" runat="server" ImageUrl="~/F_Assets/mascot.png" AlternateText="Admin avatar placeholder" />
-                <div class="master-profile-copy"><span><%= Server.HtmlEncode(Convert.ToString(Session["Username"])) %></span><small>Admin</small></div>
+                <asp:Image ID="imgLearnerProfile" runat="server" ImageUrl="~/F_Assets/mascot.png" AlternateText="Admin profile photo" />
+                <div class="master-profile-copy"><asp:Label ID="lblProfileName" runat="server" /><small>Admin</small></div>
             </a>
             <asp:Button ID="btnHeaderLogout" runat="server" Text="Log out" CssClass="btn master-logout" CausesValidation="false" OnClick="Logout_Click"/>
         </div>
@@ -36,10 +35,9 @@
                 <a runat="server" href="~/Pages/Admin/AdminDashboard.aspx" class="master-nav-item" data-page="AdminDashboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10H3ZM9 20v-7h6v7" /></svg><span>Dashboard</span></a>
                 <%-- Placeholder destinations are intentionally disabled until those pages exist. --%>
                 <p class="master-nav-label">Management</p>
-                <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v16M12 5C8 2 4 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-2-1-6-2-10 1Z" /></svg><span>Manage courses</span></a>
+                <a runat="server" href="~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx" class="master-nav-item" data-page="ReviewCoursesPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 4H4v17h16V4h-4M8 2h8v5H8ZM8 13l3 3 5-5" /></svg><span>Manage Course</span></a>
                 <a runat="server" href="~/Pages/Admin/ManageCategories/ManagerCategoriesPage.aspx" class="master-nav-item" data-page="ManagerCategoriesPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg><span>Manage categories</span></a>
                 <a runat="server" href="~/Pages/Admin/ManageUser/ManageUserPage.aspx" class="master-nav-item" data-page="ManageUserPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6" /><path d="m15 15 6 6" /></svg><span>Manage users</span></a>
-                <a runat="server" href="~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx" class="master-nav-item" data-page="ReviewCoursesPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 4H4v17h16V4h-4M8 2h8v5H8ZM8 13l3 3 5-5" /></svg><span>Content approvals</span></a>
                 <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 3v18h17M8 16v-4m5 4V8m5 8V4" /></svg><span>Reports</span></a>
                 <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 14a5 5 0 0 1-1-10 6 6 0 0 1 12 0 5 5 0 0 1-1 10v7H7ZM7 17h10" /></svg><span>Manage activities</span></a>
                 <p class="master-nav-label">Explore</p>

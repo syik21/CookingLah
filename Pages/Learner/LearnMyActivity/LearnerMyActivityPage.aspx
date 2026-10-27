@@ -46,7 +46,7 @@
                         <article class='<%# CardClass(Eval("Status")) %>'>
                             <div class="submission-thumbnail-wrap">
                                 <asp:Image runat="server" CssClass="submission-thumbnail" ImageUrl='<%# Media(Eval("Thumbnail")) %>' Visible='<%# !string.IsNullOrEmpty(Media(Eval("Thumbnail"))) %>' AlternateText='<%# Convert.ToString(Eval("CourseTitle")) + " course thumbnail" %>' loading="lazy" />
-                                <asp:Panel runat="server" CssClass="submission-thumbnail-empty" Visible='<%# string.IsNullOrEmpty(Media(Eval("Thumbnail"))) %>'><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5h16v14H4zM4 15l4-4 4 4 3-3 5 5M16 9h.01" /></svg><small>No course image</small></asp:Panel>
+                                <asp:Panel runat="server" CssClass="submission-thumbnail-empty course-image-placeholder" Visible='<%# string.IsNullOrEmpty(Media(Eval("Thumbnail"))) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                             </div>
                             <div class="submission-card-content">
                                 <div class="submission-card-heading"><div><p class="submission-course"><%#: Eval("CourseTitle") %></p><h3><%#: Eval("ActivityTitle") %></h3></div><span class='<%# StatusClass(Eval("Status")) %>'><%#: Eval("Status") %></span></div>

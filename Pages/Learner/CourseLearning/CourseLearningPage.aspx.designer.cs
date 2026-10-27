@@ -52,6 +52,9 @@ namespace CookingLah.Pages.Learner.CourseLearning
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgCourseThumbnail;
 
+        /// <summary>pnlCourseImagePlaceholder control.</summary>
+        protected global::System.Web.UI.WebControls.Panel pnlCourseImagePlaceholder;
+
         /// <summary>
         /// litCourseTitle control.
         /// </summary>

@@ -82,10 +82,10 @@
                                     ImageUrl='<%# CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail"))) %>'
                                     Visible='<%# !string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>'
                                     AlternateText='<%# Convert.ToString(Eval("Title")) + " course image" %>' loading="lazy" />
-                                <asp:Panel runat="server" CssClass="my-course-thumbnail-empty"
+                                <asp:Panel runat="server" CssClass="my-course-thumbnail-empty course-image-placeholder"
                                     Visible='<%# string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>'>
-                                    <svg viewBox="0 0 100 80" aria-hidden="true" focusable="false"><path d="M16 43c2 19 15 29 34 29s32-10 34-29H16Zm69 8h8c6 0 9 3 9 7s-3 7-9 7h-8M12 41c14-5 55-5 75 0M34 32c-5-7 5-9 1-15m17 15c-5-7 5-9 1-15m16 15c-5-7 5-9 1-15" /><circle cx="50" cy="44" r="7" /></svg>
-                                    <span>Ready to cook</span>
+                                    <img runat="server" src="~/F_Assets/mascot.png" alt="" />
+                                    <span>Food Image Coming Soon</span>
                                 </asp:Panel>
                             </div>
                             <div class="my-course-content">

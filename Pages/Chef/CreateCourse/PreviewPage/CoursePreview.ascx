@@ -3,7 +3,7 @@
 <div class="course-preview">
     <p class="builder-hint">Review the saved version of your course. Go back to a step to make changes.</p>
     <section class="preview-section">
-        <h3>Course</h3><asp:Image ID="imgCourse" runat="server" CssClass="preview-photo" AlternateText="Course thumbnail" />
+        <h3>Course</h3><asp:Image ID="imgCourse" runat="server" CssClass="preview-photo" AlternateText="Course thumbnail" /><asp:Panel ID="pnlCourseImagePlaceholder" runat="server" CssClass="preview-photo course-image-placeholder" Visible="false"><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
         <h4><asp:Literal ID="litTitle" runat="server" Mode="Encode" /></h4>
         <p><asp:Literal ID="litCategory" runat="server" Mode="Encode" /> &middot; <asp:Literal ID="litDifficulty" runat="server" Mode="Encode" /></p>
         <p>Traditional Food: <asp:Literal ID="litFoodCulture" runat="server" Mode="Encode" /></p>

@@ -1,10 +1,7 @@
 ﻿using CookingLah.F_Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using CookingLah.F_Services;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace CookingLah.Pages.Admin
 {
@@ -17,6 +14,25 @@ namespace CookingLah.Pages.Admin
                 Response.Redirect(NavigationHelper.GetUrl("Main"));
             }
         }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            LoadHeaderProfile();
+            base.OnPreRender(e);
+        }
+
+        // Refresh the header after profile changes are saved.
+        private void LoadHeaderProfile()
+        {
+            string username;
+            string profileImage;
+            if (!DatabaseManager.TryLoadMasterProfile(Session["UserId"], out username, out profileImage)) return;
+
+            Session["Username"] = username;
+            lblProfileName.Text = username;
+            imgLearnerProfile.ImageUrl = profileImage;
+        }
+
         protected void Logout_Click(object sender, System.EventArgs e)
         {
             System.Web.Security.FormsAuthentication.SignOut();

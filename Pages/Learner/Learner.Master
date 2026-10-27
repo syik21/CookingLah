@@ -20,9 +20,8 @@
         <a runat="server" href="~/Pages/Learner/LearnerDashboard.aspx" class="site-logo"><img runat="server" src="~/F_Assets/CookingLahLogo.png" alt="Cooking LAH dashboard" /></a>
         <div class="master-header-caption">Your cooking notebook<span>A little practice. A lot of flavour.</span></div>
         <div class="master-profile">
-            <%-- Existing mascot is a preview avatar; replace from Users in LoadLearnerProfile. --%>
             <a href='<%= ResolveUrl("~/Pages/Shared/Profile/ProfilePage.aspx") %>' class="master-profile-link">
-                <asp:Image ID="imgLearnerProfile" runat="server" ImageUrl="~/F_Assets/mascot.png" AlternateText="Learner avatar placeholder" />
+                <asp:Image ID="imgLearnerProfile" runat="server" ImageUrl="~/F_Assets/mascot.png" AlternateText="Learner profile photo" />
                 <div class="master-profile-copy"><asp:Label ID="lblProfileName" runat="server" Text="Username" /><small>Learner</small></div>
             </a>
             <asp:Button ID="btnHeaderLogout" runat="server" Text="Log out" CssClass="btn master-logout" CausesValidation="false" OnClick="Logout_Click"/>
