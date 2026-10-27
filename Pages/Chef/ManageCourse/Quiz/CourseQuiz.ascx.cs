@@ -11,6 +11,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Quiz
         public int SelectionId { get; private set; }
         protected int QuestionCount { get; private set; }
         protected int OptionCount { get; private set; }
+        protected int QuizId { get { return quizId; } }
         protected string AnswerGroup { get { return UniqueID + "_correct"; } }
         private CourseReviewDraft draft;
         private int quizId;

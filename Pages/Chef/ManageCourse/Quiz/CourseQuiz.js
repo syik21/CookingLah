@@ -54,9 +54,32 @@
     });
     var group = builder.querySelector('[data-question-order]');
     var dragged;
+    function rows() { return Array.from(group.children); }
+    function updateControls() {
+        rows().forEach(function (row, index, all) {
+            var number = row.querySelector('.qb-select span');
+            if (number) number.textContent = 'Question ' + (index + 1);
+            var up = row.querySelector('[data-qb-move="-1"]');
+            var down = row.querySelector('[data-qb-move="1"]');
+            if (up) up.disabled = index === 0;
+            if (down) down.disabled = index === all.length - 1;
+        });
+        var selected = group.querySelector('.qb-question.is-selected');
+        var heading = builder.querySelector('.qb-main .qb-heading h2');
+        if (selected && heading) heading.textContent = 'Question ' + (rows().indexOf(selected) + 1);
+    }
     function saveOrder() {
-        builder.querySelector('[id$="hfOrderIds"]').value = Array.from(group.children).map(function (row) { return row.dataset.questionId; }).join(',');
-        builder.querySelector('[id$="btnSaveOrder"]').click();
+        var ids = rows().map(function (row) { return row.dataset.questionId; });
+        updateControls();
+        window.CookingLahManage.saveOrder('questions', group.dataset.orderParent, ids, state)
+            .then(function () {
+                var field = builder.querySelector('[id$="hfStructure"]');
+                if (!field) return;
+                var parts = field.value.split('|');
+                parts[1] = ids.join(',');
+                field.value = parts.join('|');
+            })
+            .catch(function () {});
     }
     group.addEventListener('dragstart', function (event) {
         if (!event.target.matches('.qb-drag')) { event.preventDefault(); return; }

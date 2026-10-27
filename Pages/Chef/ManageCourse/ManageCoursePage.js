@@ -46,7 +46,38 @@
             });
         });
     }
-    window.CookingLahManage = { initSection: initSection };
+    var builderRoot = document.querySelector("[data-builder]");
+    var orderSave = Promise.resolve();
+    function saveOrder(kind, parentId, ids, state) {
+        if (!builderRoot) return Promise.reject(new Error("Course builder not found."));
+        if (state) state.textContent = "Saving order...";
+        orderSave = orderSave.catch(function () {}).then(function () {
+            return fetch(builderRoot.dataset.reorderUrl, {
+                method: "POST",
+                credentials: "same-origin",
+                headers: { "Content-Type": "application/json; charset=utf-8" },
+                body: JSON.stringify({
+                    courseId: Number(builderRoot.dataset.courseId),
+                    kind: kind,
+                    parentId: Number(parentId) || 0,
+                    ids: ids.join(","),
+                    token: builderRoot.dataset.reorderToken
+                })
+            }).then(function (response) {
+                if (!response.ok) throw new Error("Unable to save the new order.");
+                return response.json();
+            }).then(function (result) {
+                if (!result.success) throw new Error(result.message || "Unable to save the new order.");
+                if (state) state.textContent = result.message;
+                return result;
+            });
+        });
+        return orderSave.catch(function (error) {
+            if (state) state.textContent = error.message || "Unable to save the new order. Please try again.";
+            throw error;
+        });
+    }
+    window.CookingLahManage = { initSection: initSection, saveOrder: saveOrder };
     var tabField = document.getElementById("hfActiveTab");
     var tabs = Array.from(document.querySelectorAll("[data-course-tab]"));
     var sections = Array.from(document.querySelectorAll("[data-course-section]"));
@@ -119,10 +150,9 @@
     document.querySelectorAll("[data-order-group]").forEach(function (group) {
         var dragged;
         function save() {
-            document.getElementById("hfOrderKind").value = group.dataset.orderGroup;
-            document.getElementById("hfOrderParent").value = group.dataset.orderParent || "0";
-            document.getElementById("hfOrderIds").value = Array.from(group.querySelectorAll(":scope > [data-order-id]")).map(function (row) { return row.dataset.orderId; }).join(",");
-            document.getElementById("btnReorder").click();
+            var ids = Array.from(group.querySelectorAll(":scope > [data-order-id]")).map(function (row) { return row.dataset.orderId; });
+            saveOrder(group.dataset.orderGroup, group.dataset.orderParent || 0, ids, document.getElementById("builderFeedback"))
+                .catch(function () {});
         }
         group.addEventListener("dragstart", function (event) {
             if (!event.target.matches(".drag-handle") || event.target.hidden) { event.preventDefault(); return; }

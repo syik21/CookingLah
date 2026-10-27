@@ -778,7 +778,9 @@
 }
 
 .course-card-image-wrap {
-    aspect-ratio: 16 / 9;
+    height: clamp(180px, 24vw, 260px);
+    aspect-ratio: auto;
+    flex: none;
 }
 
 .course-card-body {

@@ -17,6 +17,7 @@ namespace CookingLah.Pages.Chef.ManageCourse
         public DataRow Course { get; private set; }
         public string CurrentTab { get; private set; }
         public int SetupPercent { get; private set; }
+        public string ReorderToken { get; private set; }
         private CourseReviewDraft setup;
         private int InstructorId { get { return Convert.ToInt32(Session["UserId"]); } }
 
@@ -32,6 +33,12 @@ namespace CookingLah.Pages.Chef.ManageCourse
             if (!int.TryParse(Request.QueryString["courseId"], out courseId) || courseId <= 0)
                 throw new HttpException(404, "Please select a course from My Courses.");
             CourseId = courseId;
+            ReorderToken = Convert.ToString(Session["ManageCourseReorderToken"]);
+            if (string.IsNullOrEmpty(ReorderToken))
+            {
+                ReorderToken = Guid.NewGuid().ToString("N");
+                Session["ManageCourseReorderToken"] = ReorderToken;
+            }
             ViewStateUserKey = Session.SessionID + ":" + CourseId;
             base.OnInit(e);
             Response.Cache.SetNoStore();
@@ -209,5 +216,6 @@ namespace CookingLah.Pages.Chef.ManageCourse
                 RedirectCurrent();
             });
         }
+
     }
 }

@@ -622,7 +622,11 @@
 .manage-course-content { min-width: 0; }
 .course-builder :focus-visible { outline: 3px solid #376440; outline-offset: 3px; }
 .course-section-tab:focus-visible { outline-offset: -5px; }
-
+#builderFeedback {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-primary);
+}
 
 /* Back link on the left, save status on the right */
 .mc-backFeedback-row {

@@ -48,11 +48,17 @@
     <Content Include="App_Data\CookinglahDB_log.ldf">
       <DependentUpon>CookinglahDB.mdf</DependentUpon>
     </Content>
+    <Content Include="Pages\Admin\CourseReport\CourseReportPage.aspx" />
+    <Content Include="Pages\Admin\CourseReport\CourseReportPage.js" />
+    <Content Include="Pages\Admin\CourseReport\CourseReportPage.css" />
     <Content Include="Pages\Admin\LoginPage\AdminLoginPage.css" />
     <Content Include="Pages\Admin\LoginPage\AdminLoginPage.js" />
     <Content Include="Pages\Admin\ManageUser\ManageUserjs.js" />
     <Content Include="Pages\Admin\ManageUser\ManageUserPage.aspx" />
     <Content Include="Pages\Admin\ManageUser\ManageUser.css" />
+    <Content Include="Pages\Admin\UserReport\UserReportPage.js" />
+    <Content Include="Pages\Admin\UserReport\UserReportPage.css" />
+    <Content Include="Pages\Admin\UserReport\UserReportPage.aspx" />
     <Content Include="Pages\Chef\ChefDashboard.aspx" />
     <Content Include="Pages\Chef\ChefDashboard.css" />
     <Content Include="Pages\Chef\ChefDashboard.js" />
@@ -83,12 +89,26 @@
     <Compile Include="Pages\Admin\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Admin\CourseReport\CourseReportPage.aspx.cs">
+      <DependentUpon>CourseReportPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Admin\CourseReport\CourseReportPage.aspx.designer.cs">
+      <DependentUpon>CourseReportPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Admin\ManageUser\ManageUserPage.aspx.cs">
       <DependentUpon>ManageUserPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\Admin\ManageUser\ManageUserPage.aspx.designer.cs">
       <DependentUpon>ManageUserPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Admin\UserReport\UserReportPage.aspx.cs">
+      <DependentUpon>UserReportPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Admin\UserReport\UserReportPage.aspx.designer.cs">
+      <DependentUpon>UserReportPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Chef\Chef.Master.cs">
       <DependentUpon>Chef.Master</DependentUpon>
@@ -713,6 +733,10 @@
     </Compile>
     <Content Include="Pages\Chef\ManageCourse\Lessons\CourseLessons.css" />
     <Content Include="Pages\Chef\ManageCourse\Lessons\CourseLessons.js" />
+    <Content Include="Pages\Chef\ManageCourse\CourseOrderHandler.ashx" />
+    <Compile Include="Pages\Chef\ManageCourse\CourseOrderHandler.ashx.cs">
+      <DependentUpon>CourseOrderHandler.ashx</DependentUpon>
+    </Compile>
     <Content Include="Pages\Chef\ManageCourse\ManageCoursePage.aspx" />
     <Compile Include="Pages\Chef\ManageCourse\ManageCoursePage.aspx.cs">
       <DependentUpon>ManageCoursePage.aspx</DependentUpon>

@@ -6,7 +6,7 @@
 .env*
 .editorconfig
 tests/
-App_Data/Migrations
+App_Data/Migrations/
 artifacts/
 
 # User-specific files
@@ -268,9 +268,9 @@ ServiceFabricBackup/
 *.rptproj.bak
 
 # SQL Server files
-*.mdf
-*.ldf
-*.ndf
+#*.mdf
+#*.ldf
+#*.ndf
 
 # Business Intelligence projects
 *.rdl.data

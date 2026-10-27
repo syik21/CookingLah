@@ -35,7 +35,7 @@
             <div class="lb-content-heading"><h3>Lesson content</h3><span><%= BlockCount %> blocks</span></div>
             <asp:Panel ID="pnlEmptyContent" runat="server" CssClass="lb-empty"><p>No content yet.</p><p><%= CanEdit ? "Use the content tools to build this Lesson." : "This Lesson has no learning content yet." %></p></asp:Panel>
             <asp:Label ID="errContent" runat="server" CssClass="lb-error" />
-            <div data-lesson-order="content" class="lb-block-list">
+            <div data-lesson-order="content" data-order-parent="<%= SelectedLessonId %>" class="lb-block-list">
                 <asp:Repeater ID="rptLessonContent" runat="server" OnItemCommand="rptLessonContent_ItemCommand"><ItemTemplate>
                     <article class="lb-block" data-lesson-id='<%# Eval("LessonContentID") %>' data-content-type='<%# Eval("ContentType") %>'>
                         <header class="lb-block-header">

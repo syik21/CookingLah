@@ -70,10 +70,35 @@
     });
     builder.querySelectorAll('[data-lesson-order]').forEach(function (group) {
         var dragged;
+        function rows() { return Array.from(group.children); }
+        function updateControls() {
+            rows().forEach(function (row, index, all) {
+                var number = group.dataset.lessonOrder === 'content' ? row.querySelector('.lb-position') : row.querySelector('.lb-select span');
+                if (number) number.textContent = group.dataset.lessonOrder === 'content' ? String(index + 1) : (index + 1) + '.';
+                var up = row.querySelector('[data-lb-move="-1"]');
+                var down = row.querySelector('[data-lb-move="1"]');
+                if (up) up.disabled = index === 0;
+                if (down) down.disabled = index === all.length - 1;
+            });
+            if (group.dataset.lessonOrder === 'lessons') {
+                var selected = group.querySelector('.lb-lesson.is-selected');
+                var heading = builder.querySelector('.lb-heading h2');
+                if (selected && heading) heading.textContent = 'LESSON ' + (rows().indexOf(selected) + 1);
+            }
+        }
+        function updateStructure(ids) {
+            var field = builder.querySelector('[id$="hfStructure"]');
+            if (!field) return;
+            var parts = field.value.split('|');
+            parts[group.dataset.lessonOrder === 'lessons' ? 0 : 1] = ids.join(',');
+            field.value = parts.join('|');
+        }
         function saveOrder() {
-            builder.querySelector('[id$="hfOrderKind"]').value = group.dataset.lessonOrder;
-            builder.querySelector('[id$="hfOrderIds"]').value = Array.from(group.children).map(function (row) { return row.dataset.lessonId; }).join(',');
-            builder.querySelector('[id$="btnSaveOrder"]').click();
+            var originalIds = rows().map(function (row) { return row.dataset.lessonId; });
+            updateControls();
+            window.CookingLahManage.saveOrder(group.dataset.lessonOrder, group.dataset.orderParent || 0, originalIds, state)
+                .then(function () { updateStructure(originalIds); })
+                .catch(function () {});
         }
         group.addEventListener('dragstart', function (event) {
             if (!event.target.matches('.lb-drag')) { event.preventDefault(); return; }

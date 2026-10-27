@@ -16,7 +16,7 @@
     <link href="Review/CourseReview.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content" ContentPlaceHolderID="ChefContent" runat="server">
-<div class="manage-course course-builder" data-builder="">
+<div class="manage-course course-builder" data-builder="" data-course-id="<%= CourseId %>" data-reorder-token="<%= System.Web.HttpUtility.HtmlAttributeEncode(ReorderToken) %>" data-reorder-url="<%= ResolveUrl("~/Pages/Chef/ManageCourse/CourseOrderHandler.ashx") %>">
     <div class="mc-backFeedback-row">
         <a href="../MyCourse/ChefMyCourse.aspx" class="mc-back">&larr; Back to My Courses</a>
         <p id="builderFeedback" role="status" aria-live="polite"><asp:Literal ID="litSaveState" runat="server" Mode="Encode" /></p>
@@ -87,11 +87,11 @@
     <script src="<%= ResolveUrl("~/Pages/Shared/CountryPicker/CountryPicker.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/UploadValidation.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/IngredientEditor.js") %>" defer></script>
-    <script src="ManageCoursePage.js" defer></script>
+    <script src="ManageCoursePage.js?v=20261028-reorder4" defer></script>
     <script src="Overview/CourseOverview.js" defer></script>
     <script src="Recipe/CourseRecipe.js" defer></script>
-    <script src="Lessons/CourseLessons.js" defer></script>
-    <script src="Quiz/CourseQuiz.js" defer></script>
+    <script src="Lessons/CourseLessons.js?v=20261028-reorder4" defer></script>
+    <script src="Quiz/CourseQuiz.js?v=20261028-reorder4" defer></script>
     <script src="Activity/CourseActivity.js" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/LessonVideoDialog.js") %>" defer></script>
 </asp:Content>

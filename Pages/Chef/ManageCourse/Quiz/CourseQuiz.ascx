@@ -8,7 +8,7 @@
             <asp:LinkButton ID="btnQuizInfo" runat="server" Text="Quiz information" OnClick="btnQuizInfo_Click" CausesValidation="false" />
             <asp:Button ID="btnAddQuestion" runat="server" Text="+ Add Question" CssClass="btn lb-add-lesson" OnClick="btnAddQuestion_Click" CausesValidation="false" />
             <asp:Panel ID="pnlEmptyQuestions" runat="server" CssClass="lb-empty"><p>No questions yet.</p><p><%= CanEdit ? "Add a question to begin building your quiz." : "This quiz has no questions yet." %></p></asp:Panel>
-            <div class="qb-question-list" data-question-order>
+            <div class="qb-question-list" data-question-order data-order-parent="<%= QuizId %>">
                 <asp:Repeater ID="rptQuestions" runat="server" OnItemCommand="rptQuestions_ItemCommand"><ItemTemplate>
                     <div class='qb-question <%# Convert.ToInt32(Eval("QuestionID")) == SelectionId ? "is-selected" : "" %>' data-question-id='<%# Eval("QuestionID") %>'>
                         <div class="qb-question-label"><asp:PlaceHolder runat="server" Visible='<%# CanEdit %>'><button type="button" class="qb-drag" draggable="true" aria-label="Drag question" title="Drag to reorder">&#9776;</button></asp:PlaceHolder>

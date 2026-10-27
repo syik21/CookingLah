@@ -1,2 +1,8 @@
 .mc-course-card { gap: 12px; }
+.mc-course-card > .mc-course-thumbnail {
+    height: clamp(180px, 22vw, 260px);
+    aspect-ratio: auto;
+    flex: none;
+    overflow: hidden;
+}
 .mc-course-search select { min-height: 44px; max-width: 100%; padding: 10px; }
