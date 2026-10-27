@@ -1,6 +1,33 @@
 
 (function () {
     'use strict';
+    var form = document.getElementById('form1');
+    if (form) {
+        var pendingButton = null;
+        var originalText = '';
+        form.addEventListener('submit', function (event) {
+            if (event.defaultPrevented) return;
+            if (pendingButton) {
+                event.preventDefault();
+                return;
+            }
+            var button = event.submitter || document.activeElement;
+            if (!button || !button.hasAttribute('data-loading-text')) return;
+            pendingButton = button;
+            originalText = button.value;
+            button.value = button.dataset.loadingText;
+            button.setAttribute('aria-busy', 'true');
+            button.setAttribute('aria-disabled', 'true');
+            // Keep the button enabled so Web Forms receives its name and runs OnClick.
+        });
+        window.addEventListener('pageshow', function () {
+            if (!pendingButton) return;
+            pendingButton.value = originalText;
+            pendingButton.removeAttribute('aria-busy');
+            pendingButton.removeAttribute('aria-disabled');
+            pendingButton = null;
+        });
+    }
     var logo = document.getElementById('loginLogo');
     var login = document.getElementById('txtLoginEmail');
     var password = document.getElementById('txtLoginPass');

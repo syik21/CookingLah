@@ -8,13 +8,39 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web.UI;
 
 namespace CookingLah.Pages.Shared.Profile
 {
     public partial class ProfilePage : System.Web.UI.Page
     {
+        protected string DeleteFeedback = "";
+        private string ProfileRole = "";
+        protected bool CanDeleteProfile { get { return ProfileRole == "Learner" || ProfileRole == "Instructor"; } }
+        protected string DeleteActionLabel { get { return ProfileRole == "Instructor" ? "Deactivate profile" : "Delete profile"; } }
+        protected string DeleteDescription
+        {
+            get
+            {
+                if (ProfileRole == "Learner") return "Permanently delete your account and its associated learning records. This cannot be undone.";
+                if (ProfileRole == "Instructor") return "Deactivate your account and stop access to Cooking LAH. Your profile and courses will be retained. Contact an administrator if you need to reactivate your account.";
+                return "To close an admin account, ask another administrator to deactivate it in Manage users.";
+            }
+        }
         protected string DetailsFeedback = "";
         protected string PasswordFeedback = "";
+        protected bool PasswordFeedbackIsError
+        {
+            get
+            {
+                return PasswordFeedback.StartsWith("Enter", StringComparison.OrdinalIgnoreCase) ||
+                    PasswordFeedback.StartsWith("Your current password is incorrect", StringComparison.OrdinalIgnoreCase) ||
+                    PasswordFeedback.StartsWith("Please verify", StringComparison.OrdinalIgnoreCase) ||
+                    PasswordFeedback.StartsWith("Use at least", StringComparison.OrdinalIgnoreCase) ||
+                    PasswordFeedback.StartsWith("Choose a password", StringComparison.OrdinalIgnoreCase) ||
+                    PasswordFeedback.StartsWith("Your password changed elsewhere", StringComparison.OrdinalIgnoreCase);
+            }
+        }
         protected string PhotoFeedback = "";
         protected string CsrfToken { get { return Convert.ToString(Session["ProfileCsrf"]); } }
         private int UserId { get { return Convert.ToInt32(Session["UserId"]); } }
@@ -83,7 +109,7 @@ namespace CookingLah.Pages.Shared.Profile
                             case "details": SaveProfile_Click(sender, e); break;
                             case "upload": UploadPhoto_Click(sender, e); break;
                             case "remove": RemovePhoto_Click(sender, e); break;
-                            case "password": ChangePassword_Click(sender, e); break;
+                            case "delete": if (DeleteProfile()) return; break;
                         }
                     }
                     catch (SqlException ex)
@@ -103,7 +129,7 @@ namespace CookingLah.Pages.Shared.Profile
         {
             using (var con = DatabaseManager.ConnectDB())
             using (var cmd = new SqlCommand(
-                "SELECT FullName, Username, Email, ProfileImage FROM dbo.Users WHERE UserID = @userId", con))
+                "SELECT FullName, Username, Email, ProfileImage, Role FROM dbo.Users WHERE UserID = @userId", con))
             {
                 cmd.Parameters.Add("@userId", SqlDbType.Int).Value = Convert.ToInt32(Session["UserId"]);
                 con.Open();
@@ -115,10 +141,12 @@ namespace CookingLah.Pages.Shared.Profile
                         Response.Redirect(NavigationHelper.GetUrl("Main"));
                         return;
                     }
+                    ProfileRole = Convert.ToString(reader["Role"]);
                     ViewState["FullName"] = Convert.ToString(reader["FullName"]);
                     ViewState["Username"] = Convert.ToString(reader["Username"]);
                     ViewState["Email"] = Convert.ToString(reader["Email"]);
                     string photo = Convert.ToString(reader["ProfileImage"]).Trim();
+                    ViewState["ProfileImageUrl"] = ResolveUrl("~/F_Assets/mascot.png");
                     Uri absoluteUrl;
                     if (!string.IsNullOrEmpty(photo) && !photo.StartsWith("//") && !photo.Contains("\\") &&
                         (!Uri.TryCreate(photo, UriKind.Absolute, out absoluteUrl) ||
@@ -220,37 +248,208 @@ namespace CookingLah.Pages.Shared.Profile
             PhotoFeedback = "Your profile photo has been removed.";
         }
 
-        protected void ChangePassword_Click(object sender, EventArgs e)
+        protected void btnStartPasswordChange_Click(object sender, EventArgs e)
         {
-            string current = Request.Form["currentPassword"] ?? "";
-            string next = Request.Form["newPassword"] ?? "";
-            if (current.Length == 0 || Encoding.UTF8.GetByteCount(current) > 72 || next.Length < 8 ||
-                Encoding.UTF8.GetByteCount(next) > 72 || next != Request.Form["confirmPassword"] || next == current)
-            { PasswordFeedback = "Use a different password of at least 8 characters and at most 72 UTF-8 bytes, and match the confirmation."; return; }
+            ClearPasswordVerification();
+            pnlPasswordStart.Visible = false;
+            pnlPasswordVerify.Visible = true;
+            pnlPasswordNew.Visible = false;
+            PasswordFeedback = "Enter your current password to continue.";
+        }
+
+        protected void btnVerifyCurrentPassword_Click(object sender, EventArgs e)
+        {
+            string current = txtCurrentPassword.Text;
+            if (current.Length == 0 || Encoding.UTF8.GetByteCount(current) > 72)
+            {
+                PasswordFeedback = "Enter your current password to continue.";
+                pnlPasswordVerify.Visible = true;
+                pnlPasswordNew.Visible = false;
+                ScriptManager.GetCurrent(Page).SetFocus(txtCurrentPassword);
+                return;
+            }
+
+            string passwordHash;
             using (var con = DatabaseManager.ConnectDB())
             {
                 con.Open();
-                string oldHash;
                 using (var cmd = new SqlCommand("SELECT Password FROM dbo.Users WHERE UserID=@id", con))
                 {
                     cmd.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
-                    oldHash = Convert.ToString(cmd.ExecuteScalar());
-                }
-                if (string.IsNullOrEmpty(oldHash) || !PasswordManager.isPasswordValid(current, oldHash))
-                { PasswordFeedback = "Your current password is incorrect."; return; }
-                using (var cmd = new SqlCommand("UPDATE dbo.Users SET Password=@password, UpdatedAt=GETDATE() WHERE UserID=@id AND Password=@old", con))
-                {
-                    cmd.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = PasswordManager.HashPassword(next);
-                    cmd.Parameters.Add("@old", SqlDbType.NVarChar, 255).Value = oldHash;
-                    cmd.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
-                    PasswordFeedback = cmd.ExecuteNonQuery() == 1 ? "Your password has been changed." : "Your password changed elsewhere. Please try again.";
+                    passwordHash = Convert.ToString(cmd.ExecuteScalar());
                 }
             }
+
+            if (string.IsNullOrEmpty(passwordHash) || !PasswordManager.isPasswordValid(current, passwordHash))
+            {
+                ClearPasswordVerification();
+                pnlPasswordStart.Visible = false;
+                pnlPasswordVerify.Visible = true;
+                pnlPasswordNew.Visible = false;
+                PasswordFeedback = "Your current password is incorrect.";
+                ScriptManager.GetCurrent(Page).SetFocus(txtCurrentPassword);
+                return;
+            }
+
+            Session[PasswordChangeUserIdKey] = UserId;
+            Session[PasswordChangeHashKey] = passwordHash;
+            Session[PasswordChangeExpiryKey] = DateTime.UtcNow.AddMinutes(5);
+            pnlPasswordStart.Visible = false;
+            pnlPasswordVerify.Visible = false;
+            pnlPasswordNew.Visible = true;
+            PasswordFeedback = "Current password verified. Choose a new password.";
+            ScriptManager.GetCurrent(Page).SetFocus(txtNewPassword);
+        }
+
+        protected void btnSaveNewPassword_Click(object sender, EventArgs e)
+        {
+            int verifiedUserId;
+            DateTime expiresAt;
+            string verifiedHash = Convert.ToString(Session[PasswordChangeHashKey]);
+            bool verificationIsValid =
+                int.TryParse(Convert.ToString(Session[PasswordChangeUserIdKey]), out verifiedUserId) &&
+                DateTime.TryParse(Convert.ToString(Session[PasswordChangeExpiryKey]), out expiresAt) &&
+                verifiedUserId == UserId &&
+                expiresAt > DateTime.UtcNow &&
+                !string.IsNullOrEmpty(verifiedHash);
+
+            if (!verificationIsValid)
+            {
+                ClearPasswordVerification();
+                pnlPasswordStart.Visible = false;
+                pnlPasswordVerify.Visible = true;
+                pnlPasswordNew.Visible = false;
+                PasswordFeedback = "Please verify your current password again.";
+                ScriptManager.GetCurrent(Page).SetFocus(txtCurrentPassword);
+                return;
+            }
+
+            string next = txtNewPassword.Text;
+            string confirmation = txtConfirmPassword.Text;
+            if (next.Length < 8 || Encoding.UTF8.GetByteCount(next) > 72 || next != confirmation)
+            {
+                pnlPasswordStart.Visible = false;
+                pnlPasswordVerify.Visible = false;
+                pnlPasswordNew.Visible = true;
+                PasswordFeedback = "Use at least 8 characters and at most 72 UTF-8 bytes, and make sure both new passwords match.";
+                ScriptManager.GetCurrent(Page).SetFocus(txtNewPassword);
+                return;
+            }
+
+            if (PasswordManager.isPasswordValid(next, verifiedHash))
+            {
+                pnlPasswordStart.Visible = false;
+                pnlPasswordVerify.Visible = false;
+                pnlPasswordNew.Visible = true;
+                PasswordFeedback = "Choose a password different from your current password.";
+                ScriptManager.GetCurrent(Page).SetFocus(txtNewPassword);
+                return;
+            }
+
+            using (var con = DatabaseManager.ConnectDB())
+            using (var cmd = new SqlCommand("UPDATE dbo.Users SET Password=@password, UpdatedAt=GETDATE() WHERE UserID=@id AND Password=@old", con))
+            {
+                cmd.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = PasswordManager.HashPassword(next);
+                cmd.Parameters.Add("@old", SqlDbType.NVarChar, 255).Value = verifiedHash;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
+                con.Open();
+                if (cmd.ExecuteNonQuery() == 1)
+                {
+                    PasswordFeedback = "Your password has been changed.";
+                    pnlPasswordStart.Visible = true;
+                    pnlPasswordVerify.Visible = false;
+                    pnlPasswordNew.Visible = false;
+                }
+                else
+                {
+                    PasswordFeedback = "Your password changed elsewhere. Verify your current password again.";
+                    pnlPasswordStart.Visible = false;
+                    pnlPasswordVerify.Visible = true;
+                    pnlPasswordNew.Visible = false;
+                }
+            }
+            ClearPasswordVerification();
+        }
+
+        protected void btnCancelPasswordChange_Click(object sender, EventArgs e)
+        {
+            ClearPasswordVerification();
+            pnlPasswordStart.Visible = true;
+            pnlPasswordVerify.Visible = false;
+            pnlPasswordNew.Visible = false;
+            PasswordFeedback = "Password change cancelled.";
+        }
+
+        private const string PasswordChangeUserIdKey = "ProfilePasswordChangeUserId";
+        private const string PasswordChangeHashKey = "ProfilePasswordChangeHash";
+        private const string PasswordChangeExpiryKey = "ProfilePasswordChangeExpiryUtc";
+
+        private void ClearPasswordVerification()
+        {
+            Session.Remove(PasswordChangeUserIdKey);
+            Session.Remove(PasswordChangeHashKey);
+            Session.Remove(PasswordChangeExpiryKey);
+        }
+
+        // Only the signed-in account can be removed. Database role and password are
+        // checked again inside the transaction, rather than trusting posted fields.
+        private bool DeleteProfile()
+        {
+            string password = Request.Form["deletePassword"] ?? "";
+            if (Request.Form["confirmDeleteProfile"] != "yes")
+            { DeleteFeedback = "Please confirm that you understand before continuing."; return false; }
+            if (password.Length == 0 || Encoding.UTF8.GetByteCount(password) > 72)
+            { DeleteFeedback = "Enter your current password to confirm."; return false; }
+
+            string oldPhoto = null;
+            bool permanentlyDeleted = false;
+            using (var connection = DatabaseManager.ConnectDB())
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    string role, hash, status;
+                    using (var command = new SqlCommand("SELECT Role,Password,AccountStatus,ProfileImage FROM dbo.Users WITH (UPDLOCK,HOLDLOCK) WHERE UserID=@id", connection, transaction))
+                    {
+                        command.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (!reader.Read()) { DeleteFeedback = "Your account is no longer available."; return false; }
+                            role = Convert.ToString(reader["Role"]);
+                            hash = Convert.ToString(reader["Password"]);
+                            status = Convert.ToString(reader["AccountStatus"]);
+                            oldPhoto = Convert.ToString(reader["ProfileImage"]);
+                        }
+                    }
+                    if (status != "Active" || (role != "Learner" && role != "Instructor"))
+                    { DeleteFeedback = "This account cannot be closed here. Please contact another administrator."; return false; }
+                    if (string.IsNullOrEmpty(hash) || !PasswordManager.isPasswordValid(password, hash))
+                    { DeleteFeedback = "Your current password is incorrect."; return false; }
+                    permanentlyDeleted = role == "Learner";
+                    using (var command = new SqlCommand(permanentlyDeleted
+                        ? "DELETE FROM dbo.Users WHERE UserID=@id AND Role='Learner'"
+                        : "UPDATE dbo.Users SET AccountStatus='Inactive',UpdatedAt=GETDATE() WHERE UserID=@id AND Role='Instructor'", connection, transaction))
+                    {
+                        command.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
+                        if (command.ExecuteNonQuery() != 1)
+                        { DeleteFeedback = "Your account changed. Reload the page and try again."; return false; }
+                    }
+                    transaction.Commit();
+                }
+            }
+            if (permanentlyDeleted) DeleteOwnedPhoto(oldPhoto);
+            System.Web.Security.FormsAuthentication.SignOut();
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect(NavigationHelper.GetUrl("Main"), false);
+            Context.ApplicationInstance.CompleteRequest();
+            return true;
         }
 
         private void SetFeedback(string action, string message)
         {
-            if (action == "password") PasswordFeedback = message;
+            if (action == "delete") DeleteFeedback = message;
+            else if (action == "password") PasswordFeedback = message;
             else if (action == "upload" || action == "remove") PhotoFeedback = message;
             else DetailsFeedback = message;
         }

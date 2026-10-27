@@ -1,0 +1,21 @@
+.activity-heading > div { min-width: 0; }
+.activity-heading p { max-width: 680px; margin: 6px 0 0; color: var(--color-text-soft); font-size: 13px; line-height: 1.7; }
+.activity-card { padding: 0; overflow: hidden; border-left: 6px solid var(--color-lime); }
+.activity-card-heading { padding: 28px 30px 24px; background: var(--color-tan-light); border-bottom: 1px solid var(--color-tan); }
+.activity-label { display: inline-block; margin-bottom: 9px; padding: 4px 10px; border: 1px solid var(--color-ink); border-radius: var(--radius-pill); background: var(--color-lime); font-size: 12px; font-weight: 700; }
+.activity-card-heading h3 { margin: 0; font-size: clamp(22px, 3vw, 30px); line-height: 1.25; }
+.activity-instructions { padding: 28px 30px 32px; }
+.activity-instructions h4 { margin: 0 0 14px; font-size: 17px; }
+.activity-instructions .mc-copy { max-width: 78ch; margin: 0; font-size: 15px; line-height: 1.85; }
+.activity-empty { display: grid; justify-items: center; gap: 10px; padding: 44px 24px; }
+.activity-empty h3 { margin: 0; font-size: 21px; }
+.activity-empty p { max-width: 520px; margin: 0 0 8px; color: var(--color-text-soft); line-height: 1.7; }
+.activity-empty-mark { display: grid; width: 52px; height: 52px; place-items: center; border: var(--border); border-radius: 50%; background: var(--color-lime); font-size: 30px; line-height: 1; }
+.activity-editor-intro { margin: -8px 0 24px; color: var(--color-text-soft); font-size: 13px; line-height: 1.7; }
+.course-activity .mc-danger-link { margin-top: 10px; }
+.course-activity .mc-modal textarea { min-height: 180px; line-height: 1.7; }
+
+@media (max-width: 600px) {
+    .activity-card-heading,
+    .activity-instructions { padding: 22px 20px; }
+}

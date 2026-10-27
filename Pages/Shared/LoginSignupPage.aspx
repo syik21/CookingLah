@@ -70,7 +70,7 @@
                                 <asp:LinkButton ID="lnkForgot" runat="server" CssClass="lk" CausesValidation="false" OnClick="lnkForgot_Click">Forgot password?</asp:LinkButton>
                             </div>
 
-                            <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn full" OnClick="btnLogin_Click" />
+                            <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn full" OnClick="btnLogin_Click" data-loading-text="Logging..." />
 
                             <p class="alt-line">Just browsing? <a class="lk" href="<%= ResolveUrl("~/Main.aspx") %>">Continue as guest</a></p>
                         </asp:Panel>
@@ -138,7 +138,7 @@
                                 </div>
                             </div>
 
-                            <asp:Button ID="btnSignup" runat="server" Text="Create account" CssClass="btn full" OnClick="btnSignup_Click" />
+                            <asp:Button ID="btnSignup" runat="server" Text="Create account" CssClass="btn full" OnClick="btnSignup_Click" data-loading-text="Signing up..." />
 
                             <p class="alt-line">Chef accounts are reviewed before publishing content.</p>
                         </asp:Panel>
@@ -200,6 +200,6 @@
         </dialog>
     </form>
 
-    <script src="<%= ResolveUrl("~/F_JavaScripts/LoginSignupPage.js") %>?v=admin-shortcut-2" defer></script>
+    <script src="<%= ResolveUrl("~/F_JavaScripts/LoginSignupPage.js") %>?v=loading-state-3" defer></script>
 </body>
 </html>

@@ -27,6 +27,8 @@ Borders: `--border: 2px solid var(--color-ink)` and `--border-dashed: 2px dashed
 
 Shared components: `.btn`, `.btn-primary`, `.btn-secondary` use outlined, offset-shadow buttons; `.card`, `.card-title`, `.card-eyebrow` define card treatment; `.sticker` variants, `.pill`, `.tag`, `.tag-list`, `.form-select` define reusable UI. `.site-header`, `.site-logo`, `.site-footer`, `.section-title`, `.section-description` and utility classes are also global. Prefer these classes before introducing page-only equivalents. `.form-select` now uses a solid background without gradient-drawn arrow decoration.
 
+Course thumbnails without an uploaded image use the shared `.course-image-placeholder`: the mascot appears above “Food Image Coming Soon” within the same dimensions as that page's populated course-image frame.
+
 ## 2. Layout and responsiveness
 
 - Use `.container` for the standard centered 1120px maximum-width content region with 24px gutters.

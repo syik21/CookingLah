@@ -1,4 +1,4 @@
-<%@ Page Title="Learner Dashboard | Cooking LAH" Language="C#" MasterPageFile="~/Pages/Learner/Learner.Master" AutoEventWireup="true" CodeBehind="LearnerDashboard.aspx.cs" Inherits="CookingLah.Pages.Learner.LearnerDashboard" %>
+﻿<%@ Page Title="Learner Dashboard | Cooking LAH" Language="C#" MasterPageFile="~/Pages/Learner/Learner.Master" AutoEventWireup="true" CodeBehind="LearnerDashboard.aspx.cs" Inherits="CookingLah.Pages.Learner.LearnerDashboard" %>
 <asp:Content ID="DashboardHead" ContentPlaceHolderID="LearnerHead" runat="server">
     <link href="<%= ResolveUrl("~/Pages/Learner/CSS/learnerDashboard.css") %>" rel="stylesheet" />
 </asp:Content>
@@ -57,7 +57,8 @@
             <asp:Repeater ID="rptCurrentCourses" runat="server" DataSourceID="previewCurrentCourses">
                 <ItemTemplate>
                     <article class="scrap-paper scrap-tape dashboard-course-card">
-                        <asp:Image runat="server" ImageUrl='<%# XPath("@image") %>' AlternateText='<%# XPath("@title") %>' CssClass="course-thumbnail" />
+                        <asp:Image runat="server" ImageUrl='<%# XPath("@image") %>' Visible='<%# !string.IsNullOrWhiteSpace(Convert.ToString(XPath("@image"))) %>' AlternateText='<%# XPath("@title") %>' CssClass="course-thumbnail" />
+                        <asp:Panel runat="server" CssClass="course-thumbnail course-image-placeholder" Visible='<%# string.IsNullOrWhiteSpace(Convert.ToString(XPath("@image"))) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                         <p class="card-eyebrow"><%#: XPath("@difficulty") %></p>
                         <h3><%#: XPath("@title") %></h3>
                         <div class="course-progress-label"><span>Progress</span><span><%#: XPath("@progress") %>%</span></div>
@@ -101,7 +102,8 @@
             <asp:Repeater ID="rptExploreCourses" runat="server" DataSourceID="previewExploreCourses">
                 <ItemTemplate>
                     <article class="scrap-paper scrap-tape dashboard-course-card">
-                        <asp:Image runat="server" ImageUrl='<%# XPath("@image") %>' AlternateText='<%# XPath("@title") %>' CssClass="course-thumbnail" />
+                        <asp:Image runat="server" ImageUrl='<%# XPath("@image") %>' Visible='<%# !string.IsNullOrWhiteSpace(Convert.ToString(XPath("@image"))) %>' AlternateText='<%# XPath("@title") %>' CssClass="course-thumbnail" />
+                        <asp:Panel runat="server" CssClass="course-thumbnail course-image-placeholder" Visible='<%# string.IsNullOrWhiteSpace(Convert.ToString(XPath("@image"))) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                         <p class="card-eyebrow"><%#: XPath("@difficulty") %> &bull; <%#: XPath("@category") %></p>
                         <h3><%#: XPath("@title") %></h3>
                         <p class="text-muted">Rated <%#: XPath("@rating") %> / 5</p>
@@ -113,7 +115,7 @@
     </section>
     <section class="scrap-paper food-map-cta" aria-labelledby="foodMapTitle">
         <div><p class="handwritten-note">For your next kitchen adventure...</p><h2 id="foodMapTitle">A world of flavour awaits</h2><p>Discover traditional dishes, ingredients, and cooking methods from different countries.</p></div>
-        <asp:Button ID="btnExploreFoodMap" runat="server" Text="Explore Food Map" CssClass="btn btn-primary" OnClick="ExploreFoodMap_Click" CausesValidation="false" ToolTip="Food Culture Map page coming soon" />
+        <asp:Button ID="btnExploreFoodMap" runat="server" Text="Explore Food Map" CssClass="btn btn-primary" OnClick="ExploreFoodMap_Click" CausesValidation="false" />
     </section>
 </div>
 <%-- FRONTEND PREVIEW ONLY. Inline XML keeps sample data out of backend loaders.

@@ -1,31 +1,126 @@
-/* Reuse the shared login layout; keep admin-only details here. */
+/* ===== Admin Login Page Background ===== */
+/* Reuses the shared login layout and styles from Style.css. */
 body.admin-login {
     background-image: linear-gradient(var(--color-grid) 1px, transparent 1px), linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
 }
-.admin-login .admin-badge { display: inline-block; padding: 7px 14px; border: var(--border); border-radius: var(--radius-pill); background: var(--color-lavender); font-size: 12px; font-weight: 700; }
-.admin-login .admin-eyebrow { margin: 0 0 16px; color: var(--color-text-soft); font-size: 12px; letter-spacing: .05em; }
-.admin-login .admin-login-card h2 { text-align: left; }
-.admin-login .admin-help { margin: 24px 0 0; padding-top: 18px; border-top: 1px solid var(--color-ink); font-size: 12px; line-height: 1.7; color: var(--color-text-soft); }
-.admin-login .admin-password input { padding-right: 80px; }
-.admin-login .eye { min-width: 64px; min-height: 44px; cursor: pointer; }
-.admin-login .btn.full { min-height: 48px; }
-.admin-login [hidden] { display: none !important; }
-.admin-login .admin-success h2 { margin-top: 24px; }
-.admin-login .admin-success p { margin-bottom: 0; }
-.admin-login .errbox { display: block; }
-.admin-login .btn[aria-disabled="true"] { cursor: wait; }
+
+/* ===== Admin Badge and Intro Text ===== */
+.admin-login .admin-badge {
+    display: inline-block;
+    padding: 7px 14px;
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--color-lavender);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-login .admin-eyebrow {
+    margin: 0 0 16px;
+    color: var(--color-text-soft);
+    font-size: 12px;
+    letter-spacing: .05em;
+}
+
+/* ===== Login Form ===== */
+.admin-login .admin-login-card h2 {
+    text-align: left;
+}
+
+.admin-login .admin-password input {
+    padding-right: 80px;
+}
+
+/* Show/hide password button */
+.admin-login .eye {
+    min-width: 64px;
+    min-height: 44px;
+    cursor: pointer;
+}
+
+.admin-login .btn.full {
+    min-height: 48px;
+}
+
+.admin-login .btn[aria-disabled="true"] {
+    cursor: wait;
+}
+
+/* ===== Help Text and Messages ===== */
+.admin-login .admin-help {
+    margin: 24px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--color-ink);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--color-text-soft);
+}
+
+.admin-login .admin-success h2 {
+    margin-top: 24px;
+}
+
+.admin-login .admin-success p {
+    margin-bottom: 0;
+}
+
+.admin-login .errbox {
+    display: block;
+}
+
+/* Hide elements marked as hidden */
+.admin-login [hidden] {
+    display: none !important;
+}
+
+/* ===== Tablet Layout (760px and below) ===== */
 @media (max-width: 760px) {
-    .admin-login main { grid-template-columns: 1fr; padding-top: 32px; gap: 32px; }
-    .admin-login .stickers { display: none; }
-    .admin-login .intro p { max-width: none; margin-bottom: 0; }
+    .admin-login main {
+        grid-template-columns: 1fr;
+        padding-top: 32px;
+        gap: 32px;
+    }
+
+    .admin-login .stickers {
+        display: none;
+    }
+
+    .admin-login .intro p {
+        max-width: none;
+        margin-bottom: 0;
+    }
 }
+
+/* ===== Small Mobile Layout (420px and below) ===== */
 @media (max-width: 420px) {
-    .admin-login header { gap: 12px; padding: 18px; }
-    .admin-login .logo img { height: 48px; }
-    .admin-login main { padding: 24px 18px 40px; }
-    .admin-login .admin-login-card { padding: 22px 18px; }
-    .admin-login .admin-badge { padding: 6px 10px; }
+    .admin-login header {
+        gap: 12px;
+        padding: 18px;
+    }
+
+    .admin-login .logo img {
+        height: 48px;
+    }
+
+    .admin-login main {
+        padding: 24px 18px 40px;
+    }
+
+    .admin-login .admin-login-card {
+        padding: 22px 18px;
+    }
+
+    .admin-login .admin-badge {
+        padding: 6px 10px;
+    }
 }
+
+/* ===== Accessibility: Reduced Motion ===== */
 @media (prefers-reduced-motion: reduce) {
-    .admin-login *, .admin-login *::before, .admin-login *::after { animation: none !important; transition: none !important; }
+    .admin-login *,
+    .admin-login *::before,
+    .admin-login *::after {
+        animation: none !important;
+        transition: none !important;
+    }
 }

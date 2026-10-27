@@ -1,4 +1,5 @@
 using CookingLah.F_Helpers;
+using CookingLah.F_Services;
 using System;
 using System.Web.Security;
 using System.Web.UI;
@@ -14,18 +15,24 @@ namespace CookingLah.Pages.Learner
                 Response.Redirect(NavigationHelper.GetUrl("Main"));
                 return;
             }
-            lblProfileName.Text = Session["Username"].ToString();
         }
 
-        private void ValidateLearnerSession()
+        protected override void OnPreRender(EventArgs e)
         {
-            // TODO: Verify authentication.
-            // TODO: Verify that the logged-in role is Learner.
+            LoadHeaderProfile();
+            base.OnPreRender(e);
         }
 
-        private void LoadLearnerProfile()
+        // Refresh the header after profile changes are saved.
+        private void LoadHeaderProfile()
         {
-            // TODO: Retrieve learner name and profile image from Users.
+            string username;
+            string profileImage;
+            if (!DatabaseManager.TryLoadMasterProfile(Session["UserId"], out username, out profileImage)) return;
+
+            Session["Username"] = username;
+            lblProfileName.Text = username;
+            imgLearnerProfile.ImageUrl = profileImage;
         }
 
         protected void Logout_Click(object sender, EventArgs e)

@@ -13,5 +13,26 @@ namespace CookingLah.Pages.Shared.Profile
 
     public partial class ProfilePage
     {
+        protected global::System.Web.UI.WebControls.Panel pnlPasswordStart;
+
+        protected global::System.Web.UI.WebControls.Button btnStartPasswordChange;
+
+        protected global::System.Web.UI.WebControls.Panel pnlPasswordVerify;
+
+        protected global::System.Web.UI.WebControls.TextBox txtCurrentPassword;
+
+        protected global::System.Web.UI.WebControls.Button btnVerifyCurrentPassword;
+
+        protected global::System.Web.UI.WebControls.Button btnCancelPasswordVerify;
+
+        protected global::System.Web.UI.WebControls.Panel pnlPasswordNew;
+
+        protected global::System.Web.UI.WebControls.TextBox txtNewPassword;
+
+        protected global::System.Web.UI.WebControls.TextBox txtConfirmPassword;
+
+        protected global::System.Web.UI.WebControls.Button btnSaveNewPassword;
+
+        protected global::System.Web.UI.WebControls.Button btnCancelPasswordChange;
     }
 }

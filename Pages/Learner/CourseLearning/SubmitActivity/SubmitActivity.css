@@ -1,0 +1,302 @@
+.activity-section {
+    min-width: 0;
+    padding: clamp(20px, 4vw, 38px);
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: #fffdf7;
+    box-shadow: var(--shadow-sm);
+}
+
+.activity-heading {
+    margin-bottom: 22px;
+}
+
+.activity-heading h2 {
+    margin: 0;
+    font: 400 clamp(36px, 5vw, 52px)/1 var(--font-hand);
+    text-align: left;
+}
+
+.activity-heading > p:last-child {
+    margin: 10px 0 0;
+    color: var(--color-text-soft);
+    font-size: 12px;
+}
+
+.activity-instructions {
+    margin-bottom: 22px;
+    padding: 18px;
+    border-left: 5px solid var(--color-yellow);
+    border-radius: var(--radius-sm);
+    background: var(--color-tan-light);
+    font-size: 12px;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+.activity-instructions h3,
+.activity-chef-feedback h4 {
+    margin: 0 0 8px;
+    font: 400 25px/1.1 var(--font-hand);
+}
+
+.activity-submission-summary {
+    margin-bottom: 24px;
+    padding: 18px;
+    border: 1px solid var(--color-grid);
+    border-radius: var(--radius-sm);
+    background: #fffdf7;
+}
+
+.activity-submission-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.activity-submission-heading h3 {
+    margin: 6px 0 0;
+    font: 400 25px/1.1 var(--font-hand);
+}
+
+.activity-submission-heading > p {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 10px;
+}
+
+.activity-status-badge {
+    display: inline-block;
+    margin: 0;
+    padding: 5px 9px;
+    border-radius: var(--radius-pill);
+    background: var(--color-lime);
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.activity-submitted-image {
+    display: block;
+    width: 100%;
+    max-height: 420px;
+    border: 1px solid var(--color-grid);
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+}
+
+.activity-submitted-notes {
+    margin: 13px 0 0;
+    font-size: 11px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.activity-chef-feedback {
+    margin-top: 16px;
+    padding: 15px;
+    border-left: 5px solid var(--color-lavender);
+    border-radius: var(--radius-sm);
+    background: #f4efff;
+}
+
+.activity-chef-feedback p {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.activity-chef-feedback small {
+    display: block;
+    margin-top: 9px;
+    color: var(--color-text-soft);
+    font-size: 9px;
+}
+
+.activity-submit-form {
+    display: grid;
+    gap: 18px;
+    max-width: 980px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--color-grid);
+}
+
+.activity-submit-form > h3 {
+    margin: 0;
+    font: 400 29px/1.1 var(--font-hand);
+}
+
+.activity-form-hint {
+    margin: -8px 0 0;
+    color: var(--color-text-soft);
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.activity-upload-field,
+.activity-notes-field {
+    display: grid;
+    gap: 9px;
+}
+
+.activity-upload-field label,
+.activity-notes-field label {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.activity-file-input {
+    width: 100%;
+    min-height: 58px;
+    padding: 10px;
+    border: 1px dashed var(--color-grid);
+    border-radius: var(--radius-sm);
+    background: #fffaf0;
+    font: 11px var(--font-body);
+    cursor: pointer;
+}
+
+.activity-file-input::file-selector-button {
+    min-height: 38px;
+    margin-right: 12px;
+    padding: 7px 13px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    background: #fffdf7;
+    color: var(--color-ink);
+    cursor: pointer;
+    font: 700 10px var(--font-body);
+}
+
+.activity-file-input::file-selector-button:hover {
+    background: var(--color-yellow);
+}
+
+.activity-upload-hint,
+.activity-notes-field small {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.activity-upload-feedback {
+    margin: 0;
+    color: #9a2c1e;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.activity-image-preview[hidden] {
+    display: none !important;
+}
+
+.activity-image-preview {
+    display: grid;
+    justify-items: stretch;
+    gap: 10px;
+    width: min(100%, 520px);
+    padding: 12px;
+    border: 1px solid var(--color-grid);
+    border-radius: var(--radius-sm);
+    background: #fffdf7;
+}
+
+.activity-image-preview img {
+    display: block;
+    width: 100%;
+    max-height: 300px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+}
+
+.activity-preview-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-text-soft);
+    font-size: 10px;
+}
+
+.activity-clear-image {
+    min-height: 44px;
+    padding: 7px 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink);
+    cursor: pointer;
+    font: 700 10px var(--font-body);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.activity-notes-field textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font: 12px/1.6 var(--font-body);
+    resize: vertical;
+}
+
+.activity-submit-button {
+    justify-self: end;
+    min-width: 190px;
+    min-height: 52px;
+    padding: 12px 22px;
+    font-size: 10px;
+}
+
+.activity-submit-button:focus-visible,
+.activity-file-input:focus-visible,
+.activity-clear-image:focus-visible,
+.activity-notes-field textarea:focus-visible {
+    outline: 3px solid var(--color-yellow);
+    outline-offset: 3px;
+}
+
+.activity-feedback,
+.activity-empty-state {
+    margin: 16px 0;
+    padding: 14px 16px;
+    border-left: 5px solid var(--color-lime);
+    border-radius: var(--radius-sm);
+    background: var(--color-tan-light);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.activity-empty-state h2,
+.activity-empty-state p {
+    margin: 0;
+}
+
+.activity-empty-state p {
+    margin-top: 8px;
+}
+
+@media (max-width: 520px) {
+    .activity-section {
+        padding: 20px 16px;
+    }
+
+    .activity-submission-heading {
+        flex-direction: column;
+    }
+
+    .activity-submit-button {
+        width: 100%;
+    }
+
+    .activity-preview-caption {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 2px;
+    }
+}

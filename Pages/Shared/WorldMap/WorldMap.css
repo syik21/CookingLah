@@ -1,0 +1,78 @@
+﻿.cl-world-map {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto minmax(180px,1fr) auto;
+    height: clamp(400px, 48vw, 620px);
+    overflow: hidden;
+    border: 2px solid var(--color-ink);
+    border-radius: 18px;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    isolation: isolate;
+}
+.cl-world-map__heading { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:20px 24px; border-bottom:1px solid var(--color-tan); }
+.cl-world-map__heading h2 { font:400 30px/1.1 var(--font-hand); margin:0; }
+.cl-world-map__heading p { margin:6px 0 0; font-size:12px; color:var(--color-text-soft); }
+.cl-world-map__selection {
+    padding: 8px 12px;
+    border: 1px solid var(--color-ink);
+    border-radius: 6px;
+    background: var(--color-yellow);
+    font-size: 12px;
+    font-weight: 700;
+    max-width: 45%;
+    overflow-wrap: anywhere;
+}
+.cl-world-map__viewport {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: #EAF3F2;
+    cursor: grab;
+    touch-action: none;
+    overscroll-behavior: contain;
+}
+.cl-world-map__viewport.is-dragging { 
+    cursor:grabbing; 
+    user-select:none;
+}
+#worldMap {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    max-width: none;
+    background-color: var(--color-bg);
+    background-image: linear-gradient(var(--color-grid) 1px, transparent 1px), linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+}
+#worldMap path.map-country { fill:var(--color-tan); stroke:#866C53; stroke-width:.65; vector-effect:non-scaling-stroke; cursor:pointer; transition:fill 120ms ease; }
+#worldMap path.map-country:hover { fill:var(--color-bg); }
+#worldMap path.map-country.is-selected { fill:var(--color-primary); stroke:var(--color-ink); stroke-width:2; }
+#worldMap path.map-country:focus-visible { outline:none; fill:var(--color-lime); stroke:var(--color-ink); stroke-width:2.5; }
+.cl-world-map__tooltip { position:absolute; z-index:2; display:none; pointer-events:none; padding:7px 10px; border-radius:5px; background:var(--color-ink); color:var(--color-bg); font-size:12px; max-width:calc(100% - 24px); }
+.cl-world-map__footer { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding:12px 16px; border-top:1px solid var(--color-tan); }
+.cl-world-map__footer p { font-size:11px; margin:0; color:var(--color-text-soft); }
+.cl-world-map__controls { display:flex; gap:6px; align-items:center; margin-left:auto; }
+.cl-world-map__controls .btn { min-width:44px; min-height:44px; padding:8px 12px; border:1px solid var(--color-ink); border-radius:7px; box-shadow:none; font-size:13px; background:var(--color-bg); color:var(--color-ink); }
+.cl-world-map__controls .btn:hover:not(:disabled) { background:var(--color-yellow); transform:none; }
+.cl-world-map__controls button:disabled { opacity:.35; cursor:not-allowed; }
+.cl-world-map__controls output { min-width:48px; font-size:12px; text-align:center; }
+.cl-world-map button:focus-visible,.cl-world-map__viewport:focus-visible { outline:3px solid var(--color-ink); outline-offset:-4px; }
+.map-container {
+    background-color: #fffaf0;
+    background-image: linear-gradient(rgba(90, 30, 30, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(90, 30, 30, 0.1) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+.main-food-map { max-width:1240px; margin:0 auto; padding:0 24px; }
+@media(max-width:700px) {
+    .cl-world-map { height:430px; border-radius:12px; }
+    .cl-world-map__heading { padding:14px; gap:10px; flex-wrap:wrap; }
+    .cl-world-map__heading h2 { font-size:26px; }
+    .cl-world-map__selection { max-width:100%; }
+    .cl-world-map__footer { padding:10px; }
+    .cl-world-map__footer p { width:100%; text-align:center; }
+    .cl-world-map__controls { margin:auto; }
+    .main-food-map { padding:0 16px; }
+}
+@media(prefers-reduced-motion:reduce) { #worldMap path.map-country { transition:none; } }

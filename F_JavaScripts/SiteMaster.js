@@ -52,13 +52,17 @@
         return path.replace(/\/$/, "").replace(/\.aspx$/i, "").toLowerCase();
     }
     function updateCurrentLink() {
-        nav.querySelectorAll("a[data-section]").forEach(function (link) {
+        nav.querySelectorAll("a[href]").forEach(function (link) {
             var destination = new URL(link.href, window.location.href);
-            var samePage = normalizePath(destination.pathname) === normalizePath(window.location.pathname);
-            var section = window.location.hash.slice(1) || "home";
-            var active = samePage && link.dataset.section === section;
-            if (active) { link.setAttribute("aria-current", section === "home" ? "page" : "location"); }
-            else { link.removeAttribute("aria-current"); }
+
+            var currentPath = normalizePath(window.location.pathname);
+            var linkPath = normalizePath(destination.pathname);
+
+            if (currentPath === linkPath) {
+                link.setAttribute("aria-current", "page");
+            } else {
+                link.removeAttribute("aria-current");
+            }
         });
     }
     window.addEventListener("hashchange", updateCurrentLink);

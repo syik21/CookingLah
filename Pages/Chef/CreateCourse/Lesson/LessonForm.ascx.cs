@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Web.UI.WebControls;
@@ -22,7 +22,7 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
                 {
                     var lessons = new DataTable();
                     lessons.Columns.Add("LessonOrder", typeof(int));
-                    foreach (string name in new[] { "Title", "Description", "Instructions", "LessonImage", "LessonVideo" })
+                    foreach (string name in new[] { "Title", "Description", "ArticleText", "ImagePath", "VideoPath" })
                         lessons.Columns.Add(name, typeof(string));
                     ViewState["Lessons"] = lessons;
                 }
@@ -38,7 +38,11 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
 
         public void LoadLessons(int courseId)
         {
-            Lessons = Read("SELECT LessonOrder,Title,Description,Instructions,LessonImage,LessonVideo FROM Lessons WHERE CourseID=@id ORDER BY LessonOrder", Parameter("@id", courseId));
+            Lessons = Read(@"SELECT l.LessonOrder,l.Title,l.Description,
+                (SELECT TOP 1 ContentText FROM LessonContent WHERE LessonID=l.LessonID AND ContentType='Article' ORDER BY ContentOrder) AS ArticleText,
+                (SELECT TOP 1 MediaPath FROM LessonContent WHERE LessonID=l.LessonID AND ContentType='Image' ORDER BY ContentOrder) AS ImagePath,
+                (SELECT TOP 1 MediaPath FROM LessonContent WHERE LessonID=l.LessonID AND ContentType='Video' ORDER BY ContentOrder) AS VideoPath
+                FROM Lessons l WHERE CourseID=@id ORDER BY LessonOrder", Parameter("@id", courseId));
             CurrentPage = 0;
             BindLessons();
         }
@@ -67,9 +71,9 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
                 var lesson = Lessons.Rows[CurrentPage * PageSize + item.ItemIndex];
                 lesson["Title"] = ((TextBox)item.FindControl("txtLessonTitle")).Text.Trim();
                 lesson["Description"] = ((TextBox)item.FindControl("txtLessonDescription")).Text.Trim();
-                lesson["Instructions"] = ((TextBox)item.FindControl("txtLessonInstructions")).Text.Trim();
-                lesson["LessonImage"] = SaveUpload((FileUpload)item.FindControl("fuLessonImage"), Convert.ToString(lesson["LessonImage"]));
-                lesson["LessonVideo"] = SaveUpload((FileUpload)item.FindControl("fuLessonVideo"), Convert.ToString(lesson["LessonVideo"]), true);
+                lesson["ArticleText"] = ((TextBox)item.FindControl("txtLessonInstructions")).Text.Trim();
+                lesson["ImagePath"] = SaveUpload((FileUpload)item.FindControl("fuLessonImage"), Convert.ToString(lesson["ImagePath"]));
+                lesson["VideoPath"] = SaveUpload((FileUpload)item.FindControl("fuLessonVideo"), Convert.ToString(lesson["VideoPath"]), true);
             }
             Lessons = Lessons;
         }
@@ -84,7 +88,7 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
                 if (string.IsNullOrWhiteSpace(Convert.ToString(lesson["Title"]))) errors.Add("Please enter the title for Lesson " + number + ".");
                 if (Convert.ToString(lesson["Title"]).Length > 150) errors.Add("Keep the title for Lesson " + number + " within 150 characters.");
                 if (Convert.ToString(lesson["Description"]).Length > 500) errors.Add("Keep the description for Lesson " + number + " within 500 characters.");
-                if (string.IsNullOrWhiteSpace(Convert.ToString(lesson["Instructions"]))) errors.Add("Please enter instructions for Lesson " + number + ".");
+                if (string.IsNullOrWhiteSpace(Convert.ToString(lesson["ArticleText"]))) errors.Add("Please enter instructions for Lesson " + number + ".");
             }
             return errors;
         }
@@ -95,12 +99,27 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
             EditDraft(courseId, (connection, transaction) => {
                 Execute(connection, transaction, "DELETE FROM Lessons WHERE CourseID=@id", Parameter("@id", courseId));
                 foreach (DataRow lesson in Lessons.Rows)
-                    Execute(connection, transaction,
-                        "INSERT INTO Lessons (CourseID,Title,Description,Instructions,LessonImage,LessonVideo,LessonOrder,CreatedAt) " +
-                        "VALUES (@id,@title,@description,@instructions,@image,@video,@order,GETDATE())",
+                {
+                    int lessonId = Convert.ToInt32(Execute(connection, transaction,
+                        "INSERT INTO Lessons (CourseID,Title,Description,LessonOrder,CreatedAt) OUTPUT INSERTED.LessonID " +
+                        "VALUES (@id,@title,@description,@order,GETDATE())",
                         Parameter("@id", courseId), Parameter("@title", lesson["Title"]), Parameter("@description", lesson["Description"]),
-                        Parameter("@instructions", lesson["Instructions"]), Parameter("@image", lesson["LessonImage"]),
-                        Parameter("@video", lesson["LessonVideo"]), Parameter("@order", lesson["LessonOrder"]));
+                        Parameter("@order", lesson["LessonOrder"])));
+                    int contentOrder = 1;
+                    string[] fields = { "ArticleText", "ImagePath", "VideoPath" };
+                    string[] types = { "Article", "Image", "Video" };
+                    for (int index = 0; index < fields.Length; index++)
+                    {
+                        string value = Convert.ToString(lesson[fields[index]]);
+                        if (string.IsNullOrWhiteSpace(value)) continue;
+                        Execute(connection, transaction, @"INSERT INTO LessonContent
+                            (LessonID,ContentType,ContentTitle,ContentText,MediaPath,ContentOrder)
+                            VALUES (@lesson,@type,@title,@text,@path,@order)",
+                            Parameter("@lesson", lessonId), Parameter("@type", types[index]), Parameter("@title", lesson["Title"]),
+                            Parameter("@text", index == 0 ? value : null), Parameter("@path", index == 0 ? null : value),
+                            Parameter("@order", contentOrder++));
+                    }
+                }
             });
             BindLessons();
         }

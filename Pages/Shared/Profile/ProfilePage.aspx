@@ -1,4 +1,4 @@
-<%@ Page Title="My Profile | Cooking LAH" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProfilePage.aspx.cs" Inherits="CookingLah.Pages.Shared.Profile.ProfilePage" %>
+<%@ Page Title="My Profile | Cooking LAH" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" MaintainScrollPositionOnPostBack="true" CodeBehind="ProfilePage.aspx.cs" Inherits="CookingLah.Pages.Shared.Profile.ProfilePage" %>
 
 <%-- Profile page stylesheet --%>
 <asp:Content ID="DashboardHead" ContentPlaceHolderID="ProfileHead" runat="server">
@@ -7,6 +7,7 @@
 
 <%-- Main profile page content --%>
 <asp:Content ID="ProfileContent" ContentPlaceHolderID="ProfileContent" runat="server">
+    <asp:ScriptManager ID="ProfileScriptManager" runat="server" />
     <div class="profile-page">
         <input type="hidden" name="profileCsrf" value="<%: CsrfToken %>" />
         <a class="profile-skip" href="#profileMain">Skip to profile</a>
@@ -102,6 +103,8 @@
                     </section>
 
                     <%-- Account security and password update --%>
+                    <asp:UpdatePanel ID="upnlPassword" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true">
+                        <ContentTemplate>
                     <section id="accountSecurity" class="scrap-paper profile-security" aria-labelledby="securityTitle">
                         <div class="profile-section-heading">
                             <span class="profile-number" aria-hidden="true">02</span>
@@ -111,49 +114,89 @@
                             </div>
                         </div>
 
-                        <p class="profile-security-note">Enter your current password to choose a new one.</p>
+                        <p class="profile-security-note">Only you should know your password. Verify your current password before choosing a new one.</p>
 
-                        <fieldset id="passwordFields" class="profile-fields profile-edit-fields" aria-labelledby="securityTitle" disabled="disabled">
+                        <asp:Panel ID="pnlPasswordStart" runat="server" CssClass="profile-actions">
+                            <asp:Button ID="btnStartPasswordChange" runat="server" Text="Change password"
+                                CssClass="btn btn-primary" OnClick="btnStartPasswordChange_Click" />
+                        </asp:Panel>
+
+                        <asp:Panel ID="pnlPasswordVerify" runat="server" Visible="false" CssClass="profile-fields profile-edit-fields">
                             <div class="profile-field profile-field-wide">
-                                <label for="currentPassword">Current password</label>
-                                <div class="profile-password">
-                                    <input id="currentPassword" name="currentPassword" type="password" autocomplete="current-password" maxlength="128" />
-                                    <button type="button" data-password="currentPassword" aria-label="Show current password" aria-pressed="false">Show</button>
-                                </div>
+                                <label for="txtCurrentPassword">Current password</label>
+                                <asp:TextBox ID="txtCurrentPassword" runat="server" ClientIDMode="Static"
+                                    TextMode="Password" autocomplete="current-password" MaxLength="128" />
                             </div>
+                            <div class="profile-actions">
+                                <asp:Button ID="btnVerifyCurrentPassword" runat="server" Text="Verify password"
+                                    CssClass="btn btn-primary" OnClick="btnVerifyCurrentPassword_Click" />
+                                <asp:Button ID="btnCancelPasswordVerify" runat="server" Text="Cancel"
+                                    CssClass="btn btn-secondary" OnClick="btnCancelPasswordChange_Click" CausesValidation="false" />
+                            </div>
+                        </asp:Panel>
 
+                        <asp:Panel ID="pnlPasswordNew" runat="server" Visible="false" CssClass="profile-fields profile-edit-fields">
                             <div class="profile-field">
-                                <label for="newPassword">New password</label>
-                                <div class="profile-password">
-                                    <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" aria-describedby="passwordHelp" />
-                                    <button type="button" data-password="newPassword" aria-label="Show new password" aria-pressed="false">Show</button>
-                                </div>
-                                <small id="passwordHelp">Use at least 8 characters and at most 72 UTF-8 bytes.</small>
+                                <label for="txtNewPassword">New password</label>
+                                <asp:TextBox ID="txtNewPassword" runat="server" ClientIDMode="Static"
+                                    TextMode="Password" autocomplete="new-password" MaxLength="128" />
+                                <small>Use at least 8 characters and at most 72 UTF-8 bytes.</small>
                             </div>
-
                             <div class="profile-field">
-                                <label for="confirmPassword">Confirm new password</label>
-                                <div class="profile-password">
-                                    <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" maxlength="128" />
-                                    <button type="button" data-password="confirmPassword" aria-label="Show password confirmation" aria-pressed="false">Show</button>
-                                </div>
+                                <label for="txtConfirmPassword">Confirm new password</label>
+                                <asp:TextBox ID="txtConfirmPassword" runat="server" ClientIDMode="Static"
+                                    TextMode="Password" autocomplete="new-password" MaxLength="128" />
                             </div>
-                        </fieldset>
+                            <div class="profile-actions">
+                                <asp:Button ID="btnSaveNewPassword" runat="server" Text="Save new password"
+                                    CssClass="btn btn-primary" OnClick="btnSaveNewPassword_Click" />
+                                <asp:Button ID="btnCancelPasswordChange" runat="server" Text="Cancel"
+                                    CssClass="btn btn-secondary" OnClick="btnCancelPasswordChange_Click" CausesValidation="false" />
+                            </div>
+                        </asp:Panel>
+                        <p id="passwordFeedback" class="profile-feedback profile-password-feedback<%= PasswordFeedbackIsError ? " is-error" : " is-success" %>" role="status" aria-live="polite"><%: PasswordFeedback %></p>
+                    </section>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                    <asp:UpdateProgress ID="passwordProgress" runat="server" AssociatedUpdatePanelID="upnlPassword" DisplayAfter="150">
+                        <ProgressTemplate>
+                            <p class="profile-feedback" role="status" aria-live="polite">Processing your request…</p>
+                        </ProgressTemplate>
+                    </asp:UpdateProgress>
 
-                        <%-- Password action buttons --%>
-                        <div class="profile-actions">
-                            <p>Only you should know your password.</p>
-                            <button id="editPassword" type="button" class="btn btn-primary" aria-controls="passwordFields">Change password</button>
-                            <button id="cancelPassword" type="button" class="btn btn-secondary" hidden>Cancel</button>
-                            <button id="checkPassword" type="button" class="btn btn-secondary" hidden>Save password</button>
+                    <section id="deleteProfile" class="scrap-paper profile-delete" aria-labelledby="deleteProfileTitle">
+                        <div class="profile-section-heading">
+                            <span class="profile-number" aria-hidden="true">03</span>
+                            <div><h2 id="deleteProfileTitle">Delete profile</h2><p>Manage the end of your cooking journey.</p></div>
                         </div>
-                        <p id="passwordFeedback" class="profile-feedback" role="status"><%: PasswordFeedback %></p>
+                        <p><%: DeleteDescription %></p>
+                        <% if (CanDeleteProfile) { %>
+                        <button id="openDeleteProfile" type="button" class="btn profile-delete-button" aria-haspopup="dialog" aria-controls="deleteProfileDialog"><%: DeleteActionLabel %></button>
+                        <% } %>
+                        <p class="profile-feedback" role="status"><%: DeleteFeedback %></p>
                     </section>
 
                     <p class="profile-footnote handwritten-note">A little practice. A lot of flavour.</p>
                 </div>
             </div>
         </div>
+
+        <% if (CanDeleteProfile) { %>
+        <dialog id="deleteProfileDialog" class="profile-delete-dialog" aria-labelledby="deleteDialogTitle" aria-describedby="deleteDialogDescription" data-reopen="<%= string.IsNullOrEmpty(DeleteFeedback) ? "false" : "true" %>">
+            <h2 id="deleteDialogTitle"><%: DeleteActionLabel %>?</h2>
+            <p id="deleteDialogDescription"><%: DeleteDescription %> You will be signed out immediately.</p>
+            <div class="profile-field">
+                <label for="deletePassword">Current password (required)</label>
+                <input id="deletePassword" name="deletePassword" type="password" autocomplete="current-password" maxlength="128" aria-describedby="deleteProfileError" />
+            </div>
+            <label class="profile-delete-confirm"><input id="confirmDeleteProfile" name="confirmDeleteProfile" type="checkbox" value="yes" /> <span>I understand and want to <%: DeleteActionLabel.ToLowerInvariant() %>.</span></label>
+            <p id="deleteProfileError" class="profile-feedback" role="alert"><%: DeleteFeedback %></p>
+            <div class="profile-delete-actions">
+                <button id="cancelDeleteProfile" type="button" class="btn btn-secondary" autofocus>Cancel</button>
+                <button id="confirmDeleteButton" type="button" class="btn profile-delete-button"><%: DeleteActionLabel %></button>
+            </div>
+        </dialog>
+        <% } %>
 
         <%-- Popup for uploading or removing a profile photo --%>
         <dialog id="profilePhotoDialog" class="profile-photo-dialog" aria-labelledby="photoDialogTitle" aria-describedby="photoHelp">

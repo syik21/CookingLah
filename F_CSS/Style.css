@@ -17,6 +17,7 @@
     --color-text-soft: #555555;
     --color-lime: #CDF58A;
     --color-pink: #FBB8EE;
+    --color-error: #C4453C; /* error text and validation messages */
     --color-yellow: #FFD24C;
     --color-lavender: #B99CFF;
     --color-grid: #F1E6CC; /* grid lines */
@@ -27,7 +28,7 @@
     --font-display: 'Archivo Black', 'Arial Black', sans-serif;
     --font-body: 'Space Mono', ui-monospace, monospace;
     /* Layout */
-    --content-width: 1120px;
+    --content-width: 1500px;
     --gutter: 24px;
     --grid-size: 28px;
     /* Borders & radius */
@@ -120,6 +121,23 @@ mark, .highlight {
 /* =========================
    4. Layout
    ========================= */
+.upload-size-error { color: var(--color-error); font-size: 13px; line-height: 1.6; margin: 8px 0; }
+.ingredient-editor { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
+.ingredient-editor legend { font-size: 13px; font-weight: 700; }
+.ingredient-editor > p { font-size: 12px; margin: 8px 0 16px; }
+.ingredient-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; align-items: end; gap: 12px; margin-bottom: 14px; }
+.ingredient-row label { display: grid; gap: 6px; min-width: 0; font-size: 12px; font-weight: 700; }
+.ingredient-row input { width: 100%; min-width: 0; min-height: 44px; padding: 10px; border: var(--border); border-radius: var(--radius-sm); background: var(--color-bg); color: var(--color-ink); font: inherit; font-size: 16px; }
+.ingredient-remove { min-height: 44px; padding: 8px; border: 0; background: transparent; color: var(--color-error); font: inherit; font-size: 12px; cursor: pointer; }
+.ingredient-remove:hover:not(:disabled) { text-decoration: underline; }
+.ingredient-remove:disabled { opacity: .45; cursor: not-allowed; }
+.ingredient-editor .ingredient-add { margin-top: 4px; min-height: 44px; font-size: 12px; box-shadow: none; }
+.ingredient-editor :is(input, button):focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
+@media (max-width: 480px) {
+    .ingredient-row { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 8px; }
+    .ingredient-remove { grid-column: 1 / -1; justify-self: end; }
+}
+
 .container {
     max-width: var(--content-width);
     margin: 0 auto;
@@ -898,6 +916,37 @@ body.map-dialog-open {
     width: 42px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='34' viewBox='0 0 42 34'%3E%3Cpath d='M6 11 C3 3 37 3 37 11 L37 20 C38 28 4 28 5 20 Z' fill='%23FFFDF4' stroke='%2335030C' stroke-width='2.5'/%3E%3Cpath d='M10 10 Q21 6 32 10' fill='none' stroke='%2335030C' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") repeat-y center top;
     pointer-events: none;
+}
+
+/* Shared empty state for every course thumbnail frame. */
+.course-image-placeholder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background: var(--color-tan-light);
+    color: var(--color-ink);
+    text-align: center;
+}
+.course-image-placeholder img {
+    display: block;
+    width: min(42%, 110px) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 65% !important;
+    object-fit: contain !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+.course-image-placeholder span {
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.35;
 }
 @media (max-width: 760px) {
     .notebook { padding: 16px 12px 28px; }
