@@ -129,6 +129,7 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
             litUpdated.Text = course.IsNull("UpdatedAt") ? "Not updated yet" : Convert.ToDateTime(course["UpdatedAt"]).ToString("dd MMM yyyy");
             imgCourse.ImageUrl = MediaUrl(course["Thumbnail"]);
             imgCourse.Visible = imgCourse.ImageUrl.Length > 0;
+            pnlCourseImagePlaceholder.Visible = !imgCourse.Visible;
             litSummary.Text = "<ul><li>" + (Convert.ToInt32(course["RecipeCount"]) > 0 ? "✓ Recipe Available" : "Recipe not added") + "</li>";
             string[] columns = { "LessonCount", "QuizCount", "QuestionCount", "ActivityCount" };
             string[] labels = { " Lessons", " Quiz", " Quiz Questions", " Practical Activity" };

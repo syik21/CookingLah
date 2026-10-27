@@ -195,6 +195,11 @@ namespace CookingLah.Pages.Chef.ManageCourse
         protected global::CookingLah.Pages.Chef.ManageCourse.Activity.CourseActivity Activity;
 
         /// <summary>
+        /// Review control.
+        /// </summary>
+        protected global::CookingLah.Pages.Chef.ManageCourse.Review.CourseReview Review;
+
+        /// <summary>
         /// pnlReadiness control.
         /// </summary>
         /// <remarks>

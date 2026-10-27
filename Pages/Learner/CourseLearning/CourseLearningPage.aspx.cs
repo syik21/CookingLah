@@ -162,6 +162,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
             imgCourseThumbnail.ImageUrl = thumbnail;
             imgCourseThumbnail.AlternateText = Convert.ToString(course["Title"]) + " course thumbnail";
             imgCourseThumbnail.Visible = thumbnail.Length > 0;
+            pnlCourseImagePlaceholder.Visible = !imgCourseThumbnail.Visible;
             litCourseMeta.Text = Convert.ToString(course["CategoryName"]) + " · " + Convert.ToString(course["DifficultyLevel"]);
             litChefName.Text = Convert.ToString(course["ChefName"]);
 

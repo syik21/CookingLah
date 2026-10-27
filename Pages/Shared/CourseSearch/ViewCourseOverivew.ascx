@@ -41,9 +41,7 @@
         <section class="course-intro-card" aria-labelledby="courseTitle">
             <div class="course-overview-image-wrap">
                 <asp:Image ID="imgCourseThumbnail" runat="server" CssClass="course-overview-image" AlternateText="Course thumbnail" />
-                <asp:Panel ID="pnlCourseImagePlaceholder" runat="server" CssClass="course-overview-placeholder" Visible="false">
-                    Ready to cook
-                </asp:Panel>
+                <asp:Panel ID="pnlCourseImagePlaceholder" runat="server" CssClass="course-overview-placeholder course-image-placeholder" Visible="false"><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
             </div>
             <div class="course-intro-copy">
                 <h2 id="courseTitle">

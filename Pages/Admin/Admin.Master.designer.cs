@@ -51,6 +51,11 @@ namespace CookingLah.Pages.Admin
         protected global::System.Web.UI.WebControls.Image imgLearnerProfile;
 
         /// <summary>
+        /// lblProfileName control.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblProfileName;
+
+        /// <summary>
         /// btnHeaderLogout control.
         /// </summary>
         /// <remarks>

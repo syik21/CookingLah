@@ -146,6 +146,7 @@ namespace CookingLah.Pages.Shared.Profile
                     ViewState["Username"] = Convert.ToString(reader["Username"]);
                     ViewState["Email"] = Convert.ToString(reader["Email"]);
                     string photo = Convert.ToString(reader["ProfileImage"]).Trim();
+                    ViewState["ProfileImageUrl"] = ResolveUrl("~/F_Assets/mascot.png");
                     Uri absoluteUrl;
                     if (!string.IsNullOrEmpty(photo) && !photo.StartsWith("//") && !photo.Contains("\\") &&
                         (!Uri.TryCreate(photo, UriKind.Absolute, out absoluteUrl) ||

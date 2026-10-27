@@ -39,6 +39,7 @@ namespace CookingLah.Pages.Chef.CreateCourse.PreviewPage
             litFoodCulture.Text = Convert.ToString(course["FoodDisplayName"]);
             imgCourse.ImageUrl = MediaUrl(Convert.ToString(course["Thumbnail"]));
             imgCourse.Visible = imgCourse.ImageUrl.Length > 0;
+            pnlCourseImagePlaceholder.Visible = !imgCourse.Visible;
             BindSection(rptRecipe, litRecipeEmpty, Read("SELECT * FROM CourseRecipes WHERE CourseID=@id", Parameter("@id", courseId)));
             lessonBlocks = Read("SELECT lc.* FROM LessonContent lc JOIN Lessons l ON l.LessonID=lc.LessonID WHERE l.CourseID=@id", Parameter("@id", courseId));
             BindSection(rptPreviewLessons, litLessonsEmpty, Read("SELECT * FROM Lessons WHERE CourseID=@id ORDER BY LessonOrder", Parameter("@id", courseId)));

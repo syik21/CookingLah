@@ -4,6 +4,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Preview
     public partial class CoursePreview
     {
         protected global::System.Web.UI.WebControls.Image imgCourse;
+        protected global::System.Web.UI.WebControls.Panel pnlCourseImagePlaceholder;
         protected global::System.Web.UI.WebControls.Literal litTitle;
         protected global::System.Web.UI.WebControls.Literal litCategory;
         protected global::System.Web.UI.WebControls.Literal litDifficulty;

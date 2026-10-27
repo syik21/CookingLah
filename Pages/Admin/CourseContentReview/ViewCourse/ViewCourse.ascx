@@ -50,6 +50,7 @@
             data-section="overview" role="tabpanel">
             <h2>Course Overview</h2>
             <asp:Image ID="imgCourse" runat="server" CssClass="review-photo" AlternateText="Course thumbnail" />
+            <asp:Panel ID="pnlCourseImagePlaceholder" runat="server" CssClass="review-photo course-image-placeholder" Visible="false"><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
 
             <dl class="review-facts">
                 <dt>Course title</dt>

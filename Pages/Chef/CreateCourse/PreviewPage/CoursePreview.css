@@ -4,7 +4,7 @@
 .preview-section-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
 .preview-section-heading h3 { margin: 0; }
 .preview-copy { white-space: pre-wrap; overflow-wrap: anywhere; }
-.preview-photo { display: block; width: 320px; max-width: 100%; max-height: 240px; object-fit: contain; border-radius: var(--radius-sm); }
+.preview-photo { display: block; width: 320px; max-width: 100%; max-height: 240px; aspect-ratio: 4 / 3; object-fit: contain; border-radius: var(--radius-sm); }
 .preview-measures { display: flex; flex-wrap: wrap; gap: 32px; }
 .preview-measures dt { color: var(--color-text-soft); font-size: 12px; }
 .preview-measures dd { margin: 4px 0 0; }

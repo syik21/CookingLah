@@ -82,7 +82,7 @@
                         <article class='<%# ReviewCardClass(Eval("ReviewID")) %>'>
                             <div class="review-course-image-wrap">
                                 <asp:Image runat="server" CssClass="review-course-image" ImageUrl='<%# CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail"))) %>' Visible='<%# !string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>' AlternateText='<%# Convert.ToString(Eval("Title")) + " course thumbnail" %>' loading="lazy" />
-                                <asp:Panel runat="server" CssClass="review-course-image-empty" Visible='<%# string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>'><span>Ready to cook</span></asp:Panel>
+                                <asp:Panel runat="server" CssClass="review-course-image-empty course-image-placeholder" Visible='<%# string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                             </div>
                             <div class="review-card-content">
                                 <div class="review-course-heading">

@@ -38,8 +38,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
             if (Read("SELECT UserID FROM Users WHERE UserID=@id AND Role='Instructor' AND AccountStatus='Active'", Parameter("@id", instructorId)).Rows.Count == 0)
                 throw new HttpException(403, "Please sign in as an active Chef.");
             LoadCourse();
-            CurrentTab = Request.Form[hfActiveTab.UniqueID] ?? Request.QueryString["tab"] ?? "overview";
-            if (!new[] { "overview", "recipe", "lessons", "quiz", "activity" }.Contains(CurrentTab)) CurrentTab = "overview";
+            CurrentTab = Request.Form[hfActiveTab.UniqueID] ?? Request.QueryString["section"] ?? Request.QueryString["tab"] ?? "overview";
+            if (!new[] { "overview", "recipe", "lessons", "quiz", "activity", "review" }.Contains(CurrentTab)) CurrentTab = "overview";
             // Render all sections; tabs switch them without a request.
             hfActiveTab.Value = CurrentTab;
         }
@@ -106,6 +106,12 @@ namespace CookingLah.Pages.Chef.ManageCourse
         }
 
         public string TabUrl(string tab) { return "ManageCoursePage.aspx?courseId=" + CourseId + "&tab=" + tab; }
+        public void SetCurrentTab(string tab)
+        {
+            if (!new[] { "overview", "recipe", "lessons", "quiz", "activity", "review" }.Contains(tab)) return;
+            CurrentTab = tab;
+            hfActiveTab.Value = tab;
+        }
         public string LessonUrl(int lessonId) { return "~/Pages/Chef/ManageCourse/ManageCoursePage.aspx?courseId=" + CourseId + "&tab=lessons&lessonId=" + lessonId + "#courseContent"; }
         protected string TabClass(string tab) { return "course-tab" + (CurrentTab == tab ? " active" : ""); }
 

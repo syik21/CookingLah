@@ -20,10 +20,9 @@
         <a runat="server" href="~/Pages/Chef/ChefDashboard.aspx" class="site-logo"><img runat="server" src="~/F_Assets/CookingLahLogo.png" alt="Cooking LAH dashboard" /></a>
         <div class="master-header-caption">Your teaching notebook<span>Share your skills. Inspire a cook.</span></div>
         <div class="master-profile">
-            <%-- Shared placeholder avatar until profile photo loading is connected. --%>
             <a href='<%= ResolveUrl("~/Pages/Shared/Profile/ProfilePage.aspx") %>' class="master-profile-link">
-                <asp:Image ID="imgLearnerProfile" runat="server" ImageUrl="~/F_Assets/mascot.png" AlternateText="Chef avatar placeholder" />
-                <div class="master-profile-copy"><span><%= Server.HtmlEncode(Convert.ToString(Session["Username"])) %></span><small>Chef</small></div>
+                <asp:Image ID="imgLearnerProfile" runat="server" ImageUrl="~/F_Assets/mascot.png" AlternateText="Chef profile photo" />
+                <div class="master-profile-copy"><asp:Label ID="lblProfileName" runat="server" /><small>Chef</small></div>
             </a>
             <asp:Button ID="btnHeaderLogout" runat="server" Text="Log out" CssClass="btn master-logout" CausesValidation="false" OnClick="Logout_Click"/>
         </div>
@@ -41,7 +40,7 @@
                 <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 4H4v17h16V4h-4M8 2h8v5H8ZM8 13l3 3 5-5" /></svg><span>Content Status</span></a>
                 <p class="master-nav-label">LEARNERS</p>
                 <a runat="server" href="~/Pages/Chef/ChefReviewSubmission/ChefReviewSubmissionPage.aspx" class="master-nav-item" data-page="ChefReviewSubmissionPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h4l2-3h6l2 3h4v15H3Z" /><circle cx="12" cy="13" r="4" /></svg><span>Activity Submissions</span></a>
-                <a class="master-nav-item" aria-disabled="true" title="Coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 3 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z" /></svg><span>Course Reviews</span></a>
+                <a runat="server" href="~/Pages/Chef/ChefViewReview/ChefViewReviewPage.aspx" class="master-nav-item" data-page="ChefViewReviewPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 3 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z" /></svg><span>Course Reviews</span></a>
                 <p class="master-nav-label">Account</p>
                 <a class="master-nav-item" data-page="ProfilePage" href='<%= ResolveUrl("~/Pages/Shared/Profile/ProfilePage.aspx") %>'><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="7" r="4" /><path d="M4 21v-2a8 8 0 0 1 16 0v2" /></svg><span>Profile</span></a>
                 <asp:LinkButton ID="btnSidebarLogout" runat="server" CssClass="master-nav-item" OnClick="Logout_Click" CausesValidation="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 3H3v18h7M9 12h12m-5-5 5 5-5 5" /></svg><span>Log out</span></asp:LinkButton>

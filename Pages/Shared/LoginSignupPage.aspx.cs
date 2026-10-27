@@ -1,6 +1,5 @@
 using CookingLah.F_Helpers;
 using CookingLah.F_Services;
-using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -149,6 +148,11 @@ namespace CookingLah.Pages.Shared
                 Session["Email"] = email;
                 Session["Role"] = role;
                 FormsAuthentication.SetAuthCookie(email, chkRemember.Checked);
+                string ipAddress = Request.UserHostAddress;
+                string deviceInfo = Request.UserAgent;
+
+                SaveDailyLoginLog(userId, ipAddress, deviceInfo);
+                UpdateLastLoginTime(userId);
 
                 // Navigate to user dashboard.
                 if (role == "Learner")
@@ -168,6 +172,81 @@ namespace CookingLah.Pages.Shared
                 return;
             }
         }
+
+        private void UpdateLastLoginTime(int userId)
+        {
+            string query = @"
+                            UPDATE Users
+                            SET LastLogin= GETDATE()
+                            WHERE UserID = @UserID;";
+
+            using (var con = DatabaseManager.ConnectDB())
+            using (var cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@UserID", userId);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Save one login log per user for each day.
+        private void SaveDailyLoginLog(
+            int userId,
+            string ipAddress,
+            string deviceInfo)
+        {
+            string query = @"
+        IF NOT EXISTS
+        (
+            SELECT 1
+            FROM UserLoginLog
+            WHERE UserID = @UserID
+              AND LoginDate = CAST(GETDATE() AS DATE)
+        )
+        BEGIN
+            INSERT INTO UserLoginLog
+            (
+                UserID,
+                LoginDate,
+                LoginTime,
+                IPAddress,
+                DeviceInfo
+            )
+            VALUES
+            (
+                @UserID,
+                CAST(GETDATE() AS DATE),
+                GETDATE(),
+                @IPAddress,
+                @DeviceInfo
+            );
+        END;";
+
+            using (var con = DatabaseManager.ConnectDB())
+            using (SqlCommand command = new SqlCommand(query, con))
+            {
+                command.Parameters.AddWithValue("@UserID", userId);
+
+                command.Parameters.AddWithValue(
+                    "@IPAddress",
+                    string.IsNullOrWhiteSpace(ipAddress)
+                        ? (object)DBNull.Value
+                        : ipAddress
+                );
+
+                command.Parameters.AddWithValue(
+                    "@DeviceInfo",
+                    string.IsNullOrWhiteSpace(deviceInfo)
+                        ? (object)DBNull.Value
+                        : deviceInfo
+                );
+
+                con.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
 
         // ---------- SIGN UP ----------
         protected void btnSignup_Click(object sender, EventArgs e)

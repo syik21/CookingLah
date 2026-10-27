@@ -71,9 +71,7 @@
                                     Visible='<%# MediaUrl(Eval("Thumbnail")).Length > 0 %>'
                                     AlternateText='<%# Eval("Title") %>' />
 
-                                <asp:PlaceHolder runat="server" Visible='<%# MediaUrl(Eval("Thumbnail")).Length == 0 %>'>
-                                    <span>No thumbnail</span>
-                                </asp:PlaceHolder>
+                                <asp:Panel runat="server" CssClass="course-image-placeholder" Visible='<%# MediaUrl(Eval("Thumbnail")).Length == 0 %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                             </div>
 
                             <%-- Course details --%>

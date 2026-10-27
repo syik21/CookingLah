@@ -5,6 +5,7 @@
     <asp:Repeater ID="rptOverview" runat="server"><ItemTemplate>
         <article class="card overview-details">
             <asp:Image runat="server" CssClass="overview-image" ImageUrl='<%# CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail"))) %>' Visible='<%# !string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>' AlternateText="Course thumbnail" />
+            <asp:Panel runat="server" CssClass="overview-image course-image-placeholder" Visible='<%# string.IsNullOrEmpty(CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(Eval("Thumbnail")))) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
             <h3><%#: Eval("Title") %></h3>
             <dl><div><dt>Category</dt><dd><%#: Eval("CategoryName") %></dd>
             </div><div><dt>Difficulty</dt><dd><%#: Eval("DifficultyLevel") %></dd>

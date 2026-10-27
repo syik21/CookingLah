@@ -131,6 +131,9 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgCourse;
 
+        /// <summary>pnlCourseImagePlaceholder control.</summary>
+        protected global::System.Web.UI.WebControls.Panel pnlCourseImagePlaceholder;
+
         /// <summary>
         /// litOverviewTitle control.
         /// </summary>

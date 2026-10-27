@@ -54,6 +54,8 @@
     <Content Include="Pages\Admin\ManageUser\ManageUserPage.aspx" />
     <Content Include="Pages\Admin\ManageUser\ManageUser.css" />
     <Content Include="Pages\Chef\ChefDashboard.aspx" />
+    <Content Include="Pages\Chef\ChefDashboard.css" />
+    <Content Include="Pages\Chef\ChefDashboard.js" />
     <Content Include="Pages\Admin\AdminDashboard.aspx" />
     <Compile Include="Pages\Admin\AdminDashboard.aspx.cs">
       <DependentUpon>AdminDashboard.aspx</DependentUpon>
@@ -556,6 +558,16 @@
     </Compile>
     <Content Include="Pages\Chef\ChefReviewSubmission\ChefReviewSubmissionPage.css" />
     <Content Include="Pages\Chef\ChefReviewSubmission\ChefReviewSubmissionPage.js" />
+    <Content Include="Pages\Chef\ChefViewReview\ChefViewReviewPage.aspx" />
+    <Compile Include="Pages\Chef\ChefViewReview\ChefViewReviewPage.aspx.cs">
+      <DependentUpon>ChefViewReviewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ChefViewReview\ChefViewReviewPage.aspx.designer.cs">
+      <DependentUpon>ChefViewReviewPage.aspx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ChefViewReview\ChefViewReviewPage.css" />
+    <Content Include="Pages\Chef\ChefViewReview\ChefViewReviewPage.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pages\Shared\LessonBlocks\LessonBlocks.ascx" />
@@ -688,6 +700,16 @@
     </Compile>
     <Content Include="Pages\Chef\ManageCourse\Activity\CourseActivity.css" />
     <Content Include="Pages\Chef\ManageCourse\Activity\CourseActivity.js" />
+    <Content Include="Pages\Chef\ManageCourse\Review\CourseReview.ascx" />
+    <Compile Include="Pages\Chef\ManageCourse\Review\CourseReview.ascx.cs">
+      <DependentUpon>CourseReview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Chef\ManageCourse\Review\CourseReview.ascx.designer.cs">
+      <DependentUpon>CourseReview.ascx</DependentUpon>
+    </Compile>
+    <Content Include="Pages\Chef\ManageCourse\Review\CourseReview.css" />
+    <Content Include="Pages\Chef\ManageCourse\Review\CourseReview.js" />
     <Compile Include="Pages\Chef\ManageCourse\CourseManagementData.cs" />
     <Content Include="Pages\Chef\ManageCourse\Lessons\CourseLessons.ascx" />
     <Compile Include="Pages\Chef\ManageCourse\Lessons\CourseLessons.ascx.cs">
