@@ -65,7 +65,7 @@ namespace CookingLah.Pages.Chef.ManageCourse
                 if (!int.TryParse(Convert.ToString(HttpContext.Current.Session["UserId"]), out instructorId) ||
                     HttpContext.Current.Session["BuilderEditing_" + courseId] == null ||
                     Read(@"SELECT c.CourseID FROM Courses c JOIN Users u ON u.UserID=c.InstructorID
-                        WHERE c.CourseID=@id AND c.InstructorID=@user AND c.Status<>'Pending'
+                        WHERE c.CourseID=@id AND c.InstructorID=@user AND c.Status IN ('Draft','Rejected')
                         AND u.Role='Instructor' AND u.AccountStatus='Active'", Parameter("@id", courseId), Parameter("@user", instructorId)).Rows.Count == 0)
                     throw new InvalidOperationException("This course is not editable. Reload it and click Edit Course.");
             }
@@ -157,8 +157,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
                         "WHERE c.CourseID=@id AND c.InstructorID=@user AND u.Role='Instructor' AND u.AccountStatus='Active'",
                         Parameter("@id", courseId), Parameter("@user", instructorId));
                     if (status == null) throw new InvalidOperationException("You do not have permission to manage this course.");
-                    if (Convert.ToString(status) == "Pending")
-                        throw new InvalidOperationException("This course cannot be edited while it is under review.");
+                    if (Convert.ToString(status) != "Draft" && Convert.ToString(status) != "Rejected")
+                        throw new InvalidOperationException("Only Draft or Rejected courses can be edited.");
                     save(connection, transaction);
                     Execute(connection, transaction, "UPDATE Courses SET UpdatedAt=GETDATE() WHERE CourseID=@id", Parameter("@id", courseId));
                     transaction.Commit();

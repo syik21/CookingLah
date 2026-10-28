@@ -178,7 +178,18 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
                   AND c.Status='Published'
                   AND cp.LearnerID=@learnerId
                   AND u.Role='Learner'
-                  AND u.AccountStatus='Active'",
+                  AND u.AccountStatus='Active'
+                  AND EXISTS (
+                      SELECT 1 FROM Quizzes q
+                      WHERE q.CourseID=cp.CourseID)
+                  AND NOT EXISTS (
+                      SELECT 1 FROM Quizzes q
+                      WHERE q.CourseID=cp.CourseID
+                        AND NOT EXISTS (
+                            SELECT 1 FROM QuizAttempts qa
+                            WHERE qa.QuizID=q.QuizID
+                              AND qa.LearnerID=cp.LearnerID
+                              AND qa.Passed=1))",
                 Parameter("@activityId", ActivityId),
                 Parameter("@courseId", CourseId),
                 Parameter("@learnerId", LearnerId));
@@ -219,7 +230,18 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
                           AND c.Status='Published'
                           AND cp.LearnerID=@learnerId
                           AND u.Role='Learner'
-                          AND u.AccountStatus='Active'",
+                          AND u.AccountStatus='Active'
+                          AND EXISTS (
+                              SELECT 1 FROM Quizzes q
+                              WHERE q.CourseID=cp.CourseID)
+                          AND NOT EXISTS (
+                              SELECT 1 FROM Quizzes q
+                              WHERE q.CourseID=cp.CourseID
+                                AND NOT EXISTS (
+                                    SELECT 1 FROM QuizAttempts qa
+                                    WHERE qa.QuizID=q.QuizID
+                                      AND qa.LearnerID=cp.LearnerID
+                                      AND qa.Passed=1))",
                         Parameter("@activityId", ActivityId),
                         Parameter("@courseId", CourseId),
                         Parameter("@learnerId", LearnerId));

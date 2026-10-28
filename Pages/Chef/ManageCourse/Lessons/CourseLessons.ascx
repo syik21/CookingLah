@@ -11,12 +11,12 @@
                 <asp:Repeater ID="rptLessons" runat="server" OnItemCommand="rptLessons_ItemCommand"><ItemTemplate>
                     <div class='lb-lesson <%# Convert.ToInt32(Eval("LessonID")) == SelectedLessonId ? "is-selected" : "" %>' data-lesson-id='<%# Eval("LessonID") %>'>
                         <asp:PlaceHolder runat="server" Visible='<%# CanEdit %>'><button type="button" class="lb-drag" draggable="true" aria-label="Drag lesson" title="Drag to reorder">&#9776;</button></asp:PlaceHolder>
-                        <asp:LinkButton runat="server" CommandName="SelectLesson" CommandArgument='<%# Eval("LessonID") %>' CssClass="lb-select" CausesValidation="false" aria-current='<%# Convert.ToInt32(Eval("LessonID")) == SelectedLessonId ? "true" : "false" %>'><span><%#: Eval("LessonOrder") %>.</span> <%#: LessonTitle(Eval("Title")) %></asp:LinkButton>
+                        <asp:LinkButton ID="btnSelectLesson" runat="server" CommandName="SelectLesson" CommandArgument='<%# Eval("LessonID") %>' CssClass="lb-select" CausesValidation="false" aria-current='<%# Convert.ToInt32(Eval("LessonID")) == SelectedLessonId ? "true" : "false" %>'><span><%#: Eval("LessonOrder") %>.</span> <%#: LessonTitle(Eval("Title")) %></asp:LinkButton>
                         <span class="lb-readiness" title='<%# Convert.ToBoolean(Eval("Ready")) ? "Lesson complete" : "Needs required information or content" %>' aria-label='<%# Convert.ToBoolean(Eval("Ready")) ? "Lesson complete" : "Lesson incomplete" %>'><%# Convert.ToBoolean(Eval("Ready")) ? "&#10003;" : "!" %></span>
                         <asp:PlaceHolder runat="server" Visible='<%# CanEdit %>'><div class="lb-list-actions">
                             <button type="button" data-lb-move="-1" aria-label="Move lesson up" <%# Container.ItemIndex == 0 ? "disabled" : "" %>>&#8593;</button>
                             <button type="button" data-lb-move="1" aria-label="Move lesson down" <%# Container.ItemIndex == LessonCount - 1 ? "disabled" : "" %>>&#8595;</button>
-                            <asp:LinkButton runat="server" Text="Delete" CommandName="DeleteLesson" CommandArgument='<%# Eval("LessonID") %>' CssClass="lb-delete" CausesValidation="false" OnClientClick="return confirm('Delete this Lesson? All Article, Image and Video content inside this Lesson will also be removed when you Save Changes.');" />
+                            <asp:LinkButton ID="btnDeleteLesson" runat="server" Text="Delete" CommandName="DeleteLesson" CommandArgument='<%# Eval("LessonID") %>' CssClass="lb-delete" CausesValidation="false" OnClientClick="return confirm('Delete this Lesson? All Article, Image and Video content inside this Lesson will also be removed when you Save Changes.');" />
                         </div></asp:PlaceHolder>
                     </div>
                 </ItemTemplate></asp:Repeater>
@@ -44,7 +44,7 @@
                             <asp:PlaceHolder runat="server" Visible='<%# CanEdit %>'><div class="lb-block-actions">
                                 <button type="button" data-lb-move="-1" aria-label="Move content up" <%# Container.ItemIndex == 0 ? "disabled" : "" %>>&#8593;</button>
                                 <button type="button" data-lb-move="1" aria-label="Move content down" <%# Container.ItemIndex == BlockCount - 1 ? "disabled" : "" %>>&#8595;</button>
-                                <asp:LinkButton runat="server" Text="Delete" CommandName="DeleteBlock" CommandArgument='<%# Eval("LessonContentID") %>' CssClass="lb-delete" CausesValidation="false" />
+                                <asp:LinkButton ID="btnDeleteBlock" runat="server" Text="Delete" CommandName="DeleteBlock" CommandArgument='<%# Eval("LessonContentID") %>' CssClass="lb-delete" CausesValidation="false" />
                             </div></asp:PlaceHolder>
                         </header>
                         <div class="lb-block-body">
@@ -52,7 +52,7 @@
                                 <div class="lb-field"><asp:Label runat="server" AssociatedControlID="txtContentTitle" Text="Title (optional)" /><asp:TextBox ID="txtContentTitle" runat="server" MaxLength="150" Text='<%# Eval("ContentTitle") %>' /></div>
                                 <asp:Panel runat="server" Visible='<%# Convert.ToString(Eval("ContentType")) == "Article" %>' CssClass="lb-field"><asp:Label runat="server" AssociatedControlID="txtContentText" Text="Article Content *" /><asp:TextBox ID="txtContentText" runat="server" TextMode="MultiLine" Rows="7" Text='<%# Eval("ContentText") %>' data-required="Article content is required." /></asp:Panel>
                                 <asp:Panel runat="server" Visible='<%# Convert.ToString(Eval("ContentType")) != "Article" %>'>
-                                    <div class="lb-field"><asp:Label runat="server" AssociatedControlID="fuMedia" Text='<%# Eval("ContentType") + " *" %>' /><asp:FileUpload ID="fuMedia" runat="server" data-lb-upload="" accept='<%# Convert.ToString(Eval("ContentType")) == "Image" ? ".jpg,.jpeg,.png" : ".mp4" %>' data-existing='<%# Media(Eval("MediaPath")) %>' /><small><%# Convert.ToString(Eval("ContentType")) == "Image" ? "JPG or PNG, up to 3 MB." : "MP4, up to 20 MB." %> Choose a file only to add or replace media.</small></div>
+                                    <div class="lb-field"><asp:Label runat="server" AssociatedControlID="fuMedia" Text='<%# Eval("ContentType") + " *" %>' /><asp:FileUpload ID="fuMedia" runat="server" data-lb-upload="" accept='<%# Convert.ToString(Eval("ContentType")) == "Image" ? ".jpg,.jpeg,.png" : ".mp4" %>' data-max-file-mb='<%# Convert.ToString(Eval("ContentType")) == "Image" ? "3" : "20" %>' data-existing='<%# Media(Eval("MediaPath")) %>' /><small><%# Convert.ToString(Eval("ContentType")) == "Image" ? "JPG or PNG, up to 3 MB." : "MP4, up to 20 MB." %> Choose a file only to add or replace media.</small></div>
                                     <div class="lb-field"><asp:Label runat="server" AssociatedControlID="txtCaption" Text="Caption (optional)" /><asp:TextBox ID="txtCaption" runat="server" MaxLength="500" Text='<%# Eval("Caption") %>' /></div>
                                 </asp:Panel>
                                 <asp:Label ID="errBlock" runat="server" CssClass="lb-error" />

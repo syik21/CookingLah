@@ -1,7 +1,9 @@
 ﻿using CookingLah.F_Helpers;
+using CookingLah.F_Services;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -13,7 +15,14 @@ namespace CookingLah.Pages.Chef.ManageCourse
     public partial class ManageCoursePage : System.Web.UI.Page
     {
         public int CourseId { get; private set; }
-        public bool CanEdit { get { return Course != null && Convert.ToString(Course["Status"]) != "Pending" && Session["BuilderEditing_" + CourseId] != null; } }
+        public bool CanEdit
+        {
+            get
+            {
+                string status = Course == null ? "" : Convert.ToString(Course["Status"]);
+                return (status == "Draft" || status == "Rejected") && Session["BuilderEditing_" + CourseId] != null;
+            }
+        }
         public DataRow Course { get; private set; }
         public string CurrentTab { get; private set; }
         public int SetupPercent { get; private set; }
@@ -61,7 +70,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
                 WHERE c.CourseID=@id AND c.InstructorID=@user", Parameter("@id", CourseId), Parameter("@user", InstructorId));
             if (rows.Rows.Count == 0) throw new HttpException(404, "Course not found or access denied.");
             Course = rows.Rows[0];
-            if (Convert.ToString(Course["Status"]) == "Pending")
+            string status = Convert.ToString(Course["Status"]);
+            if (status != "Draft" && status != "Rejected")
             {
                 Session.Remove("BuilderEditing_" + CourseId);
                 DiscardChangesAwaitingReview(CourseId);
@@ -90,7 +100,7 @@ namespace CookingLah.Pages.Chef.ManageCourse
                 litUpdated.Text = Convert.ToDateTime(updated).ToString("dd MMM yyyy, HH:mm");
                 lblCourseStatus.Text = status;
                 lblCourseStatus.CssClass = "mc-status mc-status-" + status.ToLowerInvariant();
-                btnEditCourse.Visible = status != "Pending" && !CanEdit;
+                btnEditCourse.Visible = (status == "Draft" || status == "Rejected") && !CanEdit;
                 btnSaveChanges.Visible = btnCancel.Visible = CanEdit;
                 pnlPending.Visible = status == "Pending";
                 pnlRejected.Visible = status == "Rejected";
@@ -151,7 +161,9 @@ namespace CookingLah.Pages.Chef.ManageCourse
         protected void btnEditCourse_Click(object sender, EventArgs e)
         {
             RunAction(() => {
-                if (Convert.ToString(Course["Status"]) == "Pending") throw new InvalidOperationException("Pending courses are read-only.");
+                string status = Convert.ToString(Course["Status"]);
+                if (status != "Draft" && status != "Rejected")
+                    throw new InvalidOperationException("Only Draft or Rejected courses can be edited.");
                 Session["BuilderEditing_" + CourseId] = true;
                 RedirectCurrent();
             });
@@ -208,6 +220,48 @@ namespace CookingLah.Pages.Chef.ManageCourse
                 Session.Remove("BuilderEditing_" + CourseId);
                 Session["ManageCourseFeedback"] = "Course submitted for review successfully.";
                 RedirectCurrent();
+            });
+        }
+
+        protected void btnDeleteCourse_Click(object sender, EventArgs e)
+        {
+            RunAction(() =>
+            {
+                var mediaPaths = new List<string>();
+                using (SqlConnection connection = DatabaseManager.ConnectDB())
+                {
+                    connection.Open();
+                    using (SqlTransaction transaction = connection.BeginTransaction())
+                    {
+                        using (SqlCommand media = new SqlCommand(@"
+                            SELECT MediaPath FROM (
+                                SELECT c.Thumbnail AS MediaPath FROM Courses c WHERE c.CourseID=@id AND c.InstructorID=@user
+                                UNION SELECT r.RecipeImage FROM CourseRecipes r INNER JOIN Courses c ON c.CourseID=r.CourseID WHERE c.CourseID=@id AND c.InstructorID=@user
+                                UNION SELECT lc.MediaPath FROM LessonContent lc INNER JOIN Lessons l ON l.LessonID=lc.LessonID INNER JOIN Courses c ON c.CourseID=l.CourseID WHERE c.CourseID=@id AND c.InstructorID=@user
+                            ) media WHERE MediaPath IS NOT NULL", connection, transaction))
+                        {
+                            media.Parameters.Add("@id", SqlDbType.Int).Value = CourseId;
+                            media.Parameters.Add("@user", SqlDbType.Int).Value = InstructorId;
+                            using (SqlDataReader reader = media.ExecuteReader())
+                                while (reader.Read()) mediaPaths.Add(Convert.ToString(reader["MediaPath"]));
+                        }
+
+                        using (SqlCommand delete = new SqlCommand(
+                            "DELETE FROM Courses WHERE CourseID=@id AND InstructorID=@user", connection, transaction))
+                        {
+                            delete.Parameters.Add("@id", SqlDbType.Int).Value = CourseId;
+                            delete.Parameters.Add("@user", SqlDbType.Int).Value = InstructorId;
+                            if (delete.ExecuteNonQuery() != 1)
+                                throw new InvalidOperationException("Course not found or you do not have permission to delete it.");
+                        }
+                        transaction.Commit();
+                    }
+                }
+
+                DiscardChangesAwaitingReview(CourseId);
+                Session.Remove("BuilderEditing_" + CourseId);
+                CleanupUnreferencedMedia(mediaPaths);
+                Response.Redirect(ResolveUrl("~/Pages/Chef/MyCourse/ChefMyCourse.aspx"));
             });
         }
         protected void btnReorder_Click(object sender, EventArgs e)

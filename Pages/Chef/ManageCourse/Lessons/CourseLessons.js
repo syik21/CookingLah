@@ -1,7 +1,9 @@
 ﻿(function () {
     "use strict";
+    function initializeLessonBuilder() {
     var builder = document.querySelector('[data-lesson-builder]');
-    if (!builder) return;
+    if (!builder || builder.dataset.initialized === 'true') return;
+    builder.dataset.initialized = 'true';
     var editing = builder.dataset.editing === 'true';
     var state = builder.querySelector('.lb-state');
     if (!editing) return;
@@ -143,8 +145,20 @@
     if (validation) validation.focus();
     // Web Forms LinkButtons submit programmatically, without a submit event.
     builder.addEventListener('click', function (event) {
+        var asyncAction = event.target.closest('.lb-select, .lb-add-lesson, .lb-delete, .lb-tool .btn');
+        var pendingFile = Array.prototype.some.call(builder.querySelectorAll('[data-lb-upload]'), function (input) {
+            return input.files && input.files.length > 0;
+        });
+        if (asyncAction && pendingFile) {
+            event.preventDefault();
+            state.textContent = 'Save the selected file before changing the lesson structure.';
+            return;
+        }
         if (event.target.closest('a[href^="javascript:__doPostBack"]')) dirty = false;
     });
     document.querySelector('form').addEventListener('submit', function () { dirty = false; });
     window.addEventListener('beforeunload', function (event) { if (dirty) { event.preventDefault(); event.returnValue = ''; } });
+    }
+    initializeLessonBuilder();
+    if (window.Sys && Sys.Application) Sys.Application.add_load(initializeLessonBuilder);
 }());

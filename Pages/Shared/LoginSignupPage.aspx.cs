@@ -157,17 +157,13 @@ namespace CookingLah.Pages.Shared
                     return;
                 }
 
-                // Session User.
+                RecordSuccessfulLogin(userId, Request.UserHostAddress, Request.UserAgent);
+
                 Session["UserId"] = userId;
                 Session["Username"] = username;
                 Session["Email"] = email;
                 Session["Role"] = role;
                 CookingLah.F_Services.AuthenticationManager.SignIn(Context, email, chkRemember.Checked);
-                string ipAddress = Request.UserHostAddress;
-                string deviceInfo = Request.UserAgent;
-
-                SaveDailyLoginLog(userId, ipAddress, deviceInfo);
-                UpdateLastLoginTime(userId);
 
                 // Navigate to user dashboard.
                 if (role == "Learner")
@@ -186,8 +182,14 @@ namespace CookingLah.Pages.Shared
                     Context.ApplicationInstance.CompleteRequest();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                System.Diagnostics.Trace.TraceError("Login failed after credential validation: {0}", ex);
+                Session.Remove("UserId");
+                Session.Remove("Username");
+                Session.Remove("Email");
+                Session.Remove("Role");
+                FormsAuthentication.SignOut();
                 Err(lblLoginError, "Something went wrong. Please try again.");
                 return;
             }
@@ -200,78 +202,42 @@ namespace CookingLah.Pages.Shared
             else if (role == "Admin") Response.Redirect("~/Pages/Admin/AdminDashboard.aspx");
         }
 
-        private void UpdateLastLoginTime(int userId)
+        private void RecordSuccessfulLogin(int userId, string ipAddress, string deviceInfo)
         {
-            string query = @"
-                            UPDATE Users
-                            SET LastLogin= GETDATE()
-                            WHERE UserID = @UserID;";
-
             using (var con = DatabaseManager.ConnectDB())
-            using (var cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@UserID", userId);
-
                 con.Open();
-                cmd.ExecuteNonQuery();
+                using (SqlTransaction transaction = con.BeginTransaction(IsolationLevel.Serializable))
+                using (SqlCommand command = new SqlCommand(@"
+                    SET XACT_ABORT ON;
+                    IF NOT EXISTS (
+                        SELECT 1
+                        FROM UserLoginLog WITH (UPDLOCK,HOLDLOCK)
+                        WHERE UserID=@UserID
+                          AND LoginDate=CAST(GETDATE() AS DATE))
+                    BEGIN
+                        INSERT INTO UserLoginLog (UserID,LoginDate,LoginTime,IPAddress,DeviceInfo)
+                        VALUES (@UserID,CAST(GETDATE() AS DATE),GETDATE(),@IPAddress,@DeviceInfo);
+                    END;
+
+                    UPDATE Users
+                    SET LastLogin=GETDATE()
+                    WHERE UserID=@UserID AND AccountStatus='Active';
+                    IF @@ROWCOUNT<>1 THROW 50001,'The account is no longer active.',1;", con, transaction))
+                {
+                    command.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
+                    command.Parameters.Add("@IPAddress", SqlDbType.NVarChar, 45).Value = DatabaseValue(ipAddress, 45);
+                    command.Parameters.Add("@DeviceInfo", SqlDbType.NVarChar, 255).Value = DatabaseValue(deviceInfo, 255);
+                    command.ExecuteNonQuery();
+                    transaction.Commit();
+                }
             }
         }
 
-        // Save one login log per user for each day.
-        private void SaveDailyLoginLog(
-            int userId,
-            string ipAddress,
-            string deviceInfo)
+        private static object DatabaseValue(string value, int maximumLength)
         {
-            string query = @"
-        IF NOT EXISTS
-        (
-            SELECT 1
-            FROM UserLoginLog
-            WHERE UserID = @UserID
-              AND LoginDate = CAST(GETDATE() AS DATE)
-        )
-        BEGIN
-            INSERT INTO UserLoginLog
-            (
-                UserID,
-                LoginDate,
-                LoginTime,
-                IPAddress,
-                DeviceInfo
-            )
-            VALUES
-            (
-                @UserID,
-                CAST(GETDATE() AS DATE),
-                GETDATE(),
-                @IPAddress,
-                @DeviceInfo
-            );
-        END;";
-
-            using (var con = DatabaseManager.ConnectDB())
-            using (SqlCommand command = new SqlCommand(query, con))
-            {
-                command.Parameters.AddWithValue("@UserID", userId);
-
-                command.Parameters.AddWithValue(
-                    "@IPAddress",
-                    string.IsNullOrWhiteSpace(ipAddress)
-                        ? (object)DBNull.Value
-                        : ipAddress
-                );
-
-                command.Parameters.AddWithValue(
-                    "@DeviceInfo",
-                    string.IsNullOrWhiteSpace(deviceInfo)
-                        ? (object)DBNull.Value
-                        : deviceInfo
-                );
-
-                con.Open();
-                command.ExecuteNonQuery();
-            }
+            if (string.IsNullOrWhiteSpace(value)) return DBNull.Value;
+            return value.Length <= maximumLength ? value : value.Substring(0, maximumLength);
         }
 
 

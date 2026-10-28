@@ -113,6 +113,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSaveChanges;
 
+        protected global::System.Web.UI.WebControls.Button btnDeleteCourse;
+
         /// <summary>
         /// hfActiveTab control.
         /// </summary>

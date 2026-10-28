@@ -6,7 +6,7 @@
 <%@ Register Src="Activity/CourseActivity.ascx" TagPrefix="course" TagName="Activity" %>
 <%@ Register Src="Review/CourseReview.ascx" TagPrefix="course" TagName="Review" %>
 <asp:Content ID="Head" ContentPlaceHolderID="ChefHead" runat="server">
-    <link href="ManageCoursePage.css" rel="stylesheet" />
+    <link href="ManageCoursePage.css?v=20261029-confirm1" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Shared/CountryPicker/CountryPicker.css") %>" rel="stylesheet" />
     <link href="Overview/CourseOverview.css" rel="stylesheet" />
     <link href="Recipe/CourseRecipe.css" rel="stylesheet" />
@@ -16,6 +16,7 @@
     <link href="Review/CourseReview.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content" ContentPlaceHolderID="ChefContent" runat="server">
+<asp:ScriptManager ID="ManageCourseScriptManager" runat="server" />
 <div class="manage-course course-builder" data-builder="" data-course-id="<%= CourseId %>" data-reorder-token="<%= System.Web.HttpUtility.HtmlAttributeEncode(ReorderToken) %>" data-reorder-url="<%= ResolveUrl("~/Pages/Chef/ManageCourse/CourseOrderHandler.ashx") %>">
     <div class="mc-backFeedback-row">
         <asp:LinkButton ID="btnBackToCourses" runat="server" CssClass="mc-back" CausesValidation="false" OnClick="btnBackToCourses_Click">&larr; Back to My Courses</asp:LinkButton>
@@ -33,6 +34,8 @@
                     <asp:Button ID="btnEditCourse" runat="server" Text="Edit Course" CssClass="btn btn-primary" OnClick="btnEditCourse_Click" />
                     <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancel_Click" />
                     <asp:Button ID="btnSaveChanges" runat="server" Text="Save Changes" CssClass="btn btn-primary" OnClick="btnSaveChanges_Click" />
+                    <asp:Button ID="btnDeleteCourse" runat="server" Text="Delete Course" CssClass="btn mc-danger" OnClick="btnDeleteCourse_Click" CausesValidation="false"
+                        OnClientClick="return window.CookingLahConfirm.open(this, 'delete');" />
                     <a class="btn" target="_blank" rel="noopener"
                         href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.aspx?courseId=" + CourseId + "&preview=chef") %>">Learner View</a>
                 </div>
@@ -62,7 +65,9 @@
             <course:Recipe ID="Recipe" runat="server" />
         </section>
         <section id="section-lessons" class="course-section" data-course-section="lessons" role="tabpanel" aria-labelledby="tab-lessons" tabindex="0" <%= CurrentTab == "lessons" ? "" : "hidden" %>>
-            <course:Lessons ID="Lessons" runat="server" />
+            <asp:UpdatePanel ID="upLessons" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                <ContentTemplate><course:Lessons ID="Lessons" runat="server" /></ContentTemplate>
+            </asp:UpdatePanel>
         </section>
         <section id="section-quiz" class="course-section" data-course-section="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="0" <%= CurrentTab == "quiz" ? "" : "hidden" %>>
             <course:Quiz ID="Quiz" runat="server" />
@@ -76,22 +81,38 @@
     </div>
     <asp:Panel ID="pnlReadiness" runat="server" CssClass="card builder-readiness"><h2>Ready to Submit?</h2>
         <p><asp:Literal ID="litReadiness" runat="server" Mode="Encode" /></p>
-        <asp:Button ID="btnSubmitReview" runat="server" Text="Submit for Review" CssClass="btn btn-primary" OnClick="btnSubmitReview_Click" />
+        <asp:Button ID="btnSubmitReview" runat="server" Text="Submit for Review" CssClass="btn btn-primary" OnClick="btnSubmitReview_Click"
+            OnClientClick="return window.CookingLahConfirm.open(this, 'submit');" />
     </asp:Panel>
     <asp:HiddenField ID="hfOrderKind" runat="server" ClientIDMode="Static" />
     <asp:HiddenField ID="hfOrderIds" runat="server" ClientIDMode="Static" />
     <asp:HiddenField ID="hfOrderParent" runat="server" ClientIDMode="Static" />
     <asp:Button ID="btnReorder" runat="server" ClientIDMode="Static" Text="Apply order" OnClick="btnReorder_Click" CssClass="builder-order-submit" />
 </div>
+<dialog id="courseConfirmationDialog" class="course-confirm-dialog" aria-labelledby="courseConfirmTitle" aria-describedby="courseConfirmMessage courseConfirmDetail">
+    <div class="course-confirm-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false"><path d="M12 9v4m0 4h.01M10.3 3.7 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z" /></svg>
+    </div>
+    <div class="course-confirm-copy">
+        <p class="course-confirm-eyebrow" id="courseConfirmEyebrow">Please confirm</p>
+        <h2 id="courseConfirmTitle">Confirm action</h2>
+        <p id="courseConfirmMessage"></p>
+        <p id="courseConfirmDetail" class="course-confirm-detail"></p>
+    </div>
+    <div class="course-confirm-actions">
+        <button id="courseConfirmCancel" type="button" class="btn">Cancel</button>
+        <button id="courseConfirmProceed" type="button" class="btn btn-primary">Continue</button>
+    </div>
+</dialog>
 </asp:Content>
 <asp:Content ID="Scripts" ContentPlaceHolderID="ChefScripts" runat="server">
     <script src="<%= ResolveUrl("~/Pages/Shared/CountryPicker/CountryPicker.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/UploadValidation.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/IngredientEditor.js") %>" defer></script>
-    <script src="ManageCoursePage.js?v=20261028-reorder4" defer></script>
+    <script src="ManageCoursePage.js?v=20261029-confirm1" defer></script>
     <script src="Overview/CourseOverview.js" defer></script>
     <script src="Recipe/CourseRecipe.js" defer></script>
-    <script src="Lessons/CourseLessons.js?v=20261028-reorder4" defer></script>
+    <script src="Lessons/CourseLessons.js?v=20261029-select2" defer></script>
     <script src="Quiz/CourseQuiz.js?v=20261028-reorder4" defer></script>
     <script src="Activity/CourseActivity.js" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/LessonVideoDialog.js") %>" defer></script>

@@ -216,7 +216,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
         protected void btnStartQuiz_Click(object sender, EventArgs e)
         {
             if (ChefPreview || HasPassed) return;
-            if (QuizId <= 0) return;
+            if (QuizId <= 0 || !ValidateQuizAccess()) return;
 
             QuizStarted = true;
             ShowResult = false;
@@ -338,7 +338,11 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
                   AND c.Status='Published'
                   AND cp.LearnerID=@learnerId
                   AND u.Role='Learner'
-                  AND u.AccountStatus='Active'",
+                  AND u.AccountStatus='Active'
+                  AND NOT EXISTS (
+                      SELECT 1 FROM Lessons l
+                      WHERE l.CourseID=cp.CourseID
+                        AND l.LessonOrder>cp.LastCompletedLessonOrder)",
                 Parameter("@quizId", QuizId),
                 Parameter("@courseId", CourseId),
                 Parameter("@learnerId", LearnerId));
@@ -363,7 +367,11 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
                       AND c.Status='Published'
                       AND cp.LearnerID=@learnerId
                       AND u.Role='Learner'
-                      AND u.AccountStatus='Active')", connection))
+                      AND u.AccountStatus='Active'
+                      AND NOT EXISTS (
+                          SELECT 1 FROM Lessons l
+                          WHERE l.CourseID=cp.CourseID
+                            AND l.LessonOrder>cp.LastCompletedLessonOrder))", connection))
             {
                 command.Parameters.Add("@quizId", SqlDbType.Int).Value = QuizId;
                 command.Parameters.Add("@learnerId", SqlDbType.Int).Value = LearnerId;

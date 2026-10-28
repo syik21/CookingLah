@@ -5,7 +5,7 @@
 <%@ Import Namespace="System.Web" %>
 
 <asp:Content ID="LearningHead" ContentPlaceHolderID="LearnerHead" runat="server">
-    <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.css?v=20261027d") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.css?v=20261029b") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/Lesson/LessonContent.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/QuizSection/QuizSection.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/SubmitActivity/SubmitActivity.css") %>" rel="stylesheet" />
@@ -151,7 +151,8 @@
                                         <asp:LinkButton ID="btnSelectLesson" runat="server"
                                             Text='<%# HttpUtility.HtmlEncode(Convert.ToString(Eval("Title"))) %>'
                                             CssClass="curriculum-lesson-title" CommandName="SelectLesson"
-                                            CommandArgument='<%# Eval("LessonID") %>' CausesValidation="false" />
+                                            CommandArgument='<%# Eval("LessonID") %>' CausesValidation="false"
+                                            Enabled='<%# IsLessonAccessible(Eval("LessonID")) %>' />
                                     </span>
                                 </asp:Panel>
                             </ItemTemplate>

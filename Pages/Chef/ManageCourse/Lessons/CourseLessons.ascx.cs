@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using static CookingLah.Pages.Chef.CreateCourse.CourseBuilderData;
 using static CookingLah.Pages.Chef.ManageCourse.CourseManagementData;
@@ -53,6 +54,17 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
             foreach (DataRow row in lessons.Rows) row["Ready"] = draft.LessonReady((int)row["LessonID"]);
             rptLessons.DataSource = new DataView(lessons) { Sort = "LessonOrder ASC" };
             rptLessons.DataBind();
+            ScriptManager manager = ScriptManager.GetCurrent(Page);
+            manager.RegisterAsyncPostBackControl(btnAddLesson);
+            manager.RegisterAsyncPostBackControl(btnAddArticle);
+            manager.RegisterAsyncPostBackControl(btnAddImage);
+            manager.RegisterAsyncPostBackControl(btnAddVideo);
+            foreach (RepeaterItem item in rptLessons.Items)
+            {
+                manager.RegisterAsyncPostBackControl(item.FindControl("btnSelectLesson"));
+                Control deleteLesson = item.FindControl("btnDeleteLesson");
+                if (deleteLesson != null) manager.RegisterAsyncPostBackControl(deleteLesson);
+            }
             hfSelectedLesson.Value = SelectedLessonId.ToString();
             var lesson = CourseReviewDraft.FindRow(draft.Lessons, "LessonID", SelectedLessonId);
             pnlSelectedLesson.Visible = lesson != null;
@@ -77,6 +89,11 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
             pnlEmptyContent.Visible = BlockCount == 0;
             rptLessonContent.DataSource = new DataView(draft.LessonContent) { RowFilter = "LessonID=" + SelectedLessonId, Sort = "ContentOrder ASC" };
             rptLessonContent.DataBind();
+            foreach (RepeaterItem item in rptLessonContent.Items)
+            {
+                Control deleteBlock = item.FindControl("btnDeleteBlock");
+                if (deleteBlock != null) manager.RegisterAsyncPostBackControl(deleteBlock);
+            }
         }
 
         private void CheckStructure()
@@ -182,6 +199,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
                 row["LessonOrder"] = draft.Lessons.Rows.Count + 1;
                 draft.Lessons.Rows.Add(row);
                 BindBuilder();
+                UpdateLessonPanel();
                 litState.Text = "New lesson — unsaved changes";
             });
         }
@@ -205,7 +223,15 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
                     litState.Text = "Lesson removed from working copy.";
                 }
                 BindBuilder();
+                UpdateLessonPanel();
             });
+        }
+
+        private void UpdateLessonPanel()
+        {
+            Control parent = Parent;
+            while (parent != null && !(parent is UpdatePanel)) parent = parent.Parent;
+            if (parent != null) ((UpdatePanel)parent).Update();
         }
 
         protected void AddContent_Command(object sender, CommandEventArgs e)
@@ -221,6 +247,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
                 row["ContentOrder"] = draft.LessonContent.Select("LessonID=" + SelectedLessonId).Length + 1;
                 draft.LessonContent.Rows.Add(row);
                 BindBuilder();
+                UpdateLessonPanel();
                 litState.Text = "Unsaved changes";
             });
         }
@@ -234,7 +261,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
                 draft.LessonContent.Rows.Remove(row);
                 var blocks = draft.LessonContent.Select("LessonID=" + SelectedLessonId, "ContentOrder ASC");
                 for (int i = 0; i < blocks.Length; i++) blocks[i]["ContentOrder"] = i + 1;
-                BindBuilder(); litState.Text = "Content removed — unsaved changes";
+                BindBuilder(); UpdateLessonPanel(); litState.Text = "Content removed — unsaved changes";
             });
         }
 

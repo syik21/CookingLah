@@ -186,3 +186,72 @@
     document.querySelector("form").addEventListener("submit", function () { dirty = false; });
     window.addEventListener("beforeunload", function (event) { if (dirty) { event.preventDefault(); event.returnValue = ""; } });
 }());
+
+(function () {
+    "use strict";
+    var dialog = document.getElementById("courseConfirmationDialog");
+    if (!dialog) return;
+
+    var title = document.getElementById("courseConfirmTitle");
+    var message = document.getElementById("courseConfirmMessage");
+    var detail = document.getElementById("courseConfirmDetail");
+    var cancel = document.getElementById("courseConfirmCancel");
+    var proceed = document.getElementById("courseConfirmProceed");
+    var pendingButton;
+    var confirmed = false;
+    var content = {
+        submit: {
+            title: "Submit course for review?",
+            message: "Your course will be sent to the admin team and editing will be paused while it is reviewed.",
+            detail: "If approved and published, the course becomes read-only. Check every section before continuing.",
+            action: "Submit for review"
+        },
+        delete: {
+            title: "Permanently delete this course?",
+            message: "This removes the course and all lessons, quizzes, practical activities and learner records connected to it.",
+            detail: "This action cannot be undone. Learner progress, attempts, submissions, reviews and reports will also be deleted.",
+            action: "Delete permanently"
+        }
+    };
+
+    window.CookingLahConfirm = {
+        open: function (button, kind) {
+            if (confirmed) {
+                confirmed = false;
+                return true;
+            }
+            var selected = content[kind];
+            if (!selected) return false;
+            pendingButton = button;
+            dialog.classList.toggle("is-delete", kind === "delete");
+            title.textContent = selected.title;
+            message.textContent = selected.message;
+            detail.textContent = selected.detail;
+            proceed.textContent = selected.action;
+            dialog.showModal();
+            cancel.focus();
+            return false;
+        }
+    };
+
+    function closeDialog() {
+        dialog.close();
+        if (pendingButton) pendingButton.focus();
+    }
+
+    cancel.addEventListener("click", closeDialog);
+    dialog.addEventListener("cancel", function (event) {
+        event.preventDefault();
+        closeDialog();
+    });
+    dialog.addEventListener("click", function (event) {
+        if (event.target === dialog) closeDialog();
+    });
+    proceed.addEventListener("click", function () {
+        if (!pendingButton) return;
+        var button = pendingButton;
+        confirmed = true;
+        dialog.close();
+        button.click();
+    });
+}());

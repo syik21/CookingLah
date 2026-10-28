@@ -12,12 +12,16 @@ namespace CookingLah.F_Services
 
         public static void SignIn(HttpContext context, string email, bool rememberMe)
         {
+            if (!rememberMe)
+            {
+                FormsAuthentication.SignOut();
+                return;
+            }
+
             DateTime issuedAt = DateTime.Now;
-            DateTime expiresAt = rememberMe
-                ? issuedAt.AddDays(RememberDays)
-                : issuedAt.Add(FormsAuthentication.Timeout);
+            DateTime expiresAt = issuedAt.AddDays(RememberDays);
             var ticket = new FormsAuthenticationTicket(
-                2, email, issuedAt, expiresAt, rememberMe, "", FormsAuthentication.FormsCookiePath);
+                2, email, issuedAt, expiresAt, true, "", FormsAuthentication.FormsCookiePath);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))
             {
                 HttpOnly = true,
@@ -25,7 +29,7 @@ namespace CookingLah.F_Services
                 Path = FormsAuthentication.FormsCookiePath,
                 SameSite = SameSiteMode.Lax
             };
-            if (rememberMe) cookie.Expires = expiresAt;
+            cookie.Expires = expiresAt;
             context.Response.Cookies.Add(cookie);
         }
 

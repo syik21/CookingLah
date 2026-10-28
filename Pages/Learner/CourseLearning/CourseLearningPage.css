@@ -547,6 +547,18 @@ body:has(.chef-preview-mode) .master-main {
     background: #fff0e9;
 }
 
+.curriculum-item.is-locked,
+.curriculum-special-item.is-locked {
+    color: var(--color-text-soft);
+    opacity: .65;
+}
+
+.curriculum-item.is-locked .curriculum-lesson-title,
+.curriculum-special-item.is-locked a {
+    color: inherit;
+    cursor: not-allowed;
+}
+
 
 .curriculum-item.is-completed .curriculum-state,
 .curriculum-special-item.is-completed .curriculum-state {
