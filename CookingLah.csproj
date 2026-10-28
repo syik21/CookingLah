@@ -48,6 +48,8 @@
     <Content Include="App_Data\CookinglahDB_log.ldf">
       <DependentUpon>CookinglahDB.mdf</DependentUpon>
     </Content>
+    <Content Include="bread.png" />
+    <Content Include="padkrapao.png" />
     <Content Include="Pages\Admin\LoginPage\AdminLoginPage.css" />
     <Content Include="Pages\Admin\LoginPage\AdminLoginPage.js" />
     <Content Include="Pages\Admin\ManageUser\ManageUserjs.js" />
@@ -345,6 +347,8 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="tacos.png" />
+    <Content Include="tools.png" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />

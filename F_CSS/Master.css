@@ -11,9 +11,9 @@
     align-items: center;
     gap: 28px;
     min-height: 100px;
-    padding: 18px 32px;
+    padding: 35px 32px;
     border-bottom: var(--border);
-    background: var(--color-bg);
+    background: var(--color-primary);
 }
 
     .master-header .site-logo {
@@ -34,7 +34,7 @@
     .master-header-caption span {
         display: block;
         margin-top: 5px;
-        color: var(--color-text-soft);
+        color: var(--color-bg);
         font: 400 12px/1.5 var(--font-body);
     }
 
@@ -86,7 +86,7 @@
 
 .master-profile small {
     display: block;
-    color: var(--color-text-soft);
+    color: var(--color-bg);
     font-size: 12px;
     font-weight: 400;
 }
@@ -109,7 +109,7 @@
 .master-sidebar {
     padding: 28px 20px;
     border-right: var(--border);
-    background: var(--color-tan-light);
+    background: transparent;
 }
 
 .master-sidebar-heading {

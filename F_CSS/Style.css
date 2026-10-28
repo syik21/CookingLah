@@ -17,7 +17,6 @@
     --color-text-soft: #555555;
     --color-lime: #CDF58A;
     --color-pink: #FBB8EE;
-    --color-error: #C4453C; /* error text and validation messages */
     --color-yellow: #FFD24C;
     --color-lavender: #B99CFF;
     --color-grid: #F1E6CC; /* grid lines */
@@ -28,7 +27,7 @@
     --font-display: 'Archivo Black', 'Arial Black', sans-serif;
     --font-body: 'Space Mono', ui-monospace, monospace;
     /* Layout */
-    --content-width: 1500px;
+    --content-width: 1120px;
     --gutter: 24px;
     --grid-size: 28px;
     /* Borders & radius */
@@ -115,28 +114,12 @@ mark, .highlight {
     padding: 0 .14em;
     display: inline-block;
     transform: rotate(-1.5deg);
+    font-size: 80px;
 }
 
 /* =========================
    4. Layout
    ========================= */
-.upload-size-error { color: var(--color-error); font-size: 13px; line-height: 1.6; margin: 8px 0; }
-.ingredient-editor { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
-.ingredient-editor legend { font-size: 13px; font-weight: 700; }
-.ingredient-editor > p { font-size: 12px; margin: 8px 0 16px; }
-.ingredient-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; align-items: end; gap: 12px; margin-bottom: 14px; }
-.ingredient-row label { display: grid; gap: 6px; min-width: 0; font-size: 12px; font-weight: 700; }
-.ingredient-row input { width: 100%; min-width: 0; min-height: 44px; padding: 10px; border: var(--border); border-radius: var(--radius-sm); background: var(--color-bg); color: var(--color-ink); font: inherit; font-size: 16px; }
-.ingredient-remove { min-height: 44px; padding: 8px; border: 0; background: transparent; color: var(--color-error); font: inherit; font-size: 12px; cursor: pointer; }
-.ingredient-remove:hover:not(:disabled) { text-decoration: underline; }
-.ingredient-remove:disabled { opacity: .45; cursor: not-allowed; }
-.ingredient-editor .ingredient-add { margin-top: 4px; min-height: 44px; font-size: 12px; box-shadow: none; }
-.ingredient-editor :is(input, button):focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
-@media (max-width: 480px) {
-    .ingredient-row { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 8px; }
-    .ingredient-remove { grid-column: 1 / -1; justify-self: end; }
-}
-
 .container {
     max-width: var(--content-width);
     margin: 0 auto;
@@ -514,11 +497,11 @@ mark, .highlight {
     margin-bottom: 8px;
 }
 
-.map-controls .btn {
-    min-width: 44px;
-    min-height: 44px;
-    padding: 8px 12px;
-}
+    .map-controls .btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 8px 12px;
+    }
 
 #mapZoomLevel {
     min-width: 5ch;
@@ -561,21 +544,22 @@ mark, .highlight {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-.map-viewport,
-.map-viewport path[data-n] {
-    cursor: grab;
-    user-select: none;
-}
 
-.map-viewport.is-dragging,
-.map-viewport.is-dragging path[data-n] {
-    cursor: grabbing;
-    scroll-behavior: auto;
-}
+    .map-viewport,
+    .map-viewport path[data-n] {
+        cursor: grab;
+        user-select: none;
+    }
 
-.map-viewport::-webkit-scrollbar {
-    display: none;
-}
+        .map-viewport.is-dragging,
+        .map-viewport.is-dragging path[data-n] {
+            cursor: grabbing;
+            scroll-behavior: auto;
+        }
+
+        .map-viewport::-webkit-scrollbar {
+            display: none;
+        }
 
 #worldMap {
     max-width: none;
@@ -617,10 +601,10 @@ mark, .highlight {
     overflow: auto;
 }
 
-.map-dialog::backdrop {
-    background: var(--color-ink);
-    opacity: .7;
-}
+    .map-dialog::backdrop {
+        background: var(--color-ink);
+        opacity: .7;
+    }
 
 body.map-dialog-open {
     overflow: hidden;
@@ -838,6 +822,7 @@ body.map-dialog-open {
     --color-rule: #D5E2E6;
     --radius-ink: 18px 7px 20px 9px / 8px 19px 9px 17px;
 }
+
 .scrap-paper {
     position: relative;
     min-width: 0;
@@ -847,6 +832,7 @@ body.map-dialog-open {
     border-radius: var(--radius-ink);
     box-shadow: 3px 4px 0 var(--color-tan);
 }
+
 .scrap-tape::before {
     content: "";
     position: absolute;
@@ -860,9 +846,11 @@ body.map-dialog-open {
     clip-path: polygon(0 0, 100% 0, 96% 25%, 100% 50%, 96% 75%, 100% 100%, 0 100%, 4% 75%, 0 50%, 4% 25%);
     pointer-events: none;
 }
+
 .handwritten-note, .notebook-caption {
     font: 400 24px/1.2 var(--font-hand);
 }
+
 .ink-underline::after {
     content: "";
     display: block;
@@ -873,6 +861,7 @@ body.map-dialog-open {
     border-radius: 50%;
     transform: rotate(-2deg);
 }
+
 .scrap-label {
     display: inline-block;
     padding: 4px 10px;
@@ -882,6 +871,7 @@ body.map-dialog-open {
     font-size: 12px;
     font-weight: 700;
 }
+
 .notebook {
     position: relative;
     padding: 22px 18px 32px;
@@ -890,12 +880,14 @@ body.map-dialog-open {
     border-radius: 28px 12px 30px 14px / 14px 28px 12px 26px;
     box-shadow: 5px 6px 0 var(--color-ink);
 }
+
 .notebook-spread {
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
 }
+
 .notebook-page {
     min-width: 0;
     padding: 28px 32px;
@@ -906,7 +898,11 @@ body.map-dialog-open {
     border-radius: 15px 5px 6px 19px / 9px 7px 5px 13px;
     box-shadow: 0 5px 0 var(--color-paper), 0 7px 0 var(--color-ink), 0 11px 0 var(--color-paper), 0 13px 0 var(--color-ink);
 }
-.notebook-page + .notebook-page { border-radius: 5px 17px 19px 6px / 7px 9px 13px 5px; }
+
+    .notebook-page + .notebook-page {
+        border-radius: 5px 17px 19px 6px / 7px 9px 13px 5px;
+    }
+
 .notebook-coil {
     position: absolute;
     top: 12px;
@@ -916,9 +912,22 @@ body.map-dialog-open {
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='34' viewBox='0 0 42 34'%3E%3Cpath d='M6 11 C3 3 37 3 37 11 L37 20 C38 28 4 28 5 20 Z' fill='%23FFFDF4' stroke='%2335030C' stroke-width='2.5'/%3E%3Cpath d='M10 10 Q21 6 32 10' fill='none' stroke='%2335030C' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") repeat-y center top;
     pointer-events: none;
 }
+
 @media (max-width: 760px) {
-    .notebook { padding: 16px 12px 28px; }
-    .notebook-spread { grid-template-columns: minmax(0, 1fr); gap: 26px; }
-    .notebook-page { padding: 24px; }
-    .notebook-coil { display: none; }
+    .notebook {
+        padding: 16px 12px 28px;
+    }
+
+    .notebook-spread {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 26px;
+    }
+
+    .notebook-page {
+        padding: 24px;
+    }
+
+    .notebook-coil {
+        display: none;
+    }
 }

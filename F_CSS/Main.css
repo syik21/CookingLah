@@ -21,6 +21,40 @@
     margin: 0 auto 34px;
 }
 
+
+.main-hero .container {
+    position: relative;
+}
+
+.main-hero__img {
+    position: absolute;
+    right: -110px;
+    top: -75px;
+    width: 330px;
+    padding: 20px;
+    pointer-events: none;
+}
+
+@media (max-width: 1100px) {
+    .main-hero__img {
+        display: none;
+    }
+}
+
+.main-hero__img2 {
+    position: absolute;
+    left: -205px;
+    top: 160px;
+    width: 350px;
+    pointer-events: none;
+}
+
+@media (max-width: 1100px) {
+    .main-hero__img2 {
+        display: none;
+    }
+}
+
 /* =========================
    2. Hero stickers
    ========================= */
@@ -33,6 +67,7 @@
 
     .main-stickers .sticker {
         position: absolute;
+        animation: bob 5s ease-in-out infinite;
     }
 
 .main-sticker-a {
@@ -45,19 +80,24 @@
     left: 30%;
     top: 130px;
     transform: rotate(3deg);
+    animation-delay: -1.5s;
 }
 
 .main-sticker-c {
     right: 24%;
     top: 30px;
     transform: rotate(5deg);
+    animation-delay: -3s;
 }
 
 .main-sticker-d {
     right: 3%;
     top: 140px;
     transform: rotate(-4deg);
+    animation-delay: -4s;
 }
+
+
 
 /* =========================
    6. Recipes
@@ -68,9 +108,9 @@
 
 .recipe-row {
     display: grid;
-    grid-template-columns: 100px 1fr auto;
+    grid-template-columns: 150px 1fr auto;
     gap: 20px;
-    align-items: baseline;
+    align-items: center;
     padding: 22px 0;
     border-top: var(--border-dashed);
     text-decoration: none;
@@ -103,6 +143,27 @@
     text-underline-offset: 6px;
 }
 
+
+.recipe-frame {
+    display: block;
+}
+
+    .recipe-frame img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+/* Time above level, on the right */
+.recipe-row__meta {
+    display: grid;
+    justify-items: end;
+    gap: 6px;
+    font-weight: 700;
+}
+
 /* =========================
    7. Responsive
    ========================= */
@@ -130,7 +191,15 @@
     }
 
     .recipe-row {
-        grid-template-columns: 60px 1fr;
+        grid-template-columns: 90px 1fr;
+    }
+
+    .recipe-row__meta {
+        grid-column: 2;
+        justify-items: start;
+        grid-auto-flow: column;
+        justify-content: start;
+        gap: 14px;
     }
 
     .recipe-row__time {
@@ -157,29 +226,89 @@
 }
 
 /* About the cooking community; linked from the public master header. */
-.main-about { 
+.main-about {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 48px; 
-    padding-top:160px; 
+    gap: 48px;
+    padding-top: 160px;
     padding-bottom: 48px;
 }
-.main-about h2 { 
-    font-size: clamp(38px, 4.5vw, 56px);
-    line-height: 1.08; 
-    text-align: left; 
-    text-transform: none; 
-}
-.main-about p { 
-    margin: 0 0 16px; 
-}
-.main-about p:last-child { 
-    color: var(--color-text-soft); 
-}
+
+    .main-about h2 {
+        font-size: clamp(38px, 4.5vw, 56px);
+        line-height: 1.08;
+        text-align: left;
+        text-transform: none;
+    }
+
+    .main-about p {
+        margin: 0 0 16px;
+    }
+
+        .main-about p:last-child {
+            color: var(--color-text-soft);
+        }
+
 @media (max-width: 760px) {
-    .main-about { 
-        grid-template-columns: 1fr; 
-        gap: 12px; 
-        padding-top: 56px; 
+    .main-about {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding-top: 56px;
+    }
+}
+
+
+/* =========================
+   8. Boxes (3 columns above footer)
+   ========================= */
+.boxes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+.box {
+    min-height: 120px;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+}
+
+.box__title {
+    font: 400 clamp(28px, 4vw, 40px)/1 var(--font-hand);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+}
+
+.box__link {
+    font-size: 14px;
+    color: var(--color-ink);
+    overflow-wrap: anywhere;
+}
+
+    .box__link:hover {
+        text-decoration: underline wavy var(--color-primary);
+        text-underline-offset: 4px;
+    }
+
+@media (max-width: 760px) {
+    .boxes {
+        gap: 10px;
+    }
+
+    .box {
+        min-height: 80px;
+    }
+
+    .box__title {
+        font-size: 24px;
+    }
+
+    .box__link {
+        font-size: 12px;
     }
 }
