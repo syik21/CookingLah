@@ -24,6 +24,15 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         protected global::System.Web.UI.WebControls.LinkButton btnBackToCourses;
 
         /// <summary>
+        /// lblCourseStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCourseStatus;
+
+        /// <summary>
         /// pnlError control.
         /// </summary>
         /// <remarks>
@@ -58,33 +67,6 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfActiveTab;
-
-        /// <summary>
-        /// litTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litTitle;
-
-        /// <summary>
-        /// litMeta control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litMeta;
-
-        /// <summary>
-        /// lblStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStatus;
 
         /// <summary>
         /// pnlPublished control.
@@ -261,6 +243,15 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         protected global::System.Web.UI.WebControls.Literal litLessonsEmpty;
 
         /// <summary>
+        /// rptLessonSelector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptLessonSelector;
+
+        /// <summary>
         /// rptLessons control.
         /// </summary>
         /// <remarks>
@@ -268,42 +259,6 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptLessons;
-
-        /// <summary>
-        /// pnlLessonPager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlLessonPager;
-
-        /// <summary>
-        /// btnLessonPrevious control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnLessonPrevious;
-
-        /// <summary>
-        /// litLessonPage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litLessonPage;
-
-        /// <summary>
-        /// btnLessonNext control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnLessonNext;
 
         /// <summary>
         /// tabQuiz control.
@@ -421,6 +376,15 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlDecision;
+
+        /// <summary>
+        /// phApproveAction control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phApproveAction;
 
         /// <summary>
         /// hfDialog control.

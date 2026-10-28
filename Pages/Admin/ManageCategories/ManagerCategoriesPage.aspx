@@ -12,12 +12,13 @@
         <%-- Page heading and add button --%>
         <header class="categories-page-header">
             <div>
+                <p class="categories-eyebrow">The admin notebook</p>
                 <h1>Category Management</h1>
-                <p>Manage the categories available for Cooking LAH courses.</p>
+                <p>Keep course categories clear and useful for Chefs and learners.</p>
             </div>
 
             <asp:Button ID="btnOpenAdd" runat="server"
-                Text="+ Add Category"
+                Text="Add Category"
                 CssClass="btn btn-primary"
                 OnClick="btnOpenAdd_Click"
                 CausesValidation="false" />
@@ -30,7 +31,11 @@
         </asp:Panel>
 
         <%-- Search categories --%>
-        <div class="categories-toolbar">
+        <div class="categories-toolbar" aria-labelledby="categorySearchHeading">
+            <div class="categories-toolbar-copy">
+                <h2 id="categorySearchHeading">Find a category</h2>
+                <p>Search by category name or description.</p>
+            </div>
             <asp:Panel ID="pnlSearch" runat="server"
                 CssClass="categories-search"
                 DefaultButton="btnSearchCategory"
@@ -53,7 +58,7 @@
                     CausesValidation="false" />
 
                 <asp:Button ID="btnClearSearch" runat="server"
-                    Text="Clear Search"
+                    Text="Clear"
                     CssClass="category-action"
                     OnClick="btnClearSearch_Click"
                     CausesValidation="false" />
@@ -70,6 +75,7 @@
             <h2 id="categoryFormHeading">
                 <asp:Literal ID="litFormTitle" runat="server" Mode="Encode" />
             </h2>
+            <p class="category-form-intro">Category names appear in course search and course creation.</p>
 
             <div class="category-field">
                 <asp:Label runat="server"
@@ -151,10 +157,14 @@
         <%-- Category directory --%>
         <section class="categories-directory" aria-labelledby="categoriesHeading">
             <div class="categories-list-heading">
-                <h2 id="categoriesHeading">Categories</h2>
+                <div>
+                    <p class="categories-section-label">Course organisation</p>
+                    <h2 id="categoriesHeading">Category Directory</h2>
+                    <p>Review category usage before editing or deleting.</p>
+                </div>
 
                 <div class="categories-summary">
-                    <span>Total Categories</span>
+                    <span>Total</span>
                     <asp:Label ID="lblTotalCategories" runat="server" Text="Not available" />
                 </div>
             </div>
@@ -238,7 +248,7 @@
                     <p>Create your first category so Chefs can organize their courses.</p>
 
                     <asp:Button runat="server"
-                        Text="+ Add Category"
+                        Text="Add Category"
                         CssClass="btn btn-primary"
                         OnClick="btnOpenAdd_Click"
                         CausesValidation="false" />

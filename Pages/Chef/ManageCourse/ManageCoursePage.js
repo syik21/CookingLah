@@ -143,10 +143,6 @@
         updateFoodFields();
     }
 
-    var preview = document.getElementById("btnPreviewLearner");
-    if (preview) preview.addEventListener("click", function () {
-        document.getElementById("builderFeedback").textContent = "Learner preview will be available later.";
-    });
     document.querySelectorAll("[data-order-group]").forEach(function (group) {
         var dragged;
         function save() {

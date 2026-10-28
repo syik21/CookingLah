@@ -8,6 +8,9 @@
 tests/
 App_Data/Migrations/
 artifacts/
+Secrets.config
+audit/
+.docx*
 
 # User-specific files
 *.rsuser

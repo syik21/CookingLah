@@ -32,6 +32,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
             LoadCourseDetails(courseId);
             LoadRecipe(courseId);
             LoadLessons(courseId);
+            LoadQuizzes(courseId);
+            LoadActivities(courseId);
             LoadReviews(courseId);
             LoadLearnerState(courseId);
         }
@@ -75,6 +77,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
 
         private void LoadRecipe(int id) { Bind(rptRecipe, pnlRecipeEmpty, Read("SELECT TOP 1 * FROM CourseRecipes WHERE CourseID=@id ORDER BY RecipeID", Parameter("@id", id))); }
         private void LoadLessons(int id) { Bind(rptLessonOverview, pnlLessonsEmpty, Read("SELECT LessonOrder,Title FROM Lessons WHERE CourseID=@id ORDER BY LessonOrder,LessonID", Parameter("@id", id))); }
+        private void LoadQuizzes(int id) { Bind(rptQuizOverview, pnlQuizEmpty, Read("SELECT q.Title,q.Description,q.PassingScore,(SELECT COUNT(*) FROM QuizQuestions qq WHERE qq.QuizID=q.QuizID) AS QuestionCount FROM Quizzes q WHERE q.CourseID=@id ORDER BY q.QuizID", Parameter("@id", id))); }
+        private void LoadActivities(int id) { Bind(rptActivityOverview, pnlActivityEmpty, Read("SELECT Title,Instructions AS ShortInstructions FROM PracticalActivities WHERE CourseID=@id ORDER BY ActivityID", Parameter("@id", id))); }
         private static void Bind(Repeater repeater, Panel empty, DataTable data) { repeater.DataSource = data; repeater.DataBind(); empty.Visible = data.Rows.Count == 0; }
 
         private void LoadReviews(int courseId)

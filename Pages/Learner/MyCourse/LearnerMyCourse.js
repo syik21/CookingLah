@@ -7,7 +7,7 @@
     if (!courseList || viewButtons.length === 0) return;
 
     function setCourseView(viewMode) {
-        courseList.classList.remove('two-column-view', 'single-column-view');
+        courseList.classList.remove('four-column-view', 'single-column-view');
         courseList.classList.add(viewMode);
 
         viewButtons.forEach(button => {
@@ -23,14 +23,14 @@
         }
     }
 
-    let savedView = 'two-column-view';
+    let savedView = 'four-column-view';
     try {
         const storedView = window.localStorage.getItem('learnerMyCourseView');
-        if (storedView === 'single-column-view') {
+        if (storedView === 'single-column-view' || storedView === 'four-column-view') {
             savedView = storedView;
         }
     } catch (error) {
-        // Use the default two-card view when browser storage is unavailable.
+        // Use the default four-card view when browser storage is unavailable.
     }
 
     setCourseView(savedView);

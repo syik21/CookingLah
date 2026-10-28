@@ -1,7 +1,9 @@
-﻿using CookingLah.F_Services;
+﻿using CookingLah.F_Helpers;
+using CookingLah.F_Services;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -42,16 +44,25 @@ namespace CookingLah.Pages.Admin.CourseContentReview
             Response.Cache.SetNoStore();
             int userId;
             if (!int.TryParse(Convert.ToString(Session["UserId"]), out userId))
-                throw new HttpException(403, "An active admin account is required.");
+            {
+                Debug.WriteLine("An active admin account is required.");
+                Response.Redirect(NavigationHelper.GetUrl("Main"));
+                return;
+            }
             try
             {
                 var admin = ReviewData.Read("SELECT UserID FROM Users WHERE UserID=@id AND Role='Admin' AND AccountStatus='Active'", ReviewData.Int("@id", userId));
                 if (admin.Rows.Count != 1)
-                    throw new HttpException(403, "An active admin account is required.");
+                {
+                    Debug.WriteLine("An active admin account is required.");
+                    Response.Redirect(NavigationHelper.GetUrl("Main"));
+                    return;
+                }
             }
             catch (SqlException ex)
             {
                 System.Diagnostics.Trace.TraceError("Course review authorization: {0}", ex);
+                Response.Redirect(NavigationHelper.GetUrl("Main"));
                 throw new HttpException(503, "Course review is temporarily unavailable. Please try again.");
             }
             ViewCourse1.BackRequested += delegate
@@ -69,7 +80,20 @@ namespace CookingLah.Pages.Admin.CourseContentReview
         {
             pnlMessage.Visible = false;
             if (!IsPostBack)
-                RunRead(LoadChefFilter);
+            {
+                RunRead(delegate
+                {
+                    LoadChefFilter();
+
+                    if (string.Equals(Request.QueryString["status"], "Pending", StringComparison.OrdinalIgnoreCase))
+                        CurrentStatusFilter = "Pending";
+
+                    int courseId;
+                    if (int.TryParse(Request.QueryString["courseId"], out courseId) && courseId > 0 &&
+                        ReviewData.Read("SELECT CourseID FROM Courses WHERE CourseID=@id AND Status='Pending'", ReviewData.Int("@id", courseId)).Rows.Count == 1)
+                        ShowCourseDetails(courseId);
+                });
+            }
         }
         // Refresh the course list and status counts before rendering.
         protected override void OnPreRender(EventArgs e)

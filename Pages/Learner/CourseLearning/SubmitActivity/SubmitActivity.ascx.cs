@@ -18,19 +18,21 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
         private int ActivityId { get; set; }
         public bool HasSubmission { get; private set; }
         public bool HasActivity { get; private set; }
+        private bool ChefPreview { get; set; }
 
-        public void LoadActivity(int courseId, int learnerId)
+        public void LoadActivity(int courseId, int learnerId, bool chefPreview = false)
         {
             CourseId = courseId;
             LearnerId = learnerId;
+            ChefPreview = chefPreview;
 
             DataTable activities = Read(@"
                 SELECT TOP 1 a.ActivityID,a.Title,a.Instructions
                 FROM PracticalActivities a
                 INNER JOIN Courses c ON c.CourseID=a.CourseID
-                WHERE a.CourseID=@courseId AND c.Status='Published'
+                WHERE a.CourseID=@courseId AND (c.Status='Published' OR (@preview=1 AND c.InstructorID=@learnerId))
                 ORDER BY a.ActivityID",
-                Parameter("@courseId", courseId));
+                Parameter("@courseId", courseId), Parameter("@preview", chefPreview), Parameter("@learnerId", learnerId));
 
             if (activities.Rows.Count == 0)
             {
@@ -51,7 +53,13 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
             pnlActivityUnavailable.Visible = false;
             pnlActivity.Visible = true;
 
-            LoadExistingSubmission();
+            if (ChefPreview)
+            {
+                HasSubmission = false;
+                pnlExistingSubmission.Visible = false;
+                pnlSubmissionForm.Visible = false;
+            }
+            else LoadExistingSubmission();
         }
 
         private void LoadExistingSubmission()
@@ -100,6 +108,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
 
         protected void btnSubmitActivity_Click(object sender, EventArgs e)
         {
+            if (ChefPreview) return;
             string description = txtActivityDescription.Text.Trim();
             if (description.Length > 1000)
             {

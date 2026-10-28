@@ -30,3 +30,9 @@
 
     updateCurriculumForViewport();
 }());
+(function () {
+    if (document.querySelector('.chef-preview-mode')) {
+        document.body.classList.add('chef-preview-shell');
+    }
+}());
+

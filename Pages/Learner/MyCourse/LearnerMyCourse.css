@@ -255,8 +255,8 @@
     gap: 22px;
 }
 
-.my-course-list.two-column-view {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.my-course-list.four-column-view {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .my-course-list.single-column-view {
@@ -277,8 +277,8 @@
 .my-course-thumbnail-wrap {
     position: relative;
     display: grid;
-    min-height: 190px;
-    aspect-ratio: 16 / 8;
+    min-height: 130px;
+    aspect-ratio: 4 / 3;
     place-items: center;
     overflow: hidden;
     border-bottom: var(--border);
@@ -313,14 +313,15 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: 20px;
+    padding: 14px;
 }
 
 .my-course-title-row {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 12px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .my-course-category {
@@ -331,8 +332,12 @@
 
 .my-course-title-row h3 {
     margin: 0;
-    font: 400 27px/1.1 var(--font-hand);
+    display: -webkit-box;
+    overflow: hidden;
+    font: 400 22px/1.1 var(--font-hand);
     overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .my-course-status-badge {
@@ -354,7 +359,7 @@
 }
 
 .my-course-meta {
-    margin: 8px 0 18px;
+    margin: 8px 0 14px;
     color: var(--color-text-soft);
     font-size: 10px;
 }
@@ -364,7 +369,7 @@
 }
 
 .my-course-progress {
-    margin: 0 0 18px;
+    margin: 0 0 14px;
 }
 
 .my-course-progress-label {
@@ -393,13 +398,13 @@
 .my-course-facts {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
+    gap: 5px;
     margin-top: auto;
     padding-top: 4px;
 }
 
 .my-course-facts span {
-    padding: 5px 8px;
+    padding: 4px 6px;
     border: 1px solid var(--color-grid);
     border-radius: var(--radius-pill);
     background: var(--color-tan-light);
@@ -409,14 +414,21 @@
 .my-course-actions {
     display: flex;
     justify-content: flex-end;
-    margin-top: 18px;
+    margin-top: 14px;
 }
 
 .my-course-actions .btn {
+    width: 100%;
     min-height: 44px;
     padding: 10px 16px;
     font-size: 10px;
     text-align: center;
+}
+
+@media (max-width: 1080px) {
+    .my-course-list.four-column-view {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .single-column-view .my-course-card {
@@ -537,7 +549,7 @@
         grid-column: auto;
     }
 
-    .my-course-list.two-column-view {
+    .my-course-list.four-column-view {
         grid-template-columns: minmax(0, 1fr);
     }
 

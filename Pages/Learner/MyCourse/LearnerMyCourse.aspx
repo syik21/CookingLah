@@ -62,8 +62,8 @@
                     <asp:Label ID="lblCourseSummary" runat="server" CssClass="my-course-summary" />
                 </div>
                 <div class="course-view-toggle" role="group" aria-label="Course list layout">
-                    <button id="btnTwoColumnView" class="course-view-toggle-button is-active" type="button"
-                        aria-label="2 card view" title="2 card view" aria-pressed="true" data-view-mode="two-column-view">
+                    <button id="btnFourColumnView" class="course-view-toggle-button is-active" type="button"
+                        aria-label="4 card view" title="4 card view" aria-pressed="true" data-view-mode="four-column-view">
                         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="8" height="7" rx="1" /><rect x="13" y="4" width="8" height="7" rx="1" /><rect x="3" y="13" width="8" height="7" rx="1" /><rect x="13" y="13" width="8" height="7" rx="1" /></svg>
                     </button>
                     <button id="btnSingleColumnView" class="course-view-toggle-button" type="button"
@@ -73,7 +73,7 @@
                 </div>
             </div>
 
-            <div id="myCourseList" class="my-course-list two-column-view">
+            <div id="myCourseList" class="my-course-list four-column-view">
                 <asp:Repeater ID="rptMyCourses" runat="server" OnItemCommand="rptMyCourses_ItemCommand">
                     <ItemTemplate>
                         <article class="my-course-card">

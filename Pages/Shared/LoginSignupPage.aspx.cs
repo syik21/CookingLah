@@ -7,7 +7,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Security;
@@ -50,6 +51,20 @@ namespace CookingLah.Pages.Shared
         {
             lblLoginError.Visible = false;
             lblSignupError.Visible = false;
+            if (!IsPostBack && Session["UserId"] != null)
+            {
+                string role = Convert.ToString(Session["Role"]);
+                if (role == "Admin")
+                {
+                    FormsAuthentication.SignOut();
+                    Session.Clear();
+                    Session.Abandon();
+                    Response.Redirect(NavigationHelper.GetUrl("Login"));
+                    return;
+                }
+                RedirectAuthenticatedUser(role);
+                return;
+            }
             if (!IsPostBack)
                 ShowView(Request.QueryString["tab"] == "signup" ? 1 : 0);
         }
@@ -147,7 +162,7 @@ namespace CookingLah.Pages.Shared
                 Session["Username"] = username;
                 Session["Email"] = email;
                 Session["Role"] = role;
-                FormsAuthentication.SetAuthCookie(email, chkRemember.Checked);
+                CookingLah.F_Services.AuthenticationManager.SignIn(Context, email, chkRemember.Checked);
                 string ipAddress = Request.UserHostAddress;
                 string deviceInfo = Request.UserAgent;
 
@@ -165,12 +180,24 @@ namespace CookingLah.Pages.Shared
                     Response.Redirect(NavigationHelper.GetUrl("Instructor"), false);
                     Context.ApplicationInstance.CompleteRequest();
                 }
+                else if (role == "Admin")
+                {
+                    Response.Redirect("~/Pages/Admin/AdminDashboard.aspx", false);
+                    Context.ApplicationInstance.CompleteRequest();
+                }
             }
             catch (Exception)
             {
                 Err(lblLoginError, "Something went wrong. Please try again.");
                 return;
             }
+        }
+
+        private void RedirectAuthenticatedUser(string role)
+        {
+            if (role == "Learner") Response.Redirect(NavigationHelper.GetUrl("Learner"));
+            else if (role == "Instructor") Response.Redirect(NavigationHelper.GetUrl("Instructor"));
+            else if (role == "Admin") Response.Redirect("~/Pages/Admin/AdminDashboard.aspx");
         }
 
         private void UpdateLastLoginTime(int userId)
@@ -402,63 +429,106 @@ namespace CookingLah.Pages.Shared
                 {
                     con.Open();
 
-                    object uid;
-                    using (var find = new SqlCommand("SELECT UserId FROM Users WHERE Email = @e AND IsActive = 1", con))
+                    int? userId = null;
+                    using (var find = new SqlCommand("SELECT UserID FROM Users WHERE Email=@email AND AccountStatus='Active'", con))
                     {
-                        find.Parameters.AddWithValue("@e", email);
-                        uid = find.ExecuteScalar();
+                        find.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = email;
+                        object result = find.ExecuteScalar();
+                        if (result != null) userId = Convert.ToInt32(result);
                     }
 
-                    if (uid != null)
+                    if (userId.HasValue)
                     {
-                        var bytes = new byte[32];
-                        using (var rng = RandomNumberGenerator.Create())
-                            rng.GetBytes(bytes);
-
-                        string token = Convert.ToBase64String(bytes).Replace('+', '-').Replace('/', '_').TrimEnd('=');
-
-                        using (var ins = new SqlCommand("INSERT INTO PasswordResets (UserId, TokenHash, ExpiresAt) VALUES (@u, @t, DATEADD(HOUR, 1, SYSUTCDATETIME()))", con))
+                        string token = PasswordResetTokenManager.GenerateResetToken();
+                        int resetTokenId;
+                        using (SqlTransaction transaction = con.BeginTransaction())
                         {
-                            ins.Parameters.AddWithValue("@u", (int)uid);
-                            ins.Parameters.AddWithValue("@t", Sha256(token));
-                            ins.ExecuteNonQuery();
+                            using (var expire = new SqlCommand("UPDATE PasswordResetTokens SET IsUsed=1 WHERE UserID=@userId AND IsUsed=0", con, transaction))
+                            {
+                                expire.Parameters.Add("@userId", SqlDbType.Int).Value = userId.Value;
+                                expire.ExecuteNonQuery();
+                            }
+                            using (var insert = new SqlCommand(@"
+                                INSERT INTO PasswordResetTokens (UserID,TokenHash,ExpiresAt)
+                                OUTPUT inserted.ResetTokenID
+                                VALUES (@userId,@tokenHash,DATEADD(MINUTE,15,SYSUTCDATETIME()))", con, transaction))
+                            {
+                                insert.Parameters.Add("@userId", SqlDbType.Int).Value = userId.Value;
+                                insert.Parameters.Add("@tokenHash", SqlDbType.NVarChar, 255).Value = PasswordResetTokenManager.HashToken(token);
+                                resetTokenId = Convert.ToInt32(insert.ExecuteScalar());
+                            }
+                            transaction.Commit();
                         }
 
-                        string link = Request.Url.GetLeftPart(UriPartial.Authority) + ResolveUrl("~/ResetPassword.aspx") + "?token=" + token;
-                        SendResetEmail(email, link);
+                        string link = Request.Url.GetLeftPart(UriPartial.Authority)
+                            + ResolveUrl("~/Pages/Guest/ResetPassword/ResetPasswordPage.aspx")
+                            + "?token=" + Server.UrlEncode(token);
+                        try
+                        {
+                            SendPasswordResetEmail(email, link);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Trace.TraceError("Password reset email failed: {0}", ex.Message);
+                            using (var expire = new SqlCommand("UPDATE PasswordResetTokens SET IsUsed=1 WHERE ResetTokenID=@id", con))
+                            {
+                                expire.Parameters.Add("@id", SqlDbType.Int).Value = resetTokenId;
+                                expire.ExecuteNonQuery();
+                            }
+                        }
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Err(lblForgotError, "Something went wrong. Please try again.");
-                return;
+                System.Diagnostics.Trace.TraceError("Password reset request failed: {0}", ex.Message);
             }
 
-            // Same message whether or not the email exists (so nobody can probe for accounts)
             lblOkTitle.Text = "Check your inbox";
-            lblOkMsg.Text = "If " + Server.HtmlEncode(email) + " has an account, a password reset link is on its way.";
+            lblOkMsg.Text = "If an account exists for this email, a password reset link has been sent.";
             hlDash.Visible = false;
             ShowView(3);
         }
 
-        // TODO: configure SMTP in Web.config (<system.net><mailSettings>), then uncomment.
-        static void SendResetEmail(string to, string link)
+        // Send the password reset link to the registered email.
+        static void SendPasswordResetEmail(string recipientEmail, string resetLink)
         {
-            // using (var m = new System.Net.Mail.MailMessage("no-reply@cookinglah.com", to, "Reset your Cooking LAH password",
-            //        "Click this link to choose a new password (valid for 1 hour): " + link))
-            // using (var smtp = new System.Net.Mail.SmtpClient()) smtp.Send(m);
+            string host = ConfigurationManager.AppSettings["SmtpHost"];
+            string sender = ConfigurationManager.AppSettings["SmtpEmail"];
+            string password = ConfigurationManager.AppSettings["SmtpAppPassword"];
+            int port;
+            bool enableSsl;
+            if (string.IsNullOrWhiteSpace(host) || string.IsNullOrWhiteSpace(sender) || string.IsNullOrWhiteSpace(password) ||
+                !int.TryParse(ConfigurationManager.AppSettings["SmtpPort"], out port) ||
+                !bool.TryParse(ConfigurationManager.AppSettings["SmtpEnableSsl"], out enableSsl))
+                throw new ConfigurationErrorsException("SMTP settings are incomplete.");
+
+            string safeLink = System.Web.HttpUtility.HtmlAttributeEncode(resetLink);
+            string body = @"<div style='font-family:Arial,sans-serif;color:#35030c;line-height:1.6'>
+                <h1 style='margin-bottom:8px'>Cooking LAH</h1>
+                <h2>Reset Your Password</h2>
+                <p>We received a request to reset your Cooking LAH password.</p>
+                <p><a href='" + safeLink + @"' style='display:inline-block;padding:12px 20px;background:#f93209;color:#fff;text-decoration:none;border-radius:8px'>Reset Password</a></p>
+                <p>This link will expire in 15 minutes.</p>
+                <p>If you did not request this password reset, you can safely ignore this email.</p>
+                </div>";
+
+            using (var message = new MailMessage())
+            using (var smtp = new SmtpClient(host, port))
+            {
+                message.From = new MailAddress(sender, "Cooking LAH");
+                message.To.Add(recipientEmail);
+                message.Subject = "Reset your Cooking LAH password";
+                message.Body = body;
+                message.IsBodyHtml = true;
+                smtp.EnableSsl = enableSsl;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential(sender, password);
+                smtp.Send(message);
+            }
         }
 
         // ---------- helpers ----------
-        void SignIn(int id, string name, string email, string role, bool remember)
-        {
-            Session["UserId"] = id;
-            Session["UserName"] = name;
-            Session["Username"] = name;
-            Session["Role"] = role;
-            FormsAuthentication.SetAuthCookie(email, remember);
-        }
 
         void Success(string role, string title, string msg)
         {
@@ -480,13 +550,6 @@ namespace CookingLah.Pages.Shared
         {
             return s.Length <= 100 && Regex.IsMatch(s, @"^\S+@\S+\.\S+$");
         }
-
-        static string Sha256(string s)
-        {
-            using (var h = SHA256.Create())
-                return Convert.ToBase64String(h.ComputeHash(Encoding.UTF8.GetBytes(s)));
-        }
-
 
     }
 }

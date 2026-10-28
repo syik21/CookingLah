@@ -3,50 +3,40 @@
     min-width: 0;
 }
 
+.review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
 .review-back {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    margin-bottom: 22px;
     font-weight: 700;
     text-underline-offset: 4px;
 }
 
-.review-detail-header {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(220px, auto);
-    align-items: center;
-    gap: 8px 32px;
-    margin-bottom: 28px;
+.review-course-status {
+    padding: 4px 12px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 700;
 }
 
-    .review-detail-header .review-eyebrow {
-        grid-column: 1 / -1;
-        margin-bottom: 0;
+    .review-course-status.pending {
+        background: var(--color-yellow);
     }
 
-    .review-detail-header h1 {
-        grid-column: 1;
-        grid-row: 2 / span 2;
-        min-width: 0;
-        text-transform: none;
+    .review-course-status.approved {
+        background: var(--color-lime);
     }
 
-    .review-detail-meta,
-    .review-detail-status {
-        grid-column: 2;
-        justify-self: end;
-        margin: 0;
-        text-align: right;
-    }
-
-    .review-detail-meta {
-        grid-row: 2;
-        overflow-wrap: anywhere;
-    }
-
-    .review-detail-status {
-        grid-row: 3;
+    .review-course-status.rejected {
+        background: var(--color-pink);
     }
 
 /* ===== Course Content Tabs ===== */
@@ -138,6 +128,45 @@
     }
 
 /* ===== Lessons and Practical Activities ===== */
+.review-lessons-layout {
+    display: grid;
+    grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.review-lesson-selector {
+    position: sticky;
+    top: 24px;
+    display: grid;
+    gap: 8px;
+}
+
+    .review-lesson-selector h3 {
+        margin-bottom: 4px;
+    }
+
+.review-lesson-link {
+    display: grid;
+    gap: 4px;
+    padding: 12px 14px;
+    color: var(--color-ink);
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+}
+
+    .review-lesson-link span {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .review-lesson-link:hover,
+    .review-lesson-link.active {
+        background: var(--color-lime);
+    }
+
 .review-content-item {
     padding: 24px 0;
     border-bottom: var(--border-dashed);
@@ -202,6 +231,14 @@
 }
 
 @media (max-width: 600px) {
+    .review-lessons-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .review-lesson-selector {
+        position: static;
+    }
+
     .lesson-video-dialog {
         padding: 16px;
     }
@@ -332,20 +369,6 @@
 
 /* ===== Mobile Layout ===== */
 @media (max-width: 600px) {
-    .review-detail-header {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 8px;
-    }
-
-    .review-detail-header h1,
-    .review-detail-meta,
-    .review-detail-status {
-        grid-column: 1;
-        grid-row: auto;
-        justify-self: start;
-        text-align: left;
-    }
-
     .review-tab-panel,
     .review-decision,
     .review-dialog {

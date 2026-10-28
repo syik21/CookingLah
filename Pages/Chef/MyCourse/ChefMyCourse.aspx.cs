@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CookingLah.F_Helpers;
+using System;
 using System.Data;
 using System.Web;
 using System.Web.UI.WebControls;
@@ -14,9 +15,15 @@ namespace CookingLah.Pages.Chef.MyCourse
             base.OnInit(e);
             int instructorId;
             if (!int.TryParse(Convert.ToString(Session["UserId"]), out instructorId))
+            {
+                Response.Redirect(NavigationHelper.GetUrl("Main"));
                 throw new HttpException(401, "Please sign in as a Chef.");
+            }
             if (Read("SELECT UserID FROM Users WHERE UserID=@id AND Role='Instructor' AND AccountStatus='Active'", Parameter("@id", instructorId)).Rows.Count == 0)
-                throw new HttpException(403, "Please sign in as an active Chef.");
+            {
+                Response.Redirect(NavigationHelper.GetUrl("Main"));
+                throw new HttpException(403, "Please sign in as a Chef.");
+            }
             ViewStateUserKey = Session.SessionID;
             Response.Cache.SetNoStore();
             if (!IsPostBack)
@@ -41,7 +48,7 @@ namespace CookingLah.Pages.Chef.MyCourse
         private void BindMyCourses()
         {
             string search = txtCourseSearch.Text.Trim();
-            var rows = Read(@"SELECT c.CourseID,c.Title,c.Thumbnail,c.Status,c.DifficultyLevel,c.UpdatedAt,cat.CategoryName,
+            var rows = Read(@"SELECT c.CourseID,c.Title,c.Description,c.Thumbnail,c.Status,c.DifficultyLevel,c.UpdatedAt,cat.CategoryName,
                 (SELECT COUNT(*) FROM Lessons WHERE CourseID=c.CourseID) AS LessonCount,
                 (SELECT COUNT(*) FROM Quizzes WHERE CourseID=c.CourseID) AS QuizCount,
                 (SELECT COUNT(*) FROM PracticalActivities WHERE CourseID=c.CourseID) AS ActivityCount FROM Courses c JOIN Categories cat ON cat.CategoryID=c.CategoryID WHERE c.InstructorID=@user AND (@category=0 OR c.CategoryID=@category) AND (@search='' OR CHARINDEX(@search,c.Title)>0) ORDER BY c.UpdatedAt DESC,c.CourseID DESC", Parameter("@user", InstructorId), Parameter("@search", search), Parameter("@category", int.Parse(ddlCategory.SelectedValue)));

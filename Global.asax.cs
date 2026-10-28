@@ -6,6 +6,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using CookingLah.F_Services;
 
 namespace CookingLah
 {
@@ -16,6 +17,11 @@ namespace CookingLah
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        void Application_AcquireRequestState(object sender, EventArgs e)
+        {
+            AuthenticationManager.RestoreSession(Context);
         }
     }
 }

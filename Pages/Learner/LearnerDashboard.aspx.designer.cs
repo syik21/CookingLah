@@ -167,40 +167,5 @@ namespace CookingLah.Pages.Learner
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnExploreFoodMap;
 
-        /// <summary>
-        /// previewCurrentCourses control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.XmlDataSource previewCurrentCourses;
-
-        /// <summary>
-        /// previewQuizzes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.XmlDataSource previewQuizzes;
-
-        /// <summary>
-        /// previewActivities control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.XmlDataSource previewActivities;
-
-        /// <summary>
-        /// previewExploreCourses control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.XmlDataSource previewExploreCourses;
     }
 }

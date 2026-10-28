@@ -148,6 +148,38 @@ mark, .highlight {
     padding: 80px 0;
 }
 
+/* Shared page frame: matches the Manage Users content width and top spacing.
+   Food map pages are intentionally omitted because they use a full-canvas layout. */
+:where(
+    .admin-dashboard,
+    .review-page,
+    .course-report,
+    .categories-page,
+    .manage-users,
+    .user-report,
+    .chef-dashboard,
+    .submission-review-page,
+    .chef-reviews,
+    .create-course-page,
+    .manage-course,
+    .learner-dashboard,
+    .course-learning-page,
+    .my-reviews-page,
+    .my-activity-page,
+    .my-courses-page,
+    .course-overview-panel,
+    .profile-page
+) {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: var(--content-width) !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    padding-top: 12px !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
 .site-header {
     display: flex;
     align-items: center;

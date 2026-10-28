@@ -320,6 +320,14 @@ namespace CookingLah.Pages.Admin.ManageUser
                 }
                 if (action == "remove")
                 {
+                    if (TargetRole == "Learner")
+                    {
+                        using (var cmd = new SqlCommand("DELETE FROM dbo.PasswordResetTokens WHERE UserID=@id", con, tx))
+                        {
+                            cmd.Parameters.Add("@id", SqlDbType.Int).Value = TargetId;
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
                     using (var cmd = new SqlCommand(TargetRole == "Learner"
                         ? "DELETE FROM dbo.Users WHERE UserID=@id AND Role='Learner'"
                         : "UPDATE dbo.Users SET AccountStatus='Inactive',UpdatedAt=GETDATE() WHERE UserID=@id AND Role IN ('Instructor','Admin')", con, tx))

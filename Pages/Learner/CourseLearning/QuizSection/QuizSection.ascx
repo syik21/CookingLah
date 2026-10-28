@@ -48,7 +48,7 @@
                                 <label class="quiz-answer-option">
                                     <input type="radio" name='<%# "answer_" + Eval("QuestionID") %>'
                                         value='<%# Eval("OptionID") %>'
-                                        <%# IsAnswerSelected(Eval("QuestionID"), Eval("OptionID")) ? "checked=\"checked\"" : "" %> />
+                                        <%# AnswerInputAttributes(Eval("QuestionID"), Eval("OptionID")) %> />
                                     <span><%#: Eval("OptionText") %></span>
                                 </label>
                             </ItemTemplate>
@@ -60,7 +60,10 @@
 
         <div class="quiz-question-navigation">
             <button id="btnPreviousQuestion" type="button" class="btn btn-secondary">Previous</button>
-            <asp:Button ID="btnSubmitQuiz" runat="server" Text="Next question" CssClass="btn btn-primary"
+            <asp:Button ID="btnBackToQuizResult" runat="server" ClientIDMode="Static" Text="Back to result"
+                CssClass="btn btn-secondary" Visible="false" OnClick="btnBackToQuizResult_Click" CausesValidation="false" />
+            <button id="btnPreviewNextQuestion" runat="server" ClientIDMode="Static" type="button" class="btn btn-primary" visible="false">Next question</button>
+            <asp:Button ID="btnSubmitQuiz" runat="server" ClientIDMode="Static" Text="Next question" CssClass="btn btn-primary"
                 OnClick="btnSubmitQuiz_Click" OnClientClick="return window.CookingLahQuiz.handleAction();"
                 CausesValidation="false" />
         </div>
@@ -79,6 +82,8 @@
             You have not passed yet. Review the lessons and try again when you are ready.
         </asp:Panel>
         <div class="quiz-result-actions">
+            <asp:Button ID="btnReviewAnswers" runat="server" Text="Review correct answers" CssClass="btn btn-secondary"
+                OnClick="btnReviewAnswers_Click" CausesValidation="false" />
             <asp:Button ID="btnReviewLessons" runat="server" Text="Review lessons" CssClass="btn btn-secondary"
                 OnClick="btnReviewLessons_Click" CausesValidation="false" />
             <asp:Button ID="btnTryAgain" runat="server" Text="Try again" CssClass="btn btn-secondary"

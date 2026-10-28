@@ -157,7 +157,7 @@
                                 <asp:TextBox ID="txtForgotEmail" runat="server" ClientIDMode="Static" TextMode="Email" placeholder="you@email.com" autocomplete="email" />
                             </div>
 
-                            <asp:Button ID="btnForgot" runat="server" Text="Send password reset" CssClass="btn full" OnClick="btnForgot_Click" />
+                            <asp:Button ID="btnForgot" runat="server" Text="Send password reset" CssClass="btn full" OnClick="btnForgot_Click" data-loading-text="Sending..." />
 
                             <p class="alt-line">
                                 <asp:LinkButton ID="lnkBackToLogin" runat="server" CssClass="lk" CausesValidation="false" OnClick="lnkBackToLogin_Click">&larr; Back to log in</asp:LinkButton>

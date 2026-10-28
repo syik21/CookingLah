@@ -13,6 +13,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.Lesson
 
         public int CurrentLessonId { get; private set; }
         public int RequestedLessonId { get; private set; }
+        public bool ChefPreview { get; set; }
 
         public void LoadLesson(
             int courseId,
@@ -25,7 +26,11 @@ namespace CookingLah.Pages.Learner.CourseLearning.Lesson
             CurrentLessonId = lessonId;
             RequestedLessonId = 0;
 
-            DataTable lessons = Read(@"
+            DataTable lessons = ChefPreview ? Read(@"
+                SELECT l.LessonID,l.LessonOrder,l.Title,l.Description
+                FROM Lessons l INNER JOIN Courses c ON c.CourseID=l.CourseID
+                WHERE l.LessonID=@lessonId AND l.CourseID=@courseId AND c.InstructorID=@learnerId",
+                Parameter("@lessonId", lessonId), Parameter("@courseId", courseId), Parameter("@learnerId", learnerId)) : Read(@"
                 SELECT l.LessonID,l.LessonOrder,l.Title,l.Description
                 FROM Lessons l
                 INNER JOIN Courses c ON c.CourseID=l.CourseID
@@ -52,7 +57,10 @@ namespace CookingLah.Pages.Learner.CourseLearning.Lesson
             litLessonOrder.Text = Convert.ToString(lesson["LessonOrder"]);
             litLessonTitle.Text = Convert.ToString(lesson["Title"]);
             litLessonDescription.Text = Convert.ToString(lesson["Description"]);
-            var blocks = Read(@"SELECT lc.* FROM LessonContent lc
+            var blocks = ChefPreview ? Read(@"SELECT lc.* FROM LessonContent lc
+                JOIN Lessons l ON l.LessonID=lc.LessonID JOIN Courses c ON c.CourseID=l.CourseID
+                WHERE lc.LessonID=@lessonId AND l.CourseID=@courseId AND c.InstructorID=@learnerId",
+                Parameter("@lessonId", lessonId), Parameter("@courseId", courseId), Parameter("@learnerId", learnerId)) : Read(@"SELECT lc.* FROM LessonContent lc
                 JOIN Lessons l ON l.LessonID=lc.LessonID
                 JOIN Courses c ON c.CourseID=l.CourseID
                 JOIN CourseProgress cp ON cp.CourseID=c.CourseID
@@ -65,7 +73,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.Lesson
 
             btnPreviousLesson.Visible = previousLessonId > 0;
             btnNextLesson.Visible = nextLessonId > 0;
-            btnMarkComplete.Visible = !isCompleted;
+            btnMarkComplete.Visible = !ChefPreview && !isCompleted;
             btnMarkComplete.Enabled = !isCompleted;
             pnlLessonCompletionNote.Visible = isCompleted;
             pnlLessonUnavailable.Visible = false;
@@ -89,7 +97,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.Lesson
 
         protected void btnMarkComplete_Click(object sender, EventArgs e)
         {
-            if (CurrentLessonId <= 0) return;
+            if (ChefPreview || CurrentLessonId <= 0) return;
 
             EventHandler handler = LessonCompleted;
             if (handler != null)

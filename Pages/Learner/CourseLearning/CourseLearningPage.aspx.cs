@@ -16,6 +16,8 @@ namespace CookingLah.Pages.Learner.CourseLearning
         private bool CourseAccessGranted { get; set; }
         private DataTable CourseLessons { get; set; }
         private int LastCompletedLessonOrder { get; set; }
+        private bool ChefPreview { get; set; }
+        protected bool IsChefPreviewMode { get { return ChefPreview; } }
 
         private int SelectedLessonId
         {
@@ -46,6 +48,20 @@ namespace CookingLah.Pages.Learner.CourseLearning
             SubmitActivity1.ActivitySubmitted += SubmitActivity_ActivitySubmitted;
 
             int learnerId = 0;
+            ChefPreview = string.Equals(Request.QueryString["preview"], "chef", StringComparison.OrdinalIgnoreCase);
+            if (ChefPreview)
+            {
+                int chefId;
+                if (!int.TryParse(Convert.ToString(Session["UserId"]), out chefId) || chefId <= 0)
+                {
+                    RedirectToLogin();
+                    return;
+                }
+                LearnerId = chefId;
+                CourseId = GetCourseId();
+                CourseAccessGranted = ValidateChefPreviewAccess(chefId, CourseId);
+                return;
+            }
             bool hasLearnerSession =
                 string.Equals(Convert.ToString(Session["Role"]), "Learner", StringComparison.OrdinalIgnoreCase) &&
                 int.TryParse(Convert.ToString(Session["UserId"]), out learnerId) &&
@@ -80,12 +96,19 @@ namespace CookingLah.Pages.Learner.CourseLearning
             }
 
             pnlLearningContent.Visible = true;
-            TouchCourseProgress();
+            pnlChefPreview.Visible = ChefPreview;
+            pnlLearningStatus.Visible = !ChefPreview;
+            lnkLearningBack.HRef = ChefPreview
+                ? ResolveUrl("~/Pages/Chef/ManageCourse/ManageCoursePage.aspx?courseId=" + CourseId)
+                : ResolveUrl("~/Pages/Learner/MyCourse/LearnerMyCourse.aspx");
+            lnkLearningBack.Visible = !ChefPreview;
+            if (!ChefPreview) TouchCourseProgress();
             if (!LoadCourseHeader())
             {
                 ShowCourseUnavailable("This course is no longer available.");
                 return;
             }
+            LoadRecipe();
 
             LoadCurriculum();
             LoadLearningComponents();
@@ -94,7 +117,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
                 RestoreCurrentSection();
             }
 
-            RecalculateCourseProgress();
+            if (!ChefPreview) RecalculateCourseProgress();
             UpdateCurriculumStatus();
             ApplyCurrentSection();
         }
@@ -134,15 +157,39 @@ namespace CookingLah.Pages.Learner.CourseLearning
             return access.Rows.Count == 1;
         }
 
+        private bool ValidateChefPreviewAccess(int chefId, int courseId)
+        {
+            if (courseId <= 0) return false;
+            return Read(@"SELECT CourseID FROM Courses WHERE CourseID=@courseId AND InstructorID=@chefId
+                    AND EXISTS (SELECT 1 FROM Users WHERE UserID=@chefId AND Role='Instructor' AND AccountStatus='Active')",
+                Parameter("@courseId", courseId), Parameter("@chefId", chefId)).Rows.Count == 1;
+        }
+
         private bool LoadCourseHeader()
         {
+            if (ChefPreview)
+            {
+                DataTable previewRows = Read(@"SELECT c.Title,c.Description,c.Thumbnail,c.CreatedAt,cat.CategoryName,c.DifficultyLevel,
+                    chef.FullName AS ChefName,fc.DishName AS TraditionalDish
+                    FROM Courses c INNER JOIN Categories cat ON cat.CategoryID=c.CategoryID
+                    INNER JOIN Users chef ON chef.UserID=c.InstructorID
+                    LEFT JOIN FoodCultures fc ON fc.FoodCultureID=c.FoodCultureID
+                    WHERE c.CourseID=@courseId AND c.InstructorID=@chefId",
+                    Parameter("@courseId", CourseId), Parameter("@chefId", LearnerId));
+                if (previewRows.Rows.Count == 0) return false;
+                BindCourseHeader(previewRows.Rows[0]);
+                courseStatusBadge.InnerText = "Chef preview";
+                return true;
+            }
             DataTable rows = Read(@"
-                SELECT c.Title,c.Thumbnail,cat.CategoryName,c.DifficultyLevel,chef.FullName AS ChefName,
+                SELECT c.Title,c.Description,c.Thumbnail,c.CreatedAt,cat.CategoryName,c.DifficultyLevel,
+                       chef.FullName AS ChefName,fc.DishName AS TraditionalDish,
                        cp.ProgressPercentage,cp.Status AS ProgressStatus,
                        cp.LastCompletedLessonOrder
                 FROM Courses c
                 INNER JOIN Categories cat ON cat.CategoryID=c.CategoryID
                 INNER JOIN Users chef ON chef.UserID=c.InstructorID
+                LEFT JOIN FoodCultures fc ON fc.FoodCultureID=c.FoodCultureID
                 INNER JOIN Users learner ON learner.UserID=@learnerId
                 INNER JOIN CourseProgress cp ON cp.CourseID=c.CourseID AND cp.LearnerID=learner.UserID
                 WHERE c.CourseID=@courseId
@@ -156,6 +203,15 @@ namespace CookingLah.Pages.Learner.CourseLearning
 
             DataRow course = rows.Rows[0];
             LastCompletedLessonOrder = Convert.ToInt32(course["LastCompletedLessonOrder"]);
+            BindCourseHeader(course);
+            int progressPercentage = Convert.ToInt32(course["ProgressPercentage"]);
+            if (Convert.ToString(course["ProgressStatus"]) == "Completed") progressPercentage = 100;
+            DisplayProgress(progressPercentage, Convert.ToString(course["ProgressStatus"]), 0, 0);
+            return true;
+        }
+
+        private void BindCourseHeader(DataRow course)
+        {
             litCourseTitle.Text = Convert.ToString(course["Title"]);
             litCompletionCourse.Text = "You've completed " + Convert.ToString(course["Title"]) + ".";
             string thumbnail = MediaUrl(Convert.ToString(course["Thumbnail"]));
@@ -163,14 +219,54 @@ namespace CookingLah.Pages.Learner.CourseLearning
             imgCourseThumbnail.AlternateText = Convert.ToString(course["Title"]) + " course thumbnail";
             imgCourseThumbnail.Visible = thumbnail.Length > 0;
             pnlCourseImagePlaceholder.Visible = !imgCourseThumbnail.Visible;
-            litCourseMeta.Text = Convert.ToString(course["CategoryName"]) + " · " + Convert.ToString(course["DifficultyLevel"]);
+            litCourseCategory.Text = Convert.ToString(course["CategoryName"]);
+            litCourseDifficulty.Text = Convert.ToString(course["DifficultyLevel"]);
+            litCourseCreated.Text = Convert.ToDateTime(course["CreatedAt"]).ToString("dd MMM yyyy");
+            string traditionalDish = Convert.ToString(course["TraditionalDish"]);
+            phTraditionalDish.Visible = !string.IsNullOrWhiteSpace(traditionalDish);
+            litTraditionalDish.Text = traditionalDish;
             litChefName.Text = Convert.ToString(course["ChefName"]);
+            litCourseDescription.Text = Convert.ToString(course["Description"]);
 
-            int progressPercentage = Convert.ToInt32(course["ProgressPercentage"]);
-            if (Convert.ToString(course["ProgressStatus"]) == "Completed") progressPercentage = 100;
-            DisplayProgress(progressPercentage, Convert.ToString(course["ProgressStatus"]), 0, 0);
+        }
 
-            return true;
+        private void LoadRecipe()
+        {
+            DataTable recipe = Read("SELECT TOP 1 Ingredients,CookingTime,ServingSize,RecipeImage FROM CourseRecipes WHERE CourseID=@courseId ORDER BY RecipeID",
+                Parameter("@courseId", CourseId));
+            pnlRecipeEmpty.Visible = recipe.Rows.Count == 0;
+            rptRecipe.DataSource = recipe;
+            rptRecipe.DataBind();
+        }
+
+        protected string FormatIngredients(object value)
+        {
+            return CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.FormatIngredients(value);
+        }
+
+        protected string RecipeIngredientsHtml(object value)
+        {
+            var ingredients = CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.ReadIngredients(Convert.ToString(value));
+            if (ingredients.Length == 0) return "<p class=\"learning-ingredients-empty\">No ingredients listed.</p>";
+            var html = new System.Text.StringBuilder("<ul class=\"learning-ingredients\">");
+            foreach (var ingredient in ingredients)
+            {
+                html.Append("<li><span>").Append(HttpUtility.HtmlEncode(ingredient.name)).Append("</span><strong>")
+                    .Append(HttpUtility.HtmlEncode(ingredient.amount)).Append("</strong></li>");
+            }
+            return html.Append("</ul>").ToString();
+        }
+
+        protected string RecipeMediaUrl(object value)
+        {
+            return CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(value));
+        }
+
+        protected string RecipeNumber(object value, string suffix)
+        {
+            return value == null || value == DBNull.Value || string.IsNullOrWhiteSpace(Convert.ToString(value))
+                ? "Not specified"
+                : Convert.ToString(value) + suffix;
         }
 
         private void LoadCurriculum()
@@ -224,8 +320,9 @@ namespace CookingLah.Pages.Learner.CourseLearning
                 LessonContent1.Visible = false;
             }
 
-            QuizSection1.LoadQuiz(CourseId, LearnerId);
-            SubmitActivity1.LoadActivity(CourseId, LearnerId);
+            LessonContent1.ChefPreview = ChefPreview;
+            QuizSection1.LoadQuiz(CourseId, LearnerId, ChefPreview);
+            SubmitActivity1.LoadActivity(CourseId, LearnerId, ChefPreview);
         }
 
         private void TouchCourseProgress()
@@ -556,6 +653,12 @@ namespace CookingLah.Pages.Learner.CourseLearning
 
         private void RestoreCurrentSection()
         {
+            if (string.Equals(Request.QueryString["section"], "activity", StringComparison.OrdinalIgnoreCase) && SubmitActivity1.HasActivity)
+            {
+                CurrentSection = "Activity";
+                return;
+            }
+
             int nextLessonId = GetNextIncompleteLessonId();
             if (nextLessonId > 0)
             {
@@ -711,7 +814,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
         private void QuizSection_QuizPassed(object sender, EventArgs e)
         {
             RecalculateCourseProgress();
-            RestoreCurrentSection();
+            CurrentSection = "Quiz";
             UpdateCurriculumStatus();
             ApplyCurrentSection();
         }

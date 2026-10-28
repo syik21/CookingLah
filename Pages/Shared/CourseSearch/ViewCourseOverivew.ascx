@@ -309,11 +309,11 @@
                         Rating *
                     </legend>
                     <asp:RadioButtonList ID="rblRating" runat="server" RepeatDirection="Horizontal" CssClass="star-rating-options">
-                        <asp:ListItem Value="1" Text="1" />
-                        <asp:ListItem Value="2" Text="2" />
-                        <asp:ListItem Value="3" Text="3" />
-                        <asp:ListItem Value="4" Text="4" />
                         <asp:ListItem Value="5" Text="5" />
+                        <asp:ListItem Value="4" Text="4" />
+                        <asp:ListItem Value="3" Text="3" />
+                        <asp:ListItem Value="2" Text="2" />
+                        <asp:ListItem Value="1" Text="1" />
                     </asp:RadioButtonList>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="rblRating" ValidationGroup="Review" ErrorMessage="Choose a rating from 1 to 5." CssClass="field-error" Display="Dynamic" />
                 </fieldset>

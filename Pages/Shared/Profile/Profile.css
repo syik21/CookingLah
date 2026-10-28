@@ -19,6 +19,16 @@
     padding-bottom: 56px;
 }
 
+.profile-closure {
+    max-width: 640px;
+    margin: 32px auto;
+    padding: clamp(24px, 5vw, 48px);
+}
+
+.profile-closure .btn {
+    margin-top: 16px;
+}
+
 .profile-heading {
     display: flex;
     justify-content: space-between;

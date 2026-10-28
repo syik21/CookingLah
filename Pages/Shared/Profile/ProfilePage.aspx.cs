@@ -426,6 +426,19 @@ namespace CookingLah.Pages.Shared.Profile
                     if (string.IsNullOrEmpty(hash) || !PasswordManager.isPasswordValid(password, hash))
                     { DeleteFeedback = "Your current password is incorrect."; return false; }
                     permanentlyDeleted = role == "Learner";
+                    if (permanentlyDeleted)
+                    {
+                        using (var command = new SqlCommand("DELETE FROM dbo.PasswordResetTokens WHERE UserID=@id", connection, transaction))
+                        {
+                            command.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
+                            command.ExecuteNonQuery();
+                        }
+                        using (var command = new SqlCommand("DELETE FROM dbo.UserLoginLog WHERE UserID=@id", connection, transaction))
+                        {
+                            command.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
+                            command.ExecuteNonQuery();
+                        }
+                    }
                     using (var command = new SqlCommand(permanentlyDeleted
                         ? "DELETE FROM dbo.Users WHERE UserID=@id AND Role='Learner'"
                         : "UPDATE dbo.Users SET AccountStatus='Inactive',UpdatedAt=GETDATE() WHERE UserID=@id AND Role='Instructor'", connection, transaction))
@@ -441,8 +454,9 @@ namespace CookingLah.Pages.Shared.Profile
             System.Web.Security.FormsAuthentication.SignOut();
             Session.Clear();
             Session.Abandon();
-            Response.Redirect(NavigationHelper.GetUrl("Main"), false);
-            Context.ApplicationInstance.CompleteRequest();
+            // End this request before the authenticated master redirects the cleared session.
+            Response.Redirect(ResolveUrl("~/Pages/Shared/Profile/AccountClosed.aspx")
+                + (permanentlyDeleted ? "" : "?deactivated=1"));
             return true;
         }
 

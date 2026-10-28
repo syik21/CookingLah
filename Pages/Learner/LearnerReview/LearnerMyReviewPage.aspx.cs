@@ -257,7 +257,8 @@ namespace CookingLah.Pages.Learner.LearnerReview
         {
             return ResolveUrl(
                 "~/Pages/Learner/SearchCourse/SearchCoursePage.aspx?courseId=" +
-                Convert.ToInt32(courseId)
+                Convert.ToInt32(courseId) +
+                "#course-reviews"
             );
         }
 

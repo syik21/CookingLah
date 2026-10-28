@@ -50,6 +50,12 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
             set { ViewState["ShowResult"] = value; }
         }
 
+        private bool ReviewCorrectAnswers
+        {
+            get { return (bool?)ViewState["ReviewCorrectAnswers"] ?? false; }
+            set { ViewState["ReviewCorrectAnswers"] = value; }
+        }
+
         private bool LastAttemptPassed
         {
             get { return (bool?)ViewState["LastAttemptPassed"] ?? false; }
@@ -70,11 +76,22 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
 
         public bool HasPassed { get; private set; }
         public bool HasQuiz { get; private set; }
+        private bool ChefPreview
+        {
+            get { return (bool?)ViewState["ChefPreview"] ?? false; }
+            set { ViewState["ChefPreview"] = value; }
+        }
 
-        public void LoadQuiz(int courseId, int learnerId)
+        public void LoadQuiz(int courseId, int learnerId, bool chefPreview = false)
         {
             CourseId = courseId;
             LearnerId = learnerId;
+            ChefPreview = chefPreview;
+            if (ChefPreview)
+            {
+                QuizStarted = true;
+                ShowResult = false;
+            }
 
             DataTable quizzes = Read(@"
                 SELECT TOP 1 q.QuizID,q.Title,q.Description,q.PassingScore,
@@ -82,9 +99,9 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
                 FROM Quizzes q
                 INNER JOIN Courses c ON c.CourseID=q.CourseID
                 WHERE q.CourseID=@courseId
-                  AND c.Status='Published'
+                  AND (c.Status='Published' OR (@preview=1 AND c.InstructorID=@learnerId))
                 ORDER BY q.QuizID",
-                Parameter("@courseId", courseId));
+                Parameter("@courseId", courseId), Parameter("@preview", chefPreview), Parameter("@learnerId", learnerId));
 
             if (quizzes.Rows.Count == 0)
             {
@@ -107,11 +124,21 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
             litQuizPassingScoreResult.Text = Convert.ToString(PassingScore);
 
             HasPassed = LoadLatestPassedState();
+            if (HasPassed && !ChefPreview && !ReviewCorrectAnswers)
+            {
+                QuizStarted = false;
+                ShowResult = true;
+            }
             pnlNoQuiz.Visible = false;
             pnlQuiz.Visible = true;
             pnlQuizIntro.Visible = !QuizStarted && !ShowResult;
             pnlQuizQuestions.Visible = QuizStarted && !ShowResult;
             pnlQuizResult.Visible = ShowResult;
+            bool readOnlyQuestions = ChefPreview || ReviewCorrectAnswers;
+            btnStartQuiz.Visible = !ChefPreview && !HasPassed;
+            btnSubmitQuiz.Visible = !readOnlyQuestions;
+            btnPreviewNextQuestion.Visible = readOnlyQuestions;
+            btnBackToQuizResult.Visible = ReviewCorrectAnswers;
 
             if (pnlQuizQuestions.Visible)
             {
@@ -127,14 +154,18 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
         private bool LoadLatestPassedState()
         {
             DataTable attempts = Read(@"
-                SELECT CASE WHEN EXISTS (
-                    SELECT 1 FROM QuizAttempts
-                    WHERE QuizID=@quizId AND LearnerID=@learnerId AND Passed=1
-                ) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS Passed",
+                SELECT TOP 1 Score,TotalQuestions
+                FROM QuizAttempts
+                WHERE QuizID=@quizId AND LearnerID=@learnerId AND Passed=1",
                 Parameter("@quizId", QuizId),
                 Parameter("@learnerId", LearnerId));
 
-            return attempts.Rows.Count > 0 && Convert.ToBoolean(attempts.Rows[0]["Passed"]);
+            if (attempts.Rows.Count == 0) return false;
+            LastAttemptPassed = true;
+            LastAttemptScore = Convert.ToInt32(attempts.Rows[0]["Score"]);
+            int totalQuestions = Convert.ToInt32(attempts.Rows[0]["TotalQuestions"]);
+            LastAttemptCorrectCount = (int)Math.Round(LastAttemptScore * totalQuestions / 100.0);
+            return true;
         }
 
         private void BindQuizQuestions()
@@ -164,8 +195,9 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
                 SELECT OptionID,QuestionID,OptionText
                 FROM QuizOptions
                 WHERE QuestionID=@questionId
+                  AND (@correctOnly=0 OR IsCorrect=1)
                 ORDER BY OptionID",
-                Parameter("@questionId", question["QuestionID"]));
+                Parameter("@questionId", question["QuestionID"]), Parameter("@correctOnly", ReviewCorrectAnswers));
             optionsRepeater.DataBind();
         }
 
@@ -175,8 +207,15 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
             return selectedOption == Convert.ToString(optionId);
         }
 
+        protected string AnswerInputAttributes(object questionId, object optionId)
+        {
+            if (ReviewCorrectAnswers) return "checked=\"checked\" disabled=\"disabled\"";
+            return IsAnswerSelected(questionId, optionId) ? "checked=\"checked\"" : "";
+        }
+
         protected void btnStartQuiz_Click(object sender, EventArgs e)
         {
+            if (ChefPreview || HasPassed) return;
             if (QuizId <= 0) return;
 
             QuizStarted = true;
@@ -189,6 +228,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
 
         protected void btnSubmitQuiz_Click(object sender, EventArgs e)
         {
+            if (ChefPreview) return;
             if (!ValidateQuizAccess())
             {
                 ShowFeedback("This quiz is no longer available to your account.");
@@ -214,6 +254,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
             HasPassed = HasPassed || passed;
             LastAttemptScore = score;
             LastAttemptCorrectCount = correctAnswers;
+            ReviewCorrectAnswers = false;
             ShowResult = true;
             pnlQuizQuestions.Visible = false;
             pnlQuizIntro.Visible = false;
@@ -346,6 +387,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
             pnlQuizFailedMessage.Visible = !LastAttemptPassed;
             btnReviewLessons.Visible = !LastAttemptPassed;
             btnTryAgain.Visible = !LastAttemptPassed;
+            btnReviewAnswers.Visible = LastAttemptPassed;
             btnContinueActivity.Visible = LastAttemptPassed;
         }
 
@@ -364,6 +406,34 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
             pnlQuizResult.Visible = false;
             pnlQuizQuestions.Visible = true;
             BindQuizQuestions();
+        }
+
+        protected void btnReviewAnswers_Click(object sender, EventArgs e)
+        {
+            if (!HasPassed || ChefPreview) return;
+            ReviewCorrectAnswers = true;
+            QuizStarted = true;
+            ShowResult = false;
+            pnlQuizResult.Visible = false;
+            pnlQuizIntro.Visible = false;
+            pnlQuizQuestions.Visible = true;
+            btnSubmitQuiz.Visible = false;
+            btnPreviewNextQuestion.Visible = true;
+            btnBackToQuizResult.Visible = true;
+            BindQuizQuestions();
+        }
+
+        protected void btnBackToQuizResult_Click(object sender, EventArgs e)
+        {
+            if (!HasPassed || ChefPreview) return;
+            ReviewCorrectAnswers = false;
+            QuizStarted = false;
+            ShowResult = true;
+            pnlQuizQuestions.Visible = false;
+            pnlQuizIntro.Visible = false;
+            pnlQuizResult.Visible = true;
+            btnBackToQuizResult.Visible = false;
+            DisplayQuizResult();
         }
 
         protected void btnReviewLessons_Click(object sender, EventArgs e)

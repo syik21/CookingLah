@@ -51,11 +51,13 @@
     <Content Include="Pages\Admin\CourseReport\CourseReportPage.aspx" />
     <Content Include="Pages\Admin\CourseReport\CourseReportPage.js" />
     <Content Include="Pages\Admin\CourseReport\CourseReportPage.css" />
+    <Content Include="Pages\Admin\AdminDashboard.js" />
     <Content Include="Pages\Admin\LoginPage\AdminLoginPage.css" />
     <Content Include="Pages\Admin\LoginPage\AdminLoginPage.js" />
     <Content Include="Pages\Admin\ManageUser\ManageUserjs.js" />
     <Content Include="Pages\Admin\ManageUser\ManageUserPage.aspx" />
     <Content Include="Pages\Admin\ManageUser\ManageUser.css" />
+    <Content Include="Pages\Admin\AdminDashboard.css" />
     <Content Include="Pages\Admin\UserReport\UserReportPage.js" />
     <Content Include="Pages\Admin\UserReport\UserReportPage.css" />
     <Content Include="Pages\Admin\UserReport\UserReportPage.aspx" />
@@ -82,6 +84,8 @@
     <Compile Include="F_Services\UserManager.cs" />
     <Compile Include="F_Services\DatabaseManager.cs" />
     <Compile Include="F_Services\PasswordManager.cs" />
+    <Compile Include="F_Services\AuthenticationManager.cs" />
+    <Compile Include="F_Services\PasswordResetTokenManager.cs" />
     <Compile Include="Pages\Admin\Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -265,6 +269,7 @@
     <Content Include="Pages\Shared\FoodMap\FoodMapView.js" />
     <Content Include="Pages\Shared\FoodMap\FoodMapView.css" />
     <Content Include="Pages\Shared\Profile\ProfilePage.aspx" />
+    <Content Include="Pages\Shared\Profile\AccountClosed.aspx" />
     <Content Include="Pages\Shared\Profile\Profile.js" />
     <Content Include="Pages\Shared\Profile\Profile.css" />
     <Content Include="Pages\Shared\CountryPicker\CountryPicker.ascx" />
@@ -277,6 +282,9 @@
     <Content Include="Pages\Shared\CourseSearch\ViewCourseOverivew.css" />
     <Content Include="Pages\Shared\CourseSearch\ViewCourseOverivew.js" />
     <Content Include="Pages\Guest\SearchCourse\SearchCoursePage.aspx" />
+    <Content Include="Pages\Guest\ResetPassword\ResetPasswordPage.aspx" />
+    <Content Include="Pages\Guest\ResetPassword\ResetPasswordPage.css" />
+    <Content Include="Pages\Guest\ResetPassword\ResetPasswordPage.js" />
     <Content Include="Pages\Learner\SearchCourse\SearchCoursePage.aspx" />
     <Content Include="Pages\Learner\CourseLearning\CourseLearningPage.aspx" />
     <Content Include="Pages\Learner\CourseLearning\CourseLearningPage.css" />
@@ -474,6 +482,13 @@
     <Compile Include="Pages\Guest\SearchCourse\SearchCoursePage.aspx.designer.cs">
       <DependentUpon>SearchCoursePage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Guest\ResetPassword\ResetPasswordPage.aspx.cs">
+      <DependentUpon>ResetPasswordPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Guest\ResetPassword\ResetPasswordPage.aspx.designer.cs">
+      <DependentUpon>ResetPasswordPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Learner\SearchCourse\SearchCoursePage.aspx.cs">
       <DependentUpon>SearchCoursePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -544,6 +559,7 @@
     <None Include=".gitattributes" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
+    <Content Include="Secrets.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -658,16 +674,6 @@
     </Compile>
     <Content Include="Pages\Chef\CreateCourse\Lesson\LessonForm.css" />
     <Content Include="Pages\Chef\CreateCourse\Lesson\LessonForm.js" />
-    <Content Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.ascx" />
-    <Compile Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.ascx.cs">
-      <DependentUpon>CoursePreview.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.ascx.designer.cs">
-      <DependentUpon>CoursePreview.ascx</DependentUpon>
-    </Compile>
-    <Content Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.css" />
-    <Content Include="Pages\Chef\CreateCourse\PreviewPage\CoursePreview.js" />
     <Content Include="Pages\Chef\CreateCourse\Quiz\QuizForm.ascx" />
     <Compile Include="Pages\Chef\CreateCourse\Quiz\QuizForm.ascx.cs">
       <DependentUpon>QuizForm.ascx</DependentUpon>
@@ -757,15 +763,6 @@
     </Compile>
     <Content Include="Pages\Chef\ManageCourse\Overview\CourseOverview.css" />
     <Content Include="Pages\Chef\ManageCourse\Overview\CourseOverview.js" />
-    <Content Include="Pages\Chef\ManageCourse\Preview\CoursePreview.ascx" />
-    <Compile Include="Pages\Chef\ManageCourse\Preview\CoursePreview.ascx.cs">
-      <DependentUpon>CoursePreview.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\Chef\ManageCourse\Preview\CoursePreview.ascx.designer.cs">
-      <DependentUpon>CoursePreview.ascx</DependentUpon>
-    </Compile>
-    <Content Include="Pages\Chef\ManageCourse\Preview\CoursePreview.css" />
     <Content Include="Pages\Chef\ManageCourse\Quiz\CourseQuiz.ascx" />
     <Compile Include="Pages\Chef\ManageCourse\Quiz\CourseQuiz.ascx.cs">
       <DependentUpon>CourseQuiz.ascx</DependentUpon>

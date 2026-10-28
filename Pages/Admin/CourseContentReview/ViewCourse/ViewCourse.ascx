@@ -3,10 +3,13 @@
 
 <div class="course-review">
 
-    <%-- Back button and error message --%>
-    <asp:LinkButton ID="btnBackToCourses" runat="server"
-        CssClass="review-back" Text="← Back to Course Review"
-        OnClick="Back_Click" CausesValidation="false" />
+    <%-- Back button, course status, and error message --%>
+    <div class="review-header">
+        <asp:LinkButton ID="btnBackToCourses" runat="server"
+            CssClass="review-back" Text="← Back to Course Review"
+            OnClick="Back_Click" CausesValidation="false" />
+        <asp:Label ID="lblCourseStatus" runat="server" />
+    </div>
 
     <asp:Panel ID="pnlError" runat="server" Visible="false"
         CssClass="review-message" role="alert">
@@ -15,14 +18,6 @@
 
     <asp:Panel ID="pnlDetails" runat="server">
         <asp:HiddenField ID="hfActiveTab" runat="server" Value="overview" />
-
-        <%-- Course heading and status --%>
-        <header class="review-detail-header">
-            <p class="review-eyebrow">REVIEW COURSE</p>
-            <h1><asp:Literal ID="litTitle" runat="server" Mode="Encode" /></h1>
-            <p class="review-detail-meta"><asp:Literal ID="litMeta" runat="server" Mode="Encode" /></p>
-            <p class="review-detail-status">Status: <asp:Label ID="lblStatus" runat="server" CssClass="review-badge" /></p>
-        </header>
 
         <%-- Published status and rejection reason --%>
         <asp:Panel ID="pnlPublished" runat="server" Visible="false" CssClass="review-message">
@@ -112,25 +107,35 @@
             <h2>Lessons</h2>
             <asp:Literal ID="litLessonsEmpty" runat="server" Text="No lessons have been added." />
 
-            <asp:Repeater ID="rptLessons" runat="server" OnItemDataBound="Lesson_ItemDataBound">
-                <ItemTemplate>
-                    <article class="review-content-item">
-                        <p class="review-eyebrow">Lesson <%#: Eval("LessonOrder") %></p>
-                        <h3><%#: Eval("Title") %></h3>
-                        <p class="review-copy"><%#: Eval("Description") %></p>
-                        <shared:LessonBlocks ID="LessonBlocks" runat="server" />
-                    </article>
-                </ItemTemplate>
-            </asp:Repeater>
+            <div class="review-lessons-layout">
+                <aside class="review-lesson-selector" aria-label="Select a lesson">
+                    <h3>Course lessons</h3>
+                    <asp:Repeater ID="rptLessonSelector" runat="server" OnItemCommand="LessonSelector_ItemCommand">
+                        <ItemTemplate>
+                            <asp:LinkButton runat="server"
+                                CssClass='<%# LessonSelectorClass(Eval("LessonID")) %>'
+                                CommandName="SelectLesson" CommandArgument='<%# Eval("LessonID") %>'
+                                CausesValidation="false">
+                                <span>Lesson <%#: Eval("LessonOrder") %></span>
+                                <strong><%#: Eval("Title") %></strong>
+                            </asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </aside>
 
-            <%-- Lesson pagination --%>
-            <asp:Panel ID="pnlLessonPager" runat="server" CssClass="review-pagination">
-                <asp:LinkButton ID="btnLessonPrevious" runat="server" CssClass="btn"
-                    Text="‹ Previous" OnClick="LessonPrevious_Click" />
-                <asp:Literal ID="litLessonPage" runat="server" />
-                <asp:LinkButton ID="btnLessonNext" runat="server" CssClass="btn"
-                    Text="Next ›" OnClick="LessonNext_Click" />
-            </asp:Panel>
+                <section class="review-lesson-content" aria-live="polite">
+                    <asp:Repeater ID="rptLessons" runat="server" OnItemDataBound="Lesson_ItemDataBound">
+                        <ItemTemplate>
+                            <article class="review-content-item">
+                                <p class="review-eyebrow">Lesson <%#: Eval("LessonOrder") %></p>
+                                <h3><%#: Eval("Title") %></h3>
+                                <p class="review-copy"><%#: Eval("Description") %></p>
+                                <shared:LessonBlocks ID="LessonBlocks" runat="server" />
+                            </article>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </section>
+            </div>
         </asp:Panel>
 
         <%-- Quiz tab --%>
@@ -205,7 +210,9 @@
             <p>Review all course content before making a decision.</p>
             <div class="review-decision-actions">
                 <button type="button" class="btn review-reject" data-open-dialog="reject">Reject Course</button>
-                <button type="button" class="btn review-approve" data-open-dialog="approve">Approve Course</button>
+                <asp:PlaceHolder ID="phApproveAction" runat="server">
+                    <button type="button" class="btn review-approve" data-open-dialog="approve">Approve Course</button>
+                </asp:PlaceHolder>
             </div>
             <asp:HiddenField ID="hfDialog" runat="server" />
 

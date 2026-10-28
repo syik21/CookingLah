@@ -1,10 +1,8 @@
 using CookingLah.F_Services;
-using Microsoft.AspNet.FriendlyUrls;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
-using System.Web.Security;
 
 namespace CookingLah.Pages.Admin.LoginPage
 {
@@ -23,7 +21,7 @@ namespace CookingLah.Pages.Admin.LoginPage
         protected void Page_Load(object sender, EventArgs e)
         {
             // Remember to add a validation before come to this page if invalid return to MainPage
-            
+
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
             lblLoginError.Visible = false;
@@ -79,10 +77,15 @@ namespace CookingLah.Pages.Admin.LoginPage
                 Session["Username"] = username;
                 Session["Email"] = email;
                 Session["Role"] = role;
-                FormsAuthentication.SetAuthCookie(email, false);
+                AuthenticationManager.SignIn(Context, email, false);
                 txtLoginEmail.Text = string.Empty;
                 pnlLogin.Visible = false;
                 pnlSuccess.Visible = true;
+                string ipAddress = Request.UserHostAddress;
+                string deviceInfo = Request.UserAgent;
+
+                SaveDailyLoginLog(userId, ipAddress, deviceInfo);
+                UpdateLastLoginTime(userId);
 
                 Response.Redirect("~/Pages/Admin/AdminDashboard.aspx");
                 // Navigation is intentionally left for the project owner to configure.
@@ -95,6 +98,79 @@ namespace CookingLah.Pages.Admin.LoginPage
             catch (BCrypt.Net.SaltParseException)
             {
                 ShowError("Unable to sign in. Contact another administrator for help with your account.");
+            }
+        }
+        private void UpdateLastLoginTime(int userId)
+        {
+            string query = @"
+                            UPDATE Users
+                            SET LastLogin= GETDATE()
+                            WHERE UserID = @UserID;";
+
+            using (var con = DatabaseManager.ConnectDB())
+            using (var cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@UserID", userId);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Save one login log per user for each day.
+        private void SaveDailyLoginLog(
+            int userId,
+            string ipAddress,
+            string deviceInfo)
+        {
+            string query = @"
+        IF NOT EXISTS
+        (
+            SELECT 1
+            FROM UserLoginLog
+            WHERE UserID = @UserID
+              AND LoginDate = CAST(GETDATE() AS DATE)
+        )
+        BEGIN
+            INSERT INTO UserLoginLog
+            (
+                UserID,
+                LoginDate,
+                LoginTime,
+                IPAddress,
+                DeviceInfo
+            )
+            VALUES
+            (
+                @UserID,
+                CAST(GETDATE() AS DATE),
+                GETDATE(),
+                @IPAddress,
+                @DeviceInfo
+            );
+        END;";
+
+            using (var con = DatabaseManager.ConnectDB())
+            using (SqlCommand command = new SqlCommand(query, con))
+            {
+                command.Parameters.AddWithValue("@UserID", userId);
+
+                command.Parameters.AddWithValue(
+                    "@IPAddress",
+                    string.IsNullOrWhiteSpace(ipAddress)
+                        ? (object)DBNull.Value
+                        : ipAddress
+                );
+
+                command.Parameters.AddWithValue(
+                    "@DeviceInfo",
+                    string.IsNullOrWhiteSpace(deviceInfo)
+                        ? (object)DBNull.Value
+                        : deviceInfo
+                );
+
+                con.Open();
+                command.ExecuteNonQuery();
             }
         }
 

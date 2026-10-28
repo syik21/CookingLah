@@ -18,7 +18,7 @@
 <asp:Content ID="Content" ContentPlaceHolderID="ChefContent" runat="server">
 <div class="manage-course course-builder" data-builder="" data-course-id="<%= CourseId %>" data-reorder-token="<%= System.Web.HttpUtility.HtmlAttributeEncode(ReorderToken) %>" data-reorder-url="<%= ResolveUrl("~/Pages/Chef/ManageCourse/CourseOrderHandler.ashx") %>">
     <div class="mc-backFeedback-row">
-        <a href="../MyCourse/ChefMyCourse.aspx" class="mc-back">&larr; Back to My Courses</a>
+        <asp:LinkButton ID="btnBackToCourses" runat="server" CssClass="mc-back" CausesValidation="false" OnClick="btnBackToCourses_Click">&larr; Back to My Courses</asp:LinkButton>
         <p id="builderFeedback" role="status" aria-live="polite"><asp:Literal ID="litSaveState" runat="server" Mode="Encode" /></p>
     </div>
     <asp:Panel ID="pnlMessage" runat="server" Visible="false" ClientIDMode="Static" tabindex="-1"><asp:Literal ID="litMessage" runat="server" Mode="Encode" /></asp:Panel>
@@ -33,7 +33,8 @@
                     <asp:Button ID="btnEditCourse" runat="server" Text="Edit Course" CssClass="btn btn-primary" OnClick="btnEditCourse_Click" />
                     <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancel_Click" />
                     <asp:Button ID="btnSaveChanges" runat="server" Text="Save Changes" CssClass="btn btn-primary" OnClick="btnSaveChanges_Click" />
-                    <button type="button" class="btn" id="btnPreviewLearner">Learner View</button>
+                    <a class="btn" target="_blank" rel="noopener"
+                        href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.aspx?courseId=" + CourseId + "&preview=chef") %>">Learner View</a>
                 </div>
             </div>
         </header>

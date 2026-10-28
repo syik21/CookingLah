@@ -96,8 +96,6 @@
                                     <time datetime='<%# ReviewDateValue(Eval("CreatedAt")) %>'>Reviewed on <%#: ReviewDate(Eval("CreatedAt")) %></time>
                                     <div class="review-card-actions">
                                         <asp:HyperLink runat="server" CssClass="btn btn-secondary" NavigateUrl='<%# CourseOverviewUrl(Eval("CourseID")) %>'>View Course</asp:HyperLink>
-                                        <asp:LinkButton runat="server" Text="Edit" CssClass="review-text-action" CommandName="EditReview" CommandArgument='<%# Eval("ReviewID") %>' CausesValidation="false" />
-                                        <asp:LinkButton runat="server" Text="Delete" CssClass="review-text-action is-delete" CommandName="DeleteReview" CommandArgument='<%# Eval("ReviewID") %>' CausesValidation="false" OnClientClick='<%# DeleteConfirmation(Eval("Title")) %>' />
                                     </div>
                                 </asp:Panel>
 

@@ -188,11 +188,11 @@
 
 .review-card-grid {
     display: grid;
-    gap: 20px;
+    gap: 14px;
 }
 
 .review-card-grid.view-two {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .review-card-grid.view-one {
@@ -242,7 +242,7 @@
     min-width: 0;
     flex: 1;
     flex-direction: column;
-    padding: 21px;
+    padding: 14px;
 }
 
 .review-card-display {
@@ -253,9 +253,14 @@
 
 .review-course-heading h2 {
     margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.55rem;
-    line-height: 1.15;
+    font-family: var(--font-hand);
+    font-size: 1.4rem;
+    line-height: 1.1;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 
 .review-course-heading p,
@@ -271,7 +276,7 @@
 
 .review-rating-label,
 .review-edit-form h4 {
-    margin: 20px 0 7px;
+    margin: 14px 0 7px;
 }
 
 .review-rating {
@@ -283,16 +288,16 @@
 
 .review-comment {
     display: -webkit-box;
-    margin: 16px 0 0;
+    margin: 12px 0 0;
     overflow: hidden;
-    line-height: 1.65;
+    font-size: .9rem;
+    line-height: 1.5;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
 
 .view-one .review-comment {
-    display: block;
-    overflow: visible;
+    -webkit-line-clamp: 4;
 }
 
 .review-date {
@@ -311,7 +316,7 @@
     flex-wrap: wrap;
     gap: 9px;
     margin-top: auto;
-    padding-top: 20px;
+    padding-top: 14px;
 }
 
 .review-card-actions .btn:first-child {
@@ -418,13 +423,19 @@
 @media (min-width: 861px) {
     .view-one .review-card:not(.is-editing) {
         display: grid;
-        grid-template-columns: minmax(220px, 31%) 1fr;
+        grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+        align-items: stretch;
     }
 
-    .view-one .review-course-image-wrap {
-        height: 100%;
+    .view-one .review-card:not(.is-editing) .review-course-image-wrap {
+        min-height: 220px;
+        aspect-ratio: auto;
         border-right: 2px solid var(--review-ink);
         border-bottom: 0;
+    }
+
+    .view-one .review-card:not(.is-editing) .review-card-content {
+        padding: 20px;
     }
 }
 
@@ -436,6 +447,10 @@
     .review-clear-filters {
         grid-column: 1 / -1;
         justify-self: start;
+    }
+
+    .review-card-grid.view-two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 

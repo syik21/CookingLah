@@ -32,6 +32,7 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         }
         private DataTable questionOptions;
         private DataTable lessonBlocks;
+        private int selectedLessonId;
 
         protected void Lesson_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
@@ -119,11 +120,10 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
                 return false;
             }
             course = rows.Rows[0];
-            litTitle.Text = litOverviewTitle.Text = litApproveTitle.Text = Convert.ToString(course["Title"]);
+            litOverviewTitle.Text = litApproveTitle.Text = Convert.ToString(course["Title"]);
             litChef.Text = Convert.ToString(course["ChefName"]);
             litCategory.Text = Convert.ToString(course["CategoryName"]);
             litDifficulty.Text = Convert.ToString(course["DifficultyLevel"]);
-            litMeta.Text = "Chef " + litChef.Text + " · " + litCategory.Text + " · " + litDifficulty.Text;
             litDescription.Text = Convert.ToString(course["Description"]);
             litCreated.Text = Convert.ToDateTime(course["CreatedAt"]).ToString("dd MMM yyyy");
             litUpdated.Text = course.IsNull("UpdatedAt") ? "Not updated yet" : Convert.ToDateTime(course["UpdatedAt"]).ToString("dd MMM yyyy");
@@ -149,13 +149,41 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
             BindSection(rptRecipe, litRecipeEmpty, ReadCourse("SELECT r.*,c.Title,c.Description FROM CourseRecipes r JOIN Courses c ON c.CourseID=r.CourseID WHERE r.CourseID=@id"));
         }
 
-        // Load lessons with pagination.
+        // Load the lesson selector and the selected lesson's content.
         private void LoadLessons()
         {
             lessonBlocks = ReadCourse("SELECT lc.* FROM LessonContent lc JOIN Lessons l ON l.LessonID=lc.LessonID WHERE l.CourseID=@id");
             var rows = ReadCourse("SELECT * FROM Lessons WHERE CourseID=@id ORDER BY LessonOrder,LessonID");
             litLessonsEmpty.Visible = rows.Rows.Count == 0;
-            LessonPage = BindPage(rptLessons, rows, LessonPage, pnlLessonPager, btnLessonPrevious, btnLessonNext, litLessonPage);
+            LessonPage = Math.Max(0, Math.Min(LessonPage, Math.Max(0, rows.Rows.Count - 1)));
+            selectedLessonId = rows.Rows.Count == 0 ? 0 : Convert.ToInt32(rows.Rows[LessonPage]["LessonID"]);
+            rptLessonSelector.DataSource = rows;
+            rptLessonSelector.DataBind();
+            rptLessons.DataSource = rows.Rows.Count == 0
+                ? null
+                : new DataView(rows) { RowFilter = "LessonID=" + selectedLessonId };
+            rptLessons.DataBind();
+        }
+
+        protected string LessonSelectorClass(object lessonId)
+        {
+            return "review-lesson-link" + (Convert.ToInt32(lessonId) == selectedLessonId ? " active" : "");
+        }
+
+        protected void LessonSelector_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName != "SelectLesson") return;
+            var rows = ReadCourse("SELECT LessonID FROM Lessons WHERE CourseID=@id ORDER BY LessonOrder,LessonID");
+            int lessonId = Convert.ToInt32(e.CommandArgument);
+            for (int index = 0; index < rows.Rows.Count; index++)
+            {
+                if (Convert.ToInt32(rows.Rows[index]["LessonID"]) == lessonId)
+                {
+                    LessonPage = index;
+                    break;
+                }
+            }
+            hfActiveTab.Value = "lessons";
         }
 
         // Load quizzes, questions, and answer options.
@@ -219,9 +247,12 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         private void ApplyCourseStatus()
         {
             string status = Convert.ToString(course["Status"]);
-            lblStatus.Text = litOverviewStatus.Text = ReviewData.StatusLabel(status);
-            lblStatus.CssClass = "review-badge " + (status == "Published" ? "approved" : status == "Rejected" ? "rejected" : "pending");
-            pnlDecision.Visible = status == "Pending";
+            string statusLabel = ReviewData.StatusLabel(status);
+            litOverviewStatus.Text = statusLabel;
+            lblCourseStatus.Text = statusLabel;
+            lblCourseStatus.CssClass = "review-course-status " + (status == "Published" ? "approved" : status == "Rejected" ? "rejected" : "pending");
+            pnlDecision.Visible = status == "Pending" || status == "Published";
+            phApproveAction.Visible = status == "Pending";
             pnlPublished.Visible = status == "Published";
             pnlRejection.Visible = status == "Rejected";
             litRejection.Text = string.IsNullOrWhiteSpace(Convert.ToString(course["RejectionReason"])) ? "No rejection reason was recorded." : Convert.ToString(course["RejectionReason"]);
@@ -234,18 +265,6 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
             {
                 BackRequested(this, EventArgs.Empty);
             }
-        }
-
-        protected void LessonPrevious_Click(object sender, EventArgs e)
-        {
-            LessonPage--;
-            hfActiveTab.Value = "lessons";
-        }
-
-        protected void LessonNext_Click(object sender, EventArgs e)
-        {
-            LessonPage++;
-            hfActiveTab.Value = "lessons";
         }
 
         protected void QuestionPrevious_Click(object sender, EventArgs e)
@@ -280,14 +299,15 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
             SaveDecision("Rejected", reason);
         }
 
-        // Save the admin decision only while the course is pending.
+        // Approve pending courses, or reject pending and published courses.
         private void SaveDecision(string status, string reason)
         {
             try
             {
                 using (var connection = DatabaseManager.ConnectDB())
                 using (var command = new SqlCommand(@"UPDATE Courses SET Status=@status,RejectionReason=@reason,UpdatedAt=GETDATE()
-                    OUTPUT INSERTED.Title WHERE CourseID=@id AND Status='Pending'
+                    OUTPUT INSERTED.Title WHERE CourseID=@id
+                    AND ((@status='Published' AND Status='Pending') OR (@status='Rejected' AND Status IN ('Pending','Published')))
                     AND EXISTS (SELECT 1 FROM Users WHERE UserID=@admin AND Role='Admin' AND AccountStatus='Active')", connection))
                 {
                     command.Parameters.Add(ReviewData.Int("@id", CourseId));
@@ -299,7 +319,7 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
                     hfDialog.Value = "";
                     if (title == null)
                     {
-                        ShowError("This course is no longer pending, or your admin access has changed. No decision was saved.");
+                        ShowError("This course is no longer eligible for that decision, or your admin access has changed. No decision was saved.");
                         return;
                     }
                     ReviewMessage = status == "Published" ? "Course approved successfully. \"" + Convert.ToString(title) + "\" is now available to learners." : "Course rejected successfully. The rejection reason will be shown to the Chef so they can make the required changes.";

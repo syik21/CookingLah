@@ -162,6 +162,12 @@ namespace CookingLah.Pages.Chef.ManageCourse
             Session.Remove("BuilderEditing_" + CourseId);
             Response.Redirect(TabUrl("overview"));
         }
+        protected void btnBackToCourses_Click(object sender, EventArgs e)
+        {
+            DiscardChangesAwaitingReview(CourseId);
+            Session.Remove("BuilderEditing_" + CourseId);
+            Response.Redirect("../MyCourse/ChefMyCourse.aspx");
+        }
         protected void btnSaveChanges_Click(object sender, EventArgs e)
         {
             RunAction(() => {

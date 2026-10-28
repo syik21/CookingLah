@@ -9,7 +9,7 @@ namespace CookingLah.Pages.Learner.MyCourse
 {
     public partial class LearnerMyCourse : Page
     {
-        private const int PageSize = 6;
+        private const int PageSize = 8;
         private int LearnerId { get; set; }
 
         private int CurrentPage
