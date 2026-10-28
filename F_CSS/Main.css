@@ -256,3 +256,59 @@
         padding-top: 56px;
     }
 }
+
+
+/* =========================
+   8. Boxes (3 columns above footer)
+   ========================= */
+.boxes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+.box {
+    min-height: 120px;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+}
+
+.box__title {
+    font: 400 clamp(28px, 4vw, 40px)/1 var(--font-hand);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+}
+
+.box__link {
+    font-size: 14px;
+    color: var(--color-ink);
+    overflow-wrap: anywhere;
+}
+
+    .box__link:hover {
+        text-decoration: underline wavy var(--color-primary);
+        text-underline-offset: 4px;
+    }
+
+@media (max-width: 760px) {
+    .boxes {
+        gap: 10px;
+    }
+
+    .box {
+        min-height: 80px;
+    }
+
+    .box__title {
+        font-size: 24px;
+    }
+
+    .box__link {
+        font-size: 12px;
+    }
+}

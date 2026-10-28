@@ -67,9 +67,31 @@
                     update();
                 });
             </script>
+            
+    <section class="container boxes" aria-label="Follow and links">
+        <div class="box scrap-paper"></div>
+        <div class="box scrap-paper"></div>
+        <div class="box scrap-paper"></div>
+    </section>
+            
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var header = document.querySelector('.public-header');
+                    if (!header) return;
+                    function update() {
+                        header.classList.toggle('is-scrolled', window.scrollY > 40);
+                    }
+                    window.addEventListener('scroll', update, { passive: true });
+                    update();
+                });
+            </script>
 
             
 </asp:Content>
+
+
+
 <asp:Content ID="HomeFooter" ContentPlaceHolderID="FooterContent" runat="server">
     <footer class="site-footer">
         <a class="site-logo" runat="server" href="~/Main.aspx"><img runat="server" src="~/F_Assets/CookingLahLogo.png" alt="Cooking LAH home" /></a>
