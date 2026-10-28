@@ -28,8 +28,8 @@
 
 .main-hero__img {
     position: absolute;
-    right: -110px;
-    top: -75px;
+    right: clamp(-400px, -20vw, -100px);
+    top: clamp(-75px, -5vw, -20px);
     width: 330px;
     padding: 20px;
     pointer-events: none;
@@ -43,8 +43,8 @@
 
 .main-hero__img2 {
     position: absolute;
-    left: -205px;
-    top: 160px;
+    left: -34.7%;
+    top: 10%;
     width: 350px;
     pointer-events: none;
 }
