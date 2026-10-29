@@ -1,8 +1,8 @@
-<%@ Page Title="Course Report | Cooking LAH" Language="C#" MasterPageFile="~/Pages/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="CourseReportPage.aspx.cs" Inherits="CookingLah.Pages.Admin.CourseReport.CourseReportPage" %>
-<asp:Content ID="CourseReportHead" ContentPlaceHolderID="AdminHead" runat="server">
-    <link href="<%= ResolveUrl("~/Pages/Admin/CourseReport/CourseReportPage.css") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Pages/Admin/CourseReport/CourseReportPage.css")).Ticks %>" rel="stylesheet" />
+<%@ Page Title="Course Report | Cooking LAH" Language="C#" MasterPageFile="~/Pages/Chef/Chef.Master" AutoEventWireup="true" CodeBehind="CourseReportPage.aspx.cs" Inherits="CookingLah.Pages.Chef.CourseReport.CourseReportPage" %>
+<asp:Content ID="CourseReportHead" ContentPlaceHolderID="ChefHead" runat="server">
+    <link href="<%= ResolveUrl("~/Pages/Chef/CourseReport/CourseReportPage.css") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Pages/Chef/CourseReport/CourseReportPage.css")).Ticks %>" rel="stylesheet" />
 </asp:Content>
-<asp:Content ID="CourseReportContent" ContentPlaceHolderID="AdminContent" runat="server">
+<asp:Content ID="CourseReportContent" ContentPlaceHolderID="ChefContent" runat="server">
     <div class="course-report">
         <header class="cr-page-heading">
             <p class="cr-eyebrow">LEARNING / ANALYTICS</p>
@@ -67,10 +67,6 @@
                             <asp:ListItem Value="Published">Published</asp:ListItem>
                             <asp:ListItem Value="Rejected">Rejected</asp:ListItem>
                         </asp:DropDownList>
-                    </div>
-                    <div class="cr-field">
-                        <label for="<%= ddlInstructor.ClientID %>">Instructor</label>
-                        <asp:DropDownList ID="ddlInstructor" runat="server" AutoPostBack="true" OnSelectedIndexChanged="Filter_Changed" />
                     </div>
                     <asp:LinkButton ID="btnClearTop" runat="server" CssClass="cr-clear-link" OnClick="ClearFilters_Click" CausesValidation="false">Clear filters</asp:LinkButton>
                 </div>
@@ -159,7 +155,7 @@
                     <div class="cr-field">
                         <label for="<%= txtSearch.ClientID %>">Search course</label>
                         <div class="cr-search-row">
-                            <asp:TextBox ID="txtSearch" runat="server" MaxLength="100" placeholder="Search course or instructor..." />
+                            <asp:TextBox ID="txtSearch" runat="server" MaxLength="100" placeholder="Search course..." />
                             <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-secondary" OnClick="Search_Click" />
                         </div>
                     </div>
@@ -167,13 +163,12 @@
 
                 <asp:Panel ID="pnlCourseTable" runat="server" CssClass="cr-table-scroll">
                     <table class="cr-table">
-                        <thead><tr><th scope="col">Course</th><th scope="col">Instructor</th><th scope="col">Status</th><th scope="col">Enrolments</th><th scope="col">Completed</th><th scope="col">Completion rate</th><th scope="col">Rating</th><th scope="col">Reviews</th></tr></thead>
+                        <thead><tr><th scope="col">Course</th><th scope="col">Status</th><th scope="col">Enrolments</th><th scope="col">Completed</th><th scope="col">Completion rate</th><th scope="col">Rating</th><th scope="col">Reviews</th></tr></thead>
                         <tbody>
                             <asp:Repeater ID="rptCoursePerformance" runat="server">
                                 <ItemTemplate>
                                     <tr>
                                         <td><strong><%#: Eval("Title") %></strong><small><%#: Eval("CategoryName") %></small></td>
-                                        <td><strong><%#: Eval("Fullname") %></strong><small>@<%#: Eval("Username") %></small></td>
                                         <td><span class='<%# GetStatusCss(Eval("Status")) %>'><%#: Eval("Status") %></span></td>
                                         <td><%#: Eval("EnrolmentCount") %></td>
                                         <td><%#: Eval("CompletedCount") %></td>
@@ -201,6 +196,6 @@
         </asp:Panel>
     </div>
 </asp:Content>
-<asp:Content ID="CourseReportScripts" ContentPlaceHolderID="AdminScripts" runat="server">
-    <script src="<%= ResolveUrl("~/Pages/Admin/CourseReport/CourseReportPage.js") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Pages/Admin/CourseReport/CourseReportPage.js")).Ticks %>" defer></script>
+<asp:Content ID="CourseReportScripts" ContentPlaceHolderID="ChefScripts" runat="server">
+    <script src="<%= ResolveUrl("~/Pages/Chef/CourseReport/CourseReportPage.js") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Pages/Chef/CourseReport/CourseReportPage.js")).Ticks %>" defer></script>
 </asp:Content>

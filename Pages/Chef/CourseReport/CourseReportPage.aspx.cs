@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace CookingLah.Pages.Admin.CourseReport
+namespace CookingLah.Pages.Chef.CourseReport
 {
     public partial class CourseReportPage : Page
     {
@@ -17,11 +17,12 @@ namespace CookingLah.Pages.Admin.CourseReport
         private const string CourseFilters = @"
             (@categoryId=0 OR c.CategoryID=@categoryId)
             AND (@status='' OR c.Status=@status)
-            AND (@instructorId=0 OR c.InstructorID=@instructorId)
+            AND c.InstructorID=@instructorId
             AND (@startDate IS NULL OR (c.CreatedAt>=@startDate AND c.CreatedAt<@endDate))";
         private const string ProgressDateFilter = "(@startDate IS NULL OR (StartedAt>=@startDate AND StartedAt<@endDate))";
         private const string ReviewDateFilter = "(@startDate IS NULL OR (CreatedAt>=@startDate AND CreatedAt<@endDate))";
         private bool isAuthorized;
+        private int instructorId;
 
         private int CurrentPage
         {
@@ -48,7 +49,7 @@ namespace CookingLah.Pages.Admin.CourseReport
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
 
-            isAuthorized = IsActiveAdmin();
+            isAuthorized = IsActiveChef();
             if (!isAuthorized)
             {
                 return;
@@ -60,11 +61,10 @@ namespace CookingLah.Pages.Admin.CourseReport
             }
         }
 
-        // Verify the current session against the active Admin record.
-        private bool IsActiveAdmin()
+        // Verify the current session against the active chef record.
+        private bool IsActiveChef()
         {
-            int userId;
-            if (!int.TryParse(Convert.ToString(Session["UserId"]), out userId))
+            if (!int.TryParse(Convert.ToString(Session["UserId"]), out instructorId))
             {
                 RedirectToHome();
                 return false;
@@ -77,10 +77,10 @@ namespace CookingLah.Pages.Admin.CourseReport
                     SELECT COUNT(*)
                     FROM dbo.Users
                     WHERE UserID=@userId
-                      AND Role='Admin'
+                      AND Role='Instructor'
                       AND AccountStatus='Active'", connection))
                 {
-                    command.Parameters.Add("@userId", SqlDbType.Int).Value = userId;
+                    command.Parameters.Add("@userId", SqlDbType.Int).Value = instructorId;
                     connection.Open();
                     if (Convert.ToInt32(command.ExecuteScalar()) == 1)
                     {
@@ -126,20 +126,16 @@ namespace CookingLah.Pages.Admin.CourseReport
             }
         }
 
-        // Populate category and instructor filters from existing records.
+        // Populate filters from this chef's courses.
         private void LoadFilters(SqlConnection connection)
         {
             LoadYearFilter(connection);
             LoadLookup(connection, ddlCategory, @"
-                SELECT CategoryID, CategoryName
-                FROM dbo.Categories
-                ORDER BY CategoryName, CategoryID", "CategoryID", "CategoryName", "All Categories");
-            LoadLookup(connection, ddlInstructor, @"
-                SELECT DISTINCT u.UserID, u.Fullname
-                FROM dbo.Users u
-                INNER JOIN dbo.Courses c ON c.InstructorID=u.UserID
-                WHERE u.Role='Instructor'
-                ORDER BY u.Fullname, u.UserID", "UserID", "Fullname", "All Instructors");
+                SELECT DISTINCT cat.CategoryID, cat.CategoryName
+                FROM dbo.Categories cat
+                INNER JOIN dbo.Courses c ON c.CategoryID=cat.CategoryID
+                WHERE c.InstructorID=@instructorId
+                ORDER BY cat.CategoryName, cat.CategoryID", "CategoryID", "CategoryName", "All Categories");
         }
 
         private void LoadYearFilter(SqlConnection connection)
@@ -148,7 +144,7 @@ namespace CookingLah.Pages.Admin.CourseReport
                 SELECT ReportYear
                 FROM
                 (
-                    SELECT DISTINCT YEAR(CreatedAt) AS ReportYear FROM dbo.Courses
+                    SELECT DISTINCT YEAR(CreatedAt) AS ReportYear FROM dbo.Courses WHERE InstructorID=@instructorId
                     UNION
                     SELECT @currentYear
                 ) years
@@ -159,6 +155,7 @@ namespace CookingLah.Pages.Admin.CourseReport
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 command.Parameters.Add("@currentYear", SqlDbType.Int).Value = DateTime.Today.Year;
+                command.Parameters.Add("@instructorId", SqlDbType.Int).Value = instructorId;
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -170,13 +167,16 @@ namespace CookingLah.Pages.Admin.CourseReport
             }
         }
 
-        private static void LoadLookup(SqlConnection connection, DropDownList list, string query, string valueField, string textField, string allLabel)
+        private void LoadLookup(SqlConnection connection, DropDownList list, string query, string valueField, string textField, string allLabel)
         {
             DataTable values = new DataTable();
             using (SqlCommand command = new SqlCommand(query, connection))
-            using (SqlDataReader reader = command.ExecuteReader())
             {
-                values.Load(reader);
+                command.Parameters.Add("@instructorId", SqlDbType.Int).Value = instructorId;
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    values.Load(reader);
+                }
             }
 
             list.DataSource = values;
@@ -545,12 +545,11 @@ namespace CookingLah.Pages.Admin.CourseReport
                 txtSearch.Text = search;
             }
 
-            string searchFilter = " AND (@search='' OR CHARINDEX(@search,c.Title)>0 OR CHARINDEX(@search,u.Fullname)>0 OR CHARINDEX(@search,u.Username)>0)";
+            string searchFilter = " AND (@search='' OR CHARINDEX(@search,c.Title)>0)";
             int totalCourses;
             using (SqlCommand countCommand = new SqlCommand(@"
                 SELECT COUNT(*)
                 FROM dbo.Courses c
-                INNER JOIN dbo.Users u ON u.UserID=c.InstructorID
                 WHERE " + CourseFilters + searchFilter, connection))
             {
                 AddReportParameters(countCommand, range);
@@ -561,13 +560,12 @@ namespace CookingLah.Pages.Admin.CourseReport
             int pageCount = Math.Max(1, (totalCourses + PageSize - 1) / PageSize);
             CurrentPage = Math.Min(Math.Max(1, CurrentPage), pageCount);
             string query = @"
-                SELECT c.CourseID,c.Title,c.Status,cat.CategoryName,u.Fullname,u.Username,
+                 SELECT c.CourseID,c.Title,c.Status,cat.CategoryName,
                        ISNULL(p.EnrolmentCount,0) AS EnrolmentCount,
                        ISNULL(p.CompletedCount,0) AS CompletedCount,
                        ISNULL(r.ReviewCount,0) AS ReviewCount,r.AverageRating
                 FROM dbo.Courses c
                 INNER JOIN dbo.Categories cat ON cat.CategoryID=c.CategoryID
-                INNER JOIN dbo.Users u ON u.UserID=c.InstructorID
                 LEFT JOIN
                 (
                     SELECT CourseID,COUNT(ProgressID) AS EnrolmentCount,
@@ -615,9 +613,7 @@ namespace CookingLah.Pages.Admin.CourseReport
         private void AddReportParameters(SqlCommand command, ReportRange range)
         {
             int categoryId;
-            int instructorId;
             int.TryParse(ddlCategory.SelectedValue, out categoryId);
-            int.TryParse(ddlInstructor.SelectedValue, out instructorId);
             command.Parameters.Add("@categoryId", SqlDbType.Int).Value = categoryId;
             command.Parameters.Add("@status", SqlDbType.NVarChar, 20).Value = ddlStatus.SelectedValue;
             command.Parameters.Add("@instructorId", SqlDbType.Int).Value = instructorId;
@@ -713,7 +709,6 @@ namespace CookingLah.Pages.Admin.CourseReport
             ddlMonth.SelectedIndex = 0;
             ddlCategory.SelectedIndex = 0;
             ddlStatus.SelectedIndex = 0;
-            ddlInstructor.SelectedIndex = 0;
             txtSearch.Text = "";
             CurrentPage = 1;
             ReloadCourseReport();

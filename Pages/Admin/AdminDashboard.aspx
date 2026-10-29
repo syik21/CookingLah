@@ -13,7 +13,7 @@
 
     <section class="summary-grid" aria-label="Platform summary">
         <a class="summary-card users" href="<%= ResolveUrl("~/Pages/Admin/ManageUser/ManageUserPage.aspx") %>"><span>Total Users</span><strong><asp:Literal ID="litTotalUsers" runat="server" /></strong><small><asp:Literal ID="litNewUsers" runat="server" /> this month</small></a>
-        <a class="summary-card courses" href="<%= ResolveUrl("~/Pages/Admin/CourseReport/CourseReportPage.aspx") %>"><span>Total Courses</span><strong><asp:Literal ID="litTotalCourses" runat="server" /></strong><small><asp:Literal ID="litPublishedCourses" runat="server" /> published</small></a>
+        <a class="summary-card courses" href="<%= ResolveUrl("~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx") %>"><span>Total Courses</span><strong><asp:Literal ID="litTotalCourses" runat="server" /></strong><small><asp:Literal ID="litPublishedCourses" runat="server" /> published</small></a>
         <a class="summary-card active" href="<%= ResolveUrl("~/Pages/Admin/UserReport/UserReportPage.aspx") %>"><span>Active Users</span><strong><asp:Literal ID="litActiveUsers" runat="server" /></strong><small>Last 7 days</small></a>
         <a id="pendingSummaryCard" runat="server" class="summary-card pending" href="~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx?status=Pending"><span>Pending Courses</span><strong><asp:Literal ID="litPendingCourses" runat="server" /></strong><small>Awaiting review</small></a>
     </section>
@@ -42,7 +42,6 @@
                 <a href="<%= ResolveUrl("~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx?status=Pending") %>"><span>Review Courses</span><small>Pending submissions</small></a>
                 <a href="<%= ResolveUrl("~/Pages/Admin/ManageCategories/ManagerCategoriesPage.aspx") %>"><span>Manage Categories</span><small>Course organisation</small></a>
                 <a href="<%= ResolveUrl("~/Pages/Admin/UserReport/UserReportPage.aspx") %>"><span>User Report</span><small>Activity insights</small></a>
-                <a href="<%= ResolveUrl("~/Pages/Admin/CourseReport/CourseReportPage.aspx") %>"><span>Course Report</span><small>Learning performance</small></a>
             </nav>
         </aside>
     </div>
@@ -73,7 +72,6 @@
             <div class="panel-heading"><div><p>Learning health</p><h2 id="performanceTitle">Platform Performance</h2></div></div>
             <dl class="performance-grid"><div><dt>Total Enrolments</dt><dd><asp:Literal ID="litEnrolments" runat="server" /></dd></div><div><dt>Completed Enrolments</dt><dd><asp:Literal ID="litCompleted" runat="server" /></dd></div><div><dt>Average Course Rating</dt><dd><asp:Literal ID="litAverageRating" runat="server" /></dd></div><div><dt>Total Reviews</dt><dd><asp:Literal ID="litReviews" runat="server" /></dd></div></dl>
             <asp:Label ID="lblPerformanceEmpty" runat="server" CssClass="performance-note" />
-            <a class="btn btn-secondary section-link" href="<%= ResolveUrl("~/Pages/Admin/CourseReport/CourseReportPage.aspx") %>">View Course Report</a>
         </section>
     </div>
 </div>

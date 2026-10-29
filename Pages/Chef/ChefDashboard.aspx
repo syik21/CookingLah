@@ -4,6 +4,22 @@
     <link href="<%= ResolveUrl("~/Pages/Chef/ChefDashboard.css") %>" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="DashboardContent" ContentPlaceHolderID="ChefContent" runat="server">
+    <style>
+        .chef-status-track {
+            width: 100%;
+            height: 10px;
+            background: var(--color-tan-light);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .chef-status-fill {
+            display: block;
+            height: 100%;
+            background: var(--color-primary);
+            border-radius: inherit;
+        }
+    </style>
 <main class="chef-dashboard" aria-labelledby="chefDashboardTitle">
     <header class="chef-dashboard-welcome">
         <h1 id="chefDashboardTitle">Chef Dashboard</h1>
@@ -29,7 +45,14 @@
             <div class="chef-status-list"><asp:Repeater ID="rptCourseStatus" runat="server"><ItemTemplate>
                 <div class='<%# StatusRowClass(Eval("Status"), Eval("Count")) %>'>
                     <div class="chef-status-label"><span><%#: Eval("Status") %></span><small runat="server" visible='<%# Convert.ToString(Eval("Status")) == "Rejected" && Convert.ToInt32(Eval("Count")) > 0 %>'>Needs attention</small></div>
-                    <div class="chef-status-track" aria-hidden="true"><i style='<%# "width:" + Eval("Percent") + "%" %>'></i></div><strong><%#: Eval("Count") %></strong>
+                    <div class="chef-status-track" aria-hidden="true">
+                        <asp:Panel
+                            runat="server"
+                            CssClass="chef-status-fill"
+                            Width='<%# System.Web.UI.WebControls.Unit.Percentage(Convert.ToDouble(Eval("Percent"))) %>' />
+                    </div>
+
+                    <strong><%#: Eval("Count") %></strong>
                 </div>
             </ItemTemplate></asp:Repeater></div>
         </section>

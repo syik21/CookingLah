@@ -37,6 +37,7 @@
                 <p class="master-nav-label">COURSE MANAGEMENT</p>
                 <a runat="server" href="~/Pages/Chef/MyCourse/ChefMyCourse.aspx" class="master-nav-item" data-page="ChefMyCourse,ManageCoursePage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v16M12 5C8 2 4 3 2 4v15c4-1 7-1 10 2 3-3 6-3 10-2V4c-2-1-6-2-10 1Z" /></svg><span>My Courses</span></a>
                 <a runat="server" href="~/Pages/Chef/CreateCourse/CreateCoursePage.aspx" class="master-nav-item" data-page="CreateCoursePage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" /></svg><span>Create Course</span></a>
+                <a runat="server" href="~/Pages/Chef/CourseReport/CourseReportPage.aspx" class="master-nav-item" data-page="CourseReportPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 3v18h17M8 16v-4m5 4V8m5 8V4" /></svg><span>Course Report</span></a>
                 <p class="master-nav-label">LEARNERS</p>
                 <a runat="server" href="~/Pages/Chef/ChefReviewSubmission/ChefReviewSubmissionPage.aspx" class="master-nav-item" data-page="ChefReviewSubmissionPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h4l2-3h6l2 3h4v15H3Z" /><circle cx="12" cy="13" r="4" /></svg><span>Activity Submissions</span></a>
                 <a runat="server" href="~/Pages/Chef/ChefViewReview/ChefViewReviewPage.aspx" class="master-nav-item" data-page="ChefViewReviewPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 3 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z" /></svg><span>Course Reviews</span></a>
@@ -55,6 +56,7 @@
     <script src="<%= ResolveUrl("~/F_JavaScripts/Master.js") %>" defer></script>
     <asp:ContentPlaceHolder ID="ChefScripts" runat="server" />
     <asp:ContentPlaceHolder ID="ProfileScripts" runat="server" />
+    <asp:ContentPlaceHolder ID="LiveScripts" runat="server" />
 </form>
 </body>
 </html>

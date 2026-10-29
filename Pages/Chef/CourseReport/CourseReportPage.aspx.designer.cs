@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CookingLah.Pages.Admin.CourseReport
+namespace CookingLah.Pages.Chef.CourseReport
 {
     public partial class CourseReportPage
     {
@@ -19,7 +19,6 @@ namespace CookingLah.Pages.Admin.CourseReport
         protected global::System.Web.UI.WebControls.DropDownList ddlMonth;
         protected global::System.Web.UI.WebControls.DropDownList ddlCategory;
         protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
-        protected global::System.Web.UI.WebControls.DropDownList ddlInstructor;
         protected global::System.Web.UI.WebControls.LinkButton btnClearTop;
         protected global::System.Web.UI.WebControls.Literal litPeriodLabel;
         protected global::System.Web.UI.WebControls.Literal litTotalCourses;
