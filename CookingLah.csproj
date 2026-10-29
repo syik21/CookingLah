@@ -80,6 +80,7 @@
     <Content Include="Pages\Chef\ChefDashboard.css" />
     <Content Include="Pages\Chef\ChefDashboard.js" />
     <Content Include="Pages\Admin\AdminDashboard.aspx" />
+    <Compile Include="Hubs\LiveSessionHub.cs" />
     <Compile Include="Pages\Admin\AdminDashboard.aspx.cs">
       <DependentUpon>AdminDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -286,12 +287,14 @@
     <Content Include="Pages\LiveSessionPage\ChefLivePage.aspx" />
     <Content Include="Pages\LiveSessionPage\CSS\FindLivePage.css" />
     <Content Include="Pages\LiveSessionPage\CSS\WatchLivePage.css" />
+    <Content Include="Pages\LiveSessionPage\jitsitest.aspx" />
     <Content Include="Pages\LiveSessionPage\JS\ChefLivePage.js" />
     <Content Include="Pages\LiveSessionPage\CSS\ChefLivePage.css" />
     <Content Include="Pages\LiveSessionPage\FindLivePage.aspx" />
     <Content Include="Pages\LiveSessionPage\JS\FindLivePage.js" />
     <Content Include="Pages\LiveSessionPage\JS\live-signalr.js" />
     <Content Include="Pages\LiveSessionPage\JS\WatchLivePage.js" />
+    <Content Include="Pages\LiveSessionPage\test.aspx" />
     <Content Include="Pages\LiveSessionPage\WatchLivePage.aspx" />
     <Content Include="Pages\Shared\FoodMap\FoodMapView.ascx" />
     <Content Include="Pages\Shared\FoodMap\FoodMapView.js" />
@@ -402,7 +405,6 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
-    <Content Include="signalr\test.aspx" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -470,6 +472,20 @@
     </Compile>
     <Compile Include="Pages\LiveSessionPage\FindLivePage.aspx.designer.cs">
       <DependentUpon>FindLivePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LiveSessionPage\jitsitest.aspx.cs">
+      <DependentUpon>jitsitest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\LiveSessionPage\jitsitest.aspx.designer.cs">
+      <DependentUpon>jitsitest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LiveSessionPage\test.aspx.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\LiveSessionPage\test.aspx.designer.cs">
+      <DependentUpon>test.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\LiveSessionPage\WatchLivePage.aspx.cs">
       <DependentUpon>WatchLivePage.aspx</DependentUpon>
@@ -577,14 +593,6 @@
       <DependentUpon>SubmitActivity.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="signalr\hubs\LiveSessionHub.cs" />
-    <Compile Include="signalr\test.aspx.cs">
-      <DependentUpon>test.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="signalr\test.aspx.designer.cs">
-      <DependentUpon>test.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
