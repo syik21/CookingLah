@@ -1,4 +1,4 @@
-.chef-dashboard { display: grid; gap: 30px; max-width: 1220px; margin: 0 auto; padding: 12px 4px 32px 0; color: var(--color-ink); }
+.chef-dashboard { display: grid; gap: 30px; max-width: var(--content-width); margin: 0 auto; padding: 12px 4px 32px 0; color: var(--color-ink); }
 .chef-dashboard-welcome { max-width: 760px; }
 .chef-dashboard-welcome h1 { margin: 0; font: 400 clamp(44px, 6vw, 68px)/1 var(--font-hand); text-transform: none; }
 .chef-dashboard-welcome p { margin: 8px 0 0; color: var(--color-text-soft); }

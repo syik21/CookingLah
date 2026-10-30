@@ -285,17 +285,18 @@
     <Content Include="Pages\Learner\LearnMyActivity\LearnerMyActivityPage.css" />
     <Content Include="Pages\Learner\LearnMyActivity\LearnerMyActivityPage.js" />
     <Content Include="Pages\LiveSessionPage\ChefLivePage.aspx" />
+    <Content Include="Pages\LiveSessionPage\ChefStartLive.aspx" />
+    <Content Include="Pages\LiveSessionPage\ChefStartLive.css" />
+    <Content Include="Pages\LiveSessionPage\ChefStartLive.js" />
+    <Content Include="Pages\LiveSessionPage\LearnerWatchLivePage.aspx" />
+    <Content Include="Pages\LiveSessionPage\CSS\LearnerLivePage.css" />
     <Content Include="Pages\LiveSessionPage\CSS\FindLivePage.css" />
-    <Content Include="Pages\LiveSessionPage\CSS\WatchLivePage.css" />
-    <Content Include="Pages\LiveSessionPage\jitsitest.aspx" />
-    <Content Include="Pages\LiveSessionPage\JS\ChefLivePage.js" />
+    <Content Include="Pages\LiveSessionPage\JS\chef-live.js" />
     <Content Include="Pages\LiveSessionPage\CSS\ChefLivePage.css" />
     <Content Include="Pages\LiveSessionPage\FindLivePage.aspx" />
     <Content Include="Pages\LiveSessionPage\JS\FindLivePage.js" />
     <Content Include="Pages\LiveSessionPage\JS\live-signalr.js" />
-    <Content Include="Pages\LiveSessionPage\JS\WatchLivePage.js" />
-    <Content Include="Pages\LiveSessionPage\test.aspx" />
-    <Content Include="Pages\LiveSessionPage\WatchLivePage.aspx" />
+    <Content Include="Pages\LiveSessionPage\JS\learner-live.js" />
     <Content Include="Pages\Shared\FoodMap\FoodMapView.ascx" />
     <Content Include="Pages\Shared\FoodMap\FoodMapView.js" />
     <Content Include="Pages\Shared\FoodMap\FoodMapView.css" />
@@ -466,33 +467,26 @@
     <Compile Include="Pages\LiveSessionPage\ChefLivePage.aspx.designer.cs">
       <DependentUpon>ChefLivePage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\LiveSessionPage\ChefStartLive.aspx.cs">
+      <DependentUpon>ChefStartLive.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\LiveSessionPage\ChefStartLive.aspx.designer.cs">
+      <DependentUpon>ChefStartLive.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LiveSessionPage\LearnerWatchLivePage.aspx.cs">
+      <DependentUpon>LearnerWatchLivePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\LiveSessionPage\LearnerWatchLivePage.aspx.designer.cs">
+      <DependentUpon>LearnerWatchLivePage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LiveSessionPage\FindLivePage.aspx.cs">
       <DependentUpon>FindLivePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\LiveSessionPage\FindLivePage.aspx.designer.cs">
       <DependentUpon>FindLivePage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LiveSessionPage\jitsitest.aspx.cs">
-      <DependentUpon>jitsitest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\LiveSessionPage\jitsitest.aspx.designer.cs">
-      <DependentUpon>jitsitest.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LiveSessionPage\test.aspx.cs">
-      <DependentUpon>test.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\LiveSessionPage\test.aspx.designer.cs">
-      <DependentUpon>test.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LiveSessionPage\WatchLivePage.aspx.cs">
-      <DependentUpon>WatchLivePage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\LiveSessionPage\WatchLivePage.aspx.designer.cs">
-      <DependentUpon>WatchLivePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Shared\FoodMap\FoodMapView.ascx.cs">
       <DependentUpon>FoodMapView.ascx</DependentUpon>
