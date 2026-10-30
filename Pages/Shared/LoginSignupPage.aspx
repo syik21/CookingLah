@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Log in - Cooking Lah</title>
+    <link rel="icon" type="image/x-icon" href="<%= ResolveUrl("~/favicon.ico?v=2") %>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />

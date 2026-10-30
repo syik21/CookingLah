@@ -5,9 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
+    <link runat="server" rel="icon" type="image/x-icon" href="~/favicon.ico?v=2" />
     <link runat="server" href="~/F_CSS/Style.css" rel="stylesheet" />
     <link runat="server" href="~/F_CSS/Master.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="AdminHead" runat="server" />
+    <asp:ContentPlaceHolder ID="SharedLiveHead" runat="server" />
     <asp:ContentPlaceHolder ID="ProfileHead" runat="server" />
 </head>
 <body class="master-shell">
@@ -38,6 +40,7 @@
                 <a runat="server" href="~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx" class="master-nav-item" data-page="ReviewCoursesPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 4H4v17h16V4h-4M8 2h8v5H8ZM8 13l3 3 5-5" /></svg><span>Manage Course</span></a>
                 <a runat="server" href="~/Pages/Admin/ManageCategories/ManagerCategoriesPage.aspx" class="master-nav-item" data-page="ManagerCategoriesPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg><span>Manage categories</span></a>
                 <a runat="server" href="~/Pages/Admin/ManageUser/ManageUserPage.aspx" class="master-nav-item" data-page="ManageUserPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6" /><path d="m15 15 6 6" /></svg><span>Manage users</span></a>
+                <a runat="server" href="~/Pages/LiveSessionPage/SearchLiveStream.aspx" class="master-nav-item" data-page="SearchLiveStream,AdminLivePage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h11v10H4ZM15 10l5-3v10l-5-3Z" /></svg><span>Monitor livestreams</span></a>
                 <p class="master-nav-label">Report Analysis</p>
                 <a runat="server" href="~/Pages/Admin/UserReport/UserReportPage.aspx" class="master-nav-item" data-page="UserReportPage"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 3v18h17M8 16v-4m5 4V8m5 8V4" /></svg><span>User report</span></a>
                 <p class="master-nav-label">Account</p>
@@ -49,11 +52,14 @@
         <button type="button" id="sidebarOverlay" class="master-overlay" aria-label="Close navigation" tabindex="-1" hidden></button>
         <main class="master-main" id="masterMain" tabindex="-1">
             <asp:ContentPlaceHolder ID="AdminContent" runat="server" />
+            <asp:ContentPlaceHolder ID="SharedLiveContent" runat="server" />
             <asp:ContentPlaceHolder ID="ProfileContent" runat="server" />
         </main>
     </div>
+    <script src="<%= ResolveUrl("~/F_JavaScripts/connectionChecker.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/Master.js") %>" defer></script>
     <asp:ContentPlaceHolder ID="AdminScripts" runat="server" />
+    <asp:ContentPlaceHolder ID="SharedLiveScripts" runat="server" />
     <asp:ContentPlaceHolder ID="ProfileScripts" runat="server" />
 </form>
 </body>

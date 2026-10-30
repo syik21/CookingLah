@@ -6,7 +6,6 @@
 .env*
 .editorconfig
 tests/
-App_Data/Migrations/
 artifacts/
 Secrets.config
 audit/

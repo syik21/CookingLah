@@ -95,6 +95,7 @@
     <Content Include="F_CSS\Master.css" />
     <Content Include="Pages\Learner\CSS\learnerDashboard.css" />
     <Content Include="F_JavaScripts\Master.js" />
+    <Content Include="F_JavaScripts\connectionChecker.js" />
     <Content Include="Pages\Learner\JS\learnerDashboard.js" />
     <Compile Include="F_Helpers\NavigationHelper.cs" />
     <Compile Include="F_Services\UserManager.cs" />
@@ -285,15 +286,20 @@
     <Content Include="Pages\Learner\LearnMyActivity\LearnerMyActivityPage.css" />
     <Content Include="Pages\Learner\LearnMyActivity\LearnerMyActivityPage.js" />
     <Content Include="Pages\LiveSessionPage\ChefLivePage.aspx" />
+    <Content Include="Pages\LiveSessionPage\AdminLivePage.aspx" />
     <Content Include="Pages\LiveSessionPage\ChefStartLive.aspx" />
     <Content Include="Pages\LiveSessionPage\ChefStartLive.css" />
     <Content Include="Pages\LiveSessionPage\ChefStartLive.js" />
     <Content Include="Pages\LiveSessionPage\LearnerWatchLivePage.aspx" />
+    <Content Include="Pages\LiveSessionPage\SearchLiveStream.aspx" />
+    <Content Include="Pages\ErrorPage\Error.aspx" />
+    <Content Include="Pages\ErrorPage\ErrorPage.css" />
+    <Content Include="Pages\LiveSessionPage\CSS\SearchLiveStream.css" />
     <Content Include="Pages\LiveSessionPage\CSS\LearnerLivePage.css" />
     <Content Include="Pages\LiveSessionPage\CSS\FindLivePage.css" />
     <Content Include="Pages\LiveSessionPage\JS\chef-live.js" />
+    <Content Include="Pages\LiveSessionPage\JS\admin-live.js" />
     <Content Include="Pages\LiveSessionPage\CSS\ChefLivePage.css" />
-    <Content Include="Pages\LiveSessionPage\FindLivePage.aspx" />
     <Content Include="Pages\LiveSessionPage\JS\FindLivePage.js" />
     <Content Include="Pages\LiveSessionPage\JS\live-signalr.js" />
     <Content Include="Pages\LiveSessionPage\JS\learner-live.js" />
@@ -418,6 +424,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ErrorPage\Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ErrorPage\Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Main.aspx.cs">
       <DependentUpon>Main.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -464,6 +477,13 @@
       <DependentUpon>ChefLivePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Pages\LiveSessionPage\AdminLivePage.aspx.cs">
+      <DependentUpon>AdminLivePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\LiveSessionPage\AdminLivePage.aspx.designer.cs">
+      <DependentUpon>AdminLivePage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LiveSessionPage\ChefLivePage.aspx.designer.cs">
       <DependentUpon>ChefLivePage.aspx</DependentUpon>
     </Compile>
@@ -478,15 +498,15 @@
       <DependentUpon>LearnerWatchLivePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\LiveSessionPage\LearnerWatchLivePage.aspx.designer.cs">
-      <DependentUpon>LearnerWatchLivePage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LiveSessionPage\FindLivePage.aspx.cs">
-      <DependentUpon>FindLivePage.aspx</DependentUpon>
+    <Compile Include="Pages\LiveSessionPage\SearchLiveStream.aspx.cs">
+      <DependentUpon>SearchLiveStream.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\LiveSessionPage\FindLivePage.aspx.designer.cs">
-      <DependentUpon>FindLivePage.aspx</DependentUpon>
+    <Compile Include="Pages\LiveSessionPage\SearchLiveStream.aspx.designer.cs">
+      <DependentUpon>SearchLiveStream.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LiveSessionPage\LearnerWatchLivePage.aspx.designer.cs">
+      <DependentUpon>LearnerWatchLivePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Shared\FoodMap\FoodMapView.ascx.cs">
       <DependentUpon>FoodMapView.ascx</DependentUpon>

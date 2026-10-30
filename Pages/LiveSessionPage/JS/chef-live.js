@@ -7,10 +7,16 @@ function loadJitsi() {
     const sessionId =
         document.getElementById("hfLiveSessionID")?.value;
 
+    const roomName =
+        document.getElementById("hfJitsiRoomName")?.value;
+
+    const chefDisplayName =
+        document.getElementById("hfChefDisplayName")?.value;
+
     const container =
         document.getElementById("jitsi-container");
 
-    if (!sessionId || sessionId === "0" || !container) {
+    if (!sessionId || sessionId === "0" || !roomName || !chefDisplayName || !container) {
         console.error("Invalid live session.");
         return;
     }
@@ -25,13 +31,13 @@ function loadJitsi() {
     if (api) return;
 
     const options = {
-        roomName: "LiveClass_" + sessionId,
+        roomName: roomName,
         width: "100%",
         height: "100%",
         parentNode: container,
 
         userInfo: {
-            displayName: "Test Chef"
+            displayName: chefDisplayName
         },
 
         configOverwrite: {
@@ -42,7 +48,9 @@ function loadJitsi() {
             startWithAudioMuted: false,
             startWithVideoMuted: false,
             disableDeepLinking: true,
-
+            hideConferenceSubject: true,
+            hideConferenceTimer: true,
+            hideParticipantsStats: true,
             disableSelfView: false,
             doNotFlipLocalVideo: false,
 
@@ -51,6 +59,10 @@ function loadJitsi() {
             },
 
             notifications: [],
+            conferenceInfo: {
+                alwaysVisible: [],
+                autoHide: []
+            },
 
             toolbarButtons: [
                 "microphone",
@@ -145,4 +157,45 @@ function reloadJitsi() {
 }
 
 document.addEventListener("DOMContentLoaded", loadJitsi);
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("btnAcknowledgeWarning").addEventListener("click", function () {
+        document.getElementById("warningDialog").close();
+    });
+});
+
+window.addEventListener("cookinglah:admin-warning", function (event) {
+    document.getElementById("lblWarningCount").textContent = event.detail.warningNumber;
+    document.getElementById("warningTitle").textContent =
+        "Admin Warning " + event.detail.warningNumber;
+    document.getElementById("warningReason").textContent = event.detail.reason;
+    const dialog = document.getElementById("warningDialog");
+    if (!dialog.open) {
+        dialog.showModal();
+    }
+});
+
+window.addEventListener("cookinglah:live-suspended", function (event) {
+    const warningDialog = document.getElementById("warningDialog");
+    if (warningDialog.open) {
+        warningDialog.close();
+    }
+
+    if (api) {
+        api.dispose();
+        api = null;
+    }
+
+    const container = document.getElementById("jitsi-container");
+    container.innerHTML = "";
+    const message = document.createElement("div");
+    message.className = "live-ended-message";
+    message.innerHTML = "<h2>Livestream suspended</h2><p></p>";
+    message.querySelector("p").textContent = event.detail.reason;
+    container.appendChild(message);
+    document.getElementById("txtChatMessage").disabled = true;
+    document.getElementById("btnSendMessage").disabled = true;
+    document.getElementById("liveParticipantCount").textContent = "Suspended";
+    $.connection.hub.stop();
+});
 

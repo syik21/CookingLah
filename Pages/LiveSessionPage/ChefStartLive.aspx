@@ -1,189 +1,82 @@
-<%@ Page Title="Live Cooking | Cooking LAH" Language="C#" MasterPageFile="~/Pages/Chef/Chef.Master" AutoEventWireup="true" CodeBehind="ChefStartLive.aspx.cs" Inherits="CookingLah.Pages.LiveSessionPage.ChefStartLive" %>
-
-<%-- Page stylesheet --%>
+<%@ Page Title="Start Live | Cooking LAH" Language="C#" MasterPageFile="~/Pages/Chef/Chef.Master" AutoEventWireup="true" CodeBehind="ChefStartLive.aspx.cs" Inherits="CookingLah.Pages.LiveSessionPage.ChefStartLive" %>
 <asp:Content ID="ChefStartLiveHead" ContentPlaceHolderID="ChefHead" runat="server">
     <link href="<%= ResolveUrl("~/Pages/LiveSessionPage/ChefStartLive.css") %>" rel="stylesheet" />
 </asp:Content>
-
 <asp:Content ID="ChefStartLiveContent" ContentPlaceHolderID="ChefContent" runat="server">
-    <main class="chef-start-live" aria-labelledby="chefStartLiveTitle">
-
-        <%-- Page heading --%>
-        <header class="chef-start-live__header">
-            <p class="chef-start-live__eyebrow">Your live kitchen</p>
-            <h1 id="chefStartLiveTitle">Live Cooking</h1>
-            <p>Start a cooking livestream now or schedule one for later.</p>
-        </header>
-
-        <%-- Feedback and streaming restrictions --%>
-        <asp:Panel ID="pnlMessage" runat="server" CssClass="live-message" Visible="false" role="status" aria-live="polite">
+    <main class="chef-live-start" aria-labelledby="pageTitle">
+        <asp:Panel ID="pnlMessage" runat="server" CssClass="chef-live-message" Visible="false" role="status" aria-live="polite">
             <asp:Label ID="lblMessage" runat="server" />
         </asp:Panel>
-
-        <asp:Panel ID="pnlStreamingPenalty" runat="server" CssClass="live-penalty-panel" Visible="false" role="alert">
-            <div class="live-panel-mark" aria-hidden="true">!</div>
-            <div>
-                <h2>Livestream temporarily unavailable</h2>
-                <p>
-                    You cannot start a livestream until
-                    <strong><asp:Label ID="lblPenaltyEndTime" runat="server" /></strong>.
-                </p>
-                <p class="live-panel-note">
-                    Reason: <asp:Label ID="lblPenaltyReason" runat="server" />
-                </p>
+        <section class="chef-live-hero" aria-labelledby="pageTitle">
+            <div class="chef-live-status-card">
+                <asp:Label ID="lblStatusBadge" runat="server" CssClass="chef-live-status-badge" />
+                <h1 id="pageTitle"><asp:Literal ID="litStatusTitle" runat="server" /></h1>
+                <p><asp:Literal ID="litStatusText" runat="server" /></p>
+                <asp:Label ID="lblCurrentTitle" runat="server" CssClass="chef-live-current-title" Visible="false" />
+                <asp:Panel ID="pnlStreamingPenalty" runat="server" CssClass="chef-live-suspended" Visible="false">
+                    <p>You cannot start another livestream until <strong><asp:Label ID="lblPenaltyEndTime" runat="server" /></strong>.</p>
+                    <p><strong>Reason:</strong><br /><asp:Label ID="lblPenaltyReason" runat="server" /></p>
+                </asp:Panel>
+                <asp:Button ID="btnReturnToLive" runat="server" Text="Return to Live" CssClass="btn btn-primary chef-live-return"
+                    CausesValidation="false" Visible="false" OnClick="btnReturnToLive_Click" />
             </div>
-        </asp:Panel>
-
-        <%-- Link to an active livestream --%>
-        <asp:Panel ID="pnlActiveLive" runat="server" CssClass="live-active-panel" Visible="false">
-            <div>
-                <span class="live-status live-status--live">Live</span>
-                <p>You currently have an active livestream.</p>
-                <h2><asp:Label ID="lblActiveLiveTitle" runat="server" /></h2>
+            <div class="chef-live-preview" aria-live="polite">
+                <span class="chef-live-preview__status"><asp:Literal ID="litPreviewStatus" runat="server" /></span>
+                <h2><asp:Literal ID="litPreviewTitle" runat="server" /></h2>
+                <p><asp:Literal ID="litPreviewText" runat="server" /></p>
             </div>
-            <asp:Button ID="btnReturnToLive" runat="server" Text="Return to Live"
-                CssClass="btn btn-primary" CausesValidation="false" OnClick="btnReturnToLive_Click" />
-        </asp:Panel>
-
-        <%-- Choose between starting now and scheduling --%>
-        <section class="live-mode-selector" aria-label="Choose livestream mode">
-            <button type="button" id="btnModeNow" class="live-mode-option live-mode-option--active" aria-pressed="true">
-                <span>Go Live Now</span>
-                <small>Start your cooking livestream immediately.</small>
-            </button>
-            <button type="button" id="btnModeSchedule" class="live-mode-option" aria-pressed="false">
-                <span>Schedule Live</span>
-                <small>Plan a livestream for a future date and time.</small>
-            </button>
         </section>
-        <asp:HiddenField ID="hfLiveMode" runat="server" ClientIDMode="Static" Value="Now" />
-
-        <%-- Livestream details form --%>
-        <section class="live-form" aria-labelledby="streamDetailsTitle">
-            <header class="live-form__header">
-                <span aria-hidden="true">01</span>
-                <div>
-                    <h2 id="streamDetailsTitle">Stream Details</h2>
-                    <p>Fields marked * are required.</p>
-                </div>
-            </header>
-
-            <div class="live-form__layout">
-                <div class="live-form__fields">
-                    <div class="live-form__group">
-                        <asp:Label ID="lblLiveTitle" runat="server" AssociatedControlID="txtLiveTitle"
-                            CssClass="live-form__label" Text="Stream Title *" />
-                        <asp:TextBox ID="txtLiveTitle" runat="server" MaxLength="150"
-                            placeholder="e.g. Cooking Traditional Nasi Lemak" aria-required="true" autocomplete="off" />
-                    </div>
-
-                    <div class="live-form__group">
-                        <div class="live-form__label-row">
-                            <asp:Label ID="lblLiveDescription" runat="server" AssociatedControlID="txtLiveDescription"
-                                CssClass="live-form__label" Text="Description" />
-                            <small>Optional</small>
+        <section class="chef-channel-header" aria-label="Chef channel">
+            <asp:Image ID="imgChefAvatar" runat="server" CssClass="chef-channel-header__avatar" AlternateText="Chef profile photo" />
+            <div><h2><asp:Label ID="lblChefName" runat="server" /></h2><p>Cooking Instructor</p></div>
+        </section>
+        <div class="chef-live-tabs" role="tablist" aria-label="Livestream information">
+            <button type="button" class="chef-live-tab chef-live-tab--active" id="tabGoLive" role="tab" aria-selected="true" aria-controls="panelGoLive" data-tab="panelGoLive">Go Live</button>
+            <button type="button" class="chef-live-tab" id="tabAbout" role="tab" aria-selected="false" aria-controls="panelAbout" data-tab="panelAbout">About Stream</button>
+            <button type="button" class="chef-live-tab" id="tabRules" role="tab" aria-selected="false" aria-controls="panelRules" data-tab="panelRules">Rules</button>
+        </div>
+        <section id="panelGoLive" class="chef-live-content" role="tabpanel" aria-labelledby="tabGoLive">
+            <asp:Panel ID="pnlGoLiveForm" runat="server" CssClass="chef-live-form">
+                <header><h2>Go Live</h2><p>Share a cooking lesson with the Cooking LAH community.</p></header>
+                <div class="chef-live-form__layout">
+                    <div class="chef-live-form__fields">
+                        <div class="chef-live-form-group">
+                            <asp:Label ID="lblLiveTitle" runat="server" AssociatedControlID="txtLiveTitle" Text="Stream Title *" />
+                            <asp:TextBox ID="txtLiveTitle" runat="server" MaxLength="150" placeholder="e.g. Cooking Traditional Nasi Lemak" aria-required="true" />
                         </div>
-                        <asp:TextBox ID="txtLiveDescription" runat="server" TextMode="MultiLine" Rows="5"
-                            MaxLength="1000" placeholder="Tell learners what you will be cooking during this livestream..." />
+                        <div class="chef-live-form-group">
+                            <asp:Label ID="lblLiveDescription" runat="server" AssociatedControlID="txtLiveDescription" Text="Description" />
+                            <asp:TextBox ID="txtLiveDescription" runat="server" TextMode="MultiLine" Rows="6" MaxLength="1000" placeholder="Tell learners what you will be cooking during this livestream..." />
+                        </div>
+                    </div>
+                    <div class="chef-live-form-group chef-live-thumbnail">
+                        <asp:Label ID="lblThumbnail" runat="server" AssociatedControlID="fuThumbnail" Text="Thumbnail" />
+                        <div class="chef-live-thumbnail-preview" id="thumbnailPreview">
+                            <img id="thumbnailPreviewImage" alt="Selected livestream thumbnail preview" hidden="hidden" />
+                            <span id="thumbnailPreviewPlaceholder">Upload Thumbnail / Preview</span>
+                        </div>
+                        <asp:FileUpload ID="fuThumbnail" runat="server" ClientIDMode="Static" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" data-max-file-mb="3" />
+                        <small>Optional. JPG, JPEG, PNG or WEBP up to 3 MB.</small>
                     </div>
                 </div>
-
-                <%-- Thumbnail upload and preview --%>
-                <div class="live-form__group live-thumbnail">
-                    <asp:Label ID="lblThumbnail" runat="server" AssociatedControlID="fuThumbnail"
-                        CssClass="live-form__label" Text="Thumbnail" />
-                    <div id="thumbnailPreview" class="live-thumbnail__preview">
-                        <img src="" id="thumbnailPreviewImage" alt="Selected livestream thumbnail preview" hidden="hidden" />
-                        <span id="thumbnailPreviewPlaceholder">Thumbnail Preview</span>
-                    </div>
-                    <asp:FileUpload ID="fuThumbnail" runat="server" ClientIDMode="Static"
-                        CssClass="live-thumbnail__input" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
-                    <small>JPG, JPEG, PNG or WEBP</small>
+                <div class="chef-live-form__action">
+                    <asp:Button ID="btnStartLive" runat="server" Text="Start Live Now" CssClass="btn btn-primary" OnClick="btnStartLive_Click" />
                 </div>
-            </div>
-
-            <%-- Date and time inputs for scheduled streams --%>
-            <div id="liveSchedule" class="live-schedule" hidden="hidden">
-                <h3>Schedule</h3>
-                <p>Choose a future start time. Scheduled sessions must be at least 2 hours apart.</p>
-                <div class="live-schedule__grid">
-                    <div class="live-form__group">
-                        <asp:Label ID="lblScheduledDate" runat="server" AssociatedControlID="txtScheduledDate"
-                            CssClass="live-form__label" Text="Scheduled Date *" />
-                        <asp:TextBox ID="txtScheduledDate" runat="server" ClientIDMode="Static" TextMode="Date" />
-                    </div>
-                    <div class="live-form__group">
-                        <asp:Label ID="lblScheduledTime" runat="server" AssociatedControlID="txtScheduledTime"
-                            CssClass="live-form__label" Text="Scheduled Time *" />
-                        <asp:TextBox ID="txtScheduledTime" runat="server" ClientIDMode="Static" TextMode="Time" />
-                    </div>
-                </div>
-            </div>
-
-            <%-- Start or schedule action buttons --%>
-            <div class="live-action">
-                <div id="actionNow">
-                    <asp:Button ID="btnStartLive" runat="server" ClientIDMode="Static" Text="Start Live"
-                        CssClass="btn btn-primary" OnClick="btnStartLive_Click" />
-                </div>
-                <div id="actionSchedule" hidden="hidden">
-                    <asp:Button ID="btnScheduleLive" runat="server" ClientIDMode="Static" Text="Schedule Session"
-                        CssClass="btn btn-primary" OnClick="btnScheduleLive_Click" />
-                </div>
-            </div>
-        </section>
-
-        <%-- Upcoming scheduled livestreams --%>
-        <section class="scheduled-live" aria-labelledby="upcomingLiveTitle">
-            <header class="scheduled-live__header">
-                <h2 id="upcomingLiveTitle">Upcoming Live Sessions</h2>
-                <p>Manage livestreams you have scheduled for later.</p>
-            </header>
-
-            <div class="scheduled-live__list">
-                <asp:Repeater ID="rptScheduledSessions" runat="server" OnItemCommand="rptScheduledSessions_ItemCommand">
-                    <ItemTemplate>
-                        <article class="scheduled-live-card">
-                            <div class="scheduled-live-card__thumbnail">
-                                <asp:Image runat="server" ImageUrl='<%# Eval("ThumbnailPath") %>'
-                                    AlternateText='<%# "Thumbnail for " + Eval("Title") %>' />
-                            </div>
-
-                            <div class="scheduled-live-card__content">
-                                <span class="live-status">Scheduled</span>
-                                <h3><%#: Eval("Title") %></h3>
-                                <p class="scheduled-live-card__meta">
-                                    <time datetime='<%# Eval("ScheduledStartAt", "{0:yyyy-MM-ddTHH:mm:ss}") %>'>
-                                        <%#: Eval("ScheduledStartAt", "{0:dd MMM yyyy}") %>
-                                        <span aria-hidden="true">&bull;</span>
-                                        <%#: Eval("ScheduledStartAt", "{0:h:mm tt}") %>
-                                    </time>
-                                </p>
-                                <div class="scheduled-live-card__actions">
-                                    <asp:LinkButton ID="btnCancelScheduledLive" runat="server" CssClass="btn"
-                                        Text="Cancel" CommandName="CancelLive" CommandArgument='<%# Eval("LiveSessionID") %>'
-                                        CausesValidation="false" />
-                                    <asp:LinkButton ID="btnStartScheduledLive" runat="server" CssClass="btn btn-primary"
-                                        Text="Start Live" CommandName="StartLive" CommandArgument='<%# Eval("LiveSessionID") %>'
-                                        CausesValidation="false" />
-                                </div>
-                            </div>
-                        </article>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </div>
-
-            <%-- Message when there are no scheduled sessions --%>
-            <asp:Panel ID="pnlNoScheduledSessions" runat="server" CssClass="live-empty-state">
-                <span aria-hidden="true">○</span>
-                <h3>No upcoming livestreams</h3>
-                <p>You have not scheduled any livestreams yet.</p>
             </asp:Panel>
+            <asp:Panel ID="pnlUnavailable" runat="server" CssClass="chef-live-unavailable" Visible="false">
+                <h2><asp:Label ID="lblUnavailableTitle" runat="server" /></h2>
+                <p><asp:Label ID="lblUnavailableText" runat="server" /></p>
+            </asp:Panel>
+        </section>
+        <section id="panelAbout" class="chef-live-content" role="tabpanel" aria-labelledby="tabAbout" hidden="hidden">
+            <h2>About your stream</h2><p>Your title, description and thumbnail help learners understand what you will cook before joining.</p>
+        </section>
+        <section id="panelRules" class="chef-live-content" role="tabpanel" aria-labelledby="tabRules" hidden="hidden">
+            <h2>Community rules</h2><p>Keep your stream respectful, cooking-focused and safe for the Cooking LAH community.</p>
         </section>
     </main>
 </asp:Content>
-
-<%-- Page JavaScript --%>
 <asp:Content ID="ChefStartLiveScripts" ContentPlaceHolderID="ChefScripts" runat="server">
+    <script src="<%= ResolveUrl("~/F_JavaScripts/UploadValidation.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/Pages/LiveSessionPage/ChefStartLive.js") %>" defer></script>
 </asp:Content>

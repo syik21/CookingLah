@@ -2,4 +2,4 @@
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server"><asp:ContentPlaceHolder ID="HeadContent" runat="server" /><asp:ContentPlaceHolder ID="ProfileHead" runat="server" /></asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="server"><asp:ContentPlaceHolder ID="FeaturedContent" runat="server" /><asp:ContentPlaceHolder ID="MainContent" runat="server" /><asp:ContentPlaceHolder ID="ProfileContent" runat="server" /></asp:Content>
 <asp:Content ContentPlaceHolderID="FooterContent" runat="server"><asp:ContentPlaceHolder ID="FooterContent" runat="server" /></asp:Content>
-<asp:Content ContentPlaceHolderID="ScriptsContent" runat="server"><asp:ContentPlaceHolder ID="ScriptsContent" runat="server" /><asp:ContentPlaceHolder ID="ProfileScripts" runat="server" /></asp:Content>
+<asp:Content ContentPlaceHolderID="ScriptsContent" runat="server"><script src="<%= ResolveUrl("~/F_JavaScripts/connectionChecker.js") %>" defer></script><asp:ContentPlaceHolder ID="ScriptsContent" runat="server" /><asp:ContentPlaceHolder ID="ProfileScripts" runat="server" /></asp:Content>

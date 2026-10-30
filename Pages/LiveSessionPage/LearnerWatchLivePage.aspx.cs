@@ -28,9 +28,12 @@ namespace CookingLah.Pages.LiveSessionPage
         {
             using (SqlConnection connection = DatabaseManager.ConnectDB())
             using (SqlCommand command = new SqlCommand(@"
-                SELECT Title,Description
-                FROM LiveSessions
-                WHERE LiveSessionID=@liveSessionId AND Status='Live'", connection))
+                SELECT s.Title,s.Description,s.JitsiRoomName,u.Username,u.FullName,
+                       u.ProfileImage,u.Country,p.Profession
+                FROM LiveSessions s
+                INNER JOIN Users u ON u.UserID=s.ChefID
+                LEFT JOIN ChefProfession p ON p.ChefID=s.ChefID
+                WHERE s.LiveSessionID=@liveSessionId AND s.Status='Live'", connection))
             {
                 command.Parameters.Add("@liveSessionId", SqlDbType.Int).Value = liveSessionId;
                 connection.Open();
@@ -39,15 +42,39 @@ namespace CookingLah.Pages.LiveSessionPage
                     if (!reader.Read()) return;
                     litLiveTitle.Text = Server.HtmlEncode(Convert.ToString(reader["Title"]));
                     litLiveDescription.Text = Server.HtmlEncode(Convert.ToString(reader["Description"]));
+                    hfJitsiRoomName.Value = Convert.ToString(reader["JitsiRoomName"]);
+                    hfChefDisplayName.Value = Convert.ToString(reader["Username"]);
+                    string fullName = Convert.ToString(reader["FullName"]).Trim();
+                    string profession = Convert.ToString(reader["Profession"]).Trim();
+                    string country = Convert.ToString(reader["Country"]).Trim();
+                    litChefName.Text = Server.HtmlEncode(fullName.Length == 0 ? Convert.ToString(reader["Username"]) : fullName);
+                    litChefProfession.Text = Server.HtmlEncode(profession.Length == 0 ? "Cooking Instructor" : profession);
+                    litChefCountry.Text = Server.HtmlEncode(country.Length == 0 ? "Country not provided" : country);
+                    imgChefProfile.ImageUrl = SafeProfileImageUrl(Convert.ToString(reader["ProfileImage"]));
                 }
             }
+        }
+
+        private string SafeProfileImageUrl(string path)
+        {
+            path = (path ?? "").Trim();
+            if (path.Length == 0 || path.StartsWith("//") || path.Contains("\\"))
+                return "~/F_Assets/mascot.png";
+
+            Uri absoluteUrl;
+            if (Uri.TryCreate(path, UriKind.Absolute, out absoluteUrl) &&
+                absoluteUrl.Scheme != Uri.UriSchemeHttp &&
+                absoluteUrl.Scheme != Uri.UriSchemeHttps)
+                return "~/F_Assets/mascot.png";
+
+            return path;
         }
 
         private void LoadMessages(int liveSessionId)
         {
             using (SqlConnection connection = DatabaseManager.ConnectDB())
             using (SqlCommand command = new SqlCommand(@"
-                SELECT u.Username,m.Message,m.CreatedAt
+                SELECT u.Username,u.Role,m.Message,m.CreatedAt
                 FROM LiveSessionMessages m
                 INNER JOIN Users u ON u.UserID=m.UserID
                 INNER JOIN LiveSessions s ON s.LiveSessionID=m.LiveSessionID
@@ -67,7 +94,8 @@ namespace CookingLah.Pages.LiveSessionPage
 
         protected void btnEndLive_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect(ResolveUrl("~/Pages/LiveSessionPage/SearchLiveStream.aspx"), false);
+            Context.ApplicationInstance.CompleteRequest();
         }
     }
 }

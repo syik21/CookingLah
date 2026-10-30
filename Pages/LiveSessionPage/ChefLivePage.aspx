@@ -8,7 +8,7 @@
 
 
 <asp:Content ID="ChefLiveHead" ContentPlaceHolderID="ChefHead" runat="server">
-    <link href="<%= ResolveUrl("~/Pages/LiveSessionPage/CSS/ChefLivePage.css?v=6") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Pages/LiveSessionPage/CSS/ChefLivePage.css") %>" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="ChefLiveContent" ContentPlaceHolderID="ChefContent" runat="server">
@@ -21,22 +21,30 @@
                     ● LIVE
                 </span>
             </div>
-            <span class="live-participant-count">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3" /><path d="M3 19v-2a6 6 0 0 1 12 0v2" /><circle cx="17" cy="9" r="2.5" /><path d="M16 14a5 5 0 0 1 5 5" /></svg>
-                <span id="liveParticipantCount" role="status" aria-live="polite">Connecting...</span>
-            </span>
+            <div class="live-header-actions">
+                <span class="chef-warning-count" aria-live="polite">
+                    Warnings <strong><asp:Label ID="lblWarningCount" runat="server" ClientIDMode="Static" /> / 3</strong>
+                </span>
+                <span class="live-participant-count">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3" /><path d="M3 19v-2a6 6 0 0 1 12 0v2" /><circle cx="17" cy="9" r="2.5" /><path d="M16 14a5 5 0 0 1 5 5" /></svg>
+                    <span id="liveParticipantCount" role="status" aria-live="polite">Connecting...</span>
+                </span>
+            </div>
         </section>
 
-        <!-- ADMIN WARNING -->
-        <div
-            id="warningBanner"
-            class="warning-banner"
-            style="display:none;">
-            <strong id="warningTitle">
-                Admin Warning
-            </strong>
-            <p id="warningReason"></p>
-        </div>
+        <dialog id="warningDialog" class="chef-warning-dialog" aria-labelledby="warningTitle">
+            <div class="chef-warning-dialog__body">
+                <h2 id="warningTitle">Admin warning</h2>
+                <p>An administrator has issued a warning for this livestream.</p>
+                <div class="chef-warning-dialog__reason">
+                    <strong>Reason</strong>
+                    <p id="warningReason"></p>
+                </div>
+                <div class="chef-warning-dialog__actions">
+                    <button type="button" id="btnAcknowledgeWarning" class="btn btn-primary">I understand</button>
+                </div>
+            </div>
+        </dialog>
 
 
         <!-- MAIN LIVE AREA -->
@@ -79,6 +87,9 @@
                                         <strong>
                                             <%#: Eval("Username") %>
                                         </strong>
+
+                                        <asp:Label runat="server" CssClass="chat-role-badge" Text="ADMIN"
+                                            Visible='<%# string.Equals(Convert.ToString(Eval("Role")), "Admin", StringComparison.OrdinalIgnoreCase) %>' />
 
                                         <span>
                                             <%#: Eval(
@@ -141,6 +152,11 @@
 
         <asp:HiddenField
             ID="hfChefID"
+            runat="server"
+            ClientIDMode="Static" />
+
+        <asp:HiddenField
+            ID="hfChefDisplayName"
             runat="server"
             ClientIDMode="Static" />
 

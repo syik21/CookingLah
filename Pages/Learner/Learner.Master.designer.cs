@@ -42,6 +42,15 @@ namespace CookingLah.Pages.Learner
         protected global::System.Web.UI.WebControls.ContentPlaceHolder LearnerLiveHead;
 
         /// <summary>
+        /// SharedLiveHead control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder SharedLiveHead;
+
+        /// <summary>
         /// learnerForm control.
         /// </summary>
         /// <remarks>
@@ -114,6 +123,15 @@ namespace CookingLah.Pages.Learner
         protected global::System.Web.UI.WebControls.ContentPlaceHolder LearnerLiveContent;
 
         /// <summary>
+        /// SharedLiveContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder SharedLiveContent;
+
+        /// <summary>
         /// LearnerScripts control.
         /// </summary>
         /// <remarks>
@@ -139,5 +157,14 @@ namespace CookingLah.Pages.Learner
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder LiveScripts;
+
+        /// <summary>
+        /// SharedLiveScripts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder SharedLiveScripts;
     }
 }

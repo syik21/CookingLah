@@ -14,10 +14,13 @@
                     ● LIVE
                 </span>
             </div>
-            <span class="live-participant-count">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3" /><path d="M3 19v-2a6 6 0 0 1 12 0v2" /><circle cx="17" cy="9" r="2.5" /><path d="M16 14a5 5 0 0 1 5 5" /></svg>
-                <span id="liveParticipantCount" role="status" aria-live="polite">Connecting...</span>
-            </span>
+            <div class="live-header-actions">
+                <span class="live-participant-count">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3" /><path d="M3 19v-2a6 6 0 0 1 12 0v2" /><circle cx="17" cy="9" r="2.5" /><path d="M16 14a5 5 0 0 1 5 5" /></svg>
+                    <span id="liveParticipantCount" role="status" aria-live="polite">Connecting...</span>
+                </span>
+                <button type="button" id="btnToggleChat" class="btn-toggle-chat" aria-controls="liveChatPanel" aria-expanded="true">Hide chat</button>
+            </div>
         </section>
 
 
@@ -30,15 +33,33 @@
                     class="jitsi-container">
                 </div>
                 <div class="live-details">
-                    <h1><asp:Literal ID="litLiveTitle" runat="server" /></h1>
-                    <p><asp:Literal ID="litLiveDescription" runat="server" /></p>
+                    <div class="live-details__heading">
+                        <h1><asp:Literal ID="litLiveTitle" runat="server" /></h1>
+                        <asp:Button
+                            ID="btnEndLive"
+                            runat="server"
+                            Text="Exit This Live"
+                            CssClass="btn-end-live"
+                            UseSubmitBehavior="false"
+                            OnClick="btnEndLive_Click"
+                            OnClientClick="return exitLearnerLive(this);" />
+                    </div>
+                    <p class="live-details__description"><asp:Literal ID="litLiveDescription" runat="server" /></p>
+                    <div class="live-chef-profile">
+                        <asp:Image ID="imgChefProfile" runat="server" CssClass="live-chef-profile__photo" AlternateText="Chef profile photo" />
+                        <div class="live-chef-profile__details">
+                            <h2><asp:Literal ID="litChefName" runat="server" /></h2>
+                            <p><asp:Literal ID="litChefProfession" runat="server" /></p>
+                            <span class="live-chef-profile__country"><asp:Literal ID="litChefCountry" runat="server" /></span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
 
             <!-- LIVE CHAT -->
             <div class="live-right-panel">
-                <aside class="live-chat" aria-labelledby="liveChatTitle">
+                <aside class="live-chat" id="liveChatPanel" aria-labelledby="liveChatTitle">
                     <div class="chat-header">
                         <h2 id="liveChatTitle">
                             Live Chat
@@ -61,6 +82,9 @@
                                         <strong>
                                             <%#: Eval("Username") %>
                                         </strong>
+
+                                        <asp:Label runat="server" CssClass="chat-role-badge" Text="ADMIN"
+                                            Visible='<%# string.Equals(Convert.ToString(Eval("Role")), "Admin", StringComparison.OrdinalIgnoreCase) %>' />
 
                                         <span>
                                             <%#: Eval(
@@ -98,13 +122,6 @@
                     </div>
 
                 </aside>
-                <asp:Button
-                    ID="btnEndLive"
-                    runat="server"
-                    Text="Exit This Live"
-                    CssClass="btn-end-live"
-                    OnClick="btnEndLive_Click"
-                    OnClientClick="return confirm('Are you sure you want to end this live session?');" />
             </div>
         </section>
 
@@ -122,6 +139,11 @@
 
         <asp:HiddenField
             ID="hfLearnerID"
+            runat="server"
+            ClientIDMode="Static" />
+
+        <asp:HiddenField
+            ID="hfChefDisplayName"
             runat="server"
             ClientIDMode="Static" />
 

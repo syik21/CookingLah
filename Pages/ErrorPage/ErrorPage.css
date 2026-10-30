@@ -1,0 +1,124 @@
+.error-page {
+    min-height: 100vh;
+}
+
+.error-shell {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: clamp(24px, 5vw, 64px) 0;
+}
+
+.error-logo {
+    display: inline-block;
+    width: min(220px, 55vw);
+    margin-bottom: 28px;
+}
+
+.error-logo:focus-visible,
+.error-actions a:focus-visible {
+    outline: 3px solid var(--color-lavender);
+    outline-offset: 4px;
+}
+
+.error-card {
+    display: grid;
+    grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: clamp(28px, 6vw, 72px);
+    padding: clamp(24px, 5vw, 58px);
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--color-tan-light);
+    box-shadow: var(--shadow-md);
+}
+
+.error-visual {
+    position: relative;
+    display: grid;
+    min-height: 310px;
+    place-items: center;
+}
+
+.error-svg {
+    width: min(100%, 300px);
+}
+
+.error-visual img {
+    position: absolute;
+    right: -8px;
+    bottom: -20px;
+    width: clamp(90px, 12vw, 145px);
+    filter: drop-shadow(4px 4px 0 var(--color-ink));
+}
+
+.error-code {
+    display: inline-flex;
+    min-width: 72px;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--color-yellow);
+    font: 700 18px var(--font-body);
+}
+
+.error-copy h1 {
+    max-width: 680px;
+    margin-top: 18px;
+    font-size: clamp(48px, 7vw, 82px);
+}
+
+.error-copy > p {
+    max-width: 620px;
+    margin: 22px 0 0;
+    color: var(--color-text-soft);
+    font-size: clamp(15px, 2vw, 18px);
+}
+
+.error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.error-actions a {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.error-reload {
+    border: var(--border);
+    background: var(--color-bg);
+    box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 760px) {
+    .error-card {
+        grid-template-columns: 1fr;
+    }
+
+    .error-visual {
+        min-height: 230px;
+    }
+
+    .error-copy {
+        text-align: center;
+    }
+
+    .error-code {
+        margin: 0 auto;
+    }
+
+    .error-actions {
+        flex-direction: column;
+    }
+
+    .error-actions a {
+        width: 100%;
+    }
+}

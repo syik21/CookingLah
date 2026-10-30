@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin login - Cooking LAH</title>
+    <link rel="icon" type="image/x-icon" href="<%= ResolveUrl("~/favicon.ico?v=2") %>" />
     <link runat="server" href="~/F_CSS/Style.css" rel="stylesheet" />
     <link runat="server" href="~/F_CSS/LoginSignupPage.css" rel="stylesheet" />
     <link runat="server" href="~/Pages/Admin/LoginPage/AdminLoginPage.css" rel="stylesheet" />

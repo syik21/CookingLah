@@ -24,6 +24,15 @@ namespace CookingLah.Pages.LiveSessionPage
         protected global::System.Web.UI.WebControls.Literal litLiveTitle;
 
         /// <summary>
+        /// btnEndLive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEndLive;
+
+        /// <summary>
         /// litLiveDescription control.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,42 @@ namespace CookingLah.Pages.LiveSessionPage
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litLiveDescription;
+
+        /// <summary>
+        /// imgChefProfile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgChefProfile;
+
+        /// <summary>
+        /// litChefName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litChefName;
+
+        /// <summary>
+        /// litChefProfession control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litChefProfession;
+
+        /// <summary>
+        /// litChefCountry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litChefCountry;
 
         /// <summary>
         /// rptMessages control.
@@ -49,15 +94,6 @@ namespace CookingLah.Pages.LiveSessionPage
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtChatMessage;
-
-        /// <summary>
-        /// btnEndLive control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEndLive;
 
         /// <summary>
         /// hfLiveSessionID control.
@@ -85,5 +121,14 @@ namespace CookingLah.Pages.LiveSessionPage
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfLearnerID;
+
+        /// <summary>
+        /// hfChefDisplayName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfChefDisplayName;
     }
 }

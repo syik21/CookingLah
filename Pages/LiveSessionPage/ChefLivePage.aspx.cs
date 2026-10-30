@@ -11,14 +11,19 @@ namespace CookingLah.Pages.LiveSessionPage
         protected void Page_Load(object sender, EventArgs e)
         {
             int chefId;
-            if (!int.TryParse(Convert.ToString(Session["UserId"]), out chefId)) return;
+            if (!string.Equals(Convert.ToString(Session["Role"]), "Instructor", StringComparison.OrdinalIgnoreCase) ||
+                !int.TryParse(Convert.ToString(Session["UserId"]), out chefId)) return;
+
+            if (IsPostBack) return;
 
             using (SqlConnection connection = DatabaseManager.ConnectDB())
             using (SqlCommand command = new SqlCommand(@"
-                SELECT TOP (1) LiveSessionID,Title,Description
-                FROM LiveSessions
-                WHERE ChefID=@chefId AND Status='Live'
-                ORDER BY LiveSessionID DESC", connection))
+                SELECT s.LiveSessionID,s.Title,s.Description,s.JitsiRoomName,u.Username,
+                       (SELECT COUNT(1) FROM LiveSessionWarnings warning
+                        WHERE warning.LiveSessionID=s.LiveSessionID) AS WarningCount
+                FROM LiveSessions s
+                INNER JOIN Users u ON u.UserID=s.ChefID
+                WHERE s.ChefID=@chefId AND s.Status='Live'", connection))
             {
                 command.Parameters.Add("@chefId", SqlDbType.Int).Value = chefId;
                 connection.Open();
@@ -27,20 +32,22 @@ namespace CookingLah.Pages.LiveSessionPage
                     if (reader.Read())
                     {
                         hfLiveSessionID.Value = Convert.ToString(reader["LiveSessionID"]);
+                        hfJitsiRoomName.Value = Convert.ToString(reader["JitsiRoomName"]);
+                        hfChefDisplayName.Value = Convert.ToString(reader["Username"]);
                         litLiveTitle.Text = Server.HtmlEncode(Convert.ToString(reader["Title"]));
                         litLiveDescription.Text = Server.HtmlEncode(Convert.ToString(reader["Description"]));
+                        lblWarningCount.Text = Convert.ToString(reader["WarningCount"]);
                     }
                     else
                     {
                         hfLiveSessionID.Value = "";
+                        hfJitsiRoomName.Value = "";
+                        hfChefDisplayName.Value = "";
                     }
                 }
             }
 
-            if (!IsPostBack)
-            {
-                LoadMessages();
-            }
+            LoadMessages();
         }
 
         private void LoadMessages()
@@ -53,7 +60,7 @@ namespace CookingLah.Pages.LiveSessionPage
             using (SqlConnection conn = DatabaseManager.ConnectDB())
             {
                 string query = @"
-                SELECT u.Username, m.Message, m.CreatedAt
+                SELECT u.Username,u.Role,m.Message,m.CreatedAt
                 FROM LiveSessionMessages m
                 INNER JOIN Users u ON u.UserID = m.UserID
                 INNER JOIN LiveSessions s ON s.LiveSessionID = m.LiveSessionID
@@ -89,6 +96,7 @@ namespace CookingLah.Pages.LiveSessionPage
                 return;
             }
 
+            bool endedByChef = false;
             try
             {
                 using (SqlConnection connection = DatabaseManager.ConnectDB())
@@ -98,22 +106,30 @@ namespace CookingLah.Pages.LiveSessionPage
                     {
                         using (SqlCommand endSession = new SqlCommand(@"
                             UPDATE LiveSessions
-                            SET Status='Ended'
+                            SET Status='Offline',
+                                EndedAt=GETDATE(),
+                                UpdatedAt=GETDATE()
                             WHERE LiveSessionID=@sessionId
                               AND ChefID=@chefId
                               AND Status='Live'", connection, transaction))
                         {
                             endSession.Parameters.Add("@sessionId", SqlDbType.Int).Value = sessionId;
                             endSession.Parameters.Add("@chefId", SqlDbType.Int).Value = chefId;
-                            if (endSession.ExecuteNonQuery() != 1) return;
+                            endedByChef = endSession.ExecuteNonQuery() == 1;
                         }
 
-                        using (SqlCommand deleteMessages = new SqlCommand(@"
-                            DELETE FROM LiveSessionMessages
-                            WHERE LiveSessionID=@sessionId", connection, transaction))
+                        if (endedByChef)
                         {
-                            deleteMessages.Parameters.Add("@sessionId", SqlDbType.Int).Value = sessionId;
-                            deleteMessages.ExecuteNonQuery();
+                            using (SqlCommand deleteTemporaryData = new SqlCommand(@"
+                                DELETE FROM LiveSessionMessages
+                                WHERE LiveSessionID=@sessionId;
+
+                                DELETE FROM LiveSessionWarnings
+                                WHERE LiveSessionID=@sessionId;", connection, transaction))
+                            {
+                                deleteTemporaryData.Parameters.Add("@sessionId", SqlDbType.Int).Value = sessionId;
+                                deleteTemporaryData.ExecuteNonQuery();
+                            }
                         }
 
                         transaction.Commit();
@@ -128,13 +144,16 @@ namespace CookingLah.Pages.LiveSessionPage
                 return;
             }
 
-            var hubContext =
-                GlobalHost.ConnectionManager.GetHubContext<CookingLah.Hubs.LiveSessionHub>();
+            if (endedByChef)
+            {
+                var hubContext =
+                    GlobalHost.ConnectionManager.GetHubContext<CookingLah.Hubs.LiveSessionHub>();
 
-            hubContext.Clients.Group(CookingLah.Hubs.LiveSessionHub.GroupPrefix + sessionId)
-                .liveEnded(sessionId);
+                hubContext.Clients.Group(CookingLah.Hubs.LiveSessionHub.GroupPrefix + sessionId)
+                    .liveEnded(sessionId);
+            }
 
-            Response.Redirect(ResolveUrl("~/Pages/Chef/ChefDashboard.aspx"), false);
+            Response.Redirect(ResolveUrl("~/Pages/LiveSessionPage/ChefStartLive.aspx"), false);
             Context.ApplicationInstance.CompleteRequest();
         }
     }

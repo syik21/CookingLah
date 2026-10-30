@@ -82,6 +82,10 @@ namespace CookingLah.Pages.Admin
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder AdminContent;
 
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder SharedLiveHead;
+
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder SharedLiveContent;
+
         /// <summary>
         /// ProfileContent control.
         /// </summary>
@@ -99,6 +103,8 @@ namespace CookingLah.Pages.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder AdminScripts;
+
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder SharedLiveScripts;
 
         /// <summary>
         /// ProfileScripts control.

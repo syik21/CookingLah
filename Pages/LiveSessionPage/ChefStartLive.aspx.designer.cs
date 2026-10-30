@@ -33,6 +33,42 @@ namespace CookingLah.Pages.LiveSessionPage
         protected global::System.Web.UI.WebControls.Label lblMessage;
 
         /// <summary>
+        /// lblStatusBadge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStatusBadge;
+
+        /// <summary>
+        /// litStatusTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litStatusTitle;
+
+        /// <summary>
+        /// litStatusText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litStatusText;
+
+        /// <summary>
+        /// lblCurrentTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCurrentTitle;
+
+        /// <summary>
         /// pnlStreamingPenalty control.
         /// </summary>
         /// <remarks>
@@ -60,24 +96,6 @@ namespace CookingLah.Pages.LiveSessionPage
         protected global::System.Web.UI.WebControls.Label lblPenaltyReason;
 
         /// <summary>
-        /// pnlActiveLive control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlActiveLive;
-
-        /// <summary>
-        /// lblActiveLiveTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblActiveLiveTitle;
-
-        /// <summary>
         /// btnReturnToLive control.
         /// </summary>
         /// <remarks>
@@ -87,13 +105,58 @@ namespace CookingLah.Pages.LiveSessionPage
         protected global::System.Web.UI.WebControls.Button btnReturnToLive;
 
         /// <summary>
-        /// hfLiveMode control.
+        /// litPreviewStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfLiveMode;
+        protected global::System.Web.UI.WebControls.Literal litPreviewStatus;
+
+        /// <summary>
+        /// litPreviewTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litPreviewTitle;
+
+        /// <summary>
+        /// litPreviewText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litPreviewText;
+
+        /// <summary>
+        /// imgChefAvatar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgChefAvatar;
+
+        /// <summary>
+        /// lblChefName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblChefName;
+
+        /// <summary>
+        /// pnlGoLiveForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlGoLiveForm;
 
         /// <summary>
         /// lblLiveTitle control.
@@ -150,42 +213,6 @@ namespace CookingLah.Pages.LiveSessionPage
         protected global::System.Web.UI.WebControls.FileUpload fuThumbnail;
 
         /// <summary>
-        /// lblScheduledDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScheduledDate;
-
-        /// <summary>
-        /// txtScheduledDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtScheduledDate;
-
-        /// <summary>
-        /// lblScheduledTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblScheduledTime;
-
-        /// <summary>
-        /// txtScheduledTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtScheduledTime;
-
-        /// <summary>
         /// btnStartLive control.
         /// </summary>
         /// <remarks>
@@ -195,30 +222,30 @@ namespace CookingLah.Pages.LiveSessionPage
         protected global::System.Web.UI.WebControls.Button btnStartLive;
 
         /// <summary>
-        /// btnScheduleLive control.
+        /// pnlUnavailable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnScheduleLive;
+        protected global::System.Web.UI.WebControls.Panel pnlUnavailable;
 
         /// <summary>
-        /// rptScheduledSessions control.
+        /// lblUnavailableTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptScheduledSessions;
+        protected global::System.Web.UI.WebControls.Label lblUnavailableTitle;
 
         /// <summary>
-        /// pnlNoScheduledSessions control.
+        /// lblUnavailableText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlNoScheduledSessions;
+        protected global::System.Web.UI.WebControls.Label lblUnavailableText;
     }
 }

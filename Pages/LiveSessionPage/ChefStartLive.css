@@ -1,160 +1,290 @@
-/* ===== Page Layout and Heading ===== */
-.chef-start-live {
+.chef-live-start {
     display: grid;
-    gap: 28px;
+    gap: 24px;
     max-width: var(--content-width);
     margin: 0 auto;
 }
 
-.chef-start-live__header {
-    max-width: 720px;
-}
-
-    .chef-start-live__header h1 {
-        margin: 2px 0 8px;
-    }
-
-    .chef-start-live__header > p:last-child, .scheduled-live__header p, .live-form__header p {
-        margin: 0;
-        color: var(--color-text-soft);
-    }
-
-.chef-start-live__eyebrow {
-    margin: 0;
-    color: var(--color-primary);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-}
-
-
-/* ===== Livestream Mode Selection ===== */
-.live-mode-selector {
+.chef-live-hero {
     display: grid;
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap: 16px;
-}
-
-.live-mode-option {
-    min-height: 96px;
-    padding: 18px 20px;
-    border: var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--color-bg);
-    color: var(--color-ink);
-    text-align: left;
-    cursor: pointer;
-}
-
-    .live-mode-option span, .live-mode-option small {
-        display: block;
-    }
-
-    .live-mode-option span {
-        margin-bottom: 6px;
-        font: 700 15px/1.3 var(--font-display);
-    }
-
-    .live-mode-option small {
-        color: var(--color-text-soft);
-        font: 400 12px/1.55 var(--font-body);
-    }
-
-    .live-mode-option:hover, .live-mode-option--active {
-        background: var(--color-yellow);
-    }
-
-.live-mode-option--active {
-    box-shadow: var(--shadow-sm);
-}
-
-.live-mode-option:focus-visible {
-    outline: 3px solid var(--color-primary);
-    outline-offset: 3px;
-}
-
-
-/* ===== Stream Details Form ===== */
-.live-form, .scheduled-live {
+    grid-template-columns: minmax(250px, .7fr) minmax(0, 1.6fr);
+    overflow: hidden;
     border: var(--border);
     border-radius: var(--radius-md);
     background: var(--color-bg);
 }
 
-.live-form__header, .scheduled-live__header {
-    padding: 22px 24px;
+.chef-live-status-card {
+    padding: 28px;
+    border-right: var(--border);
+}
+
+.chef-live-status-card h1 {
+    margin: 18px 0 8px;
+    font-size: 23px;
+}
+
+.chef-live-status-card > p,
+.chef-live-form header p,
+.chef-live-unavailable p,
+.chef-live-content > p {
+    color: var(--color-text-soft);
+}
+
+.chef-live-current-title {
+    display: block;
+    margin: 16px 0;
+    font-weight: 700;
+}
+
+.chef-live-preview {
+    display: grid;
+    min-height: 340px;
+    align-content: center;
+    justify-items: center;
+    padding: 36px;
+    background: var(--color-ink);
+    color: var(--color-bg);
+    text-align: center;
+}
+
+.chef-live-preview__status {
+    padding: 6px 10px;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-pill);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .1em;
+}
+
+.chef-live-preview h2 {
+    margin: 20px 0 6px;
+}
+
+.chef-live-preview p {
+    max-width: 430px;
+    margin: 0;
+    color: var(--color-tan-light);
+}
+
+.chef-live-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 10px;
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .08em;
+}
+
+.chef-live-status-badge::before {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+}
+
+.chef-live-status-badge--offline {
+    color: var(--color-text-soft);
+}
+
+.chef-live-status-badge--live {
+    background: var(--color-lime);
+    color: var(--color-ink);
+}
+
+.chef-live-status-badge--suspended {
+    background: var(--color-pink);
+    color: var(--color-ink);
+}
+
+.chef-live-return {
+    margin-top: 18px;
+}
+
+.chef-live-suspended {
+    margin-top: 18px;
+    padding: 14px;
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--color-pink);
+}
+
+.chef-live-suspended p {
+    margin: 0 0 10px;
+}
+
+.chef-live-suspended p:last-child {
+    margin-bottom: 0;
+}
+
+.chef-channel-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.chef-channel-header__avatar {
+    width: 64px;
+    height: 64px;
+    border: var(--border);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.chef-channel-header h2,
+.chef-channel-header p {
+    margin: 0;
+}
+
+.chef-channel-header p {
+    margin-top: 3px;
+    color: var(--color-text-soft);
+}
+
+.chef-live-tabs {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
     border-bottom: var(--border);
 }
 
-.live-form__header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+.chef-live-tab {
+    padding: 13px 18px;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: var(--color-text-soft);
+    font: 700 13px var(--font-body);
+    white-space: nowrap;
+    cursor: pointer;
 }
 
-    .live-form__header > span {
-        display: grid;
-        width: 42px;
-        height: 42px;
-        place-items: center;
-        border: var(--border);
-        border-radius: 50%;
-        background: var(--color-lime);
-        font-weight: 700;
-    }
+.chef-live-tab--active {
+    border-bottom-color: var(--color-primary);
+    color: var(--color-ink);
+}
 
-    .live-form__header h2, .scheduled-live__header h2, .live-active-panel h2, .live-penalty-panel h2 {
-        margin: 0 0 4px;
-        font-size: 20px;
-    }
+.chef-live-tab:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: -3px;
+}
 
-.live-form__layout {
+.chef-live-content {
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+}
+
+.chef-live-content[hidden] {
+    display: none;
+}
+
+.chef-live-content > h2,
+.chef-live-content > p {
+    margin-right: 24px;
+    margin-left: 24px;
+}
+
+.chef-live-form header,
+.chef-live-unavailable {
+    padding: 22px 24px;
+}
+
+.chef-live-form header {
+    border-bottom: var(--border);
+}
+
+.chef-live-form header h2,
+.chef-live-form header p,
+.chef-live-unavailable h2,
+.chef-live-unavailable p {
+    margin: 0;
+}
+
+.chef-live-form header p,
+.chef-live-unavailable p {
+    margin-top: 5px;
+}
+
+.chef-live-form__layout {
     display: grid;
-    grid-template-columns: minmax(0,1.4fr) minmax(260px,.6fr);
+    grid-template-columns: minmax(0, 1.4fr) minmax(250px, .6fr);
     gap: 28px;
     padding: 26px 24px;
 }
 
-.live-form__fields, .live-form__group {
+.chef-live-form__fields,
+.chef-live-form-group {
     display: grid;
     gap: 9px;
 }
 
-.live-form__fields {
+.chef-live-form__fields {
     align-content: start;
     gap: 22px;
 }
 
-.live-form__label-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+.chef-live-form-group label {
+    width: fit-content;
+    font: 700 13px/1.3 var(--font-body);
+    color: var(--color-ink);
 }
 
-.live-form__label {
-    font-weight: 700;
-}
-
-.live-form__label-row small, .live-thumbnail > small {
-    color: var(--color-text-soft);
-    font-size: 11px;
-}
-
-.live-form input[type=text], .live-form input[type=date], .live-form input[type=time], .live-form textarea {
+.chef-live-form-group input[type=text],
+.chef-live-form-group textarea,
+.chef-live-form-group input[type=file] {
     width: 100%;
 }
 
-.live-form textarea {
+.chef-live-form-group input[type=text],
+.chef-live-form-group textarea {
+    padding: 13px 15px;
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    background: #fffdf4;
+    color: var(--color-ink);
+    font: 400 14px/1.55 var(--font-body);
+    box-shadow: 3px 3px 0 var(--color-tan);
+    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+
+.chef-live-form-group input[type=text] {
+    min-height: 48px;
+}
+
+.chef-live-form-group textarea {
+    min-height: 150px;
     resize: vertical;
 }
 
-.live-thumbnail {
+.chef-live-form-group input[type=text]::placeholder,
+.chef-live-form-group textarea::placeholder {
+    color: var(--color-text-soft);
+    opacity: .78;
+}
+
+.chef-live-form-group input[type=text]:hover,
+.chef-live-form-group textarea:hover {
+    box-shadow: 3px 3px 0 var(--color-yellow);
+}
+
+.chef-live-form-group input[type=text]:focus,
+.chef-live-form-group textarea:focus {
+    border-color: var(--color-primary);
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+    box-shadow: 4px 4px 0 var(--color-lime);
+}
+
+.chef-live-thumbnail {
     align-content: start;
 }
 
-.live-thumbnail__preview {
+.chef-live-thumbnail-preview {
     display: grid;
     min-height: 190px;
     place-items: center;
@@ -166,263 +296,87 @@
     text-align: center;
 }
 
-    .live-thumbnail__preview img {
-        width: 100%;
-        height: 190px;
-        object-fit: cover;
-    }
-
-.live-thumbnail__input {
+.chef-live-thumbnail-preview img {
     width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.chef-live-thumbnail input[type=file] {
     padding: 8px;
     border: var(--border);
     border-radius: var(--radius-sm);
     background: var(--color-bg);
-    font: inherit;
 }
 
-    .live-thumbnail__input::file-selector-button {
-        margin-right: 10px;
-        padding: 9px 12px;
-        border: 0;
-        border-radius: 6px;
-        background: var(--color-ink);
-        color: var(--color-bg);
-        font: 700 11px var(--font-body);
-        cursor: pointer;
-    }
-
-.live-schedule {
-    margin: 0 24px;
-    padding: 22px 0 26px;
-    border-top: var(--border-dashed);
+.chef-live-thumbnail small {
+    color: var(--color-text-soft);
 }
 
-    .live-schedule h3, .live-schedule p {
-        margin: 0 0 6px;
-    }
-
-    .live-schedule p {
-        color: var(--color-text-soft);
-        font-size: 12px;
-    }
-
-.live-schedule__grid {
-    display: grid;
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap: 18px;
-    margin-top: 18px;
-}
-
-.live-action {
+.chef-live-form__action {
     display: flex;
     justify-content: flex-end;
     padding: 0 24px 26px;
 }
 
-    .live-action .btn {
-        min-width: 170px;
-    }
+.chef-live-form__action .btn {
+    min-width: 180px;
+}
 
-
-/* ===== Messages and Livestream Restrictions ===== */
-.live-active-panel, .live-penalty-panel, .live-message {
-    padding: 20px 22px;
+.chef-live-message {
+    padding: 15px 18px;
     border: var(--border);
     border-radius: var(--radius-sm);
 }
 
-.live-active-panel {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
+.chef-live-message--success {
     background: var(--color-lime);
 }
 
-    .live-active-panel p {
-        margin: 10px 0 4px;
-    }
-
-.live-penalty-panel {
-    display: flex;
-    gap: 16px;
+.chef-live-message--warning {
     background: var(--color-yellow);
 }
 
-    .live-penalty-panel p {
-        margin: 5px 0 0;
-    }
-
-.live-panel-note {
-    color: var(--color-text-soft);
-}
-
-.live-panel-mark {
-    display: grid;
-    width: 36px;
-    height: 36px;
-    flex: 0 0 auto;
-    place-items: center;
-    border: var(--border);
-    border-radius: 50%;
-    background: var(--color-bg);
-    font-weight: 700;
-}
-
-.live-message.success {
-    background: var(--color-lime);
-}
-
-.live-message.warning {
-    background: var(--color-yellow);
-}
-
-.live-message.error {
+.chef-live-message--error {
     background: var(--color-pink);
 }
 
-.live-status {
-    display: inline-block;
-    padding: 5px 9px;
-    border: 1px solid var(--color-ink);
-    border-radius: var(--radius-pill);
-    background: var(--color-yellow);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-transform: uppercase;
+@media (max-width: 850px) {
+    .chef-live-hero,
+    .chef-live-form__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .chef-live-status-card {
+        border-right: 0;
+        border-bottom: var(--border);
+    }
+
+    .chef-live-preview {
+        min-height: 280px;
+    }
 }
 
-.live-status--live {
-    background: var(--color-primary);
-    color: var(--color-bg);
-}
+@media (max-width: 560px) {
+    .chef-live-start {
+        gap: 18px;
+    }
 
-.scheduled-live__list {
-    display: grid;
-}
+    .chef-live-status-card,
+    .chef-live-preview,
+    .chef-live-form header,
+    .chef-live-form__layout,
+    .chef-live-unavailable {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
 
-.scheduled-live-card {
-    display: grid;
-    grid-template-columns: 190px minmax(0,1fr);
-    gap: 22px;
-    padding: 22px 24px;
-    border-bottom: var(--border-dashed);
-}
+    .chef-live-form__action {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
 
-.scheduled-live-card__thumbnail {
-    min-height: 130px;
-    overflow: hidden;
-    border: var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--color-tan-light);
-}
-
-    .scheduled-live-card__thumbnail img {
+    .chef-live-form__action .btn {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-.scheduled-live-card__content {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-    .scheduled-live-card__content h3 {
-        margin: 12px 0 6px;
-        overflow-wrap: anywhere;
-    }
-
-.scheduled-live-card__meta {
-    margin: 0;
-    color: var(--color-text-soft);
-}
-
-.scheduled-live-card__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: auto;
-    margin-left: auto;
-}
-
-.live-empty-state {
-    padding: 42px 24px;
-    text-align: center;
-}
-
-    .live-empty-state > span {
-        display: block;
-        color: var(--color-primary);
-        font-size: 42px;
-        line-height: 1;
-    }
-
-    .live-empty-state h3 {
-        margin: 10px 0 4px;
-    }
-
-    .live-empty-state p {
-        margin: 0;
-        color: var(--color-text-soft);
-    }
-
-
-/* ===== Tablet Layout ===== */
-@media(max-width:860px) {
-    .live-form__layout {
-        grid-template-columns: 1fr;
-    }
-
-    .scheduled-live-card {
-        grid-template-columns: 150px minmax(0,1fr);
-    }
-}
-
-
-/* ===== Mobile Layout ===== */
-@media(max-width:620px) {
-    .chef-start-live {
-        gap: 20px;
-    }
-
-    .live-mode-selector, .live-schedule__grid, .scheduled-live-card {
-        grid-template-columns: 1fr;
-    }
-
-    .live-form__header, .scheduled-live__header, .live-form__layout, .scheduled-live-card {
-        padding-right: 16px;
-        padding-left: 16px;
-    }
-
-    .live-schedule {
-        margin-right: 16px;
-        margin-left: 16px;
-    }
-
-    .live-action {
-        padding-right: 16px;
-        padding-left: 16px;
-    }
-
-        .live-action > div, .live-action .btn, .scheduled-live-card__actions, .scheduled-live-card__actions .btn {
-            width: 100%;
-        }
-
-    .live-active-panel {
-        align-items: stretch;
-        flex-direction: column;
-    }
-
-    .scheduled-live-card__thumbnail {
-        height: 180px;
-    }
-
-    .scheduled-live-card__actions {
-        margin: 18px 0 0;
     }
 }

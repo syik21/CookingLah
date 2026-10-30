@@ -15,6 +15,15 @@ namespace CookingLah.Pages.LiveSessionPage
     {
 
         /// <summary>
+        /// lblWarningCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblWarningCount;
+
+        /// <summary>
         /// litLiveTitle control.
         /// </summary>
         /// <remarks>
@@ -85,5 +94,14 @@ namespace CookingLah.Pages.LiveSessionPage
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfChefID;
+
+        /// <summary>
+        /// hfChefDisplayName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfChefDisplayName;
     }
 }
