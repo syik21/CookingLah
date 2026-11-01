@@ -20,7 +20,9 @@
                 <label for="<%= txtSearchCourses.ClientID %>">Search your courses</label>
                 <div class="my-courses-search-row">
                     <div class="my-courses-search-input">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m15.5 15.5 5 5" /></svg>
+                        <span class="sketch-plus" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false"><path d="M12.2 4.5 C12 9 12.3 15 11.8 19.6"/><path d="M4.4 12.3 C9 11.8 15 12.4 19.7 11.7"/></svg>
+                        </span>
                         <asp:TextBox ID="txtSearchCourses" runat="server" TextMode="Search" MaxLength="100"
                             placeholder="Search by course name or cuisine" />
                     </div>

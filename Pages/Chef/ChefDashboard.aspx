@@ -21,6 +21,16 @@
         }
     </style>
 <main class="chef-dashboard" aria-labelledby="chefDashboardTitle">
+
+    <svg class="chef-ink-filters" xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+            <filter id="chefRoughInk" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="8" result="paperNoise" />
+                <feDisplacementMap in="SourceGraphic" in2="paperNoise" scale="4" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
     <header class="chef-dashboard-welcome">
         <h1 id="chefDashboardTitle">Chef Dashboard</h1>
         <p class="chef-dashboard-greeting">Welcome back, Chef <asp:Literal ID="litChefName" runat="server" Mode="Encode" />.</p>
@@ -28,10 +38,38 @@
     </header>
 
     <section class="chef-summary-grid" aria-label="Teaching summary">
-        <a class="chef-summary-card is-courses" href="<%= ResolveUrl("~/Pages/Chef/MyCourse/ChefMyCourse.aspx") %>"><span>Total Courses</span><strong><asp:Literal ID="litTotalCourses" runat="server" Mode="Encode" /></strong><small>View your courses</small></a>
-        <a class="chef-summary-card is-published" href="<%= ResolveUrl("~/Pages/Chef/MyCourse/ChefMyCourse.aspx") %>"><span>Published Courses</span><strong><asp:Literal ID="litPublishedCourses" runat="server" Mode="Encode" /></strong><small>Available to learners</small></a>
-        <a class="chef-summary-card is-submissions" href="<%= ResolveUrl("~/Pages/Chef/ChefReviewSubmission/ChefReviewSubmissionPage.aspx") %>"><span>Submitted Activities</span><strong><asp:Literal ID="litSubmittedActivities" runat="server" Mode="Encode" /></strong><small>Waiting for review</small></a>
-        <a class="chef-summary-card is-rating" href="<%= ResolveUrl("~/Pages/Chef/ChefViewReview/ChefViewReviewPage.aspx") %>"><span>Average Rating</span><strong><asp:Literal ID="litAverageRating" runat="server" Mode="Encode" /></strong><small><asp:Literal ID="litRatingReviewCount" runat="server" Mode="Encode" /></small></a>
+        <a class="chef-stat" href="<%= ResolveUrl("~/Pages/Chef/MyCourse/ChefMyCourse.aspx") %>">
+            <span class="chef-stat-tab">Courses</span>
+            <div class="chef-stat-body"><div class="chef-stat-sheet">
+                <strong class="chef-stat-value"><asp:Literal ID="litTotalCourses" runat="server" Mode="Encode" /></strong>
+                <span class="chef-stat-label">Total Courses</span>
+                <small class="chef-stat-hint">View your courses</small>
+            </div></div>
+        </a>
+        <a class="chef-stat" href="<%= ResolveUrl("~/Pages/Chef/MyCourse/ChefMyCourse.aspx") %>">
+            <span class="chef-stat-tab">Published</span>
+            <div class="chef-stat-body"><div class="chef-stat-sheet">
+                <strong class="chef-stat-value"><asp:Literal ID="litPublishedCourses" runat="server" Mode="Encode" /></strong>
+                <span class="chef-stat-label">Published Courses</span>
+                <small class="chef-stat-hint">Available to learners</small>
+            </div></div>
+        </a>
+        <a class="chef-stat" href="<%= ResolveUrl("~/Pages/Chef/ChefReviewSubmission/ChefReviewSubmissionPage.aspx") %>">
+            <span class="chef-stat-tab">Submissions</span>
+            <div class="chef-stat-body"><div class="chef-stat-sheet">
+                <strong class="chef-stat-value"><asp:Literal ID="litSubmittedActivities" runat="server" Mode="Encode" /></strong>
+                <span class="chef-stat-label">Submitted Activities</span>
+                <small class="chef-stat-hint">Waiting for review</small>
+            </div></div>
+        </a>
+        <a class="chef-stat" href="<%= ResolveUrl("~/Pages/Chef/ChefViewReview/ChefViewReviewPage.aspx") %>">
+            <span class="chef-stat-tab">Rating</span>
+            <div class="chef-stat-body"><div class="chef-stat-sheet">
+                <strong class="chef-stat-value"><asp:Literal ID="litAverageRating" runat="server" Mode="Encode" /></strong>
+                <span class="chef-stat-label">Average Rating</span>
+                <small class="chef-stat-hint"><asp:Literal ID="litRatingReviewCount" runat="server" Mode="Encode" /></small>
+            </div></div>
+        </a>
     </section>
 
     <asp:Panel ID="pnlNoCourses" runat="server" Visible="false" CssClass="chef-dashboard-empty chef-dashboard-start">

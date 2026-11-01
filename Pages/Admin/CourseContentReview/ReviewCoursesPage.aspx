@@ -26,20 +26,20 @@
                 <p>Review submitted courses before they are published.</p>
             </header>
 
-            <%-- Course search and chef filter --%>
-            <asp:Panel ID="pnlToolbar" runat="server" CssClass="review-toolbar" DefaultButton="btnSearch">
-                <div class="review-search">
+           <asp:Panel ID="pnlToolbar" runat="server" CssClass="sk-toolbar sketch-panel" DefaultButton="btnSearch">
+                <div class="sk-field sk-grow">
                     <asp:Label runat="server" AssociatedControlID="txtSearchCourses" Text="Search courses" />
-
-                    <div class="review-search-input">
-                        <asp:TextBox ID="txtSearchCourses" runat="server" MaxLength="150" placeholder="Search courses..." />
+                    <div class="sk-row">
+                        <div class="sk-search">
+                            <asp:TextBox ID="txtSearchCourses" runat="server" MaxLength="150" placeholder="Search by course name or chef" />
+                        </div>
                         <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="Search_Click" />
                     </div>
                 </div>
 
-                <div>
+                <div class="sk-field sk-select-field">
                     <asp:Label runat="server" AssociatedControlID="ddlChefFilter" Text="Chef" />
-                    <asp:DropDownList ID="ddlChefFilter" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="Search_Click" />
+                    <asp:DropDownList ID="ddlChefFilter" runat="server" CssClass="sk-select" AutoPostBack="true" OnSelectedIndexChanged="Search_Click" />
                 </div>
             </asp:Panel>
 

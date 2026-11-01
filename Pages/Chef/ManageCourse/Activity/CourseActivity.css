@@ -19,3 +19,42 @@
     .activity-card-heading,
     .activity-instructions { padding: 22px 20px; }
 }
+
+/* ===== Practical Activity: hand-drawn style ===== */
+.course-activity .activity-card {
+    padding: 24px 28px;
+}
+
+.course-activity .activity-card-heading {
+    padding-bottom: 16px;
+    border-bottom: 2.5px dashed #35030C;
+}
+
+.course-activity .activity-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 3px 12px;
+    border: 2px solid #35030C;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+    background: #FFD24C;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.course-activity .activity-instructions {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+}
+
+.course-activity .activity-empty-mark {
+    border-width: 2.5px;
+    border-radius: 50% 46% 52% 48% / 48% 52% 46% 50%;
+}
+
+.course-activity .activity-empty {
+    border-style: dashed;
+}

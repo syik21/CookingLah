@@ -43,6 +43,11 @@
     --shadow-sm-hover: 2px 2px 0 var(--color-ink);
     --shadow-md: 6px 6px 0 var(--color-ink);
     color-scheme: light;
+    --hero-yellow: #F4C04F;
+    --hero-orange: #EE8248;
+    --hero-brown: #B87358;
+    --hero-blue: #5C9AD0;
+    --hero-green: #6AAE5C;
 }
 
 /* =========================
@@ -993,3 +998,5 @@ body.map-dialog-open {
         display: none;
     }
 }
+
+

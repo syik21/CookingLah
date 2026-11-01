@@ -4,15 +4,6 @@
 .chef-dashboard-welcome p { margin: 8px 0 0; color: var(--color-text-soft); }
 .chef-dashboard-welcome .chef-dashboard-greeting { margin-top: 16px; color: var(--color-ink); font: 400 clamp(22px, 2.5vw, 30px)/1.2 var(--font-hand); }
 .chef-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.chef-summary-card { display: flex; min-height: 150px; padding: 20px; flex-direction: column; border: 2px solid var(--color-ink); border-radius: 14px 6px 16px 7px; background: var(--color-bg); color: var(--color-ink); text-decoration: none; }
-.chef-summary-card > span { font-size: 12px; font-weight: 700; }
-.chef-summary-card strong { margin: 12px 0 8px; font: 400 clamp(34px, 4vw, 45px)/1 var(--font-hand); overflow-wrap: anywhere; }
-.chef-summary-card small { margin-top: auto; color: var(--color-text-soft); font-size: 11px; }
-.chef-summary-card.is-courses { background: #fff0b6; }
-.chef-summary-card.is-published { background: #e5f4cb; }
-.chef-summary-card.is-submissions { background: #fbe1ed; }
-.chef-summary-card.is-rating { background: #eae0fb; }
-.chef-summary-card:focus-visible, .chef-dashboard a:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
 .chef-dashboard-overview { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(260px, .75fr); gap: 22px; }
 .chef-dashboard-panel { min-width: 0; padding: 24px; border: 2px solid var(--color-ink); border-radius: 15px 7px 17px 8px; background: var(--color-bg); }
 .chef-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 20px; }
@@ -53,3 +44,426 @@
 @media (max-width: 1050px) { .chef-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 780px) { .chef-dashboard-overview { grid-template-columns: 1fr; } .chef-section-heading { align-items: flex-start; flex-direction: column; gap: 6px; } .chef-section-heading > a { padding-bottom: 0; } }
 @media (max-width: 560px) { .chef-dashboard { gap: 24px; } .chef-summary-grid { grid-template-columns: 1fr; } .chef-summary-card { min-height: 125px; } .chef-dashboard-panel { padding: 19px 16px; } .submission-row { grid-template-columns: 1fr; } .chef-row-action { align-items: flex-start; } .review-row-heading { flex-direction: column; gap: 6px; } .chef-dashboard-start { align-items: flex-start; flex-direction: column; } .chef-status-row { grid-template-columns: 95px minmax(70px, 1fr) 28px; gap: 9px; } }
+
+
+/* ===== Chef summary: sketched folders in one row ===== */
+.chef-ink-filters {
+    position: absolute;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.chef-dashboard .chef-summary-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important; /* always one row */
+    gap: 20px;
+    padding-top: 4px;
+}
+
+.chef-stat {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: transform .15s;
+}
+
+    .chef-stat:nth-child(odd) {
+        transform: rotate(-.8deg);
+    }
+
+    .chef-stat:nth-child(even) {
+        transform: rotate(.7deg);
+    }
+
+    .chef-stat:hover {
+        transform: rotate(0) translateY(-2px);
+    }
+
+    .chef-stat:focus-visible {
+        outline: 3px solid var(--color-primary);
+        outline-offset: 6px;
+        border-radius: 12px;
+    }
+
+/* Tab */
+.chef-stat-tab {
+    position: relative;
+    z-index: 1;
+    align-self: flex-end;
+    margin: 0 12% -2px 0;
+    padding: 7px 20px 6px;
+    background: var(--color-paper);
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-bottom: 0;
+    border-radius: 16px 12px 0 0 / 14px 10px 0 0;
+    font: 400 15px/1.2 var(--font-hand);
+    white-space: nowrap;
+}
+
+    .chef-stat-tab::before {
+        content: "";
+        position: absolute;
+        inset: -2px -2px 0;
+        z-index: -1;
+        border: 2px solid var(--color-ink);
+        border-bottom: 0;
+        border-radius: inherit;
+        filter: url(#chefRoughInk);
+        pointer-events: none;
+    }
+
+/* Folder body with wobbly outline */
+.chef-stat-body {
+    position: relative;
+    isolation: isolate;
+    flex: 1;
+    padding: 12px;
+    background: var(--color-paper);
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: var(--radius-ink);
+}
+
+    .chef-stat-body::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        z-index: -1;
+        border: 2px solid var(--color-ink);
+        border-radius: inherit;
+        filter: url(#chefRoughInk);
+        pointer-events: none;
+    }
+
+/* Inner dashed sheet with punched holes */
+.chef-stat-sheet {
+    position: relative;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding: 40px 16px 14px;
+    border: 2px dashed var(--color-ink);
+    border-radius: 12px 7px 14px 8px / 8px 13px 8px 12px;
+}
+
+    .chef-stat-sheet::before {
+        content: "";
+        position: absolute;
+        top: 11px;
+        left: 14px;
+        right: 14px;
+        height: 16px;
+        background-image: radial-gradient(circle at center, transparent 0 4.5px, var(--color-ink) 5px 6px, transparent 6.5px);
+        background-size: 26px 16px;
+        background-repeat: space no-repeat;
+        pointer-events: none;
+    }
+
+.chef-stat-value {
+    display: block;
+    font: 400 clamp(34px, 3.6vw, 54px)/1 var(--font-hand);
+    overflow-wrap: anywhere;
+}
+
+.chef-stat-label {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.chef-stat-hint {
+    margin-top: auto;
+    padding-top: 6px;
+    color: var(--color-text-soft);
+    font-size: 11px;
+}
+
+/* Keep four in a row on small screens by shrinking everything */
+@media (max-width: 760px) {
+    .chef-dashboard .chef-summary-grid {
+        gap: 10px;
+    }
+
+    .chef-stat-tab {
+        margin-right: 6%;
+        padding: 5px 10px 4px;
+        font-size: 12px;
+    }
+
+    .chef-stat-body {
+        padding: 8px;
+    }
+
+    .chef-stat-sheet {
+        padding: 34px 8px 10px;
+    }
+
+        .chef-stat-sheet::before {
+            left: 8px;
+            right: 8px;
+            background-size: 20px 16px;
+        }
+
+    .chef-stat-value {
+        font-size: 28px;
+    }
+
+    .chef-stat-label {
+        font-size: 10px;
+        line-height: 1.35;
+    }
+
+    .chef-stat-hint {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chef-stat-tab {
+        display: none;
+    }
+
+    .chef-stat-sheet::before {
+        display: none;
+    }
+
+    .chef-stat-sheet {
+        padding-top: 24px;
+    }
+
+    .chef-stat-hint {
+        display: none;
+    }
+}
+
+/* ===== Chef dashboard: sketch panels, bars, quick actions ===== */
+
+/* Panels */
+.chef-dashboard .chef-dashboard-panel {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+/* Hand-drawn status bars */
+.chef-dashboard .chef-status-track {
+    height: 16px;
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 9px 12px 8px 13px / 12px 8px 13px 9px;
+    background: #fff;
+}
+
+.chef-dashboard .chef-status-row:nth-child(even) .chef-status-track {
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 12px 8px 13px 9px / 8px 13px 9px 12px;
+}
+
+/* Fill: colour + diagonal pencil shading */
+.chef-dashboard .chef-status-track .chef-status-fill {
+    min-width: 2px;
+    border-radius: 0 7px 6px 0 / 0 6px 7px 0;
+    background-color: #CDF58A;
+    background-image: repeating-linear-gradient(-45deg, rgba(53, 3, 12, .22) 0 1.5px, transparent 1.5px 6px);
+}
+
+.chef-dashboard .chef-status-row:nth-child(1) .chef-status-fill {
+    background-color: #CDF58A;
+}
+
+.chef-dashboard .chef-status-row:nth-child(2) .chef-status-fill {
+    background-color: #B99CFF;
+}
+
+.chef-dashboard .chef-status-row:nth-child(3) .chef-status-fill {
+    background-color: #FFD24C;
+}
+
+.chef-dashboard .chef-status-row:nth-child(4) .chef-status-fill {
+    background-color: #FBB8EE;
+}
+
+/* Rejected row: sketch dashed box */
+.chef-dashboard .chef-status-row.is-rejected {
+    border: 2px dashed #35030C;
+    border-radius: 14px 10px 15px 11px / 11px 15px 10px 14px;
+}
+
+/* Quick Actions buttons */
+.chef-dashboard .chef-quick-actions nav {
+    gap: 14px;
+}
+
+.chef-dashboard .chef-quick-actions .btn {
+    position: relative;
+    min-height: 56px;
+    padding: 12px 44px 12px 20px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    color: #35030C;
+    font-weight: 700;
+    box-shadow: 3px 3px 0 #35030C;
+    text-align: left;
+    transition: transform .1s ease, box-shadow .1s ease, background-color .1s ease;
+}
+
+    .chef-dashboard .chef-quick-actions .btn:nth-child(even) {
+        border-width: 2.5px 3px 2.7px 2.3px;
+        border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    }
+
+    /* Arrow on the right */
+    .chef-dashboard .chef-quick-actions .btn::after {
+        position: absolute;
+        top: 50%;
+        right: 16px;
+        width: 18px;
+        height: 18px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Cpath d='M3 9.2 L14.5 8.8' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M9.5 3.8 L15 9 L9.3 14.4' stroke='%2335030C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat center / contain;
+        content: "";
+        transform: translateY(-50%);
+        transition: transform .1s ease;
+    }
+
+    .chef-dashboard .chef-quick-actions .btn:hover {
+        background: #FFD24C;
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 #35030C;
+    }
+
+        .chef-dashboard .chef-quick-actions .btn:hover::after {
+            transform: translate(3px, -50%);
+        }
+
+    .chef-dashboard .chef-quick-actions .btn:active {
+        transform: translate(3px, 3px) rotate(-.5deg);
+        box-shadow: none;
+    }
+
+    .chef-dashboard .chef-quick-actions .btn:focus-visible {
+        outline: 3px solid #F93209;
+        outline-offset: 3px;
+    }
+
+/* ===== Chef dashboard: sketch panels, bars, quick actions ===== */
+
+/* Panels */
+.chef-dashboard .chef-dashboard-panel {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+/* Hand-drawn status bars */
+.chef-dashboard .chef-status-track {
+    height: 16px;
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 9px 12px 8px 13px / 12px 8px 13px 9px;
+    background: #fff;
+}
+
+.chef-dashboard .chef-status-row:nth-child(even) .chef-status-track {
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 12px 8px 13px 9px / 8px 13px 9px 12px;
+}
+
+/* Fill: colour + diagonal pencil shading */
+.chef-dashboard .chef-status-track .chef-status-fill {
+    min-width: 2px;
+    border-radius: 0 7px 6px 0 / 0 6px 7px 0;
+    background-color: #CDF58A;
+    background-image: repeating-linear-gradient(-45deg, rgba(53, 3, 12, .22) 0 1.5px, transparent 1.5px 6px);
+}
+
+.chef-dashboard .chef-status-row:nth-child(1) .chef-status-fill {
+    background-color: #CDF58A;
+}
+
+.chef-dashboard .chef-status-row:nth-child(2) .chef-status-fill {
+    background-color: #B99CFF;
+}
+
+.chef-dashboard .chef-status-row:nth-child(3) .chef-status-fill {
+    background-color: #FFD24C;
+}
+
+.chef-dashboard .chef-status-row:nth-child(4) .chef-status-fill {
+    background-color: #FBB8EE;
+}
+
+/* Rejected row: sketch dashed box */
+.chef-dashboard .chef-status-row.is-rejected {
+    border: 2px dashed #35030C;
+    border-radius: 14px 10px 15px 11px / 11px 15px 10px 14px;
+}
+
+/* Quick Actions buttons */
+.chef-dashboard .chef-quick-actions nav {
+    gap: 14px;
+}
+
+.chef-dashboard .chef-quick-actions .btn {
+    position: relative;
+    min-height: 56px;
+    padding: 12px 44px 12px 20px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    color: #35030C;
+    font-weight: 700;
+    box-shadow: 3px 3px 0 #35030C;
+    text-align: left;
+    transition: transform .1s ease, box-shadow .1s ease, background-color .1s ease;
+}
+
+    .chef-dashboard .chef-quick-actions .btn:nth-child(even) {
+        border-width: 2.5px 3px 2.7px 2.3px;
+        border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    }
+
+    /* Arrow on the right */
+    .chef-dashboard .chef-quick-actions .btn::after {
+        position: absolute;
+        top: 50%;
+        right: 16px;
+        width: 18px;
+        height: 18px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Cpath d='M3 9.2 L14.5 8.8' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M9.5 3.8 L15 9 L9.3 14.4' stroke='%2335030C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat center / contain;
+        content: "";
+        transform: translateY(-50%);
+        transition: transform .1s ease;
+    }
+
+    .chef-dashboard .chef-quick-actions .btn:hover {
+        background: #FFD24C;
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 #35030C;
+    }
+
+        .chef-dashboard .chef-quick-actions .btn:hover::after {
+            transform: translate(3px, -50%);
+        }
+
+    .chef-dashboard .chef-quick-actions .btn:active {
+        transform: translate(3px, 3px) rotate(-.5deg);
+        box-shadow: none;
+    }
+
+    .chef-dashboard .chef-quick-actions .btn:focus-visible {
+        outline: 3px solid #F93209;
+        outline-offset: 3px;
+    }

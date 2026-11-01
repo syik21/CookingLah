@@ -143,7 +143,9 @@
                     <div class="ur-field">
                         <label for="<%= txtSearch.ClientID %>">Search user</label>
                         <div class="ur-search-row">
-                            <asp:TextBox ID="txtSearch" runat="server" MaxLength="100" placeholder="Search username, email or name..." />
+                            <div class="sk-search">
+                                <asp:TextBox ID="txtSearch" runat="server" MaxLength="100" placeholder="Search username, email or name..." />
+                            </div>
                             <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-secondary" OnClick="Search_Click" />
                         </div>
                     </div>

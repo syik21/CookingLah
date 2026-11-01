@@ -136,3 +136,149 @@
 @media (prefers-reduced-motion: reduce) {
     .lb-lesson { transition: none; }
 }
+
+/* ===== Lesson builder: hand-drawn style ===== */
+.lesson-builder .lb-sidebar,
+.lesson-builder .lb-middle,
+.lesson-builder .lb-toolbox {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+.lesson-builder .lb-sidebar-heading {
+    border-bottom: 2.5px dashed #35030C;
+    background: #F7EFD9;
+}
+
+.lesson-builder .lb-count {
+    border: 2px solid #35030C;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+    font-weight: 700;
+}
+
+/* Lesson list items */
+.lesson-builder .lb-lesson {
+    border: 2.5px solid transparent;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+}
+
+    .lesson-builder .lb-lesson:hover:not(.is-selected) {
+        border: 2.5px dashed #35030C;
+        background: #fff;
+    }
+
+    .lesson-builder .lb-lesson.is-selected {
+        border: 2.5px solid #35030C;
+        border-width: 2.5px 3px 2.7px 2.3px;
+        background: #FFD24C;
+        box-shadow: 3px 3px 0 #35030C;
+    }
+
+.lesson-builder .lb-readiness {
+    border: 2px solid #35030C;
+    background: #fff;
+}
+
+/* Headings and dividers */
+.lesson-builder .lb-heading {
+    border-bottom: 2.5px dashed #35030C;
+}
+
+.lesson-builder .lb-content-heading {
+    border-bottom: 2.5px dashed #35030C;
+}
+
+/* Lesson information card */
+.lesson-builder .lb-information {
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+/* Content blocks */
+.lesson-builder .lb-block {
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+    box-shadow: 3px 3px 0 #35030C;
+}
+
+    .lesson-builder .lb-block:nth-child(even) {
+        border-width: 2.5px 3px 2.7px 2.3px;
+        border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    }
+
+.lesson-builder .lb-block-header {
+    border-bottom: 2.5px dashed #35030C;
+    background: #F7EFD9;
+}
+
+.lesson-builder .lb-media {
+    border: 2.5px solid #35030C;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+}
+
+/* Inputs */
+.lesson-builder .lb-field input[type=text],
+.lesson-builder .lb-field textarea {
+    min-height: 46px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+.lesson-builder .lb-field input::file-selector-button {
+    border: 2.5px solid #35030C;
+    border-radius: 12px 16px 11px 15px / 15px 11px 16px 12px;
+    background: #fff;
+    font-weight: 700;
+}
+
+    .lesson-builder .lb-field input::file-selector-button:hover {
+        background: #FFD24C;
+    }
+
+/* Small arrow / drag buttons */
+.lesson-builder .lb-list-actions button,
+.lesson-builder .lb-block-actions button,
+.lesson-builder .lb-drag {
+    border: 2px solid transparent;
+    border-radius: 12px 16px 11px 15px / 15px 11px 16px 12px;
+}
+
+    .lesson-builder .lb-list-actions button:hover:not(:disabled),
+    .lesson-builder .lb-block-actions button:hover:not(:disabled),
+    .lesson-builder .lb-drag:hover {
+        border-color: #35030C;
+        background: #FFD24C;
+    }
+
+/* Empty + error states */
+.lesson-builder .lb-empty {
+    margin: 8px 0;
+    border: 2.5px dashed #35030C;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+.lesson-builder .lb-validation {
+    border: 2.5px dashed #a61b35;
+    border-left-width: 2.5px;
+    border-radius: 14px 10px 15px 11px / 11px 15px 10px 14px;
+}
+
+.lesson-builder .lb-drop-target {
+    outline: 3px dashed #F93209;
+}
+
+.lesson-builder :focus-visible {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}

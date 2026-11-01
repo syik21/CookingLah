@@ -46,9 +46,11 @@
                         AssociatedControlID="txtSearchCategory"
                         Text="Search categories" />
 
-                    <asp:TextBox ID="txtSearchCategory" runat="server"
-                        MaxLength="100"
-                        placeholder="Search categories..." />
+                    <div class="sk-search">
+                        <asp:TextBox ID="txtSearchCategory" runat="server"
+                            MaxLength="100"
+                            placeholder="Search categories..." />
+                    </div>
                 </div>
 
                 <asp:Button ID="btnSearchCategory" runat="server"

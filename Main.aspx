@@ -2,8 +2,8 @@
 <%@ Register Src="~/Pages/Shared/WorldMap/WorldMap.ascx" TagPrefix="uc" TagName="WorldMap" %>
 <asp:Content ID="MapNavigation" ContentPlaceHolderID="ScriptsContent" runat="server">
     <script>
-        document.addEventListener('worldmap:countrychange', function (event) {
-            window.location.href = '<%= ResolveUrl("~/Pages/Guest/Map.aspx") %>?country=' + encodeURIComponent(event.detail.country);
+document.addEventListener('worldmap:countrychange', function (event) {
+    window.location.href = '<%= ResolveUrl("~/Pages/Guest/Map.aspx") %>?country=' + encodeURIComponent(event.detail.country);
         });
     </script>
 </asp:Content>

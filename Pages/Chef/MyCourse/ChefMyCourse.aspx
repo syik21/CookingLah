@@ -5,7 +5,7 @@
         <header class="manage-course-header mc-page-header"><div><p class="mc-page-eyebrow">YOUR TEACHING KITCHEN</p><h1>My Courses</h1><p class="text-muted">Manage, update, and track every cooking course.</p></div><a runat="server" href="~/Pages/Chef/CreateCourse/CreateCoursePage.aspx" class="btn btn-primary">+ Create Course</a></header>
         <asp:Panel ID="pnlNoCourses" runat="server" CssClass="card mc-empty"><h2>Your teaching kitchen starts here.</h2><p>No courses yet. Create your first cooking course.</p></asp:Panel>
         <asp:Panel ID="pnlCourseSearch" runat="server" CssClass="mc-course-search" DefaultButton="btnSearchCourses" role="search" aria-label="Search your courses">
-            <div class="mc-field"><asp:Label runat="server" AssociatedControlID="txtCourseSearch" Text="Search by course name" /><asp:TextBox ID="txtCourseSearch" runat="server" MaxLength="150" placeholder="Enter a course name" /></div>
+            <div class="mc-field"><asp:Label runat="server" AssociatedControlID="txtCourseSearch" Text="Search by course name" /><div class="sk-search"><asp:TextBox ID="txtCourseSearch" runat="server" MaxLength="150" placeholder="Enter a course name" /></div></div>
             <asp:DropDownList ID="ddlCategory" runat="server" aria-label="Filter by category" AutoPostBack="true" OnSelectedIndexChanged="btnSearchCourses_Click" />
             <asp:Button ID="btnSearchCourses" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="btnSearchCourses_Click" CausesValidation="false" />
             <asp:Button ID="btnClearCourseSearch" runat="server" Text="Clear" CssClass="btn" OnClick="btnClearCourseSearch_Click" CausesValidation="false" />

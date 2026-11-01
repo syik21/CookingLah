@@ -435,3 +435,225 @@ html.mu-modal-open {
         transition: none !important;
     }
 }
+
+/* ===== Sketch style (self-contained) ===== */
+
+/* Main panels */
+.manage-users .mu-panel {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+/* Count pill */
+.manage-users .mu-count {
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+}
+
+/* Search frame: "+" | divider | input */
+.manage-users .sk-search {
+    display: flex;
+    min-width: 0;
+    min-height: 46px;
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+    .manage-users .sk-search::before {
+        content: "";
+        flex: 0 0 44px;
+        border-right: 2.5px solid #35030C;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 3 L11 19' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3 11 L19 11' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") no-repeat center / 22px 22px;
+    }
+
+.manage-users .mu-search .sk-search input {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #35030C;
+    font: inherit;
+    font-size: 15px;
+    appearance: none;
+}
+
+    .manage-users .mu-search .sk-search input::placeholder {
+        color: #8a8378;
+        opacity: 1;
+    }
+
+    .manage-users .mu-search .sk-search input:focus,
+    .manage-users .mu-search .sk-search input:focus-visible {
+        outline: 0;
+    }
+
+.manage-users .sk-search:focus-within {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}
+
+/* Dropdowns and form inputs */
+.manage-users .mu-filters select,
+.manage-users .mu-fields select,
+.manage-users .mu-fields input:not([type=hidden]) {
+    min-height: 46px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background-color: #fff;
+    color: #35030C;
+}
+
+.manage-users .mu-fields input:not([type=hidden]) {
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+}
+
+.manage-users .mu-filters .mu-field:not(.mu-search) {
+    min-width: 170px;
+}
+
+@supports (appearance: base-select) {
+    .manage-users .mu-filters select,
+    .manage-users .mu-fields select,
+    .manage-users .mu-filters select::picker(select),
+    .manage-users .mu-fields select::picker(select) {
+        appearance: base-select;
+    }
+
+        .manage-users .mu-filters select::picker(select),
+        .manage-users .mu-fields select::picker(select) {
+            position-area: block-end span-inline-end;
+            position-try-fallbacks: none;
+            min-width: anchor-size(width);
+            max-height: 260px;
+            overflow-y: auto;
+            margin-top: 8px;
+            padding: 6px;
+            border: 2.5px solid #35030C;
+            border-width: 2.9px 2.4px 3px 2.6px;
+            border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+            background: #fff;
+            box-shadow: 3px 3px 0 #35030C;
+        }
+
+        .manage-users .mu-filters select option,
+        .manage-users .mu-fields select option {
+            padding: 10px 12px;
+            border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
+            background: #fff;
+            color: #35030C;
+            cursor: pointer;
+        }
+
+            .manage-users .mu-filters select option:hover,
+            .manage-users .mu-fields select option:hover {
+                background: #FFD24C;
+            }
+
+            .manage-users .mu-filters select option:checked,
+            .manage-users .mu-fields select option:checked {
+                background: #CDF58A;
+                font-weight: 700;
+            }
+
+            .manage-users .mu-filters select option::checkmark,
+            .manage-users .mu-fields select option::checkmark {
+                display: none;
+            }
+}
+
+/* Buttons (.btn) */
+.manage-users .btn {
+    min-height: 46px;
+    padding: 10px 22px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    color: #35030C;
+    font-weight: 700;
+    box-shadow: none;
+    cursor: pointer;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .manage-users .btn:hover {
+        background: #FFD24C;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .manage-users .btn:active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+    .manage-users .btn.mu-danger {
+        background: #35030C;
+        color: #FFF9EB;
+    }
+
+        .manage-users .btn.mu-danger:hover {
+            background: #F93209;
+            color: #35030C;
+        }
+
+/* Edit / Previous / Next / close buttons (Delete & Deactivate stay as links) */
+.manage-users .mu-action:not(.mu-remove-link) {
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    font-weight: 700;
+}
+
+    .manage-users .mu-action:not(.mu-remove-link):hover {
+        background: #FFD24C;
+    }
+
+    .manage-users .mu-action:not(.mu-remove-link):active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+/* Table: sketch header line and dashed row dividers */
+.manage-users .mu-table th {
+    border-bottom: 2.5px solid #35030C;
+}
+
+.manage-users .mu-table td {
+    border-bottom: 2px dashed #e3d3ad;
+}
+
+.manage-users .mu-directory-footer {
+    border-top: 2px dashed #35030C;
+}
+
+/* Status pills */
+.manage-users .mu-status {
+    border: 2px solid #35030C;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+    font-weight: 700;
+}
+
+/* Red focus ring */
+.manage-users :is(a, button, select):focus-visible {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+    .manage-users .mu-filters .mu-field:not(.mu-search) {
+        min-width: 0;
+    }
+}

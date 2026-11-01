@@ -30,3 +30,216 @@
 .chef-review-empty p { color: var(--color-text-soft); }
 @media (max-width: 950px) { .chef-review-filters { grid-template-columns: 1fr 1fr; } .chef-review-search { grid-column: 1 / -1; } .chef-review-row { grid-template-columns: 180px minmax(0, 1fr); } .chef-review-action { grid-column: 2; flex-direction: row; align-items: center; border-top: var(--border); border-left: 0; } }
 @media (max-width: 650px) { .chef-reviews { padding: 28px 16px 44px; } .chef-review-stats, .chef-review-filters, .chef-review-row { grid-template-columns: 1fr; } .chef-review-search { grid-column: auto; } .chef-review-image-wrap { min-height: 0; aspect-ratio: 16 / 8; } .chef-review-action { grid-column: auto; border-top: var(--border); } }
+
+/* ===== Sketch style: filters, search bar, buttons ===== */
+.chef-reviews .chef-review-filters {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+/* Search frame: "+" | divider | input */
+.chef-reviews .sk-search {
+    display: flex;
+    min-width: 0;
+    min-height: 46px;
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+    .chef-reviews .sk-search::before {
+        content: "";
+        flex: 0 0 44px;
+        border-right: 2.5px solid #35030C;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 3 L11 19' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3 11 L19 11' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") no-repeat center / 22px 22px;
+    }
+
+.chef-reviews .chef-review-filters .sk-search input {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #35030C;
+    font: inherit;
+    font-size: 15px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+    .chef-reviews .chef-review-filters .sk-search input::placeholder {
+        color: #8a8378;
+        opacity: 1;
+    }
+
+    .chef-reviews .chef-review-filters .sk-search input:focus,
+    .chef-reviews .chef-review-filters .sk-search input:focus-visible {
+        outline: 0;
+    }
+
+    .chef-reviews .chef-review-filters .sk-search input::-webkit-search-cancel-button {
+        display: none;
+    }
+
+.chef-reviews .sk-search:focus-within {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}
+
+/* Dropdowns */
+.chef-reviews .chef-review-filters select {
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background-color: #fff;
+    color: #35030C;
+    cursor: pointer;
+}
+
+@supports (appearance: base-select) {
+    .chef-reviews .chef-review-filters select,
+    .chef-reviews .chef-review-filters select::picker(select) {
+        appearance: base-select;
+    }
+
+        .chef-reviews .chef-review-filters select::picker(select) {
+            position-area: block-end span-inline-end;
+            position-try-fallbacks: none;
+            min-width: anchor-size(width);
+            max-height: 260px;
+            overflow-y: auto;
+            margin-top: 8px;
+            padding: 6px;
+            border: 2.5px solid #35030C;
+            border-width: 2.9px 2.4px 3px 2.6px;
+            border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+            background: #fff;
+            box-shadow: 3px 3px 0 #35030C;
+        }
+
+        .chef-reviews .chef-review-filters select option {
+            padding: 10px 12px;
+            border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
+            background: #fff;
+            color: #35030C;
+            cursor: pointer;
+        }
+
+            .chef-reviews .chef-review-filters select option:hover {
+                background: #FFD24C;
+            }
+
+            .chef-reviews .chef-review-filters select option:checked {
+                background: #CDF58A;
+                font-weight: 700;
+            }
+
+            .chef-reviews .chef-review-filters select option::checkmark {
+                display: none;
+            }
+}
+
+/* Buttons */
+.chef-reviews .btn {
+    min-height: 46px;
+    padding: 10px 22px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    color: #35030C;
+    font-weight: 700;
+    box-shadow: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .chef-reviews .btn:hover {
+        background: #FFD24C;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .chef-reviews .btn:active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+    .chef-reviews .btn:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+/* Stat blocks and review rows */
+.chef-reviews .chef-review-stats article,
+.chef-reviews .chef-review-row {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    box-shadow: 3px 3px 0 #35030C;
+}
+
+.chef-reviews .chef-review-action {
+    border-left: 2px dashed #35030C;
+}
+
+@media (max-width: 950px) {
+    .chef-reviews .chef-review-action {
+        border-left: 0;
+        border-top: 2px dashed #35030C;
+    }
+}
+
+/* ===== Stat cards: solid outer + dashed inner + colour marker ===== */
+.chef-reviews .chef-review-stats article {
+    position: relative;
+    min-height: 0;
+    padding: 12px 16px 12px 22px;
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 10px 14px 11px 15px / 14px 10px 15px 11px;
+    background: #fffdf7;
+    box-shadow: none;
+}
+
+    .chef-reviews .chef-review-stats article::before {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 6px;
+        background: #FFD24C;
+        content: "";
+    }
+
+    .chef-reviews .chef-review-stats article:nth-child(2)::before {
+        background: #CDF58A;
+    }
+
+    .chef-reviews .chef-review-stats article:nth-child(3)::before {
+        background: #B99CFF;
+    }
+
+    .chef-reviews .chef-review-stats article::after {
+        position: absolute;
+        inset: 4px 4px 4px 10px;
+        border: 1.8px dashed #35030C;
+        border-radius: 5px 7px 5px 8px / 7px 5px 8px 5px;
+        content: "";
+        pointer-events: none;
+    }
+
+    .chef-reviews .chef-review-stats article strong {
+        margin-top: 4px;
+        font-size: 1.7rem;
+    }

@@ -4,6 +4,15 @@
 </asp:Content>
 <asp:Content ID="DashboardContent" ContentPlaceHolderID="AdminContent" runat="server">
 <div class="admin-dashboard">
+    <svg class="admin-ink-filters" xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+            <filter id="adminRoughInk" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="8" result="paperNoise" />
+                <feDisplacementMap in="SourceGraphic" in2="paperNoise" scale="4" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
     <header class="dashboard-header">
         <p class="dashboard-kicker">The admin notebook</p><h1>Admin Dashboard</h1>
         <p class="dashboard-welcome">Welcome back, <asp:Label ID="lblAdminName" runat="server" />.</p>
@@ -12,10 +21,38 @@
     <asp:Panel ID="pnlError" runat="server" Visible="false" CssClass="dashboard-message" role="alert"><asp:Literal ID="litError" runat="server" Mode="Encode" /></asp:Panel>
 
     <section class="summary-grid" aria-label="Platform summary">
-        <a class="summary-card users" href="<%= ResolveUrl("~/Pages/Admin/ManageUser/ManageUserPage.aspx") %>"><span>Total Users</span><strong><asp:Literal ID="litTotalUsers" runat="server" /></strong><small><asp:Literal ID="litNewUsers" runat="server" /> this month</small></a>
-        <a class="summary-card courses" href="<%= ResolveUrl("~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx") %>"><span>Total Courses</span><strong><asp:Literal ID="litTotalCourses" runat="server" /></strong><small><asp:Literal ID="litPublishedCourses" runat="server" /> published</small></a>
-        <a class="summary-card active" href="<%= ResolveUrl("~/Pages/Admin/UserReport/UserReportPage.aspx") %>"><span>Active Users</span><strong><asp:Literal ID="litActiveUsers" runat="server" /></strong><small>Last 7 days</small></a>
-        <a id="pendingSummaryCard" runat="server" class="summary-card pending" href="~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx?status=Pending"><span>Pending Courses</span><strong><asp:Literal ID="litPendingCourses" runat="server" /></strong><small>Awaiting review</small></a>
+        <a class="admin-stat" href="<%= ResolveUrl("~/Pages/Admin/ManageUser/ManageUserPage.aspx") %>">
+            <span class="admin-stat-tab">Users</span>
+            <div class="admin-stat-body"><div class="admin-stat-sheet">
+                <strong class="admin-stat-value"><asp:Literal ID="litTotalUsers" runat="server" /></strong>
+                <span class="admin-stat-label">Total Users</span>
+                <small class="admin-stat-hint"><asp:Literal ID="litNewUsers" runat="server" /> this month</small>
+            </div></div>
+        </a>
+        <a class="admin-stat" href="<%= ResolveUrl("~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx") %>">
+            <span class="admin-stat-tab">Courses</span>
+            <div class="admin-stat-body"><div class="admin-stat-sheet">
+                <strong class="admin-stat-value"><asp:Literal ID="litTotalCourses" runat="server" /></strong>
+                <span class="admin-stat-label">Total Courses</span>
+                <small class="admin-stat-hint"><asp:Literal ID="litPublishedCourses" runat="server" /> published</small>
+            </div></div>
+        </a>
+        <a class="admin-stat" href="<%= ResolveUrl("~/Pages/Admin/UserReport/UserReportPage.aspx") %>">
+            <span class="admin-stat-tab">Active</span>
+            <div class="admin-stat-body"><div class="admin-stat-sheet">
+                <strong class="admin-stat-value"><asp:Literal ID="litActiveUsers" runat="server" /></strong>
+                <span class="admin-stat-label">Active Users</span>
+                <small class="admin-stat-hint">Last 7 days</small>
+            </div></div>
+        </a>
+        <a id="pendingSummaryCard" runat="server" class="admin-stat pending" href="~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx?status=Pending">
+            <span class="admin-stat-tab">Pending</span>
+            <div class="admin-stat-body"><div class="admin-stat-sheet">
+                <strong class="admin-stat-value"><asp:Literal ID="litPendingCourses" runat="server" /></strong>
+                <span class="admin-stat-label">Pending Courses</span>
+                <small class="admin-stat-hint">Awaiting review</small>
+            </div></div>
+        </a>
     </section>
 
     <div class="dashboard-top-grid">
