@@ -63,6 +63,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="F_Assets\kitchen.png" />
+    <Content Include="F_Assets\LiveSessionThumbnails\04a2af32812f4c2e997e064f4a4b172e.png" />
+    <Content Include="F_Assets\LiveSessionThumbnails\0a444011ab624294a21977c56beb6706.jpg" />
+    <Content Include="F_Assets\LiveSessionThumbnails\1c4eb9d6350042e88a001f808d8537bd.jpg" />
+    <Content Include="F_Assets\LiveSessionThumbnails\bb3f692b04a445bfbb25f2f673694cc5.jpg" />
     <Content Include="jars.png" />
     <Content Include="kitchen.png" />
     <Content Include="Pages\Chef\CourseReport\CourseReportPage.aspx" />
@@ -636,10 +641,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\Migrations\" />
-    <Folder Include="F_Assets\CourseMedia\" />
-    <Folder Include="F_Assets\ProfilePicture\" />
-    <Folder Include="F_Controllers\" />
+    <Content Include="F_Assets\CourseMedia\Submission\a02948a2f1204268b8ebf5c3a4066c4b.jpg" />
+    <Content Include="F_Assets\CourseMedia\Submission\d32bed189e36449ba3be97a0c91508fc.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -897,6 +900,14 @@
     </Compile>
     <Content Include="Pages\Admin\CourseContentReview\ViewCourse\ViewCourse.css" />
     <Content Include="Pages\Admin\CourseContentReview\ViewCourse\ViewCourse.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\Migrations\" />
+    <Folder Include="F_Assets\CourseMedia\Lesson\" />
+    <Folder Include="F_Assets\CourseMedia\Recipe\" />
+    <Folder Include="F_Assets\CourseMedia\Thumbnail\" />
+    <Folder Include="F_Assets\ProfilePicture\" />
+    <Folder Include="F_Controllers\" />
   </ItemGroup>
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

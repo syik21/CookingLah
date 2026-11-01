@@ -132,7 +132,7 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
             string imagePath;
             try
             {
-                imagePath = SaveUpload(fuActivityImage, existingImagePath);
+                imagePath = SaveUpload(fuActivityImage, existingImagePath, "Submission");
             }
             catch (InvalidOperationException ex)
             {

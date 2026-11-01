@@ -33,13 +33,14 @@ namespace CookingLah.Pages.Chef.ManageCourse
             {
                 if (string.IsNullOrWhiteSpace(path) || !path.StartsWith("~/F_Assets/CourseMedia/", StringComparison.OrdinalIgnoreCase)) continue;
                 string fileName = path.Substring("~/F_Assets/CourseMedia/".Length);
-                if (fileName.Length == 0 || Path.GetFileName(fileName) != fileName) continue;
+                if (!System.Text.RegularExpressions.Regex.IsMatch(fileName, @"\A(?:(?:Thumbnail|Recipe|Lesson|Submission)/)?[a-f0-9]{32}\.(?:jpg|mp4)\z")) continue;
                 try
                 {
                     int references = Convert.ToInt32(Read(@"
                         SELECT (SELECT COUNT(*) FROM Courses WHERE Thumbnail=@path)
                              + (SELECT COUNT(*) FROM CourseRecipes WHERE RecipeImage=@path)
-                             + (SELECT COUNT(*) FROM LessonContent WHERE MediaPath=@path)", Parameter("@path", path)).Rows[0][0]);
+                             + (SELECT COUNT(*) FROM LessonContent WHERE MediaPath=@path)
+                             + (SELECT COUNT(*) FROM ActivitySubmissions WHERE ImagePath=@path)", Parameter("@path", path)).Rows[0][0]);
                     if (references != 0) continue;
                     string mediaRoot = Path.GetFullPath(HttpContext.Current.Server.MapPath("~/F_Assets/CourseMedia/"));
                     string fullPath = Path.GetFullPath(HttpContext.Current.Server.MapPath(path));

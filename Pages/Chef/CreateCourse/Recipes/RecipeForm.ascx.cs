@@ -44,7 +44,7 @@ namespace CookingLah.Pages.Chef.CreateCourse.Recipes
             CheckNumber(txtServingSize.Text, "Serving size", errors);
             if (errors.Count > 0) throw new InvalidOperationException(string.Join(" ", errors));
             string ingredients = ValidateIngredientsJson(txtIngredients.Text);
-            ImagePath = SaveUpload(fuRecipeImage, ImagePath);
+            ImagePath = SaveUpload(fuRecipeImage, ImagePath, "Recipe");
             EditDraft(courseId, (connection, transaction) => {
                 Execute(connection, transaction,
                     "IF EXISTS (SELECT 1 FROM CourseRecipes WHERE CourseID=@id) " +

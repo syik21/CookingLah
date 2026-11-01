@@ -77,7 +77,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Overview
                     var draft = GetReviewDraft(CourseId, true);
                     if (Read("SELECT CategoryID FROM Categories WHERE CategoryID=@id", Parameter("@id", categoryId)).Rows.Count == 0)
                         throw new InvalidOperationException("This category is no longer available. Reload the page and choose another.");
-                    string image = SaveUpload(fuThumbnail, Convert.ToString(draft.Courses.Rows[0]["Thumbnail"]));
+                    string image = SaveUpload(fuThumbnail, Convert.ToString(draft.Courses.Rows[0]["Thumbnail"]), "Thumbnail");
                     draft.TrackMediaUpload(image);
                     DataRow staged = draft.Courses.Rows[0];
 
@@ -115,7 +115,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Overview
                 {
                     if (Execute(connection, transaction, "SELECT CategoryID FROM Categories WHERE CategoryID=@id", Parameter("@id", categoryId)) == null)
                         throw new InvalidOperationException("This category is no longer available. Reload the page and choose another.");
-                    string image = SaveUpload(fuThumbnail, Convert.ToString(Host.Course["Thumbnail"]));
+                    string image = SaveUpload(fuThumbnail, Convert.ToString(Host.Course["Thumbnail"]), "Thumbnail");
                     int? foodCultureId = ResolveFoodCultureId(
                         connection,
                         transaction,

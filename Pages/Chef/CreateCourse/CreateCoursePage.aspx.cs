@@ -139,7 +139,7 @@ namespace CookingLah.Pages.Chef.CreateCourse
         // Create the private draft using the submitted basic information.
         private int CreateDraftCourse()
         {
-            string thumbnail = SaveUpload(fuCourseThumbnail, "");
+            string thumbnail = SaveUpload(fuCourseThumbnail, "", "Thumbnail");
             int courseId;
 
             using (SqlConnection connection = DatabaseManager.ConnectDB())

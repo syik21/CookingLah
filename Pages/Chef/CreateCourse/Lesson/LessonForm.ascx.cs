@@ -72,8 +72,8 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
                 lesson["Title"] = ((TextBox)item.FindControl("txtLessonTitle")).Text.Trim();
                 lesson["Description"] = ((TextBox)item.FindControl("txtLessonDescription")).Text.Trim();
                 lesson["ArticleText"] = ((TextBox)item.FindControl("txtLessonInstructions")).Text.Trim();
-                lesson["ImagePath"] = SaveUpload((FileUpload)item.FindControl("fuLessonImage"), Convert.ToString(lesson["ImagePath"]));
-                lesson["VideoPath"] = SaveUpload((FileUpload)item.FindControl("fuLessonVideo"), Convert.ToString(lesson["VideoPath"]), true);
+                lesson["ImagePath"] = SaveUpload((FileUpload)item.FindControl("fuLessonImage"), Convert.ToString(lesson["ImagePath"]), "Lesson");
+                lesson["VideoPath"] = SaveUpload((FileUpload)item.FindControl("fuLessonVideo"), Convert.ToString(lesson["VideoPath"]), "Lesson", true);
             }
             Lessons = Lessons;
         }

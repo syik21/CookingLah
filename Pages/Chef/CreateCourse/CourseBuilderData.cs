@@ -268,14 +268,16 @@ namespace CookingLah.Pages.Chef.CreateCourse
             }
         }
 
-        public static string SaveUpload(FileUpload upload, string existingPath, bool video = false)
+        public static string SaveUpload(FileUpload upload, string existingPath, string subfolder, bool video = false)
         {
             if (!upload.HasFile) return existingPath;
             int limit = video ? 20 * 1024 * 1024 : 3 * 1024 * 1024;
             if (upload.PostedFile.ContentLength > limit)
                 throw new InvalidOperationException(video ? "Choose a video smaller than 20 MB." : "Choose an image smaller than 3 MB.");
 
-            string folder = "~/F_Assets/CourseMedia/";
+            if (subfolder != "Thumbnail" && subfolder != "Recipe" && subfolder != "Lesson" && subfolder != "Submission")
+                throw new ArgumentException("Invalid course media folder.", nameof(subfolder));
+            string folder = "~/F_Assets/CourseMedia/" + subfolder + "/";
             string path = folder + Guid.NewGuid().ToString("N") + (video ? ".mp4" : ".jpg");
             string physicalFolder = HttpContext.Current.Server.MapPath(folder);
             Directory.CreateDirectory(physicalFolder);

@@ -63,7 +63,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Recipe
                         draft.Recipes.Rows.Add(row);
                     }
                     row["Ingredients"] = ingredients; row["CookingTime"] = time; row["ServingSize"] = servings;
-                    string image = SaveUpload(fuRecipeImage, ImagePath);
+                    string image = SaveUpload(fuRecipeImage, ImagePath, "Recipe");
                     draft.TrackMediaUpload(image);
                     row["RecipeImage"] = image;
                     Saved("Recipe changes saved.");
@@ -77,7 +77,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Recipe
                         throw new InvalidOperationException("This content no longer exists. Reload the page.");
                     string sql = RecordId == 0 ? "INSERT INTO CourseRecipes (CourseID,Ingredients,CookingTime,ServingSize,RecipeImage) VALUES (@course,@ingredients,@time,@servings,@image)" : "UPDATE CourseRecipes SET Ingredients=@ingredients,CookingTime=@time,ServingSize=@servings,RecipeImage=@image WHERE RecipeID=@id AND CourseID=@course";
                     Execute(connection, transaction, sql, Parameter("@course", CourseId), Parameter("@id", RecordId), Parameter("@ingredients", ingredients),
-                        Parameter("@time", time), Parameter("@servings", servings), Parameter("@image", SaveUpload(fuRecipeImage, ImagePath)));
+                        Parameter("@time", time), Parameter("@servings", servings), Parameter("@image", SaveUpload(fuRecipeImage, ImagePath, "Recipe")));
                 });
                 Saved("Recipe saved successfully.");
             });

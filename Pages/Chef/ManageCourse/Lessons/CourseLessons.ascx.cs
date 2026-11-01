@@ -157,7 +157,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
                             string extension = Path.GetExtension(upload.FileName).ToLowerInvariant();
                             if (upload.PostedFile.ContentLength == 0 || (type == "Image" && extension != ".jpg" && extension != ".jpeg" && extension != ".png"))
                                 throw new InvalidOperationException("Please select a valid " + type.ToLowerInvariant() + ".");
-                            row["MediaPath"] = SaveUpload(upload, Convert.ToString(row["MediaPath"]), type == "Video");
+                            row["MediaPath"] = SaveUpload(upload, Convert.ToString(row["MediaPath"]), "Lesson", type == "Video");
                             draft.TrackMediaUpload(Convert.ToString(row["MediaPath"]));
                         }
                         if (validate && string.IsNullOrWhiteSpace(Media(row["MediaPath"]))) throw new InvalidOperationException("Please select a valid " + type.ToLowerInvariant() + ".");
