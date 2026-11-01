@@ -63,10 +63,73 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="F_Assets\avacado.png" />
+    <Content Include="F_Assets\bread.png" />
+    <Content Include="F_Assets\Broccoli.png" />
+    <Content Include="F_Assets\carrot.png" />
+    <Content Include="F_Assets\CookingLahLogo.png" />
+    <Content Include="F_Assets\corn.png" />
+    <Content Include="F_Assets\CourseMedia\Submission\a02948a2f1204268b8ebf5c3a4066c4b.jpg" />
+    <Content Include="F_Assets\CourseMedia\Submission\d32bed189e36449ba3be97a0c91508fc.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Basic Home Cooking Techniques.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Basic Sauce and Seasoning Techniques.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Beginner Baking Fundamentals.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Beginner Knife Skills and Kitchen Safety.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Healthy Everyday Meal Preparation.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Malaysian Curry Fundamentals.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Cacio e Pepe — Italy.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Char Kuey Teow.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Chicken Tagine — Morocco.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Curry Laksa.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Dal Tadka — India.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Hainanese Chicken Rice.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Kimchi Jjigae — South Korea.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Malaysian Nasi Lemak.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Menemen — Turkey.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Nasi Goreng — Indonesia.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Okonomiyaki — Japan.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Pad Kra Pao — Thailand.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Pho — Vietnam.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Tortilla Española — Spain.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Weekend Vegetable Soup.jpg" />
+    <Content Include="F_Assets\egg.png" />
+    <Content Include="F_Assets\Food\burger.png" />
+    <Content Include="F_Assets\Food\dashboard-54e82617ac54f66b.png" />
+    <Content Include="F_Assets\Food\dashboard-5fade5a8da7cf59f.png" />
+    <Content Include="F_Assets\Food\dashboard-6bebec025c22edd8.gif" />
+    <Content Include="F_Assets\Food\dashboard-a404f8c398373c81.png" />
+    <Content Include="F_Assets\Food\dashboard-eda0afe269fb608b.gif" />
+    <Content Include="F_Assets\Food\nasi lemak.png" />
+    <Content Include="F_Assets\Garlic.png" />
+    <Content Include="F_Assets\greenonion.png" />
+    <Content Include="F_Assets\instagram-icon.png" />
+    <Content Include="F_Assets\lettuce.png" />
     <Content Include="F_Assets\LiveSessionThumbnails\04a2af32812f4c2e997e064f4a4b172e.png" />
     <Content Include="F_Assets\LiveSessionThumbnails\0a444011ab624294a21977c56beb6706.jpg" />
     <Content Include="F_Assets\LiveSessionThumbnails\1c4eb9d6350042e88a001f808d8537bd.jpg" />
     <Content Include="F_Assets\LiveSessionThumbnails\bb3f692b04a445bfbb25f2f673694cc5.jpg" />
+    <Content Include="F_Assets\LoginFood1.png" />
+    <Content Include="F_Assets\LoginFood2.png" />
+    <Content Include="F_Assets\LoginFood3.png" />
+    <Content Include="F_Assets\LoginFood4.png" />
+    <Content Include="F_Assets\LoginFood5.png" />
+    <Content Include="F_Assets\LoginFood6.png" />
+    <Content Include="F_Assets\LoginFood7.png" />
+    <Content Include="F_Assets\mascot.png" />
+    <Content Include="F_Assets\milk.png" />
+    <Content Include="F_Assets\Onion.png" />
+    <Content Include="F_Assets\padkrapao.png" />
+    <Content Include="F_Assets\Pepper.png" />
+    <Content Include="F_Assets\placeholder-food.svg" />
+    <Content Include="F_Assets\plate.png" />
+    <Content Include="F_Assets\potato.png" />
+    <Content Include="F_Assets\sy.png" />
+    <Content Include="F_Assets\tacos.png" />
+    <Content Include="F_Assets\toast.png" />
+    <Content Include="F_Assets\Tomato.png" />
+    <Content Include="F_Assets\tools.png" />
+    <Content Include="F_Assets\wh.png" />
+    <Content Include="F_Assets\xx.png" />
     <Content Include="Pages\Chef\CourseReport\CourseReportPage.aspx" />
     <Content Include="Pages\Chef\CourseReport\CourseReportPage.js" />
     <Content Include="Pages\Chef\CourseReport\CourseReportPage.css" />
@@ -262,23 +325,6 @@
   <ItemGroup>
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
-    <Content Include="F_Assets\CookingLahLogo.png" />
-    <Content Include="F_Assets\placeholder-food.svg" />
-    <Content Include="F_Assets\Food\burger.png" />
-    <Content Include="F_Assets\Food\dashboard-54e82617ac54f66b.png" />
-    <Content Include="F_Assets\Food\dashboard-5fade5a8da7cf59f.png" />
-    <Content Include="F_Assets\Food\dashboard-6bebec025c22edd8.gif" />
-    <Content Include="F_Assets\Food\dashboard-a404f8c398373c81.png" />
-    <Content Include="F_Assets\Food\dashboard-eda0afe269fb608b.gif" />
-    <Content Include="F_Assets\Food\nasi lemak.png" />
-    <Content Include="F_Assets\LoginFood1.png" />
-    <Content Include="F_Assets\LoginFood2.png" />
-    <Content Include="F_Assets\LoginFood3.png" />
-    <Content Include="F_Assets\LoginFood4.png" />
-    <Content Include="F_Assets\LoginFood5.png" />
-    <Content Include="F_Assets\LoginFood6.png" />
-    <Content Include="F_Assets\LoginFood7.png" />
-    <Content Include="F_Assets\mascot.png" />
     <Content Include="Pages\Learner\Map\Map.aspx" />
     <Content Include="Pages\Learner\MyCourse\LearnerMyCourse.js" />
     <Content Include="Pages\Learner\MyCourse\LearnerMyCourse.aspx" />
@@ -635,10 +681,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="F_Assets\CourseMedia\Submission\a02948a2f1204268b8ebf5c3a4066c4b.jpg" />
-    <Content Include="F_Assets\CourseMedia\Submission\d32bed189e36449ba3be97a0c91508fc.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <None Include=".gitignore" />
     <None Include=".gitattributes" />
@@ -896,11 +938,32 @@
     <Content Include="Pages\Admin\CourseContentReview\ViewCourse\ViewCourse.js" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Basic Home Cooking Techniques.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Basic Sauce and Seasoning Techniques.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Beginner Baking Fundamentals.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Beginner Knife Skills and Kitchen Safety.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Healthy Everyday Meal Preparation.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Malaysian Curry Fundamentals.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Cacio e Pepe — Italy.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Char Kuey Teow.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Chicken Tagine — Morocco.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Curry Laksa.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Dal Tadka — India.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Hainanese Chicken Rice.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Kimchi Jjigae — South Korea.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Malaysian Nasi Lemak.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Menemen — Turkey.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Nasi Goreng — Indonesia.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Okonomiyaki — Japan.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Pad Kra Pao — Thailand.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Pho — Vietnam.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Traditional Tortilla Española — Spain.jpg" />
+    <Content Include="F_Assets\CourseMedia\Thumbnail\Weekend Vegetable Soup.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="App_Data\Migrations\" />
     <Folder Include="F_Assets\CourseMedia\Lesson\" />
     <Folder Include="F_Assets\CourseMedia\Recipe\" />
-    <Folder Include="F_Assets\CourseMedia\Thumbnail\" />
-    <Content Include="F_Assets\CourseMedia\Thumbnail\*.jpg" />
     <Folder Include="F_Assets\ProfilePicture\" />
     <Folder Include="F_Controllers\" />
   </ItemGroup>

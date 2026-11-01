@@ -13,6 +13,7 @@ namespace CookingLah.Pages.Chef.ManageCourse
 
     public partial class ManageCoursePage
     {
+        protected global::System.Web.UI.WebControls.Panel pnlSetup;
 
         /// <summary>
         /// btnBackToCourses control.

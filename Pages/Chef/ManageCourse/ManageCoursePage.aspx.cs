@@ -103,6 +103,7 @@ namespace CookingLah.Pages.Chef.ManageCourse
                 btnEditCourse.Visible = (status == "Draft" || status == "Rejected") && !CanEdit;
                 btnSaveChanges.Visible = btnCancel.Visible = CanEdit;
                 pnlPending.Visible = status == "Pending";
+                pnlSetup.Visible = status == "Draft" || status == "Pending";
                 pnlRejected.Visible = status == "Rejected";
                 litRejection.Text = Convert.ToString(Course["RejectionReason"]);
                 litSaveState.Text = CanEdit ? "Edit mode — apply section edits, then Save Changes to save the course." : "View mode";

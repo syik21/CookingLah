@@ -6,7 +6,7 @@
 <%@ Register Src="Activity/CourseActivity.ascx" TagPrefix="course" TagName="Activity" %>
 <%@ Register Src="Review/CourseReview.ascx" TagPrefix="course" TagName="Review" %>
 <asp:Content ID="Head" ContentPlaceHolderID="ChefHead" runat="server">
-    <link href="ManageCoursePage.css?v=20261029-confirm1" rel="stylesheet" />
+    <link href="ManageCoursePage.css?v=20261101-setup" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Shared/CountryPicker/CountryPicker.css") %>" rel="stylesheet" />
     <link href="Overview/CourseOverview.css" rel="stylesheet" />
     <link href="Recipe/CourseRecipe.css" rel="stylesheet" />
@@ -23,6 +23,11 @@
         <p id="builderFeedback" role="status" aria-live="polite"><asp:Literal ID="litSaveState" runat="server" Mode="Encode" /></p>
     </div>
     <asp:Panel ID="pnlMessage" runat="server" Visible="false" ClientIDMode="Static" tabindex="-1"><asp:Literal ID="litMessage" runat="server" Mode="Encode" /></asp:Panel>
+    <asp:Panel ID="pnlSetup" runat="server" CssClass="builder-setup" Visible="false">
+        <h2 class="builder-setup-heading">Course setup <span><%= SetupPercent %>% complete</span></h2>
+        <progress max="100" value="<%= SetupPercent %>" aria-label="Course setup completeness"><%= SetupPercent %>%</progress>
+        <div class="builder-checklist"><asp:Repeater ID="rptSetup" runat="server"><ItemTemplate><span><%#: Eval("Marker") %> <%#: Eval("Name") %></span></ItemTemplate></asp:Repeater></div>
+    </asp:Panel>
     <div class="course-header-card">
         <header class="manage-course-header">
             <div class="course-heading"><h1><asp:Literal ID="litCourseTitle" runat="server" Mode="Encode" /></h1>
@@ -55,10 +60,6 @@
     <asp:Panel ID="pnlRejected" runat="server" CssClass="mc-message mc-error"><h2>Admin Feedback</h2><asp:Literal ID="litRejection" runat="server" Mode="Encode" /></asp:Panel>
     <div class="manage-course-content" id="courseContent">
         <section id="section-overview" class="course-section" data-course-section="overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0" <%= CurrentTab == "overview" ? "" : "hidden" %>>
-            <details class="builder-setup"><summary>Course setup <span><%= SetupPercent %>% complete</span></summary>
-                <progress max="100" value="<%= SetupPercent %>" aria-label="Course setup completeness"><%= SetupPercent %>%</progress>
-                <div class="builder-checklist"><asp:Repeater ID="rptSetup" runat="server"><ItemTemplate><span><%#: Eval("Marker") %> <%#: Eval("Name") %></span></ItemTemplate></asp:Repeater></div>
-            </details>
             <course:Overview ID="Overview" runat="server" />
         </section>
         <section id="section-recipe" class="course-section" data-course-section="recipe" role="tabpanel" aria-labelledby="tab-recipe" tabindex="0" <%= CurrentTab == "recipe" ? "" : "hidden" %>>
