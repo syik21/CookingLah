@@ -2,3 +2,4 @@
 .overview-details dl { display: flex; flex-wrap: wrap; gap: 18px 32px; }
 .overview-details dt { font-size: 12px; color: var(--color-text-soft); }
 .overview-details dd { margin: 4px 0 0; }
+.overview-details dd, .overview-details .mc-copy { color: var(--color-primary); }

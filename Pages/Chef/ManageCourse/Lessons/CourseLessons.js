@@ -8,7 +8,7 @@
     var state = builder.querySelector('.lb-state');
     if (!editing) return;
     var dirty = false;
-    function markDirty() { dirty = true; state.textContent = 'Unsaved changes'; }
+    function markDirty() { dirty = true; state.classList.remove('lb-error'); state.textContent = 'Unsaved changes'; }
     builder.addEventListener('input', markDirty);
     builder.addEventListener('change', markDirty);
     function showError(input, message) {
@@ -53,23 +53,6 @@
             preview.hidden = !preview.src;
         });
     });
-    function validateLesson() {
-        var firstInvalid;
-        builder.querySelectorAll('[data-required], [data-maxlength], [data-lb-upload]').forEach(function (input) {
-            if (!validateInput(input) && !firstInvalid) firstInvalid = input;
-        });
-        var empty = !builder.querySelector('.lb-block');
-        var contentError = builder.querySelector('[id$="errContent"]');
-        if (contentError) contentError.textContent = empty ? 'Add at least one Article, Image, or Video to this Lesson.' : '';
-        if (firstInvalid) firstInvalid.focus();
-        if (firstInvalid || empty) state.textContent = 'Unable to save Lesson. Check the marked fields.';
-        return !firstInvalid && !empty;
-    }
-    var save = builder.querySelector('[data-save-lesson]');
-    if (save) save.addEventListener('click', function (event) { if (!validateLesson()) event.preventDefault(); });
-    builder.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' && event.target.matches('input[type=text]') && save) { event.preventDefault(); save.click(); }
-    });
     builder.querySelectorAll('[data-lesson-order]').forEach(function (group) {
         var dragged;
         function rows() { return Array.from(group.children); }
@@ -98,6 +81,7 @@
         function saveOrder() {
             var originalIds = rows().map(function (row) { return row.dataset.lessonId; });
             updateControls();
+            state.classList.remove('lb-error');
             window.CookingLahManage.saveOrder(group.dataset.lessonOrder, group.dataset.orderParent || 0, originalIds, state)
                 .then(function () { updateStructure(originalIds); })
                 .catch(function () {});

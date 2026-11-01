@@ -5,7 +5,7 @@
 <%@ Import Namespace="System.Web" %>
 
 <asp:Content ID="LearningHead" ContentPlaceHolderID="LearnerHead" runat="server">
-    <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.css?v=20261029b") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.css?v=20261102-notebook") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/Lesson/LessonContent.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/QuizSection/QuizSection.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/SubmitActivity/SubmitActivity.css") %>" rel="stylesheet" />
@@ -70,14 +70,20 @@
                     </section>
             </asp:Panel>
 
-            <section class="learning-course-header" aria-labelledby="learningCourseTitle">
-                <div class="learning-course-media">
+            <section class="notebook learning-course-header" aria-labelledby="learningCourseTitle">
+                <div class="notebook-spread">
+                <div class="notebook-page learning-course-media">
+                    <p class="notebook-caption">On the menu today</p>
                     <asp:Image ID="imgCourseThumbnail" runat="server" CssClass="learning-course-thumbnail" />
                     <asp:Panel ID="pnlCourseImagePlaceholder" runat="server" CssClass="learning-course-thumbnail course-image-placeholder" Visible="false"><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
+                    <span class="handwritten-note">A taste of home, made by you.</span>
+                    <svg class="learning-cooking-doodle" viewBox="0 0 100 60" fill="none" aria-hidden="true" focusable="false"><path d="M12 28 Q46 22 79 29 Q74 53 46 53 Q19 51 12 28Z M8 28 Q46 33 84 28 M32 18 Q25 11 34 4 M48 18 Q40 10 49 2 M63 18 Q56 11 65 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" /></svg>
                 </div>
-                <header class="learning-course-heading">
-                    <p class="learning-eyebrow">Your learning kitchen</p>
+                <div class="notebook-page learning-course-details-page">
+                <header class="scrap-paper scrap-tape learning-course-heading">
+                    <p class="learning-eyebrow">Your learning notebook</p>
                     <h1 id="learningCourseTitle"><asp:Literal ID="litCourseTitle" runat="server" Mode="Encode" /></h1>
+                    <p class="learning-course-description"><asp:Literal ID="litCourseDescription" runat="server" Mode="Encode" /></p>
                     <dl class="learning-course-facts">
                         <div><dt>Category</dt><dd><asp:Literal ID="litCourseCategory" runat="server" Mode="Encode" /></dd></div>
                         <div><dt>Level</dt><dd><asp:Literal ID="litCourseDifficulty" runat="server" Mode="Encode" /></dd></div>
@@ -85,8 +91,9 @@
                         <div><dt>Created</dt><dd><asp:Literal ID="litCourseCreated" runat="server" Mode="Encode" /></dd></div>
                         <div><dt>Chef</dt><dd><asp:Literal ID="litChefName" runat="server" Mode="Encode" /></dd></div>
                     </dl>
-                    <p class="learning-course-description"><asp:Literal ID="litCourseDescription" runat="server" Mode="Encode" /></p>
                 </header>
+                </div>
+                </div>
             </section>
 
             <section class="learning-recipe" aria-labelledby="learningRecipeTitle">

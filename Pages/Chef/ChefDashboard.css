@@ -33,7 +33,7 @@
 .chef-dashboard-row time { color: var(--color-text-soft); font-size: 11px; }
 .review-row-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
 .review-row-heading > div > p { color: var(--color-text-soft); font-size: 12px; }
-.dashboard-rating { flex: 0 0 auto; color: #8b5700; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.dashboard-rating { flex: 0 0 auto; color: var(--color-primary); font-size: 13px; font-weight: 700; white-space: nowrap; }
 .dashboard-review-comment { display: -webkit-box; max-width: 850px; overflow: hidden; line-height: 1.65; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .review-row > time { display: block; margin-top: 10px; }
 .chef-dashboard-empty { padding: 24px; border: 2px dashed var(--color-ink); border-radius: 12px 5px 14px 6px; background: var(--color-paper); text-align: center; }

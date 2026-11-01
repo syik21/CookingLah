@@ -59,9 +59,10 @@ body:has(.chef-preview-mode) .master-main {
     min-height: 34px;
     align-items: center;
     padding: 7px 13px;
-    border: 1px solid var(--color-ink);
+    border: var(--border);
     border-radius: var(--radius-pill);
-    background: #fffdf7;
+    background: var(--color-yellow);
+    color: var(--color-ink);
     font-size: 11px;
     font-weight: 800;
     white-space: nowrap;
@@ -77,9 +78,7 @@ body:has(.chef-preview-mode) .master-main {
 }
 
 .learning-course-status.is-completed {
-    border-color: #376332;
-    background: #effbd3;
-    color: #274d24;
+    background: #3fbf5f;
 }
 
 .learning-course-status.is-completed::before {
@@ -97,21 +96,38 @@ body:has(.chef-preview-mode) .master-main {
 }
 
 .learning-course-header {
-    display: grid;
-    grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr);
-    gap: clamp(22px, 4vw, 44px);
-    align-items: stretch;
-    margin-bottom: 24px;
-    padding: clamp(18px, 2.5vw, 28px);
-    border: var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--color-tan-light);
-    box-shadow: var(--shadow-sm);
+    max-width: 1100px;
+    margin: 48px auto 44px;
+    padding: 22px 20px 30px;
+    background: white;
+}
+
+.learning-course-header .notebook-page {
+    padding: 26px 20px 32px;
+}
+
+.learning-course-header .notebook-spread::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: calc(50% - 1px);
+    border-left: 2px dashed var(--color-ink);
+    pointer-events: none;
+}
+
+.learning-course-details-page {
+    display: flex;
+    align-items: center;
 }
 
 .learning-course-heading {
-    align-self: center;
+    --tape-color: #dedbd0cc;
+    width: 100%;
     min-width: 0;
+    padding: 26px 22px;
+    border-style: dashed;
+    background: white;
 }
 
 .learning-status-column {
@@ -124,16 +140,41 @@ body:has(.chef-preview-mode) .master-main {
 .learning-course-thumbnail {
     display: block;
     width: 100%;
-    height: 100%;
-    min-height: 260px;
-    aspect-ratio: 4 / 3;
-    border: 2px solid var(--color-ink);
-    border-radius: var(--radius-md);
-    object-fit: cover;
+    height: 220px;
+    object-fit: contain;
 }
 
 .learning-course-media {
-    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+}
+
+.learning-course-media .notebook-caption {
+    align-self: flex-start;
+    margin: 0;
+    transform: rotate(-3deg);
+}
+
+.learning-course-media .handwritten-note { font-size: 22px; }
+.learning-cooking-doodle { width: 54px; height: 34px; }
+
+.learning-course-heading > .learning-eyebrow {
+    margin-bottom: 12px;
+    color: var(--color-primary);
+    font-size: 11px;
+}
+
+.learning-eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 5px 10px;
+    background: var(--color-yellow);
+    color: var(--color-ink);
+    font-size: 11px;
 }
 
 .learning-eyebrow {
@@ -147,35 +188,34 @@ body:has(.chef-preview-mode) .master-main {
 
 .learning-course-heading h1 {
     margin: 0;
-    font: 400 clamp(32px, 4vw, 48px)/1.05 var(--font-hand);
+    font: 400 clamp(36px, 4vw, 54px)/1.1 var(--font-hand);
     text-align: left;
     text-transform: none;
     overflow-wrap: anywhere;
 }
 
 .learning-course-facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 20px 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 24px;
+    margin: 24px 0 0;
+    padding-top: 20px;
+    border-top: var(--border-dashed);
 }
 
 .learning-course-facts > div {
-    min-width: 112px;
+    min-width: 0;
     margin: 0;
-    padding: 10px 13px;
-    border: 1px solid var(--color-ink);
-    border-radius: var(--radius-sm);
-    background: #fffdf7;
+    overflow-wrap: anywhere;
 }
 
 .learning-course-facts > .is-dish {
-    background: var(--color-lime);
+    grid-column: 1 / -1;
 }
 
 .learning-course-facts dt {
     color: var(--color-text-soft);
-    font-size: 8px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: .06em;
     text-transform: uppercase;
@@ -183,15 +223,15 @@ body:has(.chef-preview-mode) .master-main {
 
 .learning-course-facts dd {
     margin: 4px 0 0;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 700;
 }
 
 .learning-course-description {
     max-width: 68ch;
-    margin: 20px 0 0;
+    margin: 14px 0 0;
     color: var(--color-text-soft);
-    font-size: 12px;
+    font-size: 16px;
     line-height: 1.7;
     white-space: pre-wrap;
 }
@@ -720,13 +760,12 @@ body:has(.chef-preview-mode) .master-main {
 }
 
 @media (max-width: 940px) {
-    .learning-course-header {
+    .learning-course-header .notebook-spread {
         grid-template-columns: minmax(0, 1fr);
+        gap: 26px;
     }
 
-    .learning-course-thumbnail {
-        max-height: 320px;
-    }
+    .learning-course-header .notebook-spread::before { display: none; }
 
     .learning-recipe-card {
         grid-template-columns: minmax(170px, 220px) minmax(0, 1fr);
@@ -739,9 +778,8 @@ body:has(.chef-preview-mode) .master-main {
 }
 
 @media (max-width: 720px) {
-    .learning-course-thumbnail {
-        min-height: 200px;
-        max-height: 240px;
+    .learning-course-facts {
+        gap: 16px;
     }
 
     .learning-recipe-card {
@@ -780,4 +818,34 @@ body:has(.chef-preview-mode) .master-main {
     .learning-progress-fill {
         transition: none;
     }
+}
+
+    .learning-course-header::after {
+        content: "";
+        position: absolute;
+        inset: -42px -12px;
+        z-index: 3;
+        border: 0;
+        border-radius: 0;
+        transform: none;
+        pointer-events: none;
+        background-repeat: no-repeat;
+        background-size: 48px 64px, 48px 64px, 60px 60px, 64px 64px;
+        background-position: center top, center bottom, right 0 top 30px, left 0 bottom 30px;
+        background-image:
+        /* top binder clip */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 80' fill='none' stroke='%2335030C' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 42C12 22 17 5 30 5s18 17 13 37'/%3E%3Cpath d='M24 42c-2-14 1-26 6-26s8 12 6 26'/%3E%3Cpath d='M7 42h46l-4 32H11z' fill='%23FFFDF4'/%3E%3Cpath d='M19 50v16M41 50v16' stroke-width='1.8'/%3E%3C/svg%3E"),
+        /* bottom binder clip (flipped) */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 80' fill='none' stroke='%2335030C' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='rotate(180 30 40)'%3E%3Cpath d='M17 42C12 22 17 5 30 5s18 17 13 37'/%3E%3Cpath d='M24 42c-2-14 1-26 6-26s8 12 6 26'/%3E%3Cpath d='M7 42h46l-4 32H11z' fill='%23FFFDF4'/%3E%3Cpath d='M19 50v16M41 50v16' stroke-width='1.8'/%3E%3C/g%3E%3C/svg%3E"),
+        /* star, top-right */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 108 108' fill='none' stroke='%2335030C' stroke-linejoin='round' stroke-linecap='round'%3E%3Cg transform='rotate(14 50 52)'%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' fill='%23FFFDF4' stroke-width='3'/%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' transform='translate(10 10.4) scale(.8)' stroke-width='2' stroke-dasharray='4 4'/%3E%3C/g%3E%3C/svg%3E"),
+        /* star, bottom-left */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 108 108' fill='none' stroke='%2335030C' stroke-linejoin='round' stroke-linecap='round'%3E%3Cg transform='rotate(-16 50 52)'%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' fill='%23FFFDF4' stroke-width='3'/%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' transform='translate(10 10.4) scale(.8)' stroke-width='2' stroke-dasharray='4 4'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+@media (max-width: 480px) {
+    .learning-course-header { padding: 16px 12px 28px; }
+    .learning-course-header .notebook-page { padding: 22px 14px; }
+    .learning-course-heading { padding: 22px 16px; }
+    .learning-course-header::after { background-size: 40px 56px, 40px 56px, 0 0, 0 0; }
 }

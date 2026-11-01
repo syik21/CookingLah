@@ -34,24 +34,6 @@
         if (input.dataset.qbMaxlength) input.maxLength = Number(input.dataset.qbMaxlength);
         input.addEventListener('blur', function () { validateInput(input); });
     });
-    var save = builder.querySelector('[data-save-quiz]');
-    if (save) save.addEventListener('click', function (event) {
-        var firstInvalid;
-        builder.querySelectorAll('[data-qb-required], [data-qb-score], [data-qb-maxlength]').forEach(function (input) {
-            if (!validateInput(input) && !firstInvalid) firstInvalid = input;
-        });
-        var options = builder.querySelector('.qb-options');
-        var answerMissing = options && !options.querySelector('input[type=radio]:checked');
-        if (options) builder.querySelector('[id$="errOptions"]').textContent = answerMissing ? 'Select one correct answer.' : '';
-        if (firstInvalid || answerMissing) {
-            event.preventDefault();
-            state.textContent = 'Unable to save. Check the marked fields.';
-            (firstInvalid || options.querySelector('input[type=radio]')).focus();
-        }
-    });
-    builder.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' && event.target.matches('input[type=text]') && save) { event.preventDefault(); save.click(); }
-    });
     var group = builder.querySelector('[data-question-order]');
     var dragged;
     function rows() { return Array.from(group.children); }

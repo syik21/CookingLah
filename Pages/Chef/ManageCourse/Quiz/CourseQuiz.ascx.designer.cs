@@ -35,7 +35,6 @@ namespace CookingLah.Pages.Chef.ManageCourse.Quiz
         protected global::System.Web.UI.WebControls.Literal litQuestionText;
         protected global::System.Web.UI.WebControls.Repeater rptViewOptions;
         protected global::System.Web.UI.WebControls.Panel pnlValidation;
-        protected global::System.Web.UI.WebControls.Button btnSave;
         protected global::System.Web.UI.WebControls.Literal litState;
         protected global::System.Web.UI.WebControls.HiddenField hfOrderIds;
         protected global::System.Web.UI.WebControls.Button btnSaveOrder;

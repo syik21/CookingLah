@@ -120,6 +120,7 @@ namespace CookingLah.Pages.Learner
         private void LoadExploreCourses()
         {
             Bind(rptExploreCourses, Read(@"SELECT TOP 3 c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,cat.CategoryName,
+                (SELECT TOP 1 CookingTime FROM CourseRecipes cr WHERE cr.CourseID=c.CourseID) AS CookingTime,
                 COALESCE(CONVERT(DECIMAL(3,1),AVG(CONVERT(DECIMAL(5,2),r.Rating))),0) AS AverageRating
                 FROM Courses c JOIN Categories cat ON cat.CategoryID=c.CategoryID LEFT JOIN Reviews r ON r.CourseID=c.CourseID
                 WHERE c.Status='Published' AND NOT EXISTS (SELECT 1 FROM CourseProgress cp WHERE cp.CourseID=c.CourseID AND cp.LearnerID=@id)

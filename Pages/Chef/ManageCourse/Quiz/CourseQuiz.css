@@ -147,6 +147,14 @@
     accent-color: #35030C;
 }
 
+.quiz-builder .qb-option.is-correct {
+    background: var(--color-lime);
+}
+
+.quiz-builder .qb-option.is-correct .qb-correct-choice input {
+    accent-color: #376332;
+}
+
 /* Answer options (read-only) */
 .quiz-builder .qb-read-options li {
     border: 2.5px solid #35030C;

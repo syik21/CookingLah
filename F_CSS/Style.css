@@ -13,6 +13,7 @@
     /* Colour */
     --color-bg: #FFF9EB; /* main cream */
     --color-primary: #F93209; /* red-orange highlight */
+    --color-error: #a61b35;
     --color-ink: #35030C; /* all text, borders, shadows */
     --color-text-soft: #555555;
     --color-lime: #CDF58A;
@@ -1019,6 +1020,19 @@ body.map-dialog-open {
     border: 0 !important;
     border-radius: 0 !important;
 }
+.dashboard-title-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-right: .2em;
+    vertical-align: -.12em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
 .course-image-placeholder span {
     font-size: 11px;
     font-weight: 700;

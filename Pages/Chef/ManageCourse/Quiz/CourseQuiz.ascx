@@ -50,7 +50,6 @@
             <asp:Panel ID="pnlQuestionView" runat="server" CssClass="qb-view"><h3 class="lb-copy"><asp:Literal ID="litQuestionText" runat="server" Mode="Encode" /></h3><ol class="qb-read-options"><asp:Repeater ID="rptViewOptions" runat="server"><ItemTemplate><li class='<%# Convert.ToBoolean(Eval("IsCorrect")) ? "is-correct" : "" %>'><span><%#: Eval("OptionText") %></span><asp:PlaceHolder runat="server" Visible='<%# Convert.ToBoolean(Eval("IsCorrect")) %>'><strong class="qb-answer-badge">&#10003; Correct answer</strong></asp:PlaceHolder></li></ItemTemplate></asp:Repeater></ol></asp:Panel>
         </asp:Panel>
         <asp:Panel ID="pnlValidation" runat="server" Visible="false" CssClass="lb-validation" role="alert" tabindex="-1">Unable to save. Check the marked fields.</asp:Panel>
-        <div class="lb-footer"><asp:Button ID="btnSave" runat="server" CssClass="btn btn-primary" OnClick="btnSave_Click" CausesValidation="false" data-save-quiz="" /></div>
         <p class="lb-state" role="status" aria-live="polite"><asp:Literal ID="litState" runat="server" Mode="Encode" /></p>
         <% if (CanEdit) { %><p class="lb-save-note">Edits stay in your working copy. Use Save Changes above to save the course.</p><% } %>
     </div>

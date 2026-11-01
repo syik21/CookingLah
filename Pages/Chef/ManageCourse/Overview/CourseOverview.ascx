@@ -9,7 +9,7 @@
             <h3><%#: Eval("Title") %></h3>
             <dl><div><dt>Category</dt><dd><%#: Eval("CategoryName") %></dd>
             </div><div><dt>Difficulty</dt><dd><%#: Eval("DifficultyLevel") %></dd>
-            </div><div><dt>Traditional Food</dt><dd><%#: Eval("FoodDisplayName") %></dd>
+            </div><div runat="server" visible='<%# string.Equals(Convert.ToString(Eval("CategoryName")), "Traditional Dishes", StringComparison.OrdinalIgnoreCase) %>'><dt>Traditional Food</dt><dd><%#: Eval("FoodDisplayName") %></dd>
             </div><div><dt>Status</dt><dd><%#: Eval("Status") %></dd>
             </div><div><dt>Created</dt><dd><%#: Eval("CreatedAt", "{0:dd MMM yyyy}") %></dd>
             </div><div><dt>Updated</dt><dd><%#: Eval("UpdatedAt") == DBNull.Value ? "Not updated yet" : Eval("UpdatedAt", "{0:dd MMM yyyy}") %></dd></div></dl>

@@ -300,7 +300,7 @@
 }
 
 .mc-error {
-    color: var(--color-error);
+    color: var(--color-ink);
     border-color: var(--color-error);
     background: var(--color-bg);
 }
@@ -821,6 +821,11 @@
     transition: transform .1s ease, background-color .1s ease;
 }
 
+.course-builder .btn-primary,
+.course-confirm-dialog .btn-primary {
+    background: var(--color-primary);
+}
+
     .course-builder .btn:hover:not(:disabled),
     .course-confirm-dialog .btn:hover:not(:disabled) {
         background: #FFD24C;
@@ -935,6 +940,11 @@
 }
 
 /* Form fields */
+.course-builder .mc-message.mc-error {
+    border-color: var(--color-error);
+    outline-color: var(--color-error);
+}
+
 .course-builder .mc-field input:not([type=radio]):not([type=checkbox]),
 .course-builder .mc-field textarea,
 .course-builder .mc-field select {

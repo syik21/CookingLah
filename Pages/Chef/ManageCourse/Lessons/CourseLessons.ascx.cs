@@ -73,7 +73,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
             btnAddLesson.Visible = CanEdit;
             pnlContentToolbox.Visible = CanEdit;
             btnAddArticle.Enabled = btnAddImage.Enabled = btnAddVideo.Enabled = lesson != null;
-            pnlLessonFields.Visible = btnSaveLesson.Visible = CanEdit;
+            pnlLessonFields.Visible = CanEdit;
             pnlLessonView.Visible = !CanEdit;
             var blocks = draft.LessonContent.Select("LessonID=" + SelectedLessonId, "ContentOrder ASC");
             BlockCount = blocks.Length;
@@ -262,15 +262,6 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
                 var blocks = draft.LessonContent.Select("LessonID=" + SelectedLessonId, "ContentOrder ASC");
                 for (int i = 0; i < blocks.Length; i++) blocks[i]["ContentOrder"] = i + 1;
                 BindBuilder(); UpdateLessonPanel(); litState.Text = "Content removed — unsaved changes";
-            });
-        }
-
-        protected void btnSaveLesson_Click(object sender, EventArgs e)
-        {
-            Edit(() => {
-                if (!CaptureLesson(true)) return;
-                BindBuilder();
-                litState.Text = "✓ Lesson saved to working copy. Save Changes saves the course.";
             });
         }
 

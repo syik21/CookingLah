@@ -66,10 +66,9 @@
                 </ItemTemplate></asp:Repeater>
             </div>
             <asp:Panel ID="pnlValidation" runat="server" Visible="false" CssClass="lb-validation" role="alert" tabindex="-1"><asp:Literal ID="litValidation" runat="server" Mode="Encode" /></asp:Panel>
-            <div class="lb-footer"><asp:Button ID="btnSaveLesson" runat="server" Text="Save Lesson" CssClass="btn btn-primary" OnClick="btnSaveLesson_Click" data-save-lesson="" CausesValidation="false" /></div>
         </asp:Panel>
         <p class="lb-state" role="status" aria-live="polite"><asp:Literal ID="litState" runat="server" Mode="Encode" /></p>
-        <% if (CanEdit) { %><p class="lb-save-note">Save Lesson keeps your working copy. Use Save Changes above to save the course.</p><% } %>
+        <% if (CanEdit) { %><p class="lb-save-note">Use Save Changes above to save the course.</p><% } %>
     </main>
     <asp:Panel ID="pnlContentToolbox" runat="server" CssClass="lb-toolbox">
         <h3>Add content</h3><p>Build this Lesson using content blocks.</p>

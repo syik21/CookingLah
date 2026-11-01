@@ -69,10 +69,9 @@ namespace CookingLah.Pages.Chef.ManageCourse.Quiz
             pnlEmptyQuestions.Visible = quiz != null && questions.Length == 0;
             pnlQuizInfo.Visible = quiz != null && question == null;
             pnlQuestion.Visible = question != null;
-            pnlQuizFields.Visible = pnlQuestionFields.Visible = btnSave.Visible = CanEdit && quiz != null;
+            pnlQuizFields.Visible = pnlQuestionFields.Visible = CanEdit && quiz != null;
             pnlQuizView.Visible = pnlQuestionView.Visible = !CanEdit;
             btnDeleteQuiz.Visible = CanEdit;
-            btnSave.Text = SelectionId == 0 ? "Save Quiz" : "Save Question";
             if (quiz != null)
             {
                 txtQuizTitle.Text = litQuizTitle.Text = Convert.ToString(quiz["Title"]);
@@ -271,15 +270,6 @@ namespace CookingLah.Pages.Chef.ManageCourse.Quiz
                 if (draft.Options.Select("QuestionID=" + SelectionId).Length <= 2) throw new InvalidOperationException("Keep at least two answer options.");
                 draft.Options.Rows.Remove(option);
                 BindBuilder();
-            });
-        }
-
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            Edit(() => {
-                if (!CaptureQuiz(true)) return;
-                BindBuilder();
-                litState.Text = "Saved to working copy. Save Changes saves the course.";
             });
         }
 

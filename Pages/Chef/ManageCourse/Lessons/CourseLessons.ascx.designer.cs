@@ -23,7 +23,6 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
         protected global::System.Web.UI.WebControls.Repeater rptLessonContent;
         protected global::System.Web.UI.WebControls.Panel pnlValidation;
         protected global::System.Web.UI.WebControls.Literal litValidation;
-        protected global::System.Web.UI.WebControls.Button btnSaveLesson;
         protected global::System.Web.UI.WebControls.Literal litState;
         protected global::System.Web.UI.WebControls.Panel pnlContentToolbox;
         protected global::System.Web.UI.WebControls.Button btnAddArticle;
