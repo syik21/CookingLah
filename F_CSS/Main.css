@@ -8,7 +8,7 @@
    ========================= */
 .main-hero {
     text-align: center;
-    padding: 36px 0 0;
+    padding: 30px 0 0;
 }
 
     .main-hero h1 {
@@ -55,6 +55,91 @@
     }
 }
 
+/* ===== Falling food in the hero: drops, lands at the bottom, drops again ===== */
+.main-hero {
+    position: relative;
+    padding-bottom: 180px;
+}
+
+    .main-hero .container {
+        z-index: 1;
+    }
+
+.main-falling {
+    --k: 1; /* overall size scale */
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+    .main-falling img {
+        --h: calc(var(--s) * var(--k) * var(--ar)); /* picture height */
+        --land: calc(100% - var(--h) - var(--b)); /* resting spot at the bottom */
+        position: absolute;
+        left: var(--x);
+        top: var(--land);
+        width: calc(var(--s) * var(--k));
+        height: auto;
+        transform: rotate(var(--rot));
+    }
+
+    .main-falling.is-dropping img {
+        animation: foodDrop var(--d) ease var(--dl) both;
+    }
+
+@keyframes foodDrop {
+    0% {
+        top: calc(var(--h) * -1);
+        transform: rotate(calc(var(--rot) * -4));
+        animation-timing-function: cubic-bezier(.5, 0, .9, .6);
+    }
+
+    70% {
+        top: var(--land);
+        transform: rotate(var(--rot));
+    }
+
+    82% {
+        top: calc(var(--land) - 22px);
+    }
+
+    92% {
+        top: var(--land);
+    }
+
+    96% {
+        top: calc(var(--land) - 7px);
+    }
+
+    100% {
+        top: var(--land);
+        transform: rotate(var(--rot));
+    }
+}
+
+@media (max-width: 760px) {
+    .main-hero {
+        padding-bottom: 170px;
+    }
+
+    .main-falling {
+        --k: .6;
+    }
+
+        .main-falling img:nth-child(even) {
+            display: none;
+        }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .main-falling.is-dropping img {
+        animation: none;
+    }
+    /* foods just sit at the bottom */
+}
+
 /* =========================
    2. Hero stickers
    ========================= */
@@ -96,14 +181,11 @@
     transform: rotate(-4deg);
     animation-delay: -4s;
 }
-
-
-
 /* =========================
    6. Recipes
    ========================= */
 .recipes-section {
-    padding: 80px 24px 20px;
+    padding: 100px 84px 20px;
 }
 
 .recipe-row {
@@ -163,6 +245,8 @@
     gap: 6px;
     font-weight: 700;
 }
+
+
 
 /* =========================
    7. Responsive
@@ -311,4 +395,57 @@
     .box__link {
         font-size: 12px;
     }
+}
+
+/* ===== Follow boxes: avatar, small Instagram icon, handle ===== */
+.social-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    text-align: center;
+}
+
+.social-avatar {
+    display: block;
+    width: 154px;
+    height: 154px;
+    object-fit: cover;
+;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 12px 16px 13px 17px / 16px 12px 17px 13px;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: background-color .1s ease, transform .1s ease;
+}
+
+    .social-link:hover {
+        background: var(--color-yellow);
+    }
+
+    .social-link:active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+    .social-link:focus-visible {
+        outline: 3px solid var(--color-primary);
+        outline-offset: 3px;
+    }
+
+.social-ig-icon {
+    display: block;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.social-handle {
+    font: 400 24px/1.2 var(--font-hand);
+    overflow-wrap: anywhere;
 }

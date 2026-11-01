@@ -1,66 +1,733 @@
-.food-map-shell { display:grid; grid-template-columns:minmax(260px,320px) minmax(0,1fr); gap:20px; align-items:stretch; width:100%; padding:20px; margin:0 auto; max-width:1500px; color:var(--color-ink); }
-.master-main .food-map-shell { padding:0; }
-.food-map-canvas { grid-column:2; grid-row:1; min-width:0; }
-.food-map-canvas .cl-world-map { height:600px; }
-.food-map-panel { grid-column:1; grid-row:1; display:flex; flex-direction:column; min-width:0; min-height:0; height:600px; padding:20px; border:2px solid var(--color-ink); border-radius:18px; background:#fffdf7; }
-.food-map-panel__header { margin-bottom:18px; }
-.food-map-panel__eyebrow { margin:0 0 8px; font-size:11px; font-weight:700; color:var(--color-text-soft); }
-.food-map-panel__title { margin:0; font:400 30px/1.15 var(--font-hand); }
-.food-map-panel__controls { display:grid; gap:8px; }
-.food-map-label { font-size:12px; font-weight:700; margin-top:4px; }
-.food-map-select,.food-map-search__input { width:100%; min-width:0; min-height:44px; border:1px solid var(--color-ink); border-radius:6px; padding:10px; background:white; color:var(--color-ink); font:inherit; font-size:12px; }
-.food-map-search { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
-.food-map-search__button { min-height:44px; padding:10px; font-size:12px; box-shadow:none; }
-.food-map-panel__summary { margin:20px 0 12px; padding-top:16px; border-top:1px solid var(--color-tan); }
-.food-map-country-name { display:block; font-weight:700; font-size:16px; }
-.food-map-dish-count { display:block; font-size:11px; color:var(--color-text-soft); margin-top:4px; }
-.food-map-results { display:flex; flex-direction:column; flex:1; min-height:0; overflow:auto; gap:10px; padding-right:4px; scrollbar-width:thin; }
-.food-dish-card { display:grid; grid-template-columns:68px minmax(0,1fr); gap:12px; flex-shrink:0; padding:10px; border:1px solid var(--color-tan); border-radius:8px; background:#fff; }
-.food-dish-card__image-wrap { height:74px; overflow:hidden; border-radius:5px; background:var(--color-tan-light); }
-.food-dish-card__image { display:block; width:100%; height:100%; object-fit:cover; }
-.food-dish-card__body { min-width:0; }
-.food-dish-card__title { margin:0 0 6px; font:400 22px/1.1 var(--font-hand); text-transform:none; overflow-wrap:anywhere; }
-.food-dish-card__description { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; margin:0; color:var(--color-text-soft); font-size:11px; line-height:1.6; }
-.food-map-empty { padding:24px 8px; text-align:center; }
-.food-map-empty__icon { display:none; }
-.food-map-empty h2 { font:400 28px/1.2 var(--font-hand); margin:0 0 10px; }
-.food-map-empty p { font-size:12px; color:var(--color-text-soft); }
-.food-map-pagination { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding-top:14px; margin-top:14px; border-top:1px solid var(--color-tan); }
-.food-map-pagination__button { font-size:11px; padding:8px 10px; min-height:44px; border-width:1px; box-shadow:none; }
-.food-map-pagination__info { font-size:11px; }
-.food-map-shell :is(input,select,a):focus-visible { outline:3px solid var(--color-ink); outline-offset:3px; }
+.food-map-shell {
+    display: grid;
+    grid-template-columns: minmax(260px,320px) minmax(0,1fr);
+    gap: 20px;
+    align-items: stretch;
+    width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1500px;
+    color: var(--color-ink);
+}
+
+.master-main .food-map-shell {
+    padding: 0;
+}
+
+.food-map-canvas {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+}
+
+    .food-map-canvas .cl-world-map {
+        height: 600px;
+    }
+
+.food-map-panel {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    height: 600px;
+    padding: 20px;
+    border: 2px solid var(--color-ink);
+    border-radius: 18px;
+    background: #fffdf7;
+}
+
+.food-map-panel__header {
+    margin-bottom: 18px;
+}
+
+.food-map-panel__eyebrow {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-soft);
+}
+
+.food-map-panel__title {
+    margin: 0;
+    font: 400 30px/1.15 var(--font-hand);
+}
+
+.food-map-panel__controls {
+    display: grid;
+    gap: 8px;
+}
+
+.food-map-label {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.food-map-select, .food-map-search__input {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    border: 1px solid var(--color-ink);
+    border-radius: 6px;
+    padding: 10px;
+    background: white;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 12px;
+}
+
+.food-map-search {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: 8px;
+}
+
+.food-map-search__button {
+    min-height: 44px;
+    padding: 10px;
+    font-size: 12px;
+    box-shadow: none;
+}
+
+.food-map-panel__summary {
+    margin: 20px 0 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-tan);
+}
+
+.food-map-country-name {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.food-map-dish-count {
+    display: block;
+    font-size: 11px;
+    color: var(--color-text-soft);
+    margin-top: 4px;
+}
+
+.food-map-results {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    gap: 10px;
+    padding-right: 4px;
+    scrollbar-width: thin;
+}
+
+.food-dish-card {
+    display: grid;
+    grid-template-columns: 68px minmax(0,1fr);
+    gap: 12px;
+    flex-shrink: 0;
+    padding: 10px;
+    border: 1px solid var(--color-tan);
+    border-radius: 8px;
+    background: #fff;
+}
+
+.food-dish-card__image-wrap {
+    height: 74px;
+    overflow: hidden;
+    border-radius: 5px;
+    background: var(--color-tan-light);
+}
+
+.food-dish-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.food-dish-card__body {
+    min-width: 0;
+}
+
+.food-dish-card__title {
+    margin: 0 0 6px;
+    font: 400 22px/1.1 var(--font-hand);
+    text-transform: none;
+    overflow-wrap: anywhere;
+}
+
+.food-dish-card__description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.food-map-empty {
+    padding: 24px 8px;
+    text-align: center;
+}
+
+.food-map-empty__icon {
+    display: none;
+}
+
+.food-map-empty h2 {
+    font: 400 28px/1.2 var(--font-hand);
+    margin: 0 0 10px;
+}
+
+.food-map-empty p {
+    font-size: 12px;
+    color: var(--color-text-soft);
+}
+
+.food-map-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 14px;
+    margin-top: 14px;
+    border-top: 1px solid var(--color-tan);
+}
+
+.food-map-pagination__button {
+    font-size: 11px;
+    padding: 8px 10px;
+    min-height: 44px;
+    border-width: 1px;
+    box-shadow: none;
+}
+
+.food-map-pagination__info {
+    font-size: 11px;
+}
+
+.food-map-shell :is(input,select,a):focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+}
 
 
 /* Keep the page stationary; only the dish list scrolls. */
-body.food-map-page-active { overflow:hidden; }
+body.food-map-page-active {
+    overflow: hidden;
+}
+
 .food-map-page-active #siteMain,
-.food-map-page-active .master-main { padding:0; margin:0; max-width:none; }
-.food-map-page-active .master-layout { min-height:0; }
-.food-map-shell { position:relative; display:block; max-width:none; padding:0; height:calc(100vh - var(--food-map-top, 100px)); height:calc(100dvh - var(--food-map-top, 100px)); overflow:hidden; }
-.food-map-canvas { position:absolute; inset:0; }
-.food-map-canvas .cl-world-map { height:100%; border:0; border-radius:0; grid-template-rows:minmax(0,1fr); }
-.food-map-canvas .cl-world-map__heading { display:none; }
-.food-map-canvas .cl-world-map__footer { position:absolute; right:16px; bottom:12px; padding:0; border:0; }
-.food-map-canvas .cl-world-map__footer p { display:none; }
-.food-map-panel-toggle { position:absolute; top:16px; left:16px; min-height:44px; padding:8px 14px; box-shadow:none; }
-.food-map-panel { position:absolute; top:68px; bottom:76px; left:16px; width:320px; max-width:calc(100% - 32px); height:auto; padding:16px; }
-.food-map-panel__header { margin-bottom:10px; }
-.food-map-panel__title { font-size:26px; }
-.food-map-panel__summary { margin:12px 0 10px; padding-top:10px; }
-.food-map-results { overflow:auto; overscroll-behavior:contain; }
-.food-map-dish-list { display:flex; flex-direction:column; gap:10px; }
-.food-map-shell [hidden] { display:none !important; }
-.food-map-shell :is(input,select,button):focus-visible { outline:3px solid var(--color-ink); outline-offset:3px; }
-.food-map-pagination__button:disabled { opacity:.45; cursor:not-allowed; }
+.food-map-page-active .master-main {
+    padding: 0;
+    margin: 0;
+    max-width: none;
+}
+
+.food-map-page-active .master-layout {
+    min-height: 0;
+}
+
+.food-map-shell {
+    position: relative;
+    display: block;
+    max-width: none;
+    padding: 0;
+    height: calc(100vh - var(--food-map-top, 100px));
+    height: calc(100dvh - var(--food-map-top, 100px));
+    overflow: hidden;
+}
+
+.food-map-canvas {
+    position: absolute;
+    inset: 0;
+}
+
+    .food-map-canvas .cl-world-map {
+        height: 100%;
+        border: 0;
+        border-radius: 0;
+        grid-template-rows: minmax(0,1fr);
+    }
+
+    .food-map-canvas .cl-world-map__heading {
+        display: none;
+    }
+
+    .food-map-canvas .cl-world-map__footer {
+        position: absolute;
+        right: 16px;
+        bottom: 12px;
+        padding: 0;
+        border: 0;
+    }
+
+        .food-map-canvas .cl-world-map__footer p {
+            display: none;
+        }
+
+.food-map-panel-toggle {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    min-height: 44px;
+    padding: 8px 14px;
+    box-shadow: none;
+}
+
+.food-map-panel {
+    position: absolute;
+    top: 68px;
+    bottom: 76px;
+    left: 16px;
+    width: 320px;
+    max-width: calc(100% - 32px);
+    height: auto;
+    padding: 16px;
+}
+
+.food-map-panel__header {
+    margin-bottom: 10px;
+}
+
+.food-map-panel__title {
+    font-size: 26px;
+}
+
+.food-map-panel__summary {
+    margin: 12px 0 10px;
+    padding-top: 10px;
+}
+
+.food-map-results {
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+
+.food-map-dish-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.food-map-shell [hidden] {
+    display: none !important;
+}
+
+.food-map-shell :is(input,select,button):focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+}
+
+.food-map-pagination__button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
 
 
 @media(max-width:700px) {
-    .food-map-panel-toggle { top:10px; left:10px; }
-    .food-map-panel { top:62px; left:10px; bottom:auto; max-height:calc(58% - 52px); width:290px; max-width:calc(100% - 20px); padding:12px; }
-    .food-map-panel__header { display:none; }
-    .food-map-panel__controls { gap:4px; }
-    .food-map-panel__summary { margin:8px 0; padding-top:8px; }
-    .food-map-pagination { margin-top:8px; padding-top:8px; }
+    .food-map-panel-toggle {
+        top: 10px;
+        left: 10px;
+    }
+
+    .food-map-panel {
+        top: 62px;
+        left: 10px;
+        bottom: auto;
+        max-height: calc(58% - 52px);
+        width: 290px;
+        max-width: calc(100% - 20px);
+        padding: 12px;
+    }
+
+    .food-map-panel__header {
+        display: none;
+    }
+
+    .food-map-panel__controls {
+        gap: 4px;
+    }
+
+    .food-map-panel__summary {
+        margin: 8px 0;
+        padding-top: 8px;
+    }
+
+    .food-map-pagination {
+        margin-top: 8px;
+        padding-top: 8px;
+    }
 }
-.food-dish-card__explore { display:inline-flex; align-items:center; min-height:44px; margin-top:4px; color:var(--color-ink); font-size:12px; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
-.food-dish-card__explore:hover { text-decoration-thickness:2px; }
+
+.food-dish-card__explore {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 4px;
+    color: var(--color-ink);
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+    .food-dish-card__explore:hover {
+        text-decoration-thickness: 2px;
+    }
+
+
+/* ==========================================================
+   SKETCH STYLE - Food Explorer panel
+   (shared pieces - buttons, Country dropdown and its list - come from Style.css)
+   Keep this block at the END of the file. CSS only: FoodMapView.ascx is unchanged.
+   ========================================================== */
+
+/* Panel */
+.food-map-shell .food-map-panel {
+    border: 2.5px solid var(--color-ink);
+    border-width: var(--sketch-width-b);
+    border-radius: var(--sketch-panel-radius);
+    background: #fffdf7;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Search box: "+" cell and divider drawn with backgrounds (an <input> cannot have ::before) */
+.food-map-shell .food-map-search__input {
+    min-height: 46px;
+    padding: 10px 12px 10px 62px;
+    border: 2.5px solid var(--color-ink);
+    border-width: var(--sketch-width-a);
+    border-radius: var(--sketch-radius-a);
+    background: linear-gradient(var(--color-ink), var(--color-ink)) 46px 0 / 2.8px 100% no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2335030C' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12.2 4.5C12 9 12.3 15 11.8 19.6'/%3E%3Cpath d='M4.4 12.3C9 11.8 15 12.4 19.7 11.7'/%3E%3C/svg%3E") 12px center / 22px 22px no-repeat, #fff;
+}
+
+    .food-map-shell .food-map-search__input::-webkit-search-cancel-button {
+        display: none;
+    }
+
+/* Dashed dividers instead of thin tan lines */
+.food-map-panel__summary,
+.food-map-pagination {
+    border-top: 1.8px dashed var(--color-ink);
+}
+
+/* Dish cards */
+.food-map-shell .food-dish-card {
+    border: 2px solid var(--color-ink);
+    border-width: 2px 2.4px 2.2px 1.9px;
+    border-radius: 14px 9px 15px 10px / 10px 15px 9px 14px;
+    background: #fff;
+}
+
+.food-map-shell .food-dish-card__image-wrap {
+    border: 2px solid var(--color-ink);
+    border-radius: 9px 6px 10px 7px / 7px 10px 6px 9px;
+}
+
+/* "Explore" link becomes a small sketch button */
+.food-map-shell .food-dish-card__explore {
+    min-height: 36px;
+    padding: 6px 12px;
+    border: 2.5px solid var(--color-ink);
+    border-width: var(--sketch-width-b);
+    border-radius: var(--sketch-radius-b);
+    background: #fff;
+    text-decoration: none;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .food-map-shell .food-dish-card__explore:hover {
+        background: var(--color-yellow);
+    }
+
+    .food-map-shell .food-dish-card__explore:active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+/* Focus ring in the brand red */
+.food-map-shell :is(input, select, button, a):focus-visible {
+    outline-color: var(--color-primary);
+}
+
+/* ---------- Country dropdown: sketch field + bigger, rounder list ----------
+   Self-contained on purpose (works even if Style.css is not updated yet).
+   Opened list needs Chrome / Edge 135+; other browsers keep their own list. */
+.food-map-shell .food-map-panel select.food-map-select {
+    min-height: 50px;
+    padding: 12px 14px;
+    border: 2.5px solid var(--color-ink);
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 22px 15px 24px 16px / 16px 24px 15px 22px;
+    background-color: #fff;
+    background-image: none;
+    color: var(--color-ink);
+    box-shadow: none;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+    .food-map-shell .food-map-panel select.food-map-select option {
+        background: #fff;
+        color: var(--color-ink);
+        font: inherit;
+        font-size: 14px;
+    }
+
+@supports (appearance: base-select) {
+    .food-map-shell select.food-map-select,
+    .food-map-shell select.food-map-select::picker(select) {
+        appearance: base-select;
+    }
+        /* the list: always opens BELOW the field */
+        .food-map-shell select.food-map-select::picker(select) {
+            position-area: block-end span-inline-end;
+            position-try-fallbacks: none;
+            min-width: anchor-size(width);
+            max-height: 320px;
+            overflow-y: auto;
+            margin-top: 10px;
+            padding: 8px;
+            border: 2.5px solid var(--color-ink);
+            border-width: 2.9px 2.4px 3px 2.6px;
+            border-radius: 26px 18px 28px 19px / 19px 28px 18px 26px;
+            background: #fff;
+            box-shadow: 4px 4px 0 var(--color-ink);
+        }
+        /* bigger, rounder options */
+        .food-map-shell select.food-map-select option {
+            padding: 12px 16px;
+            border-radius: 14px 16px 13px 17px / 16px 13px 17px 14px;
+            cursor: pointer;
+        }
+
+            .food-map-shell select.food-map-select option:hover,
+            .food-map-shell select.food-map-select option:focus-visible {
+                background: var(--color-yellow);
+                outline: 0;
+            }
+
+            .food-map-shell select.food-map-select option:checked {
+                background: var(--color-lime);
+                font-weight: 700;
+            }
+
+            .food-map-shell select.food-map-select option::checkmark {
+                display: none;
+            }
+}
+
+/* ==========================================================
+   AUTO-SIZE: the panel follows the window, 320 x 490 is the biggest it gets.
+   Change the four numbers below to resize it. Mobile (700px and under)
+   keeps the original mobile rules.
+   ========================================================== */
+.food-map-shell {
+    --food-panel-top: 68px; /* gap above the panel (under the Hide button) */
+    --food-panel-bottom: 76px; /* gap kept free below the panel */
+    --food-panel-width: 320px; /* biggest width */
+    --food-panel-max-height: 490px; /* biggest height */
+}
+
+    .food-map-shell .food-map-results {
+        min-height: 72px; /* the dish list never collapses to nothing */
+    }
+
+@media (min-width: 701px) {
+    .food-map-shell .food-map-panel {
+        top: var(--food-panel-top);
+        bottom: auto;
+        width: min(var(--food-panel-width), calc(100% - 32px));
+        height: min(var(--food-panel-max-height), calc(100% - var(--food-panel-top) - var(--food-panel-bottom)));
+        padding: 18px;
+        overflow-y: auto; /* last resort on very short windows */
+    }
+}
+
+/* Short windows: tighten the panel so the dish list keeps room */
+@media (min-width: 701px) and (max-height: 760px) {
+    .food-map-shell .food-map-panel {
+        padding: 14px;
+    }
+
+    .food-map-shell .food-map-panel__header {
+        margin-bottom: 6px;
+    }
+
+    .food-map-shell .food-map-panel__title {
+        font-size: 22px;
+    }
+
+    .food-map-shell .food-map-panel__controls {
+        gap: 4px;
+    }
+
+    .food-map-shell .food-map-panel select.food-map-select,
+    .food-map-shell .food-map-search__input {
+        min-height: 44px;
+    }
+
+    .food-map-shell .food-map-panel__summary {
+        margin: 8px 0 6px;
+        padding-top: 8px;
+    }
+
+    .food-map-shell .food-map-pagination {
+        margin-top: 8px;
+        padding-top: 8px;
+    }
+}
+
+/* Very short windows: hide the big title (the size buttons stay) */
+@media (min-width: 701px) and (max-height: 600px) {
+    .food-map-shell .food-map-panel__title {
+        display: none;
+    }
+}
+
+/* ==========================================================
+   SIZE BUTTONS: [-] smaller   [+] bigger   (3 sizes, remembered in the browser)
+   The buttons and the data-panel-size attribute come from FoodMapView.ascx.
+   To change a size, edit the numbers below.
+   ========================================================== */
+.food-map-shell[data-panel-size="small"] {
+    --food-panel-width: 260px;
+    --food-panel-max-height: 360px;
+}
+
+.food-map-shell[data-panel-size="large"] {
+    --food-panel-width: 440px;
+    --food-panel-max-height: 680px;
+}
+
+/* smooth resize */
+.food-map-shell .food-map-panel {
+    transition: width .2s ease, height .2s ease;
+}
+
+/* top row: label on the left, [-] [+] on the right */
+.food-map-panel__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+    .food-map-panel__top .food-map-panel__eyebrow {
+        margin: 0;
+    }
+
+.food-map-panel__size {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+}
+
+.food-map-shell .food-map-size-btn {
+    display: grid;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    place-items: center;
+    font-size: 20px;
+    line-height: 1;
+}
+
+    .food-map-shell .food-map-size-btn:disabled {
+        opacity: .4;
+        cursor: not-allowed;
+    }
+
+/* SMALL: title and descriptions hidden, tighter cards */
+.food-map-shell[data-panel-size="small"] .food-map-panel {
+    padding: 12px;
+}
+
+.food-map-shell[data-panel-size="small"] .food-map-panel__title {
+    display: none;
+}
+
+.food-map-shell[data-panel-size="small"] .food-map-panel__controls {
+    gap: 4px;
+}
+
+.food-map-shell[data-panel-size="small"] .food-dish-card {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 8px;
+    padding: 8px;
+}
+
+.food-map-shell[data-panel-size="small"] .food-dish-card__image-wrap {
+    height: 56px;
+}
+
+.food-map-shell[data-panel-size="small"] .food-dish-card__title {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.food-map-shell[data-panel-size="small"] .food-dish-card__description {
+    display: none;
+}
+
+.food-map-shell[data-panel-size="small"] .food-dish-card__explore {
+    min-height: 32px;
+    padding: 4px 10px;
+    font-size: 11px;
+}
+
+/* LARGE: roomier text and bigger dish cards */
+.food-map-shell[data-panel-size="large"] .food-map-panel {
+    padding: 22px;
+}
+
+.food-map-shell[data-panel-size="large"] .food-map-panel__title {
+    font-size: 34px;
+}
+
+.food-map-shell[data-panel-size="large"] .food-map-panel select.food-map-select,
+.food-map-shell[data-panel-size="large"] .food-map-search__input {
+    font-size: 14px;
+}
+
+.food-map-shell[data-panel-size="large"] .food-dish-card {
+    grid-template-columns: 100px minmax(0, 1fr);
+    gap: 16px;
+    padding: 14px;
+}
+
+.food-map-shell[data-panel-size="large"] .food-dish-card__image-wrap {
+    height: 108px;
+}
+
+.food-map-shell[data-panel-size="large"] .food-dish-card__title {
+    font-size: 28px;
+}
+
+.food-map-shell[data-panel-size="large"] .food-dish-card__description {
+    font-size: 13px;
+    -webkit-line-clamp: 3;
+}
+
+/* Mobile: your original rules hide the whole header, but the size buttons must stay */
+@media (max-width: 700px) {
+    .food-map-shell .food-map-panel__header {
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .food-map-shell .food-map-panel__title {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .food-map-shell .food-map-panel {
+        transition: none;
+    }
+}

@@ -14,7 +14,16 @@
             aria-controls="foodExplorerPanel" aria-expanded="true">Hide food explorer</button>
     <aside id="foodExplorerPanel" class="food-map-panel" aria-label="Food explorer">
         <div class="food-map-panel__header">
-            <p class="food-map-panel__eyebrow">Food Explorer</p>
+            <%-- NEW: top row with the smaller / bigger buttons --%>
+            <div class="food-map-panel__top">
+                <p class="food-map-panel__eyebrow">Food Explorer</p>
+                <div class="food-map-panel__size" role="group" aria-label="Panel size">
+                    <button id="foodPanelSmaller" type="button" class="btn food-map-size-btn"
+                            aria-label="Make the panel smaller" title="Smaller">&minus;</button>
+                    <button id="foodPanelBigger" type="button" class="btn food-map-size-btn"
+                            aria-label="Make the panel bigger" title="Bigger">+</button>
+                </div>
+            </div>
             <h1 class="food-map-panel__title">Explore traditional food</h1>
         </div>
         <div class="food-map-panel__controls">
@@ -45,5 +54,32 @@
     <script id="foodCultureData" type="application/json"><%= FoodCulturesJson %></script>
 </section>
 <script src="<%= ResolveUrl("~/Pages/Shared/FoodMap/FoodMapView.js") %>"></script>
+<%-- NEW: panel size buttons (separate from FoodMapView.js) --%>
+<script>
+(function () {
+    var shell = document.getElementById('foodMapShell');
+    var smaller = document.getElementById('foodPanelSmaller');
+    var bigger = document.getElementById('foodPanelBigger');
+    if (!shell || !smaller || !bigger) { return; }
 
+    var sizes = ['small', 'medium', 'large'];
+    var storageKey = 'foodPanelSize';
+    var index = 1; // medium is the default
 
+    try {
+        var saved = localStorage.getItem(storageKey);
+        if (sizes.indexOf(saved) > -1) { index = sizes.indexOf(saved); }
+    } catch (e) { /* storage blocked: keep the default */ }
+
+    function apply() {
+        shell.setAttribute('data-panel-size', sizes[index]);
+        smaller.disabled = index === 0;
+        bigger.disabled = index === sizes.length - 1;
+        try { localStorage.setItem(storageKey, sizes[index]); } catch (e) { }
+    }
+
+    smaller.addEventListener('click', function () { if (index > 0) { index--; apply(); } });
+    bigger.addEventListener('click', function () { if (index < sizes.length - 1) { index++; apply(); } });
+    apply();
+})();
+</script>

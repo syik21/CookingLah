@@ -170,7 +170,7 @@ mark, .highlight {
    4. Layout
    ========================= */
 .container {
-    max-width: var(--content-width);
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--gutter);
 }

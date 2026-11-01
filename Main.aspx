@@ -16,16 +16,37 @@ document.addEventListener('worldmap:countrychange', function (event) {
                <div class="container">
                     <h1>Cook your way around <mark>the whole world, lah.</mark></h1>
                     <p class="main-hero__text">Pick any country on the map and see what its kitchen is about, then cook it at home.</p>
-                    <img runat="server" class="main-hero__img" src="~/F_Assets/tools.png" alt="" />
-                    <img runat="server" class="main-hero__img2" src="~/F_Assets/bread.png" alt="" />
-                </div>
 
-                <div class="main-stickers" aria-hidden="true">
-                    <div class="sticker main-sticker-a">What do people eat for breakfast in Malaysia?</div>
-                    <div class="sticker sticker-ink main-sticker-b">Give me a 20 minute dinner from Thailand</div>
-                    <div class="sticker main-sticker-c">Which spices make Moroccan food taste warm?</div>
-                    <div class="sticker sticker-primary main-sticker-d">Easy street food I can fake at home</div>
                 </div>
+                    <div class="main-falling" id="mainFalling" aria-hidden="true">
+                        <img runat="server" src="~/F_Assets/egg.png"   alt="" style="--x:6%;  --s:180px; --ar:1.05; --b:15px; --rot:-8deg;  --d:1.8s; --dl:0s" />
+                        <img runat="server" src="~/F_Assets/milk.png"   alt="" style="--x:18%; --s:210px; --ar:1.12; --b:4px;  --rot:10deg;  --d:2.2s; --dl:.35s" />
+                        <img runat="server" src="~/F_Assets/lettuce.png" alt="" style="--x:28%; --s:220px; --ar:0.835; --b:14px; --rot:-6deg;  --d:2s;   --dl:.15s" />
+                        <img runat="server" src="~/F_Assets/toast.png"    alt="" style="--x:42%; --s:200px; --ar:0.853; --b:6px;  --rot:7deg;   --d:2.4s; --dl:.6s" />
+                        <img runat="server" src="~/F_Assets/tomato.png"   alt="" style="--x:54%; --s:160px; --ar:0.77; --b:20px; --rot:12deg;  --d:1.9s; --dl:.9s" />
+                        <img runat="server" src="~/F_Assets/corn.png"   alt="" style="--x:65%; --s:140px; --ar:0.87; --b:6px;  --rot:-12deg; --d:2.3s; --dl:.25s" />
+                        <img runat="server" src="~/F_Assets/potato.png"    alt="" style="--x:73%; --s:200px; --ar:0.83; --b:12px; --rot:-11deg;  --d:2.1s; --dl:.75s" />
+                        <img runat="server" src="~/F_Assets/onion.png" alt="" style="--x:85%; --s:140px; --ar:0.855; --b:8px;  --rot:9deg;   --d:2.2s; --dl:.45s" />
+                    </div>
+
+                <script>
+                    (function () {
+                        var box = document.getElementById('mainFalling'), away = false;
+                        if (!box) return;
+                        function drop() {
+                            box.classList.remove('is-dropping');
+                            void box.offsetWidth;                 // restart the animation
+                            box.classList.add('is-dropping');
+                        }
+                        window.addEventListener('load', drop);
+                        window.addEventListener('scroll', function () {
+                            if (window.scrollY > 300) away = true;            // scrolled down the page
+                            else if (away && window.scrollY < 120) {          // came back to the top
+                                away = false; drop();
+                            }
+                        }, { passive: true });
+                    })();
+                </script>
             </section>
 
             <section class="main-food-map" aria-label="Explore food around the world"><uc:WorldMap ID="WorldMapControl" runat="server" /></section>
@@ -67,12 +88,33 @@ document.addEventListener('worldmap:countrychange', function (event) {
                     update();
                 });
             </script>
+
             
-    <section class="container boxes" aria-label="Follow and links">
-        <div class="box scrap-paper"></div>
-        <div class="box scrap-paper"></div>
-        <div class="box scrap-paper"></div>
-    </section>
+<section class="container boxes" aria-label="Follow and links">
+    <div class="box scrap-paper social-box">
+        <img runat="server" class="social-avatar" src="~/F_Assets/xx.png" alt="@_nixgnaix profile picture" />
+        <a class="social-link" href="https://www.instagram.com/_nixgnaix/" target="_blank" rel="noopener noreferrer">
+            <img runat="server" class="social-ig-icon" src="~/F_Assets/instagram-icon.png" alt="" />
+            <span class="social-handle">@_nixgnaix</span>
+        </a>
+    </div>
+
+    <div class="box scrap-paper social-box">
+        <img runat="server" class="social-avatar" src="~/F_Assets/sy.png" alt="@_seryik profile picture" />
+        <a class="social-link" href="https://www.instagram.com/_seryik/" target="_blank" rel="noopener noreferrer">
+            <img runat="server" class="social-ig-icon" src="~/F_Assets/instagram-icon.png" alt="" />
+            <span class="social-handle">@_seryik</span>
+        </a>
+    </div>
+
+    <div class="box scrap-paper social-box">
+        <img runat="server" class="social-avatar" src="~/F_Assets/wh.png" alt="@wenhui_1123 profile picture" />
+        <a class="social-link" href="https://www.instagram.com/wenhui_1123/" target="_blank" rel="noopener noreferrer">
+            <img runat="server" class="social-ig-icon" src="~/F_Assets/instagram-icon.png" alt="" />
+            <span class="social-handle">@wenhui_1123</span>
+        </a>
+    </div>
+</section>
             
 
             <script>
