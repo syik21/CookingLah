@@ -91,7 +91,7 @@
 
 .submission-filters {
     display: grid;
-    grid-template-columns: minmax(270px, 1fr) repeat(3, minmax(145px, .48fr)) auto;
+    grid-template-columns: minmax(0, 1fr) repeat(3, minmax(0, .48fr)) auto;
     align-items: end;
     gap: 12px;
     margin-top: 26px;
@@ -100,6 +100,11 @@
     border-radius: var(--radius-md);
     background: var(--submission-paper);
 }
+
+.submission-filters > *,
+.submission-search-row,
+.submission-search-field,
+.submission-filter-field { min-width: 0; }
 
 .submission-search-field label,
 .submission-filter-field label,
@@ -152,10 +157,10 @@
 
 .submission-list-card {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(180px, auto) auto;
+    grid-template-columns: 88px minmax(0, 1fr) auto auto;
     align-items: center;
-    gap: 22px;
-    padding: 20px;
+    gap: 18px;
+    padding: 16px 20px;
     border: 1px solid var(--submission-ink);
     border-radius: var(--radius-md);
     background: var(--submission-paper);
@@ -225,6 +230,8 @@
 
 .submission-open {
     min-width: 96px;
+    justify-self: end;
+    white-space: nowrap;
 }
 
 .submission-pagination {
@@ -457,13 +464,14 @@
     }
 
     .submission-list-card {
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 14px;
+        grid-template-columns: 72px minmax(0, 1fr) auto;
+        gap: 12px;
     }
 
-    .submission-list-main {
-        grid-column: 1 / -1;
-    }
+    .submission-list-main { min-width: 0; }
+    .submission-list-meta { grid-column: 2 / -1; grid-row: 2; display: flex; align-items: center; justify-content: space-between; }
+    .submission-card-image { grid-row: span 2; width: 72px; height: 64px; }
+    .submission-open { grid-column: 3; grid-row: 1; }
 
     .submission-review-actions {
         display: grid;
@@ -477,9 +485,8 @@
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .submission-open {
-        width: 100%;
-    }
+    .submission-open { width: 100%; justify-self: stretch; }
+    .submission-list-meta, .submission-open, .submission-card-image { grid-column: 1; grid-row: auto; }
 
     .submission-completed-progress {
         display: grid;
@@ -527,6 +534,7 @@
     color: #35030C;
     font: inherit;
     font-size: 15px;
+    text-overflow: ellipsis;
 }
 
     .submission-review-page .submission-search-field .sk-search input[type="text"]::placeholder {
@@ -546,15 +554,29 @@
 
 /* Dropdowns + feedback box */
 .submission-review-page .submission-filter-field select {
+    box-sizing: border-box;
+    height: 46px;
     min-height: 46px;
+    min-width: 0;
     padding: 10px 12px;
+    padding-right: 34px;
     border: 2.5px solid #35030C;
     border-width: 2.5px 3px 2.7px 2.3px;
     border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
     background-color: #fff;
+    background-image: linear-gradient(45deg, transparent 50%, #35030C 50%), linear-gradient(135deg, #35030C 50%, transparent 50%);
+    background-position: calc(100% - 17px) 20px, calc(100% - 12px) 20px;
+    background-repeat: no-repeat;
+    background-size: 5px 5px;
     color: #35030C;
     cursor: pointer;
+    appearance: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
+.submission-card-image { display: block; width: 88px; height: 72px; object-fit: cover; border: 2px solid #35030C; border-radius: 12px; }
 
 .submission-review-page .submission-chef-review textarea {
     border: 2.5px solid #35030C;
@@ -563,7 +585,6 @@
 }
 
 @supports (appearance: base-select) {
-    .submission-review-page .submission-filter-field select,
     .submission-review-page .submission-filter-field select::picker(select) {
         appearance: base-select;
     }

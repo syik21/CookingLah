@@ -99,6 +99,7 @@
                                     <span class='<%# StatusBadgeClass(Eval("ProgressStatus")) %>'><%#: Eval("ProgressStatus") %></span>
                                 </div>
                                 <p class="my-course-meta"><%#: Eval("DifficultyLevel") %> <span aria-hidden="true">·</span> By <%#: Eval("ChefName") %></p>
+                                <p>Cooking time: <%#: Eval("CookingTime") == DBNull.Value ? "Not specified" : Eval("CookingTime") + " min" %></p>
                                 <div class="my-course-progress">
                                     <div class="my-course-progress-label">
                                         <span>Progress</span>

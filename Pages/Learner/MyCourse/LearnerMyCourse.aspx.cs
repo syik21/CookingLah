@@ -135,6 +135,7 @@ namespace CookingLah.Pages.Learner.MyCourse
                        c.Title,
                        c.Thumbnail,
                        c.DifficultyLevel,
+                       (SELECT TOP 1 CookingTime FROM CourseRecipes cr WHERE cr.CourseID=c.CourseID) AS CookingTime,
                        cat.CategoryName,
                        chef.FullName AS ChefName,
                        CASE WHEN cp.Status='Completed' THEN 100

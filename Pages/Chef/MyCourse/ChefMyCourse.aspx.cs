@@ -49,7 +49,7 @@ namespace CookingLah.Pages.Chef.MyCourse
         private void BindMyCourses()
         {
             string search = txtCourseSearch.Text.Trim();
-            var rows = Read(@"SELECT c.CourseID,c.Title,c.Description,c.Thumbnail,c.Status,c.DifficultyLevel,c.UpdatedAt,cat.CategoryName,
+            var rows = Read(@"SELECT c.CourseID,c.Title,c.Description,c.Thumbnail,c.Status,c.DifficultyLevel,c.UpdatedAt,cat.CategoryName,(SELECT TOP 1 CookingTime FROM CourseRecipes cr WHERE cr.CourseID=c.CourseID) AS CookingTime,
                 (SELECT COUNT(*) FROM Lessons WHERE CourseID=c.CourseID) AS LessonCount,
                 (SELECT COUNT(*) FROM Quizzes WHERE CourseID=c.CourseID) AS QuizCount,
                 (SELECT COUNT(*) FROM PracticalActivities WHERE CourseID=c.CourseID) AS ActivityCount FROM Courses c JOIN Categories cat ON cat.CategoryID=c.CategoryID WHERE c.InstructorID=@user AND (@category=0 OR c.CategoryID=@category) AND (@search='' OR CHARINDEX(@search,c.Title)>0) ORDER BY c.UpdatedAt DESC,c.CourseID DESC", Parameter("@user", InstructorId), Parameter("@search", search), Parameter("@category", int.Parse(ddlCategory.SelectedValue)));

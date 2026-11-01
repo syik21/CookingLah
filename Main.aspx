@@ -54,17 +54,17 @@ document.addEventListener('worldmap:countrychange', function (event) {
            <section class="container recipes-section" id="recipes">
                 <h2 class="section-title">Cooking basics: start with these</h2>
                 <p class="section-description">Tested, short and written for a normal kitchen.</p>
-                <a class="recipe-row" href="#">
+                <a class="recipe-row" href="<%= ResolveUrl("~/Pages/Guest/SearchCourse/SearchCoursePage.aspx?search=nasi%20lemak") %>">
                     <span class="recipe-frame"><img runat="server" src="~/F_Assets/Food/nasi lemak.png" alt="Nasi lemak" /></span>
                     <div><h3 class="recipe-row__title">Nasi lemak, the proper way</h3><p class="recipe-row__desc">Malaysia. Coconut rice, sambal and crispy anchovies.</p></div>
                     <div class="recipe-row__meta"><span class="recipe-row__time">30m</span><span>Easy</span></div>
                 </a>
-                <a class="recipe-row" href="#">
+                <a class="recipe-row" href="<%= ResolveUrl("~/Pages/Guest/SearchCourse/SearchCoursePage.aspx?search=pad%20kra%20pao") %>">
                     <span class="recipe-frame"><img runat="server" src="~/F_Assets/padkrapao.png" alt="Pad kra pao" /></span>
                     <div><h3 class="recipe-row__title">Pad kra pao for one</h3><p class="recipe-row__desc">Thailand. Holy basil, chilli and a fried egg on top.</p></div>
                     <div class="recipe-row__meta"><span class="recipe-row__time">25m</span><span>Easy</span></div>
                 </a>
-                <a class="recipe-row" href="#">
+                <a class="recipe-row" href="<%= ResolveUrl("~/Pages/Guest/SearchCourse/SearchCoursePage.aspx?search=tacos%20al%20pastor") %>">
                     <span class="recipe-frame"><img runat="server" src="~/F_Assets/tacos.png" alt="Tacos al pastor" /></span>
                     <div><h3 class="recipe-row__title">Tacos al pastor without a spit</h3><p class="recipe-row__desc">Mexico. Pork, pineapple and a hot pan.</p></div>
                     <div class="recipe-row__meta"><span class="recipe-row__time">45m</span><span>Medium</span></div>

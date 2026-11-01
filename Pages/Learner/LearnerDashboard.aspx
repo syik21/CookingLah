@@ -84,6 +84,7 @@
                         <asp:Panel runat="server" CssClass="course-thumbnail course-image-placeholder" Visible='<%# !HasCourseImage(Eval("Thumbnail")) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                         <p class="card-eyebrow"><%#: Eval("DifficultyLevel") %></p>
                         <h3><%#: Eval("Title") %></h3>
+                        <p>Cooking time: <%#: Eval("CookingTime") == DBNull.Value ? "Not specified" : Eval("CookingTime") + " min" %></p>
                         <div class="course-progress-label"><span>Progress</span><span><%#: Eval("ProgressPercentage") %>%</span></div>
                         <progress class="course-progress" value='<%# Eval("ProgressPercentage") %>' max="100" aria-label='<%# Eval("Title") + " progress" %>'><%#: Eval("ProgressPercentage") %>%</progress>
                         <a class="btn btn-secondary" href='<%# CourseLearningUrl(Eval("CourseID")) %>'>Continue</a>
@@ -127,6 +128,7 @@
                         <asp:Panel runat="server" CssClass="course-thumbnail course-image-placeholder" Visible='<%# !HasCourseImage(Eval("Thumbnail")) %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                         <p class="card-eyebrow"><%#: Eval("DifficultyLevel") %> &bull; <%#: Eval("CategoryName") %></p>
                         <h3><%#: Eval("Title") %></h3>
+                        <p>Cooking time: <%#: Eval("CookingTime") == DBNull.Value ? "Not specified" : Eval("CookingTime") + " min" %></p>
                         <p class="text-muted">Rated <%#: Eval("AverageRating") %> / 5</p>
                         <a class="btn btn-secondary" href='<%# CourseOverviewUrl(Eval("CourseID")) %>'>View Course</a>
                     </article>

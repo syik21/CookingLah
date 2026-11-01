@@ -48,6 +48,8 @@ namespace CookingLah.Pages.Chef.ManageCourse.Recipe
             {
                 EnsureEditable();
                 string ingredients = ValidateIngredientsJson(txtIngredients.Text);
+                if (string.IsNullOrWhiteSpace(txtCookingTime.Text))
+                    throw new InvalidOperationException("Please enter the cooking time.");
                 object time = PositiveNumber(txtCookingTime.Text, "Cooking time");
                 object servings = PositiveNumber(txtServingSize.Text, "Serving size");
                 if (CanEdit)

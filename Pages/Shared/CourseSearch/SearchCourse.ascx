@@ -74,6 +74,7 @@
                         <div class="course-card-labels"><span class="course-level"><%#: Eval("DifficultyLevel") %></span><span class="course-category"><%#: Eval("CategoryName") %></span></div>
                         <h3 title='<%#: Eval("Title") %>'><%#: Eval("Title") %></h3>
                         <p class="course-card-description"><%#: Eval("ShortDescription") %></p>
+                        <p>Cooking time: <%#: Eval("CookingTime") == DBNull.Value ? "Not specified" : Eval("CookingTime") + " min" %></p>
                         <p class="course-chef">By <strong><%#: Eval("ChefName") %></strong></p>
                         <p class="course-rating"><%#: FormatCourseRating(Eval("AverageRating"), Eval("ReviewCount")) %></p>
                         <asp:Panel runat="server" CssClass="course-traditional-dish" Visible='<%# !string.IsNullOrWhiteSpace(Convert.ToString(Eval("DishName"))) %>'>Traditional Dish: <strong><%#: Eval("DishName") %></strong></asp:Panel>

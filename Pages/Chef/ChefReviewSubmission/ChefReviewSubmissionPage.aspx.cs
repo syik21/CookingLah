@@ -145,6 +145,11 @@ namespace CookingLah.Pages.Chef.ChefReviewSubmission
             return value == DBNull.Value ? "0" : Convert.ToString(value);
         }
 
+        protected string SubmissionImageUrl(object value)
+        {
+            return MediaUrl(Convert.ToString(value));
+        }
+
         // Load submissions from Courses owned by the current Chef.
         private void LoadSubmissions()
         {
@@ -160,6 +165,7 @@ namespace CookingLah.Pages.Chef.ChefReviewSubmission
                     s.SubmissionID,
                     s.Status,
                     s.SubmittedAt,
+                    s.ImagePath,
                     learner.FullName AS LearnerName,
                     c.Title AS CourseTitle,
                     a.Title AS ActivityTitle

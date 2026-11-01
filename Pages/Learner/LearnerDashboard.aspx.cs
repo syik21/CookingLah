@@ -59,7 +59,7 @@ namespace CookingLah.Pages.Learner
 
         private void LoadContinueLearning()
         {
-            DataTable rows = Read(@"SELECT TOP 1 c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,cat.CategoryName,cp.ProgressPercentage,cp.LastAccessedAt
+            DataTable rows = Read(@"SELECT TOP 1 c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,(SELECT TOP 1 CookingTime FROM CourseRecipes cr WHERE cr.CourseID=c.CourseID) AS CookingTime,cat.CategoryName,cp.ProgressPercentage,cp.LastAccessedAt
                 FROM CourseProgress cp JOIN Courses c ON c.CourseID=cp.CourseID JOIN Categories cat ON cat.CategoryID=c.CategoryID
                 WHERE cp.LearnerID=@id AND cp.Status IN ('In Progress','Submitted') AND c.Status='Published'
                 ORDER BY cp.LastAccessedAt DESC,cp.ProgressID DESC", Parameter("@id", LearnerId));
@@ -95,7 +95,7 @@ namespace CookingLah.Pages.Learner
 
         private void LoadCurrentCourses()
         {
-            Bind(rptCurrentCourses, Read(@"SELECT TOP 3 c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,cp.ProgressPercentage
+            Bind(rptCurrentCourses, Read(@"SELECT TOP 3 c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,(SELECT TOP 1 CookingTime FROM CourseRecipes cr WHERE cr.CourseID=c.CourseID) AS CookingTime,cp.ProgressPercentage
                 FROM CourseProgress cp JOIN Courses c ON c.CourseID=cp.CourseID
                 WHERE cp.LearnerID=@id AND cp.Status IN ('In Progress','Submitted') AND c.Status='Published'
                 ORDER BY cp.LastAccessedAt DESC,cp.ProgressID DESC", Parameter("@id", LearnerId)));

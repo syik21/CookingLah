@@ -79,6 +79,7 @@
                                 <h3><%#: Eval("Title") %></h3>
                                 <p>Chef: <%#: Eval("ChefName") %></p>
                                 <p><%#: Eval("CategoryName") %> &middot; <%#: Eval("DifficultyLevel") %></p>
+                                <p>Cooking time: <%#: Eval("CookingTime") == DBNull.Value ? "Not specified" : Eval("CookingTime") + " min" %></p>
                                 <p class="review-content-counts">
                                     <%#: Eval("LessonCount") %> Lessons &middot;
                                     <%#: Eval("QuizCount") %> Quiz &middot;

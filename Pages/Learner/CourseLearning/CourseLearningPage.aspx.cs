@@ -383,7 +383,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
                               FROM ActivitySubmissions s
                               WHERE s.ActivityID=a.ActivityID
                                 AND s.LearnerID=cp.LearnerID
-                                AND s.Status='Approved')) AS ApprovedActivities
+                                AND s.Status IN ('Submitted','Approved'))) AS CompletedActivities
                 FROM CourseProgress cp
                 INNER JOIN Courses c ON c.CourseID=cp.CourseID
                 INNER JOIN Users u ON u.UserID=cp.LearnerID
@@ -405,7 +405,7 @@ namespace CookingLah.Pages.Learner.CourseLearning
                 + Convert.ToInt32(row["TotalActivities"]);
             int completedSteps = Convert.ToInt32(row["CompletedLessons"])
                 + Convert.ToInt32(row["PassedQuizzes"])
-                + Convert.ToInt32(row["ApprovedActivities"]);
+                + Convert.ToInt32(row["CompletedActivities"]);
 
             int percentage = totalSteps == 0
                 ? 0

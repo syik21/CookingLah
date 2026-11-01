@@ -172,7 +172,7 @@ namespace CookingLah.Pages.Admin.CourseContentReview
             int.TryParse(ddlChefFilter.SelectedValue, out chefId);
             string search = txtSearchCourses.Text.Trim();
             string pattern = "%" + search.Replace("[", "[[]").Replace("%", "[%]").Replace("_", "[_]") + "%";
-            var rows = ReviewData.Read(@"SELECT c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,c.Status,
+            var rows = ReviewData.Read(@"SELECT c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,(SELECT TOP 1 CookingTime FROM CourseRecipes cr WHERE cr.CourseID=c.CourseID) AS CookingTime,c.Status,
                 COALESCE(c.UpdatedAt,c.CreatedAt) AS UpdatedAt,u.Username AS ChefName,cat.CategoryName,
                 (SELECT COUNT(*) FROM Lessons WHERE CourseID=c.CourseID) AS LessonCount,
                 (SELECT COUNT(*) FROM Quizzes WHERE CourseID=c.CourseID) AS QuizCount,

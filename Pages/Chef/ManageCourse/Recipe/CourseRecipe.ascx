@@ -25,7 +25,7 @@
         <button type="button" class="btn ingredient-add" data-ingredient-add="">+ Add ingredient</button>
         <noscript>Enable JavaScript to use ingredient rows.</noscript>
     </fieldset>
-<div class="mc-field"><asp:Label runat="server" AssociatedControlID="txtCookingTime" Text="Cooking Time (minutes)" /><asp:TextBox ID="txtCookingTime" runat="server" MaxLength="10" /></div>
+<div class="mc-field"><asp:Label runat="server" AssociatedControlID="txtCookingTime" Text="Cooking Time (minutes) *" /><asp:TextBox ID="txtCookingTime" runat="server" TextMode="Number" min="1" required="required" MaxLength="10" /></div>
 <div class="mc-field"><asp:Label runat="server" AssociatedControlID="txtServingSize" Text="Serving Size" /><asp:TextBox ID="txtServingSize" runat="server" MaxLength="10" /></div>
 <div class="mc-field">
 <asp:Label runat="server" AssociatedControlID="fuRecipeImage" Text="Recipe Image" />

@@ -61,6 +61,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
             if (!IsPostBack)
             {
                 LoadCategories();
+                txtSearch.Text = (Request.QueryString["search"] ?? "").Trim();
+                if (txtSearch.Text.Length > 100) txtSearch.Text = txtSearch.Text.Substring(0, 100);
                 int foodCultureId;
                 if (int.TryParse(Request.QueryString["foodCultureId"], out foodCultureId) && foodCultureId > 0)
                 {
@@ -109,7 +111,7 @@ namespace CookingLah.Pages.Shared.CourseSearch
                 minimumRating = 0;
 
             DataTable courses = Read(@"
-                SELECT c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,
+                SELECT c.CourseID,c.Title,c.Thumbnail,c.DifficultyLevel,(SELECT TOP 1 CookingTime FROM CourseRecipes cr WHERE cr.CourseID=c.CourseID) AS CookingTime,
                        LEFT(c.Description,180) AS ShortDescription,
                        cat.CategoryName,u.FullName AS ChefName,fc.DishName,
                        ratings.AverageRating,COALESCE(ratings.ReviewCount,0) AS ReviewCount
@@ -129,7 +131,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
                   AND (@searchText='' OR c.Title LIKE '%' + @searchText + '%'
                        OR c.Description LIKE '%' + @searchText + '%'
                        OR cat.CategoryName LIKE '%' + @searchText + '%')
-                ORDER BY c.UpdatedAt DESC,c.CourseID DESC",
+                ORDER BY CASE WHEN ratings.ReviewCount IS NULL THEN 1 ELSE 0 END,
+                         ratings.AverageRating DESC,ratings.ReviewCount DESC,c.UpdatedAt DESC,c.CourseID DESC",
                  Parameter("@foodCultureId", SelectedFoodCultureId),
                  Parameter("@categoryId", categoryId),
                 Parameter("@difficulty", difficulty),

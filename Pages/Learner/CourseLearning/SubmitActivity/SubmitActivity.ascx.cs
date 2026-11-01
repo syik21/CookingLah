@@ -1,4 +1,5 @@
 using CookingLah.F_Services;
+using CookingLah.Pages.Chef.ManageCourse;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -152,13 +153,16 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
 
             if (!SaveSubmission(imagePath, description))
             {
+                CourseManagementData.CleanupUnreferencedMedia(new[] { imagePath });
                 ShowFeedback("Unable to submit your activity. Please try again.");
                 return;
             }
+            if (!string.Equals(existingImagePath, imagePath, StringComparison.OrdinalIgnoreCase))
+                CourseManagementData.CleanupUnreferencedMedia(new[] { existingImagePath });
 
             txtActivityDescription.Text = description;
             LoadExistingSubmission();
-            litActivityFeedback.Text = "Activity submitted successfully.";
+            litActivityFeedback.Text = "Activity submitted successfully. Your progress is updated; the course will be marked completed after your Chef approves it.";
             pnlActivityFeedback.Visible = true;
 
             EventHandler handler = ActivitySubmitted;

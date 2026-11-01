@@ -72,6 +72,7 @@
                     <asp:Repeater ID="rptSubmissions" runat="server" OnItemCommand="rptSubmissions_ItemCommand">
                         <ItemTemplate>
                             <article class="submission-list-card">
+                                <asp:Image runat="server" CssClass="submission-card-image" ImageUrl='<%# SubmissionImageUrl(Eval("ImagePath")) %>' AlternateText="Learner activity submission" Visible='<%# !string.IsNullOrEmpty(SubmissionImageUrl(Eval("ImagePath"))) %>' />
                                 <div class="submission-list-main">
                                     <h3><%#: Eval("LearnerName") %></h3>
                                     <p class="submission-course"><%#: Eval("CourseTitle") %></p>

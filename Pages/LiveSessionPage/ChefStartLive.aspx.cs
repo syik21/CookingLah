@@ -353,6 +353,7 @@ namespace CookingLah.Pages.LiveSessionPage
         private bool TryStartLive(int chefId, string title, string description, string thumbnailPath, out int sessionId)
         {
             sessionId = 0;
+            string oldThumbnailPath = null;
             using (SqlConnection connection = DatabaseManager.ConnectDB())
             {
                 connection.Open();
@@ -369,6 +370,7 @@ namespace CookingLah.Pages.LiveSessionPage
                             Status='Live',
                             AdminCloseReason=NULL,
                             UpdatedAt=GETDATE()
+                        OUTPUT deleted.ThumbnailPath
                         WHERE ChefID=@chefId
                           AND Status='Offline'
                           AND NOT EXISTS (
@@ -381,12 +383,13 @@ namespace CookingLah.Pages.LiveSessionPage
                         command.Parameters.Add("@thumbnailPath", SqlDbType.NVarChar, 500).Value = (object)thumbnailPath ?? DBNull.Value;
                         command.Parameters.Add("@jitsiRoomName", SqlDbType.NVarChar, 200).Value = GenerateJitsiRoomName(chefId);
                         command.Parameters.Add("@chefId", SqlDbType.Int).Value = chefId;
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected != 1)
+                        object oldPath = command.ExecuteScalar();
+                        if (oldPath == null)
                         {
                             transaction.Rollback();
                             return false;
                         }
+                        oldThumbnailPath = Convert.ToString(oldPath);
                     }
 
                     using (SqlCommand idCommand = new SqlCommand("SELECT LiveSessionID FROM LiveSessions WHERE ChefID=@chefId", connection, transaction))
@@ -395,9 +398,11 @@ namespace CookingLah.Pages.LiveSessionPage
                         sessionId = Convert.ToInt32(idCommand.ExecuteScalar());
                     }
                     transaction.Commit();
-                    return true;
                 }
             }
+            if (!string.IsNullOrEmpty(thumbnailPath) && !string.Equals(oldThumbnailPath, thumbnailPath, StringComparison.OrdinalIgnoreCase))
+                DeleteNewThumbnail(oldThumbnailPath);
+            return true;
         }
 
         private bool ChefHasActivePenalty(int chefId)
@@ -517,7 +522,8 @@ namespace CookingLah.Pages.LiveSessionPage
 
         private void DeleteNewThumbnail(string relativePath)
         {
-            if (string.IsNullOrEmpty(relativePath) || !relativePath.StartsWith(ThumbnailFolder, StringComparison.Ordinal))
+            if (string.IsNullOrEmpty(relativePath) || !System.Text.RegularExpressions.Regex.IsMatch(relativePath,
+                "^" + System.Text.RegularExpressions.Regex.Escape(ThumbnailFolder) + "[a-f0-9]{32}\\.(?:jpg|png|webp)$"))
             {
                 return;
             }

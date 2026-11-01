@@ -276,7 +276,10 @@
 /* Category dropdown */
 .manage-course .mc-course-search select {
     flex: 0 0 230px;
+    box-sizing: border-box;
+    height: 46px;
     min-height: 46px;
+    overflow: hidden;
     padding: 10px 14px;
     border: 2.5px solid #35030C;
     border-width: 2.5px 3px 2.7px 2.3px;
@@ -284,6 +287,8 @@
     background-color: #fff;
     color: #35030C;
     cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 @supports (appearance: base-select) {
