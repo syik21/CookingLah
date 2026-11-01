@@ -32,3 +32,80 @@
 @media (max-width: 460px) {
     .recipe-measures { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ===== Recipe: hand-drawn style ===== */
+.course-recipe .recipe-visual {
+    border-right: 2.5px dashed #35030C;
+}
+
+.course-recipe .recipe-measures > div {
+    position: relative;
+    padding: 14px 18px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 10px 14px 11px 15px / 14px 10px 15px 11px;
+    background: #fffdf7;
+}
+
+    .course-recipe .recipe-measures > div::after {
+        position: absolute;
+        inset: 4px;
+        border: 1.8px dashed #35030C;
+        border-radius: 5px 7px 5px 8px / 7px 5px 8px 5px;
+        content: "";
+        pointer-events: none;
+    }
+
+    .course-recipe .recipe-measures > div:nth-child(1) {
+        background: #FFF3C9;
+    }
+
+    .course-recipe .recipe-measures > div:nth-child(2) {
+        background: #EAFAC8;
+    }
+
+.course-recipe .recipe-ingredients {
+    border-top: 2.5px dashed #35030C;
+}
+
+.course-recipe .recipe-empty-mark {
+    border-width: 2.5px;
+    border-radius: 50% 46% 52% 48% / 48% 52% 46% 50%;
+}
+
+/* Editor */
+.course-recipe .ingredient-editor {
+    margin: 0 0 20px;
+    padding: 16px 18px;
+    border: 2.5px dashed #35030C;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+    .course-recipe .ingredient-editor legend {
+        padding: 0 8px;
+        font-weight: 700;
+    }
+
+    .course-recipe .ingredient-editor input:not([type=hidden]) {
+        min-height: 44px;
+        padding: 8px 12px;
+        border: 2.5px solid #35030C;
+        border-width: 2.5px 3px 2.7px 2.3px;
+        border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+        background: #fff;
+        color: #35030C;
+        font: inherit;
+    }
+
+.course-recipe .mc-image-preview {
+    border: 2.5px solid #35030C;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+}
+
+@media (max-width: 760px) {
+    .course-recipe .recipe-visual {
+        border-right: 0;
+        border-bottom: 2.5px dashed #35030C;
+    }
+}

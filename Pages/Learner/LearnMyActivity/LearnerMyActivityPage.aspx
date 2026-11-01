@@ -25,7 +25,17 @@
             <asp:Panel ID="pnlFilters" runat="server" CssClass="activity-filters" DefaultButton="btnSearch">
                 <div class="activity-search-field">
                     <label for="<%= txtSearch.ClientID %>">Search by course or activity</label>
-                    <div class="activity-search-row"><asp:TextBox ID="txtSearch" runat="server" TextMode="Search" MaxLength="100" placeholder="Search by course..." /><asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="btnSearch_Click" CausesValidation="false" /></div>
+                    <%-- In LearnerMyActivityPage.aspx, replace the whole <div class="activity-search-row"> ... </div> with this. --%>
+<%-- In LearnerMyActivityPage.aspx, replace the whole <div class="activity-search-row"> ... </div> with this. --%>
+                    <div class="activity-search-row">
+                        <div class="sketch-search">
+                            <span class="sketch-plus" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><path d="M12.2 4.5 C12 9 12.3 15 11.8 19.6"/><path d="M4.4 12.3 C9 11.8 15 12.4 19.7 11.7"/></svg>
+                            </span>
+                            <asp:TextBox ID="txtSearch" runat="server" TextMode="Search" MaxLength="100" placeholder="Search by course..." />
+                        </div>
+                        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="btnSearch_Click" CausesValidation="false" />
+                    </div>
                 </div>
                 <div class="activity-filter-field">
                     <label for="<%= ddlStatus.ClientID %>">Status</label>

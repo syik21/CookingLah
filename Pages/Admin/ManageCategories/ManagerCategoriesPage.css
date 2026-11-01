@@ -89,3 +89,211 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .category-action { transition: none; } }
+
+/* ===== Sketch toolbar (search bar + buttons) ===== */
+.categories-page .categories-toolbar {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+.categories-page .categories-search {
+    align-items: flex-end;
+    flex-wrap: nowrap;
+}
+
+    .categories-page .categories-search .category-field {
+        flex: 1 1 0;
+    }
+
+/* Search frame: "+" | divider | input */
+.categories-page .sk-search {
+    display: flex;
+    min-width: 0;
+    min-height: 46px;
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+    .categories-page .sk-search::before {
+        content: "";
+        flex: 0 0 44px;
+        border-right: 2.5px solid #35030C;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 3 L11 19' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3 11 L19 11' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") no-repeat center / 22px 22px;
+    }
+
+    .categories-page .sk-search input[type=text] {
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        margin: 0;
+        padding: 10px 16px;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: #35030C;
+        font: inherit;
+        font-size: 15px;
+    }
+
+        .categories-page .sk-search input[type=text]::placeholder {
+            color: #8a8378;
+            opacity: 1;
+        }
+
+        .categories-page .sk-search input[type=text]:focus,
+        .categories-page .sk-search input[type=text]:focus-visible {
+            outline: 0;
+        }
+
+    .categories-page .sk-search:focus-within {
+        outline: 3px solid #F93209;
+        outline-offset: 3px;
+    }
+
+/* Search + Clear buttons */
+.categories-page .categories-search .btn,
+.categories-page .categories-search .category-action {
+    flex: 0 0 auto;
+    min-height: 46px;
+    padding: 10px 22px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    color: #35030C;
+    font: 700 14px var(--font-body);
+    box-shadow: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .categories-page .categories-search .btn:hover,
+    .categories-page .categories-search .category-action:hover {
+        background: #FFD24C;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .categories-page .categories-search .btn:active,
+    .categories-page .categories-search .category-action:active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+@media (max-width: 650px) {
+    .categories-page .categories-search {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+/* ===== Sketch table (Category Directory) ===== */
+
+/* Directory panel */
+.categories-page .categories-directory {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+/* Total pill */
+.categories-page .categories-summary {
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+}
+
+/* Table frame */
+.categories-page .category-list {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+    .categories-page .category-list th {
+        border-bottom: 2.5px solid #35030C;
+        background: #F7EFD9;
+    }
+
+    .categories-page .category-list td {
+        border-bottom: 2px dashed #e3d3ad;
+    }
+
+    .categories-page .category-list .category-row:hover td {
+        background: #fffdf7;
+    }
+
+/* Courses pill */
+.categories-page .category-course-count {
+    border: 2px solid #35030C;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+}
+
+/* Edit button (sketch) */
+.categories-page .category-list .category-action:not(.category-delete) {
+    min-height: 40px;
+    padding: 7px 16px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+}
+
+    .categories-page .category-list .category-action:not(.category-delete):hover {
+        background: #FFD24C;
+    }
+
+    .categories-page .category-list .category-action:not(.category-delete):active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+/* Delete stays a red underlined link */
+.categories-page .category-list .category-delete:hover {
+    background: transparent;
+    text-decoration-thickness: 2px;
+}
+
+/* Footer and pagination buttons */
+.categories-page .categories-pagination {
+    border-top: 2px dashed #35030C;
+}
+
+    .categories-page .categories-pagination .btn {
+        min-height: 44px;
+        border: 2.5px solid #35030C;
+        border-width: 2.9px 2.4px 3px 2.6px;
+        border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+        background: #fff;
+        color: #35030C;
+        font-weight: 700;
+        box-shadow: none;
+    }
+
+        .categories-page .categories-pagination .btn:hover:not(:disabled) {
+            background: #FFD24C;
+            transform: none;
+        }
+
+/* Mobile card rows */
+@media (max-width: 1050px) {
+    .categories-page .category-row {
+        border-bottom: 2px dashed #35030C;
+    }
+
+        .categories-page .category-row:last-child {
+            border-bottom: 0;
+        }
+
+    .categories-page .category-list td {
+        border-bottom: 0;
+    }
+}

@@ -66,51 +66,162 @@
     margin: 0;
 }
 
-/* Summary statistic cards */
-.dashboard-summary-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
+.learner-dashboard .dashboard-summary-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important; 
+    padding-top: 22px; 
+    gap: 20px;
 }
 
-.summary-card {
+.stat-folder {
     display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 18px;
-    border-width: 1.5px;
-    box-shadow: 2px 3px 0 var(--color-tan);
+    flex-direction: column;
+    min-width: 0;
+    
 }
 
-    .summary-card:nth-child(1) {
-        background: #FFF0B6;
-        transform: rotate(-1deg);
+    .stat-folder:nth-child(odd) {
+        transform: rotate(-.8deg);
     }
 
-    .summary-card:nth-child(2) {
-        background: #E5F4CB;
+    .stat-folder:nth-child(even) {
         transform: rotate(.7deg);
     }
 
-    .summary-card:nth-child(3) {
-        background: #FBE1ED;
-        transform: rotate(-.6deg);
-    }
-
-    .summary-card:nth-child(4) {
-        background: #EAE0FB;
-        transform: rotate(1deg);
-    }
-
-.summary-value {
-    font: 400 42px/1 var(--font-hand);
-    flex-shrink: 0;
+/* Tab */
+.stat-tab {
+    position: relative;
+    z-index: 1;
+    align-self: flex-end;
+    margin: 0 12% -2px 0;
+    padding: 7px 20px 6px;
+    background: var(--color-paper);
+    border: 2px solid transparent;
+    border-bottom: 0;
+    border-radius: 16px 12px 0 0 / 14px 10px 0 0;
+    background-clip: padding-box;
+    font: 400 15px/1.2 var(--font-hand);
+    white-space: nowrap;
 }
 
-.summary-card p {
+    .stat-tab::before {
+        content: "";
+        position: absolute;
+        inset: -2px -2px 0;
+        z-index: -1;
+        border: 2px solid var(--color-ink);
+        border-bottom: 0;
+        border-radius: inherit;
+        filter: url(#dashboardRoughInk);
+        pointer-events: none;
+    }
+
+/* Folder body: wobbly outline + pencil-hatched shadow */
+.stat-body {
+    position: relative;
+    isolation: isolate;
+    padding: 12px;
+    background: var(--color-paper);
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: var(--radius-ink);
+}
+
+    .stat-body::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        z-index: -1;
+        border: 2px solid var(--color-ink);
+        border-radius: inherit;
+        filter: url(#dashboardRoughInk);
+        pointer-events: none;
+    }
+
+
+/* Inner sheet: dashed pencil line, punched holes, doodled clip */
+.stat-sheet {
+    position: relative;
+    padding: 40px 16px 14px;
+    border: 2px dashed var(--color-ink);
+    border-radius: 12px 7px 14px 8px / 8px 13px 8px 12px;
+}
+
+    .stat-sheet::before {
+        content: "";
+        position: absolute;
+        top: 11px;
+        left: 14px;
+        right: 44px;
+        height: 16px;
+        background: radial-gradient(circle at center, transparent 0 4.5px, var(--color-ink) 5px 6px, transparent 6.5px) repeat-x;
+        background-size: 26px 16px;
+        background-repeat: space no-repeat;
+        pointer-events: none;
+    }
+
+    .stat-sheet .summary-value {
+        display: block;
+        font: 400 clamp(34px, 3.6vw, 54px)/1 var(--font-hand);
+    }
+
+/* Hand-drawn underline under the label */
+.stat-label {
+    margin: 8px 0 0;
     font-size: 12px;
+    font-weight: 700;
     line-height: 1.5;
-    margin: 0;
+}
+
+/* Keep four in a row on small screens by shrinking everything */
+@media (max-width: 760px) {
+    .learner-dashboard .dashboard-summary-grid {
+        gap: 10px;
+    }
+
+    .stat-tab {
+        margin-right: 6%;
+        padding: 5px 10px 4px;
+        font-size: 12px;
+    }
+
+    .stat-body {
+        padding: 8px;
+    }
+
+    .stat-sheet {
+        padding: 34px 8px 10px;
+    }
+
+        .stat-sheet::before {
+            left: 8px;
+            right: 26px;
+            background-size: 20px 16px;
+        }
+
+
+        .stat-sheet .summary-value {
+            font-size: 28px;
+        }
+
+    .stat-label {
+        font-size: 10px;
+        line-height: 1.35;
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-tab {
+        display: none;
+    }
+    /* no room for tab text on phones */
+    .stat-sheet::before {
+        display: none;
+    }
+    /* hide holes, keep clip */
+    .stat-sheet {
+        padding-top: 26px;
+    }
 }
 
 /* Continue-learning image and course information */
@@ -682,16 +793,71 @@ Keep native border widths to preserve the existing layout and tape placement. */
         background: #FFF;
     }
 
+/* ===== Continue-course notebook: clipped sketchbook with stitched stars ===== */
+.learner-dashboard .course-book {
+    margin: 54px 0 46px; /* room for the binder clips */
+}
+
+    /* Solid inked cover edge instead of the hatched shadow */
+    .learner-dashboard .course-book::before {
+        box-shadow: 7px 8px 0 var(--color-ink);
+    }
+
+/* Fold line between the two pages */
+.course-book .notebook-spread::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: calc(50% - 1px);
+    border-left: 2px dashed var(--color-ink);
+    pointer-events: none;
+}
+
+/* Binder clips (top + bottom) and stitched stars (top-right + bottom-left), all drawn in ink */
     .learner-dashboard .course-book::after {
         content: "";
         position: absolute;
-        inset: -3px;
-        z-index: -2;
-        border-radius: inherit;
-        transform: translate(9px, 10px);
-        background: repeating-linear-gradient(135deg, var(--color-ink) 0 2px, transparent 2px 7px);
-        filter: url(#dashboardRoughInk);
+        inset: -52px -22px;
+        z-index: 3;
+        border: 0;
+        border-radius: 0;
+        transform: none;
         pointer-events: none;
+        background-repeat: no-repeat;
+        background-size: 60px 80px, 60px 80px, 74px 74px, 84px 84px;
+        background-position: center top, center bottom, right 0 top 30px, left 0 bottom 30px;
+        background-image:
+        /* top binder clip */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 80' fill='none' stroke='%2335030C' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 42C12 22 17 5 30 5s18 17 13 37'/%3E%3Cpath d='M24 42c-2-14 1-26 6-26s8 12 6 26'/%3E%3Cpath d='M7 42h46l-4 32H11z' fill='%23FFFDF4'/%3E%3Cpath d='M19 50v16M41 50v16' stroke-width='1.8'/%3E%3C/svg%3E"),
+        /* bottom binder clip (flipped) */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 80' fill='none' stroke='%2335030C' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='rotate(180 30 40)'%3E%3Cpath d='M17 42C12 22 17 5 30 5s18 17 13 37'/%3E%3Cpath d='M24 42c-2-14 1-26 6-26s8 12 6 26'/%3E%3Cpath d='M7 42h46l-4 32H11z' fill='%23FFFDF4'/%3E%3Cpath d='M19 50v16M41 50v16' stroke-width='1.8'/%3E%3C/g%3E%3C/svg%3E"),
+        /* star, top-right */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 108 108' fill='none' stroke='%2335030C' stroke-linejoin='round' stroke-linecap='round'%3E%3Cg transform='rotate(14 50 52)'%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' fill='%23FFFDF4' stroke-width='3'/%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' transform='translate(10 10.4) scale(.8)' stroke-width='2' stroke-dasharray='4 4'/%3E%3C/g%3E%3C/svg%3E"),
+        /* star, bottom-left */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 108 108' fill='none' stroke='%2335030C' stroke-linejoin='round' stroke-linecap='round'%3E%3Cg transform='rotate(-16 50 52)'%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' fill='%23FFFDF4' stroke-width='3'/%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' transform='translate(10 10.4) scale(.8)' stroke-width='2' stroke-dasharray='4 4'/%3E%3C/g%3E%3C/svg%3E");
+        filter: url(#dashboardRoughInk);
+    }
+
+    /* Stacked pages: the fold becomes horizontal, like the reference */
+    @media (max-width: 1000px) {
+        .course-book .notebook-spread::before {
+            top: calc(50% - 1px);
+            bottom: auto;
+            left: 8px;
+            right: 8px;
+            border-left: 0;
+            border-top: 2px dashed var(--color-ink);
+        }
+    }
+
+    /* Small phones: keep only the clips and make them smaller */
+    @media (max-width: 480px) {
+        .learner-dashboard .course-book::after {
+            background-size: 44px 58px, 44px 58px;
+            background-position: center top, center bottom;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 80' fill='none' stroke='%2335030C' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 42C12 22 17 5 30 5s18 17 13 37'/%3E%3Cpath d='M7 42h46l-4 32H11z' fill='%23FFFDF4'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 80' fill='none' stroke='%2335030C' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='rotate(180 30 40)'%3E%3Cpath d='M17 42C12 22 17 5 30 5s18 17 13 37'/%3E%3Cpath d='M7 42h46l-4 32H11z' fill='%23FFFDF4'/%3E%3C/g%3E%3C/svg%3E");
+        }
     }
 
     .learner-dashboard .course-book .notebook-page {
@@ -707,4 +873,73 @@ Keep native border widths to preserve the existing layout and tape placement. */
 
 .learner-dashboard .summary-card::after {
     inset: -1.5px;
+}
+
+/* ===== Medium "Back to the kitchen" notebook ===== */
+.learner-dashboard .course-book {
+    max-width: 1020px;
+    margin: 48px auto 40px;
+    padding: 22px 20px 30px;
+}
+
+.course-book .notebook-spread {
+    gap: 16px;
+}
+
+.course-book .notebook-page {
+    padding: 26px 20px 32px;
+}
+
+.course-book .continue-image {
+    height: 175px;
+}
+
+.continue-photo-page .handwritten-note {
+    font-size: 20px;
+    margin-top: 8px;
+}
+
+.cooking-doodle {
+    width: 54px;
+    height: 34px;
+    margin-top: 8px;
+}
+
+.course-book .course-book-card {
+    padding: 24px 20px;
+}
+
+.course-book .continue-details h3 {
+    font-size: clamp(26px, 2.6vw, 36px);
+}
+
+.course-book .continue-details .scrap-label {
+    margin-bottom: 12px;
+}
+
+.course-book .continue-details > .text-muted {
+    margin: 10px 0;
+}
+
+.course-book .course-progress-label {
+    margin-top: 14px;
+}
+
+.course-book .course-progress {
+    height: 16px;
+    margin: 7px 0 12px;
+}
+
+.learner-dashboard .course-book .btn {
+    min-height: 42px;
+    padding: 10px 20px;
+}
+
+/* binder clips and stars (phones keep their own small clips) */
+@media (min-width: 481px) {
+    .learner-dashboard .course-book::after {
+        inset: -46px -20px;
+        background-size: 52px 68px, 52px 68px, 64px 64px, 72px 72px;
+        background-position: center top, center bottom, right 0 top 26px, left 0 bottom 26px;
+    }
 }

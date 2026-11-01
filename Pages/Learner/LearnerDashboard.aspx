@@ -21,10 +21,34 @@
         <div class="dashboard-mascot" aria-hidden="true"><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>A little practice,<br />a lot of flavour.</span></div>
     </section>
     <section class="dashboard-summary-grid" aria-label="Learning summary">
-        <article class="scrap-paper summary-card"><asp:Label ID="lblCoursesInProgress" runat="server" Text="3" CssClass="summary-value" /><p>Courses in progress</p></article>
-        <article class="scrap-paper summary-card"><asp:Label ID="lblCoursesCompleted" runat="server" Text="5" CssClass="summary-value" /><p>Courses completed</p></article>
-        <article class="scrap-paper summary-card"><asp:Label ID="lblQuizzesTaken" runat="server" Text="12" CssClass="summary-value" /><p>Quizzes taken</p></article>
-        <article class="scrap-paper summary-card"><asp:Label ID="lblAverageQuizScore" runat="server" Text="82%" CssClass="summary-value" /><p>Average quiz score</p></article>
+        <article class="stat-folder">
+            <span class="stat-tab">In progress</span>
+            <div class="stat-body"><div class="stat-sheet">
+                <asp:Label ID="lblCoursesInProgress" runat="server" Text="3" CssClass="summary-value" />
+                <p class="stat-label">Courses in progress</p>
+            </div></div>
+        </article>
+        <article class="stat-folder">
+            <span class="stat-tab">Completed</span>
+            <div class="stat-body"><div class="stat-sheet">
+                <asp:Label ID="lblCoursesCompleted" runat="server" Text="5" CssClass="summary-value" />
+                <p class="stat-label">Courses completed</p>
+            </div></div>
+        </article>
+        <article class="stat-folder">
+            <span class="stat-tab">Quizzes</span>
+            <div class="stat-body"><div class="stat-sheet">
+                <asp:Label ID="lblQuizzesTaken" runat="server" Text="12" CssClass="summary-value" />
+                <p class="stat-label">Quizzes taken</p>
+            </div></div>
+        </article>
+        <article class="stat-folder">
+            <span class="stat-tab">Avg score</span>
+            <div class="stat-body"><div class="stat-sheet">
+                <asp:Label ID="lblAverageQuizScore" runat="server" Text="82%" CssClass="summary-value" />
+                <p class="stat-label">Average quiz score</p>
+            </div></div>
+        </article>
     </section>
     <section aria-labelledby="continueTitle">
         <h2 id="continueTitle" class="ink-underline">Back to the kitchen</h2>

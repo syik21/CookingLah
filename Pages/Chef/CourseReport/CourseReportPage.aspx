@@ -155,7 +155,9 @@
                     <div class="cr-field">
                         <label for="<%= txtSearch.ClientID %>">Search course</label>
                         <div class="cr-search-row">
-                            <asp:TextBox ID="txtSearch" runat="server" MaxLength="100" placeholder="Search course..." />
+                            <div class="sk-search">
+                                <asp:TextBox ID="txtSearch" runat="server" MaxLength="100" placeholder="Search course..." />
+                            </div>
                             <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-secondary" OnClick="Search_Click" />
                         </div>
                     </div>

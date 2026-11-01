@@ -92,3 +92,271 @@
     .course-report .cr-pagination { gap:10px; }
     .course-report .cr-pagination .btn { min-width:0; padding:10px; font-size:11px; }
 }
+
+/* ===== Sketch style: search, filters, table, buttons ===== */
+
+/* Panels */
+.course-report .cr-filter-panel,
+.course-report .cr-panel {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+/* Filter panel layout: heading on top, dropdowns in a row, Clear below */
+.course-report .cr-filter-panel {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 18px;
+}
+
+.course-report .cr-filters {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: end;
+    gap: 14px;
+}
+
+.course-report .cr-clear-link {
+    grid-column: 1 / -1;
+    justify-self: start;
+    min-height: 46px;
+    padding: 0 14px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+    .course-report .cr-clear-link:hover {
+        background: #FFD24C;
+    }
+
+    .course-report .cr-clear-link:active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+/* Dropdowns */
+.course-report .cr-field select {
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background-color: #fff;
+    color: #35030C;
+    cursor: pointer;
+}
+
+@supports (appearance: base-select) {
+    .course-report .cr-field select,
+    .course-report .cr-field select::picker(select) {
+        appearance: base-select;
+    }
+
+        .course-report .cr-field select::picker(select) {
+            position-area: block-end span-inline-end;
+            position-try-fallbacks: none;
+            min-width: anchor-size(width);
+            max-height: 260px;
+            overflow-y: auto;
+            margin-top: 8px;
+            padding: 6px;
+            border: 2.5px solid #35030C;
+            border-width: 2.9px 2.4px 3px 2.6px;
+            border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+            background: #fff;
+            box-shadow: 3px 3px 0 #35030C;
+        }
+
+        .course-report .cr-field select option {
+            padding: 10px 12px;
+            border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
+            background: #fff;
+            color: #35030C;
+            cursor: pointer;
+        }
+
+            .course-report .cr-field select option:hover {
+                background: #FFD24C;
+            }
+
+            .course-report .cr-field select option:checked {
+                background: #CDF58A;
+                font-weight: 700;
+            }
+
+            .course-report .cr-field select option::checkmark {
+                display: none;
+            }
+}
+
+/* Search frame: "+" | divider | input */
+.course-report .sk-search {
+    display: flex;
+    min-width: 0;
+    min-height: 46px;
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+    .course-report .sk-search::before {
+        content: "";
+        flex: 0 0 44px;
+        border-right: 2.5px solid #35030C;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 3 L11 19' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3 11 L19 11' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") no-repeat center / 22px 22px;
+    }
+
+.course-report .cr-search .sk-search input[type=text] {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #35030C;
+    font: inherit;
+    font-size: 15px;
+}
+
+    .course-report .cr-search .sk-search input[type=text]::placeholder {
+        color: #8a8378;
+        opacity: 1;
+    }
+
+    .course-report .cr-search .sk-search input[type=text]:focus,
+    .course-report .cr-search .sk-search input[type=text]:focus-visible {
+        outline: 0;
+    }
+
+.course-report .sk-search:focus-within {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}
+
+/* Buttons */
+.course-report .btn {
+    min-height: 46px;
+    padding: 10px 22px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    color: #35030C;
+    font-weight: 700;
+    box-shadow: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .course-report .btn:hover {
+        background: #FFD24C;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .course-report .btn:active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+    .course-report .btn:disabled,
+    .course-report .aspNetDisabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+/* Table */
+.course-report .cr-table-scroll {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+.course-report .cr-table th {
+    border-bottom: 2.5px solid #35030C;
+}
+
+.course-report .cr-table td {
+    border-bottom: 2px dashed #e3d3ad;
+}
+
+/* Pills */
+.course-report .cr-status {
+    border: 2px solid #35030C;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+    font-weight: 700;
+}
+
+.course-report .cr-count {
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+}
+
+.course-report :is(select, a, button):focus-visible {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}
+
+@media (max-width: 1200px) {
+    .course-report .cr-filters {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .course-report .cr-filters {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* ===== Summary cards: solid outer + dashed inner + colour marker ===== */
+.course-report .cr-summary-grid .cr-summary-card {
+    position: relative;
+    padding: 14px 18px 14px 24px;
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 10px 14px 11px 15px / 14px 10px 15px 11px;
+    background: #fffdf7;
+}
+
+    .course-report .cr-summary-grid .cr-summary-card::before {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 6px;
+        background: #FFD24C;
+        content: "";
+    }
+
+.course-report .cr-summary-grid .cr-summary-published::before {
+    background: #CDF58A;
+}
+
+.course-report .cr-summary-grid .cr-summary-enrolments::before {
+    background: #B99CFF;
+}
+
+.course-report .cr-summary-grid .cr-summary-rating::before {
+    background: #FBB8EE;
+}
+
+.course-report .cr-summary-grid .cr-summary-card::after {
+    position: absolute;
+    inset: 5px 5px 5px 11px;
+    border: 1.8px dashed #35030C;
+    border-radius: 5px 7px 5px 8px / 7px 5px 8px 5px;
+    content: "";
+    pointer-events: none;
+}

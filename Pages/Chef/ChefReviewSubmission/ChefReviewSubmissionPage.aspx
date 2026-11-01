@@ -37,7 +37,9 @@
                 <div class="submission-search-field">
                     <asp:Label runat="server" AssociatedControlID="txtSearch" Text="Search learner or course" />
                     <div class="submission-search-row">
-                        <asp:TextBox ID="txtSearch" runat="server" MaxLength="150" placeholder="Search learner or course" />
+                        <div class="sk-search">
+                            <asp:TextBox ID="txtSearch" runat="server" MaxLength="150" placeholder="Search learner or course" />
+                        </div>
                         <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="btnSearch_Click" CausesValidation="false" />
                     </div>
                 </div>

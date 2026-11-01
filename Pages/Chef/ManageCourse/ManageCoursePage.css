@@ -767,3 +767,256 @@
             margin-left: auto;
         }
 }
+
+/* ===== Manage Course: hand-drawn style ===== */
+
+/* Header card */
+.course-builder .course-header-card {
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+/* Status pill */
+.course-builder .mc-status {
+    border: 2px solid #35030C;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+    font-weight: 700;
+}
+
+/* Back link as a small sketch button */
+.course-builder .mc-back {
+    padding: 8px 16px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .course-builder .mc-back:hover {
+        background: #FFD24C;
+    }
+
+    .course-builder .mc-back:active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+/* All buttons */
+.course-builder .btn,
+.course-confirm-dialog .btn {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    color: #35030C;
+    font-weight: 700;
+    box-shadow: none;
+    cursor: pointer;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .course-builder .btn:hover:not(:disabled),
+    .course-confirm-dialog .btn:hover:not(:disabled) {
+        background: #FFD24C;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .course-builder .btn:active:not(:disabled),
+    .course-confirm-dialog .btn:active:not(:disabled) {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+    /* Delete button keeps a warning colour */
+    .course-builder .btn.mc-danger {
+        border-color: #701323;
+        background: #fff;
+        color: #a61b35;
+    }
+
+        .course-builder .btn.mc-danger:hover:not(:disabled) {
+            background: #ffd9df;
+            color: #701323;
+        }
+
+/* Section tabs: sketch tabs */
+.course-builder .course-section-tabs {
+    gap: 8px;
+    padding: 12px 20px;
+    border-top: 2.5px dashed #35030C;
+    background: #fffdf7;
+}
+
+.course-builder .course-section-tab {
+    min-height: 44px;
+    padding: 8px 22px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    font-weight: 700;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .course-builder .course-section-tab:nth-child(even) {
+        border-width: 2.9px 2.4px 3px 2.6px;
+        border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    }
+
+    .course-builder .course-section-tab:hover {
+        background: #F7EFD9;
+    }
+
+    .course-builder .course-section-tab[aria-selected=true] {
+        background: #FFD24C;
+        border-bottom-width: 3px;
+        border-bottom-color: #35030C;
+        box-shadow: 3px 3px 0 #35030C;
+    }
+
+    .course-builder .course-section-tab:focus-visible {
+        outline: 3px solid #F93209;
+        outline-offset: 3px;
+    }
+
+/* Course setup (details) */
+.course-builder .builder-setup {
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fffdf7;
+}
+
+    /* Progress bar */
+    .course-builder .builder-setup progress {
+        height: 16px;
+        border: 2.5px solid #35030C;
+        border-radius: 9px 12px 8px 13px / 12px 8px 13px 9px;
+        background: #fff;
+        overflow: hidden;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+        .course-builder .builder-setup progress::-webkit-progress-bar {
+            background: #fff;
+        }
+
+        .course-builder .builder-setup progress::-webkit-progress-value {
+            background-color: #CDF58A;
+            background-image: repeating-linear-gradient(-45deg, rgba(53, 3, 12, .22) 0 1.5px, transparent 1.5px 6px);
+            border-radius: 0 7px 6px 0 / 0 6px 7px 0;
+        }
+
+        .course-builder .builder-setup progress::-moz-progress-bar {
+            background-color: #CDF58A;
+            background-image: repeating-linear-gradient(-45deg, rgba(53, 3, 12, .22) 0 1.5px, transparent 1.5px 6px);
+            border-radius: 0 7px 6px 0;
+        }
+
+.course-builder .builder-checklist span {
+    padding: 3px 10px;
+    border: 2px dashed #35030C;
+    border-radius: 12px 9px 13px 10px / 10px 13px 9px 12px;
+    background: #fff;
+}
+
+/* Messages */
+.course-builder .mc-message {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+}
+
+/* Form fields */
+.course-builder .mc-field input:not([type=radio]):not([type=checkbox]),
+.course-builder .mc-field textarea,
+.course-builder .mc-field select {
+    min-height: 46px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+.course-builder .mc-field select {
+    padding: 10px 12px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    color: #35030C;
+    font: inherit;
+    cursor: pointer;
+}
+
+.course-builder .mc-field :is(input, textarea, select):focus-visible {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}
+
+/* Traditional food block */
+.course-builder .mc-traditional-food {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fffdf7;
+    box-shadow: 3px 3px 0 #35030C;
+}
+
+.course-builder .mc-traditional-icon {
+    border-width: 2.5px;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+}
+
+/* Cards (Ready to Submit, etc.) */
+.course-builder .card {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+/* Dialogs */
+.mc-dialog,
+.review-reminder-dialog,
+.lesson-video-dialog,
+.course-confirm-dialog {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 5px 5px 0 #35030C;
+}
+
+.course-confirm-icon {
+    border-width: 2.5px;
+    border-radius: 50% 46% 52% 48% / 48% 52% 46% 50%;
+}
+
+.course-confirm-detail {
+    border-left: 0;
+    border: 2px dashed #35030C;
+    border-radius: 14px 10px 15px 11px / 11px 15px 10px 14px;
+    background: #fff;
+}
+
+.course-confirm-dialog.is-delete .course-confirm-detail {
+    border-color: #a61b35;
+}
+
+.course-confirm-dialog.is-delete #courseConfirmProceed {
+    background: #ffd9df;
+    border-color: #701323;
+    color: #701323;
+}
+
+/* Red focus ring everywhere on this page */
+.course-builder :is(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}

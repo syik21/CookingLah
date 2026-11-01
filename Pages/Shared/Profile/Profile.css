@@ -591,3 +591,240 @@
     .profile-delete, .profile-delete-dialog { padding: 20px; }
     .profile-delete-actions { flex-direction: column; }
 }
+
+/* ===== Profile page: hand-drawn style ===== */
+
+/* Panels (sidebar card, details, security, delete) */
+.profile-page .scrap-paper {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+.profile-page .profile-delete {
+    border-style: dashed;
+}
+
+/* Heading stamp + label sticker */
+.profile-page .profile-stamp {
+    padding: 10px 16px;
+    border: 2.5px dashed #35030C;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #FFD24C;
+}
+
+.profile-page .scrap-label {
+    border: 2px solid #35030C;
+    border-radius: 14px 18px 13px 17px / 17px 13px 18px 14px;
+    background: #FFD24C;
+}
+
+/* Avatars: wobbly sketch frame */
+.profile-page .profile-avatar {
+    border: 3px solid #35030C;
+    border-radius: 50% 46% 52% 48% / 48% 52% 46% 50%;
+    background: #fff;
+    object-fit: cover;
+}
+
+.profile-page .profile-avatar-button {
+    border-radius: 50% 46% 52% 48% / 48% 52% 46% 50%;
+    transition: transform .1s ease;
+}
+
+    .profile-page .profile-avatar-button:hover {
+        transform: rotate(-2deg);
+    }
+
+/* Section links in the sidebar */
+.profile-page .profile-section-nav a {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    box-shadow: 3px 3px 0 #35030C;
+    text-decoration: none;
+    transition: transform .1s ease, box-shadow .1s ease, background-color .1s ease;
+}
+
+    .profile-page .profile-section-nav a:nth-child(even) {
+        border-width: 2.5px 3px 2.7px 2.3px;
+        border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    }
+
+    .profile-page .profile-section-nav a:hover {
+        background: #FFD24C;
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 #35030C;
+    }
+
+/* Note under the nav */
+.profile-page .profile-note {
+    padding: 14px 16px;
+    border: 2.5px dashed #35030C;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+/* Section numbers */
+.profile-page .profile-number {
+    display: inline-grid;
+    min-width: 46px;
+    min-height: 46px;
+    place-items: center;
+    border: 2.5px solid #35030C;
+    border-radius: 50% 46% 52% 48% / 48% 52% 46% 50%;
+    background: #FFD24C;
+}
+
+.profile-page .profile-section-heading {
+    padding-bottom: 14px;
+    border-bottom: 2.5px dashed #35030C;
+}
+
+/* Inputs */
+.profile-page .profile-field input {
+    min-height: 46px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+    color: #35030C;
+}
+
+    .profile-page .profile-field input:disabled {
+        border-style: dashed;
+        background: #F7EFD9;
+    }
+
+    .profile-page .profile-field input:focus-visible {
+        outline: 3px solid #F93209;
+        outline-offset: 3px;
+    }
+
+/* Buttons */
+.profile-page .btn,
+.profile-photo-dialog .btn,
+.profile-delete-dialog .btn {
+    min-height: 46px;
+    padding: 10px 22px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    color: #35030C;
+    font-weight: 700;
+    box-shadow: none;
+    cursor: pointer;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .profile-page .btn:hover:not(:disabled),
+    .profile-photo-dialog .btn:hover:not(:disabled),
+    .profile-delete-dialog .btn:hover:not(:disabled) {
+        background: #FFD24C;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .profile-page .btn:active:not(:disabled),
+    .profile-photo-dialog .btn:active:not(:disabled),
+    .profile-delete-dialog .btn:active:not(:disabled) {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+    .profile-page .btn:disabled,
+    .profile-photo-dialog .btn:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+    /* Delete buttons keep a warning colour */
+    .profile-page .btn.profile-delete-button,
+    .profile-delete-dialog .btn.profile-delete-button {
+        border-color: #701323;
+        color: #a61b35;
+    }
+
+        .profile-page .btn.profile-delete-button:hover:not(:disabled),
+        .profile-delete-dialog .btn.profile-delete-button:hover:not(:disabled) {
+            background: #ffd9df;
+            color: #701323;
+        }
+
+/* Feedback messages */
+.profile-page .profile-feedback:not(:empty) {
+    padding: 8px 14px;
+    border: 2px dashed #35030C;
+    border-radius: 14px 10px 15px 11px / 11px 15px 10px 14px;
+    background: #fff;
+}
+
+.profile-page .profile-feedback.is-error:not(:empty) {
+    border-color: #a61b35;
+    color: #a61b35;
+}
+
+.profile-page .profile-feedback.is-success:not(:empty) {
+    background: #EAFAC8;
+}
+
+/* Dialogs */
+.profile-photo-dialog,
+.profile-delete-dialog {
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    color: #35030C;
+    box-shadow: 5px 5px 0 #35030C;
+}
+
+.profile-photo-close {
+    border: 2.5px solid #35030C;
+    border-radius: 50% 46% 52% 48% / 48% 52% 46% 50%;
+    background: #fff;
+    cursor: pointer;
+}
+
+    .profile-photo-close:hover {
+        background: #FFD24C;
+    }
+
+/* "Choose photo" label as a sketch button */
+.profile-photo-dialog .profile-upload-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 10px 22px;
+    border: 2.5px dashed #35030C;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color .1s ease;
+}
+
+    .profile-photo-dialog .profile-upload-label:hover {
+        background: #FFF3C9;
+    }
+
+.profile-photo-dialog .profile-text-button {
+    color: #a61b35;
+    cursor: pointer;
+}
+
+.profile-delete-dialog .profile-delete-confirm input {
+    accent-color: #35030C;
+}
+
+/* Red focus ring */
+.profile-page :is(a, button):focus-visible,
+.profile-photo-dialog :is(a, button, label, input):focus-visible,
+.profile-delete-dialog :is(a, button, input):focus-visible {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}

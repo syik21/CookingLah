@@ -1,8 +1,5 @@
 .mc-page-header {
     padding: 28px;
-    border: var(--border);
-    border-radius: var(--radius-md);
-    background: var(--color-tan-light);
 }
 
 .mc-page-header h1,
@@ -199,3 +196,168 @@
 }
 
 .mc-course-search select { min-height: 44px; max-width: 100%; padding: 10px; }
+
+/* ===== Sketch search toolbar ===== */
+.manage-course .mc-course-search {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 14px;
+    margin: 0 0 24px;
+    padding: 22px 24px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
+    background: #fffdf7;
+    box-shadow: 4px 4px 0 #35030C;
+}
+
+    .manage-course .mc-course-search .mc-field {
+        display: grid;
+        flex: 1 1 320px;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .manage-course .mc-course-search label {
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+/* Search frame: "+" | divider | input */
+.manage-course .sk-search {
+    display: flex;
+    min-width: 0;
+    min-height: 46px;
+    overflow: hidden;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+    background: #fff;
+}
+
+    .manage-course .sk-search::before {
+        content: "";
+        flex: 0 0 44px;
+        border-right: 2.5px solid #35030C;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 3 L11 19' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3 11 L19 11' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") no-repeat center / 22px 22px;
+    }
+
+    .manage-course .sk-search input[type=text] {
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        margin: 0;
+        padding: 10px 16px;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: #35030C;
+        font: inherit;
+        font-size: 15px;
+    }
+
+        .manage-course .sk-search input[type=text]::placeholder {
+            color: #8a8378;
+            opacity: 1;
+        }
+
+        .manage-course .sk-search input[type=text]:focus,
+        .manage-course .sk-search input[type=text]:focus-visible {
+            outline: 0;
+        }
+
+    .manage-course .sk-search:focus-within {
+        outline: 3px solid #F93209;
+        outline-offset: 3px;
+    }
+
+/* Category dropdown */
+.manage-course .mc-course-search select {
+    flex: 0 0 230px;
+    min-height: 46px;
+    padding: 10px 14px;
+    border: 2.5px solid #35030C;
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background-color: #fff;
+    color: #35030C;
+    cursor: pointer;
+}
+
+@supports (appearance: base-select) {
+    .manage-course .mc-course-search select,
+    .manage-course .mc-course-search select::picker(select) {
+        appearance: base-select;
+    }
+
+        .manage-course .mc-course-search select::picker(select) {
+            position-area: block-end span-inline-end;
+            position-try-fallbacks: none;
+            min-width: anchor-size(width);
+            max-height: 260px;
+            overflow-y: auto;
+            margin-top: 8px;
+            padding: 6px;
+            border: 2.5px solid #35030C;
+            border-width: 2.9px 2.4px 3px 2.6px;
+            border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+            background: #fff;
+            box-shadow: 3px 3px 0 #35030C;
+        }
+
+        .manage-course .mc-course-search select option {
+            padding: 10px 12px;
+            border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
+            background: #fff;
+            color: #35030C;
+            cursor: pointer;
+        }
+
+            .manage-course .mc-course-search select option:hover {
+                background: #FFD24C;
+            }
+
+            .manage-course .mc-course-search select option:checked {
+                background: #CDF58A;
+                font-weight: 700;
+            }
+
+            .manage-course .mc-course-search select option::checkmark {
+                display: none;
+            }
+}
+
+/* Search + Clear buttons */
+.manage-course .mc-course-search .btn {
+    flex: 0 0 auto;
+    min-height: 46px;
+    padding: 10px 22px;
+    border: 2.5px solid #35030C;
+    border-width: 2.9px 2.4px 3px 2.6px;
+    border-radius: 14px 22px 15px 20px / 22px 14px 21px 13px;
+    background: #fff;
+    color: #35030C;
+    font-weight: 700;
+    box-shadow: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform .1s ease, background-color .1s ease;
+}
+
+    .manage-course .mc-course-search .btn:hover {
+        background: #FFD24C;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .manage-course .mc-course-search .btn:active {
+        transform: translateY(1px) rotate(-1deg);
+    }
+
+@media (max-width: 700px) {
+    .manage-course .mc-course-search select {
+        flex: 1 1 100%;
+    }
+}

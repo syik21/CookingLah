@@ -224,7 +224,9 @@
                     <label for="userSearch">
                         Search users
                     </label>
-                    <input id="userSearch" value="<%= H(Search) %>" type="search" maxlength="100" placeholder="Username or email" />
+                    <div class="sk-search">
+                        <input id="userSearch" value="<%= H(Search) %>" type="search" maxlength="100" placeholder="Username or email" />
+                    </div>
                 </div>
                 <div class="mu-field">
                     <label for="roleFilter">
