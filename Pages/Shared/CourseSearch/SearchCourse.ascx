@@ -85,9 +85,9 @@
         </asp:Repeater>
 
         <asp:Panel ID="pnlPager" runat="server" CssClass="course-search-pager" Visible="false">
-            <asp:Button ID="btnPrevious" runat="server" Text="‹ Previous" CssClass="btn btn-secondary pager-button" OnClick="btnPrevious_Click" CausesValidation="false" />
+            <asp:Button ID="btnPrevious" runat="server" Text="< Previous" CssClass="btn btn-secondary pager-button" OnClick="btnPrevious_Click" CausesValidation="false" />
             <asp:Label ID="lblPage" runat="server" CssClass="pager-status" />
-            <asp:Button ID="btnNext" runat="server" Text="Next ›" CssClass="btn btn-secondary pager-button" OnClick="btnNext_Click" CausesValidation="false" />
+            <asp:Button ID="btnNext" runat="server" Text="Next >" CssClass="btn btn-secondary pager-button" OnClick="btnNext_Click" CausesValidation="false" />
         </asp:Panel>
     </section>
 </asp:Panel>

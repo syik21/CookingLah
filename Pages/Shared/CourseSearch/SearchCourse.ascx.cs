@@ -9,7 +9,7 @@ namespace CookingLah.Pages.Shared.CourseSearch
 {
     public partial class SearchCourse : System.Web.UI.UserControl
     {
-        private const int PageSize = 8;
+        private const int PageSize = 9;
         private int CurrentPage
         {
             get { return (int?)ViewState["CurrentPage"] ?? 0; }

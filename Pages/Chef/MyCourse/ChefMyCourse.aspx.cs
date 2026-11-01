@@ -8,6 +8,7 @@ namespace CookingLah.Pages.Chef.MyCourse
 {
     public partial class ChefMyCourse : System.Web.UI.Page
     {
+        private const int PageSize = 9;
         private int InstructorId { get { return Convert.ToInt32(Session["UserId"]); } }
         private int ListPage { get { return (int?)ViewState["ListPage"] ?? 0; } set { ViewState["ListPage"] = value; } }
         protected override void OnInit(EventArgs e)
@@ -71,14 +72,14 @@ namespace CookingLah.Pages.Chef.MyCourse
             }
             var view = new DataView(rows);
             if (ListStatus != "All") view.RowFilter = "Status='" + ListStatus + "'";
-            int totalPages = Math.Max(1, (view.Count + 9) / 10);
+            int totalPages = Math.Max(1, (view.Count + PageSize - 1) / PageSize);
             ListPage = Math.Min(ListPage, totalPages - 1);
-            rptCourses.DataSource = new PagedDataSource { DataSource = view, AllowPaging = true, PageSize = 10, CurrentPageIndex = ListPage };
+            rptCourses.DataSource = new PagedDataSource { DataSource = view, AllowPaging = true, PageSize = PageSize, CurrentPageIndex = ListPage };
             rptCourses.DataBind();
             pnlNoCourses.Visible = rows.Rows.Count == 0 && search.Length == 0;
             pnlNoCourseMatches.Visible = view.Count == 0 && !pnlNoCourses.Visible;
             btnClearCourseSearch.Visible = search.Length > 0;
-            pnlCoursePager.Visible = view.Count > 10;
+            pnlCoursePager.Visible = view.Count > PageSize;
             btnPreviousCourses.Enabled = ListPage > 0;
             btnNextCourses.Enabled = ListPage < totalPages - 1;
             lblCoursesPage.Text = "Page " + (ListPage + 1) + " of " + totalPages;

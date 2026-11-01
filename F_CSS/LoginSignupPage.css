@@ -45,14 +45,14 @@ html {
 
 body {
     margin: 0;
-    height: 100vh;
-    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     background-color: #FFF9EB;
     background-image: linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
     background-size: 28px 28px;
     color: var(--ink);
     font: 400 15px/1.65 var(--mono);
-    overflow: hidden;
+    overflow-x: hidden; 
 }
 
 :focus-visible {
@@ -122,7 +122,7 @@ header {
 /* Page layout and introduction */
 
 main {
-    max-width: var(--content-width);
+    max-width: 1300px;
     margin: 0 auto;
     padding: 40px 24px 16px;
     display: grid;
@@ -156,14 +156,14 @@ mark {
 .stickers {
     position: relative;
     width: 100%;
-    max-width: 380px;
+    max-width: 460px;
     aspect-ratio: 460 / 380; /* the area the stickers scatter in */
 }
 
     .stickers .st {
         --r: 0deg;
         position: absolute;
-        width: 24%;
+        width: 28%;
         aspect-ratio: 1;
         transform: rotate(var(--r));
         animation: fl 5s ease-in-out infinite;
@@ -497,6 +497,7 @@ a.lk, button.lk {
 
 @media (max-width: 860px) {
     main {
+        
         grid-template-columns: 1fr;
         gap: 28px;
     }
