@@ -10,7 +10,10 @@ namespace CookingLah.Pages.LiveSessionPage
     {
         protected bool IsLearner
         {
-            get { return string.Equals(Convert.ToString(Session["Role"]), "Learner", StringComparison.OrdinalIgnoreCase); }
+            get
+            {
+                return string.Equals(Convert.ToString(Session["Role"]), "Learner", StringComparison.OrdinalIgnoreCase);
+            }
         }
 
         protected void Page_PreInit(object sender, EventArgs e)
@@ -33,7 +36,8 @@ namespace CookingLah.Pages.LiveSessionPage
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!ValidatePageAccess()) return;
+            if (!ValidatePageAccess())
+                return;
 
             litSubtitle.Text = IsLearner
                 ? "<p class=\"live-search__subtitle\">Watch Chefs cook, interact and learn in real time.</p>"
@@ -161,16 +165,19 @@ namespace CookingLah.Pages.LiveSessionPage
         private string SafeLocalImage(string path, string fallback)
         {
             path = (path ?? "").Trim();
-            if (path.Length == 0 || path.StartsWith("//") || path.Contains("\\")) return fallback;
+            if (path.Length == 0 || path.StartsWith("//") || path.Contains("\\"))
+                return fallback;
 
             Uri absoluteUrl;
-            if (Uri.TryCreate(path, UriKind.Absolute, out absoluteUrl)) return fallback;
+            if (Uri.TryCreate(path, UriKind.Absolute, out absoluteUrl))
+                return fallback;
             return path.StartsWith("~/", StringComparison.Ordinal) ? path : fallback;
         }
 
         protected string FormatStartedAt(object value)
         {
-            if (value == null || value == DBNull.Value) return "Live now";
+            if (value == null || value == DBNull.Value)
+                return "Live now";
             return "Started " + Convert.ToDateTime(value).ToString("h:mm tt");
         }
 

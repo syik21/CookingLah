@@ -23,16 +23,20 @@ namespace CookingLah.F_Services
                 Path = FormsAuthentication.FormsCookiePath,
                 SameSite = SameSiteMode.Lax
             };
-            if (rememberMe) cookie.Expires = expiresAt;
+            if (rememberMe)
+                cookie.Expires = expiresAt;
             context.Response.Cookies.Add(cookie);
         }
 
         // Restore server-side identity after a remembered browser session returns.
         public static bool RestoreSession(HttpContext context)
         {
-            if (context.Session == null) return false;
-            if (context.Session["UserId"] != null) return true;
-            if (context.User == null || context.User.Identity == null || !context.User.Identity.IsAuthenticated) return false;
+            if (context.Session == null)
+                return false;
+            if (context.Session["UserId"] != null)
+                return true;
+            if (context.User == null || context.User.Identity == null || !context.User.Identity.IsAuthenticated)
+                return false;
 
             try
             {

@@ -3,14 +3,18 @@
     var header = document.getElementById("publicHeader");
     var toggle = document.getElementById("publicMenuToggle");
     var nav = document.getElementById("publicNavigation");
-    if (!header || !toggle || !nav) { return; }
+    if (!header || !toggle || !nav) {
+        return;
+    }
     var mobile = window.matchMedia("(max-width: 1000px)");
     header.classList.add("nav-ready");
 
     function closeMenu(restoreFocus) {
         header.classList.remove("menu-open");
         toggle.setAttribute("aria-expanded", "false");
-        if (restoreFocus) { toggle.focus(); }
+        if (restoreFocus) {
+            toggle.focus();
+        }
     }
     toggle.addEventListener("click", function () {
         var open = toggle.getAttribute("aria-expanded") !== "true";
@@ -30,15 +34,21 @@
     });
     nav.addEventListener("click", function (event) {
         var link = event.target.closest("a[href]");
-        if (!link) { return; }
-        if (mobile.matches) { closeMenu(true); }
+        if (!link) {
+            return;
+        }
+        if (mobile.matches) {
+            closeMenu(true);
+        }
         // Put keyboard focus at the selected section after an in-page jump.
         var destination = new URL(link.href, window.location.href);
         if (normalizePath(destination.pathname) === normalizePath(window.location.pathname) && destination.hash) {
             var target = document.getElementById(destination.hash.slice(1));
             if (target) {
                 target.setAttribute("tabindex", "-1");
-                target.focus({ preventScroll: true });
+                target.focus({
+                    preventScroll: true
+                });
             }
         }
     });
@@ -46,11 +56,15 @@
         var focusInNav = nav.contains(document.activeElement);
         var focusOnToggle = document.activeElement === toggle;
         closeMenu(mobile.matches && focusInNav);
-        if (!mobile.matches && focusOnToggle) { nav.querySelector("a").focus(); }
+        if (!mobile.matches && focusOnToggle) {
+            nav.querySelector("a").focus();
+        }
     });
+
     function normalizePath(path) {
         return path.replace(/\/$/, "").replace(/\.aspx$/i, "").toLowerCase();
     }
+
     function updateCurrentLink() {
         nav.querySelectorAll("a[href]").forEach(function (link) {
             var destination = new URL(link.href, window.location.href);

@@ -21,7 +21,10 @@ namespace CookingLah.Pages.Shared
         // Connection string name in Web.config
         static string ConnStr
         {
-            get { return ConfigurationManager.ConnectionStrings["CookingLahDB"].ConnectionString; }
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["CookingLahDB"].ConnectionString;
+            }
         }
 
         static readonly Dictionary<string, string> Blurb = new Dictionary<string, string>
@@ -205,9 +208,12 @@ namespace CookingLah.Pages.Shared
 
         private void RedirectAuthenticatedUser(string role)
         {
-            if (role == "Learner") Response.Redirect(NavigationHelper.GetUrl("Learner"));
-            else if (role == "Instructor") Response.Redirect(NavigationHelper.GetUrl("Instructor"));
-            else if (role == "Admin") Response.Redirect("~/Pages/Admin/AdminDashboard.aspx");
+            if (role == "Learner")
+                Response.Redirect(NavigationHelper.GetUrl("Learner"));
+            else if (role == "Instructor")
+                Response.Redirect(NavigationHelper.GetUrl("Instructor"));
+            else if (role == "Admin")
+                Response.Redirect("~/Pages/Admin/AdminDashboard.aspx");
         }
 
         private void RecordSuccessfulLogin(int userId, string ipAddress, string deviceInfo)
@@ -244,7 +250,8 @@ namespace CookingLah.Pages.Shared
 
         private static object DatabaseValue(string value, int maximumLength)
         {
-            if (string.IsNullOrWhiteSpace(value)) return DBNull.Value;
+            if (string.IsNullOrWhiteSpace(value))
+                return DBNull.Value;
             return value.Length <= maximumLength ? value : value.Substring(0, maximumLength);
         }
 
@@ -408,7 +415,8 @@ namespace CookingLah.Pages.Shared
                     {
                         find.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = email;
                         object result = find.ExecuteScalar();
-                        if (result != null) userId = Convert.ToInt32(result);
+                        if (result != null)
+                            userId = Convert.ToInt32(result);
                     }
 
                     if (userId.HasValue)

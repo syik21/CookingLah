@@ -89,7 +89,7 @@
     cursor: pointer;
 }
 
-.country-dialog > p {
+.country-dialog>p {
     color: var(--color-text-soft);
     font-size: 13px;
 }

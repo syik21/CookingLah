@@ -1,6 +1,6 @@
 .food-map-shell {
     display: grid;
-    grid-template-columns: minmax(260px,320px) minmax(0,1fr);
+    grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
     gap: 20px;
     align-items: stretch;
     width: 100%;
@@ -20,9 +20,9 @@
     min-width: 0;
 }
 
-    .food-map-canvas .cl-world-map {
-        height: 600px;
-    }
+.food-map-canvas .cl-world-map {
+    height: 600px;
+}
 
 .food-map-panel {
     grid-column: 1;
@@ -65,7 +65,8 @@
     margin-top: 4px;
 }
 
-.food-map-select, .food-map-search__input {
+.food-map-select,
+.food-map-search__input {
     width: 100%;
     min-width: 0;
     min-height: 44px;
@@ -80,7 +81,7 @@
 
 .food-map-search {
     display: grid;
-    grid-template-columns: minmax(0,1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px;
 }
 
@@ -123,7 +124,7 @@
 
 .food-dish-card {
     display: grid;
-    grid-template-columns: 68px minmax(0,1fr);
+    grid-template-columns: 68px minmax(0, 1fr);
     gap: 12px;
     flex-shrink: 0;
     padding: 10px;
@@ -210,7 +211,7 @@
     font-size: 11px;
 }
 
-.food-map-shell :is(input,select,a):focus-visible {
+.food-map-shell :is(input, select, a):focus-visible {
     outline: 3px solid var(--color-ink);
     outline-offset: 3px;
 }
@@ -247,28 +248,28 @@ body.food-map-page-active {
     inset: 0;
 }
 
-    .food-map-canvas .cl-world-map {
-        height: 100%;
-        border: 0;
-        border-radius: 0;
-        grid-template-rows: minmax(0,1fr);
-    }
+.food-map-canvas .cl-world-map {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+    grid-template-rows: minmax(0, 1fr);
+}
 
-    .food-map-canvas .cl-world-map__heading {
-        display: none;
-    }
+.food-map-canvas .cl-world-map__heading {
+    display: none;
+}
 
-    .food-map-canvas .cl-world-map__footer {
-        position: absolute;
-        right: 16px;
-        bottom: 12px;
-        padding: 0;
-        border: 0;
-    }
+.food-map-canvas .cl-world-map__footer {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+    padding: 0;
+    border: 0;
+}
 
-        .food-map-canvas .cl-world-map__footer p {
-            display: none;
-        }
+.food-map-canvas .cl-world-map__footer p {
+    display: none;
+}
 
 .food-map-panel-toggle {
     position: absolute;
@@ -318,7 +319,7 @@ body.food-map-page-active {
     display: none !important;
 }
 
-.food-map-shell :is(input,select,button):focus-visible {
+.food-map-shell :is(input, select, button):focus-visible {
     outline: 3px solid var(--color-ink);
     outline-offset: 3px;
 }
@@ -376,9 +377,9 @@ body.food-map-page-active {
     text-underline-offset: 3px;
 }
 
-    .food-dish-card__explore:hover {
-        text-decoration-thickness: 2px;
-    }
+.food-dish-card__explore:hover {
+    text-decoration-thickness: 2px;
+}
 
 
 /* ==========================================================
@@ -406,9 +407,9 @@ body.food-map-page-active {
     background: linear-gradient(var(--color-ink), var(--color-ink)) 46px 0 / 2.8px 100% no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2335030C' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12.2 4.5C12 9 12.3 15 11.8 19.6'/%3E%3Cpath d='M4.4 12.3C9 11.8 15 12.4 19.7 11.7'/%3E%3C/svg%3E") 12px center / 22px 22px no-repeat, #fff;
 }
 
-    .food-map-shell .food-map-search__input::-webkit-search-cancel-button {
-        display: none;
-    }
+.food-map-shell .food-map-search__input::-webkit-search-cancel-button {
+    display: none;
+}
 
 /* Dashed dividers instead of thin tan lines */
 .food-map-panel__summary,
@@ -441,13 +442,13 @@ body.food-map-page-active {
     transition: transform .1s ease, background-color .1s ease;
 }
 
-    .food-map-shell .food-dish-card__explore:hover {
-        background: var(--color-yellow);
-    }
+.food-map-shell .food-dish-card__explore:hover {
+    background: var(--color-yellow);
+}
 
-    .food-map-shell .food-dish-card__explore:active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.food-map-shell .food-dish-card__explore:active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
 /* Focus ring in the brand red */
 .food-map-shell :is(input, select, button, a):focus-visible {
@@ -471,54 +472,57 @@ body.food-map-page-active {
     cursor: pointer;
 }
 
-    .food-map-shell .food-map-panel select.food-map-select option {
-        background: #fff;
-        color: var(--color-ink);
-        font: inherit;
-        font-size: 14px;
-    }
+.food-map-shell .food-map-panel select.food-map-select option {
+    background: #fff;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 14px;
+}
 
 @supports (appearance: base-select) {
+
     .food-map-shell select.food-map-select,
     .food-map-shell select.food-map-select::picker(select) {
         appearance: base-select;
     }
-        /* the list: always opens BELOW the field */
-        .food-map-shell select.food-map-select::picker(select) {
-            position-area: block-end span-inline-end;
-            position-try-fallbacks: none;
-            min-width: anchor-size(width);
-            max-height: 320px;
-            overflow-y: auto;
-            margin-top: 10px;
-            padding: 8px;
-            border: 2.5px solid var(--color-ink);
-            border-width: 2.9px 2.4px 3px 2.6px;
-            border-radius: 26px 18px 28px 19px / 19px 28px 18px 26px;
-            background: #fff;
-            box-shadow: 4px 4px 0 var(--color-ink);
-        }
-        /* bigger, rounder options */
-        .food-map-shell select.food-map-select option {
-            padding: 12px 16px;
-            border-radius: 14px 16px 13px 17px / 16px 13px 17px 14px;
-            cursor: pointer;
-        }
 
-            .food-map-shell select.food-map-select option:hover,
-            .food-map-shell select.food-map-select option:focus-visible {
-                background: var(--color-yellow);
-                outline: 0;
-            }
+    /* the list: always opens BELOW the field */
+    .food-map-shell select.food-map-select::picker(select) {
+        position-area: block-end span-inline-end;
+        position-try-fallbacks: none;
+        min-width: anchor-size(width);
+        max-height: 320px;
+        overflow-y: auto;
+        margin-top: 10px;
+        padding: 8px;
+        border: 2.5px solid var(--color-ink);
+        border-width: 2.9px 2.4px 3px 2.6px;
+        border-radius: 26px 18px 28px 19px / 19px 28px 18px 26px;
+        background: #fff;
+        box-shadow: 4px 4px 0 var(--color-ink);
+    }
 
-            .food-map-shell select.food-map-select option:checked {
-                background: var(--color-lime);
-                font-weight: 700;
-            }
+    /* bigger, rounder options */
+    .food-map-shell select.food-map-select option {
+        padding: 12px 16px;
+        border-radius: 14px 16px 13px 17px / 16px 13px 17px 14px;
+        cursor: pointer;
+    }
 
-            .food-map-shell select.food-map-select option::checkmark {
-                display: none;
-            }
+    .food-map-shell select.food-map-select option:hover,
+    .food-map-shell select.food-map-select option:focus-visible {
+        background: var(--color-yellow);
+        outline: 0;
+    }
+
+    .food-map-shell select.food-map-select option:checked {
+        background: var(--color-lime);
+        font-weight: 700;
+    }
+
+    .food-map-shell select.food-map-select option::checkmark {
+        display: none;
+    }
 }
 
 /* ==========================================================
@@ -527,15 +531,20 @@ body.food-map-page-active {
    keeps the original mobile rules.
    ========================================================== */
 .food-map-shell {
-    --food-panel-top: 68px; /* gap above the panel (under the Hide button) */
-    --food-panel-bottom: 76px; /* gap kept free below the panel */
-    --food-panel-width: 320px; /* biggest width */
-    --food-panel-max-height: 490px; /* biggest height */
+    --food-panel-top: 68px;
+    /* gap above the panel (under the Hide button) */
+    --food-panel-bottom: 76px;
+    /* gap kept free below the panel */
+    --food-panel-width: 320px;
+    /* biggest width */
+    --food-panel-max-height: 490px;
+    /* biggest height */
 }
 
-    .food-map-shell .food-map-results {
-        min-height: 72px; /* the dish list never collapses to nothing */
-    }
+.food-map-shell .food-map-results {
+    min-height: 72px;
+    /* the dish list never collapses to nothing */
+}
 
 @media (min-width: 701px) {
     .food-map-shell .food-map-panel {
@@ -544,7 +553,8 @@ body.food-map-page-active {
         width: min(var(--food-panel-width), calc(100% - 32px));
         height: min(var(--food-panel-max-height), calc(100% - var(--food-panel-top) - var(--food-panel-bottom)));
         padding: 18px;
-        overflow-y: auto; /* last resort on very short windows */
+        overflow-y: auto;
+        /* last resort on very short windows */
     }
 }
 
@@ -618,9 +628,9 @@ body.food-map-page-active {
     margin-bottom: 8px;
 }
 
-    .food-map-panel__top .food-map-panel__eyebrow {
-        margin: 0;
-    }
+.food-map-panel__top .food-map-panel__eyebrow {
+    margin: 0;
+}
 
 .food-map-panel__size {
     display: flex;
@@ -638,10 +648,10 @@ body.food-map-page-active {
     line-height: 1;
 }
 
-    .food-map-shell .food-map-size-btn:disabled {
-        opacity: .4;
-        cursor: not-allowed;
-    }
+.food-map-shell .food-map-size-btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
 
 /* SMALL: title and descriptions hidden, tighter cards */
 .food-map-shell[data-panel-size="small"] .food-map-panel {

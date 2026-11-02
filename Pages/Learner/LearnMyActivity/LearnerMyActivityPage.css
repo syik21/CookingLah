@@ -9,19 +9,21 @@
     margin-bottom: 28px;
 }
 
-    .activity-page-heading h1, .activity-detail-heading h1 {
-        margin: 0;
-        font-size: clamp(34px,5vw,56px);
-        line-height: 1.08;
-        overflow-wrap: anywhere;
-    }
+.activity-page-heading h1,
+.activity-detail-heading h1 {
+    margin: 0;
+    font-size: clamp(34px, 5vw, 56px);
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+}
 
-    .activity-page-heading > p:last-child, .activity-detail-heading > p:last-child {
-        max-width: 700px;
-        margin: 12px 0 0;
-        color: var(--color-text-soft);
-        line-height: 1.7;
-    }
+.activity-page-heading>p:last-child,
+.activity-detail-heading>p:last-child {
+    max-width: 700px;
+    margin: 12px 0 0;
+    color: var(--color-text-soft);
+    line-height: 1.7;
+}
 
 .activity-kicker {
     margin: 0 0 8px;
@@ -31,7 +33,7 @@
 
 .activity-statistics {
     display: grid;
-    grid-template-columns: repeat(3,minmax(0,1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
     margin-bottom: 28px;
 }
@@ -46,38 +48,38 @@
     overflow: hidden;
 }
 
-    .activity-stat-card::before {
-        content: "";
-        position: absolute;
-        inset: 0 auto 0 0;
-        width: 7px;
-        background: var(--color-yellow);
-    }
+.activity-stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 7px;
+    background: var(--color-yellow);
+}
 
-    .activity-stat-card.is-approved::before {
-        background: var(--color-lime);
-    }
+.activity-stat-card.is-approved::before {
+    background: var(--color-lime);
+}
 
-    .activity-stat-card.is-resubmit::before {
-        background: var(--color-primary);
-    }
+.activity-stat-card.is-resubmit::before {
+    background: var(--color-primary);
+}
 
-    .activity-stat-card span {
-        display: block;
-        font-size: 13px;
-        font-weight: 700;
-    }
+.activity-stat-card span {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+}
 
-    .activity-stat-card strong {
-        display: block;
-        margin-top: 8px;
-        font-size: 34px;
-        line-height: 1;
-    }
+.activity-stat-card strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 34px;
+    line-height: 1;
+}
 
 .activity-filters {
     display: grid;
-    grid-template-columns: minmax(260px,1fr) minmax(170px,auto) minmax(170px,auto);
+    grid-template-columns: minmax(260px, 1fr) minmax(170px, auto) minmax(170px, auto);
     gap: 16px;
     align-items: end;
     padding: 20px;
@@ -86,47 +88,50 @@
     background: var(--color-tan-light);
 }
 
-.activity-search-field, .activity-filter-field {
+.activity-search-field,
+.activity-filter-field {
     display: grid;
     gap: 7px;
     min-width: 0;
 }
 
-    .activity-search-field label, .activity-filter-field label {
-        font-size: 13px;
-        font-weight: 700;
-    }
+.activity-search-field label,
+.activity-filter-field label {
+    font-size: 13px;
+    font-weight: 700;
+}
 
 .activity-search-row {
     display: flex;
     gap: 8px;
 }
 
-    .activity-search-row input[type=search], .activity-filter-field select {
-        width: 100%;
-        min-width: 0;
-        min-height: 46px;
-        padding: 10px 12px;
-        border: 1px solid var(--color-ink);
-        border-radius: var(--radius-sm);
-        background: #fff;
-        color: var(--color-ink);
-        font: inherit;
-        font-size: 14px;
-    }
+.activity-search-row input[type=search],
+.activity-filter-field select {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 14px;
+}
 
-    .activity-search-row input[type=search] {
-        flex: 1;
-    }
+.activity-search-row input[type=search] {
+    flex: 1;
+}
 
 .activity-results-heading {
     margin: 28px 0 14px;
 }
 
-    .activity-results-heading h2 {
-        margin: 0;
-        font-size: 24px;
-    }
+.activity-results-heading h2 {
+    margin: 0;
+    font-size: 24px;
+}
 
 .activity-submission-list {
     display: grid;
@@ -135,7 +140,7 @@
 
 .activity-submission-card {
     display: grid;
-    grid-template-columns: 220px minmax(0,1fr);
+    grid-template-columns: 220px minmax(0, 1fr);
     min-width: 0;
     overflow: hidden;
     border: 1px solid var(--color-grid);
@@ -145,13 +150,13 @@
     box-shadow: 0 3px 0 var(--color-grid);
 }
 
-    .activity-submission-card.is-approved {
-        border-left-color: var(--color-lime);
-    }
+.activity-submission-card.is-approved {
+    border-left-color: var(--color-lime);
+}
 
-    .activity-submission-card.is-resubmit {
-        border-left-color: var(--color-primary);
-    }
+.activity-submission-card.is-resubmit {
+    border-left-color: var(--color-primary);
+}
 
 .submission-thumbnail-wrap {
     min-height: 210px;
@@ -176,15 +181,15 @@
     color: var(--color-text-soft);
 }
 
-    .submission-thumbnail-empty svg {
-        width: 42px;
-        height: 42px;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 1.5;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-    }
+.submission-thumbnail-empty svg {
+    width: 42px;
+    height: 42px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
 .submission-card-content {
     display: flex;
@@ -225,14 +230,14 @@
     font-weight: 700;
 }
 
-    .activity-status.is-approved {
-        background: var(--color-lime);
-    }
+.activity-status.is-approved {
+    background: var(--color-lime);
+}
 
-    .activity-status.is-resubmit {
-        background: var(--color-primary);
-        color: #fff;
-    }
+.activity-status.is-resubmit {
+    background: var(--color-primary);
+    color: #fff;
+}
 
 .submission-date {
     margin: 18px 0 8px;
@@ -269,16 +274,16 @@
     text-align: center;
 }
 
-    .activity-empty-state h2 {
-        margin: 0 0 10px;
-    }
+.activity-empty-state h2 {
+    margin: 0 0 10px;
+}
 
-    .activity-empty-state p {
-        max-width: 580px;
-        margin: 0 auto 20px;
-        color: var(--color-text-soft);
-        line-height: 1.7;
-    }
+.activity-empty-state p {
+    max-width: 580px;
+    margin: 0 auto 20px;
+    color: var(--color-text-soft);
+    line-height: 1.7;
+}
 
 .activity-page-message {
     margin-bottom: 20px;
@@ -303,9 +308,9 @@
     margin-bottom: 24px;
 }
 
-    .activity-detail-heading:focus {
-        outline: none;
-    }
+.activity-detail-heading:focus {
+    outline: none;
+}
 
 .activity-detail-summary {
     display: flex;
@@ -314,20 +319,22 @@
     margin-bottom: 18px;
 }
 
-    .activity-detail-summary > div, .activity-progress-confirmation > div {
-        min-width: 180px;
-        padding: 14px 16px;
-        border: 1px solid var(--color-tan);
-        border-radius: var(--radius-sm);
-        background: #fff;
-    }
+.activity-detail-summary>div,
+.activity-progress-confirmation>div {
+    min-width: 180px;
+    padding: 14px 16px;
+    border: 1px solid var(--color-tan);
+    border-radius: var(--radius-sm);
+    background: #fff;
+}
 
-    .activity-detail-summary span, .activity-progress-confirmation span {
-        display: block;
-        margin-bottom: 5px;
-        color: var(--color-text-soft);
-        font-size: 12px;
-    }
+.activity-detail-summary span,
+.activity-progress-confirmation span {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--color-text-soft);
+    font-size: 12px;
+}
 
 .activity-progress-confirmation {
     display: contents;
@@ -342,27 +349,27 @@
     background: var(--color-tan-light);
 }
 
-    .activity-detail-state.is-approved {
-        border-left-color: var(--color-lime);
-    }
+.activity-detail-state.is-approved {
+    border-left-color: var(--color-lime);
+}
 
-    .activity-detail-state.is-resubmit {
-        border-left-color: var(--color-primary);
-    }
+.activity-detail-state.is-resubmit {
+    border-left-color: var(--color-primary);
+}
 
-    .activity-detail-state h2 {
-        margin: 0 0 7px;
-        font-size: 21px;
-    }
+.activity-detail-state h2 {
+    margin: 0 0 7px;
+    font-size: 21px;
+}
 
-    .activity-detail-state p {
-        margin: 0;
-        line-height: 1.7;
-    }
+.activity-detail-state p {
+    margin: 0;
+    line-height: 1.7;
+}
 
 .activity-detail-grid {
     display: grid;
-    grid-template-columns: minmax(0,3fr) minmax(280px,2fr);
+    grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr);
     gap: 20px;
     align-items: start;
 }
@@ -376,15 +383,15 @@
     box-shadow: 0 3px 0 var(--color-grid);
 }
 
-    .activity-detail-card h2 {
-        margin: 0 0 18px;
-        font-size: 24px;
-    }
+.activity-detail-card h2 {
+    margin: 0 0 18px;
+    font-size: 24px;
+}
 
-    .activity-detail-card h3 {
-        margin: 22px 0 8px;
-        font-size: 16px;
-    }
+.activity-detail-card h3 {
+    margin: 22px 0 8px;
+    font-size: 16px;
+}
 
 .activity-feedback-card {
     border-top: 7px solid var(--color-yellow);
@@ -440,7 +447,7 @@
     }
 
     .activity-submission-card {
-        grid-template-columns: 170px minmax(0,1fr);
+        grid-template-columns: 170px minmax(0, 1fr);
     }
 
     .activity-detail-grid {
@@ -449,7 +456,9 @@
 }
 
 @media (max-width:620px) {
-    .activity-statistics, .activity-filters {
+
+    .activity-statistics,
+    .activity-filters {
         grid-template-columns: 1fr;
     }
 
@@ -466,7 +475,9 @@
         grid-template-columns: 1fr;
     }
 
-    .submission-thumbnail-wrap, .submission-thumbnail, .submission-thumbnail-empty {
+    .submission-thumbnail-wrap,
+    .submission-thumbnail,
+    .submission-thumbnail-empty {
         min-height: 190px;
         max-height: 240px;
     }
@@ -475,25 +486,27 @@
         flex-direction: column;
     }
 
-    .submission-card-action, .activity-detail-actions {
+    .submission-card-action,
+    .activity-detail-actions {
         justify-content: stretch;
     }
 
-        .submission-card-action .btn, .activity-detail-actions .btn {
-            width: 100%;
-            text-align: center;
-        }
+    .submission-card-action .btn,
+    .activity-detail-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
 
     .activity-pagination {
         flex-wrap: wrap;
         justify-content: center;
     }
 
-        .activity-pagination span {
-            width: 100%;
-            text-align: center;
-            order: -1;
-        }
+    .activity-pagination span {
+        width: 100%;
+        text-align: center;
+        order: -1;
+    }
 }
 
 
@@ -514,10 +527,10 @@
     overflow: hidden;
 }
 
-    .sketch-search:focus-within {
-        outline: 3px solid var(--color-ink);
-        outline-offset: 3px;
-    }
+.sketch-search:focus-within {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+}
 
 .sketch-plus {
     display: grid;
@@ -527,15 +540,15 @@
     border-radius: 0 3px 2px 0;
 }
 
-    .sketch-plus svg {
-        width: 22px;
-        height: 22px;
-        fill: none;
-        stroke: var(--color-ink);
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-    }
+.sketch-plus svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
 /* Input sits flat inside the sketch frame */
 .activity-search-row .sketch-search input[type=search] {
@@ -551,9 +564,9 @@
     outline: none;
 }
 
-    .activity-search-row .sketch-search input[type=search]::-webkit-search-cancel-button {
-        display: none;
-    }
+.activity-search-row .sketch-search input[type=search]::-webkit-search-cancel-button {
+    display: none;
+}
 
 /* Hand-drawn Status and Sort dropdowns */
 .activity-filter-field select {
@@ -581,45 +594,46 @@
 }
 
 @supports (appearance: base-select) {
+
     .activity-filter-field select,
     .activity-filter-field select::picker(select) {
         appearance: base-select;
     }
 
-        .activity-filter-field select::picker(select) {
-            position-area: block-end span-inline-end;
-            position-try-fallbacks: none;
-            min-width: anchor-size(width);
-            max-height: 260px;
-            overflow-y: auto;
-            margin-top: 8px;
-            padding: 6px;
-            border: 2.5px solid var(--color-ink);
-            border-radius: 14px 18px 15px 19px / 19px 14px 18px 15px;
-            background: #fff;
-            box-shadow: 3px 3px 0 var(--color-ink);
-        }
+    .activity-filter-field select::picker(select) {
+        position-area: block-end span-inline-end;
+        position-try-fallbacks: none;
+        min-width: anchor-size(width);
+        max-height: 260px;
+        overflow-y: auto;
+        margin-top: 8px;
+        padding: 6px;
+        border: 2.5px solid var(--color-ink);
+        border-radius: 14px 18px 15px 19px / 19px 14px 18px 15px;
+        background: #fff;
+        box-shadow: 3px 3px 0 var(--color-ink);
+    }
 
-        .activity-filter-field select option {
-            padding: 10px 12px;
-            border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
-            cursor: pointer;
-        }
+    .activity-filter-field select option {
+        padding: 10px 12px;
+        border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
+        cursor: pointer;
+    }
 
-            .activity-filter-field select option:hover,
-            .activity-filter-field select option:focus-visible {
-                background: var(--color-yellow);
-                outline: 0;
-            }
+    .activity-filter-field select option:hover,
+    .activity-filter-field select option:focus-visible {
+        background: var(--color-yellow);
+        outline: 0;
+    }
 
-            .activity-filter-field select option:checked {
-                background: var(--color-lime);
-                font-weight: 700;
-            }
+    .activity-filter-field select option:checked {
+        background: var(--color-lime);
+        font-weight: 700;
+    }
 
-            .activity-filter-field select option::checkmark {
-                display: none;
-            }
+    .activity-filter-field select option::checkmark {
+        display: none;
+    }
 }
 
 /* Hand-drawn Search button */
@@ -636,18 +650,18 @@
     transition: transform .1s ease, background-color .1s ease;
 }
 
-    .activity-search-row .btn.btn-primary:hover {
-        background: var(--color-yellow);
-    }
+.activity-search-row .btn.btn-primary:hover {
+    background: var(--color-yellow);
+}
 
-    .activity-search-row .btn.btn-primary:active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.activity-search-row .btn.btn-primary:active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
-    .activity-search-row .btn.btn-primary:focus-visible {
-        outline: 3px solid var(--color-ink);
-        outline-offset: 3px;
-    }
+.activity-search-row .btn.btn-primary:focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+}
 
 /* More hand-drawn borders: uneven line thickness + wobblier corners (overrides the radii above) */
 .activity-filters {
@@ -677,10 +691,10 @@
     border-radius: var(--sketch-radius-b);
 }
 
-    .activity-filter-field select::picker(select) {
-        border-width: var(--sketch-width-b);
-        border-radius: var(--sketch-radius-a);
-    }
+.activity-filter-field select::picker(select) {
+    border-width: var(--sketch-width-b);
+    border-radius: var(--sketch-radius-a);
+}
 
 /* Colours matched to the My Courses page: cream panel, ink border, soft shadow, red focus ring */
 .activity-filters {
@@ -709,43 +723,46 @@
 
    Adjust the three values below to change the spacing; everything else follows. */
 .my-activity-page .activity-statistics {
-    --stat-gap: 26px; /* space between the three cards */
-    --stat-pad-y: 12px; /* top/bottom space inside a card (keep 8px or more) */
-    --stat-pad-x: 16px; /* right space inside a card (keep 8px or more) */
+    --stat-gap: 26px;
+    /* space between the three cards */
+    --stat-pad-y: 12px;
+    /* top/bottom space inside a card (keep 8px or more) */
+    --stat-pad-x: 16px;
+    /* right space inside a card (keep 8px or more) */
     gap: var(--stat-gap);
 }
 
-    .my-activity-page .activity-statistics .activity-stat-card {
-        padding: var(--stat-pad-y) var(--stat-pad-x) var(--stat-pad-y) calc(var(--stat-pad-x) + 6px);
-        border: 2.5px solid var(--color-ink);
-        border-width: 2.5px 3px 2.7px 2.3px;
-        border-radius: 10px 14px 11px 15px / 14px 10px 15px 11px;
-        background: #fffdf7;
-    }
+.my-activity-page .activity-statistics .activity-stat-card {
+    padding: var(--stat-pad-y) var(--stat-pad-x) var(--stat-pad-y) calc(var(--stat-pad-x) + 6px);
+    border: 2.5px solid var(--color-ink);
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 10px 14px 11px 15px / 14px 10px 15px 11px;
+    background: #fffdf7;
+}
 
-        /* colour marker on the left, slim so it fits inside the frame */
-        .my-activity-page .activity-statistics .activity-stat-card::before {
-            width: 6px;
-        }
+/* colour marker on the left, slim so it fits inside the frame */
+.my-activity-page .activity-statistics .activity-stat-card::before {
+    width: 6px;
+}
 
-        /* dashed inner line, like the stitched border in the reference */
-        .my-activity-page .activity-statistics .activity-stat-card::after {
-            position: absolute;
-            inset: 4px 4px 4px 10px;
-            border: 1.8px dashed var(--color-ink);
-            border-radius: 5px 7px 5px 8px / 7px 5px 8px 5px;
-            content: "";
-            pointer-events: none;
-        }
+/* dashed inner line, like the stitched border in the reference */
+.my-activity-page .activity-statistics .activity-stat-card::after {
+    position: absolute;
+    inset: 4px 4px 4px 10px;
+    border: 1.8px dashed var(--color-ink);
+    border-radius: 5px 7px 5px 8px / 7px 5px 8px 5px;
+    content: "";
+    pointer-events: none;
+}
 
-        .my-activity-page .activity-statistics .activity-stat-card span {
-            font-size: 12px;
-        }
+.my-activity-page .activity-statistics .activity-stat-card span {
+    font-size: 12px;
+}
 
-        .my-activity-page .activity-statistics .activity-stat-card strong {
-            margin-top: 4px;
-            font-size: 28px;
-        }
+.my-activity-page .activity-statistics .activity-stat-card strong {
+    margin-top: 4px;
+    font-size: 28px;
+}
 
 @media (max-width: 620px) {
     .my-activity-page .activity-statistics {
@@ -757,7 +774,8 @@
    Put this at the very END of LearnerMyActivityPage.css. */
 .my-activity-page .activity-submission-list .activity-submission-card {
     position: relative;
-    padding-left: 7px; /* room for the status marker */
+    padding-left: 7px;
+    /* room for the status marker */
     border: 2.5px solid var(--color-ink);
     border-width: 2.5px 3px 2.7px 2.3px;
     border-radius: 14px 18px 15px 19px / 18px 14px 19px 15px;
@@ -765,23 +783,23 @@
     box-shadow: var(--shadow-sm);
 }
 
-    /* status marker: yellow = submitted, green = approved, red = resubmit */
-    .my-activity-page .activity-submission-list .activity-submission-card::before {
-        position: absolute;
-        inset: 0 auto 0 0;
-        z-index: 1;
-        width: 7px;
-        background: var(--color-yellow);
-        content: "";
-    }
+/* status marker: yellow = submitted, green = approved, red = resubmit */
+.my-activity-page .activity-submission-list .activity-submission-card::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 1;
+    width: 7px;
+    background: var(--color-yellow);
+    content: "";
+}
 
-    .my-activity-page .activity-submission-list .activity-submission-card.is-approved::before {
-        background: var(--color-lime);
-    }
+.my-activity-page .activity-submission-list .activity-submission-card.is-approved::before {
+    background: var(--color-lime);
+}
 
-    .my-activity-page .activity-submission-list .activity-submission-card.is-resubmit::before {
-        background: var(--color-primary);
-    }
+.my-activity-page .activity-submission-list .activity-submission-card.is-resubmit::before {
+    background: var(--color-primary);
+}
 
 /* "View Submission" button in the same sketch style as the Search button */
 .my-activity-page .submission-card-action .btn {
@@ -796,13 +814,13 @@
     transition: transform .1s ease, background-color .1s ease;
 }
 
-    .my-activity-page .submission-card-action .btn:hover {
-        background: var(--color-yellow);
-    }
+.my-activity-page .submission-card-action .btn:hover {
+    background: var(--color-yellow);
+}
 
-    .my-activity-page .submission-card-action .btn:active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.my-activity-page .submission-card-action .btn:active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
 @media (prefers-reduced-motion: reduce) {
     .my-activity-page .submission-card-action .btn {

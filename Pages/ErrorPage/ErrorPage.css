@@ -69,7 +69,7 @@
     font-size: clamp(48px, 7vw, 82px);
 }
 
-.error-copy > p {
+.error-copy>p {
     max-width: 620px;
     margin: 22px 0 0;
     color: var(--color-text-soft);

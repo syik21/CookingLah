@@ -41,9 +41,13 @@
             width: "100%",
             height: "100%",
             parentNode: container,
-            userInfo: { displayName: adminName + " (Admin)" },
+            userInfo: {
+                displayName: adminName + " (Admin)"
+            },
             configOverwrite: {
-                prejoinConfig: { enabled: false },
+                prejoinConfig: {
+                    enabled: false
+                },
                 startWithAudioMuted: true,
                 startWithVideoMuted: true,
                 disableSelfView: true,
@@ -51,8 +55,12 @@
                 hideConferenceSubject: true,
                 hideConferenceTimer: true,
                 hideParticipantsStats: true,
-                filmstrip: { disabled: true },
-                tileView: { disabled: true },
+                filmstrip: {
+                    disabled: true
+                },
+                tileView: {
+                    disabled: true
+                },
                 notifications: [],
                 conferenceInfo: {
                     alwaysVisible: [],
@@ -95,7 +103,9 @@
 
         try {
             var rooms = await api.getRoomsInfo();
-            var mainRoom = rooms.find(function (room) { return room.isMainRoom; });
+            var mainRoom = rooms.find(function (room) {
+                return room.isMainRoom;
+            });
             var chefName = document.getElementById("hfChefDisplayName").value;
             var chef = mainRoom && mainRoom.participants && mainRoom.participants.find(function (participant) {
                 return participant.displayName === chefName;
@@ -170,7 +180,9 @@
             buttonId: "btnSubmitWarning",
             inputId: "warningReason",
             errorId: "warningError",
-            action: function (reason) { return window.liveHub.server.issueWarning(sessionId, reason); },
+            action: function (reason) {
+                return window.liveHub.server.issueWarning(sessionId, reason);
+            },
             success: function () {
                 document.getElementById("warningDialog").close();
                 document.getElementById("warningReason").value = "";
@@ -184,7 +196,9 @@
             buttonId: "btnSubmitSuspension",
             inputId: "suspensionReason",
             errorId: "suspensionError",
-            action: function (reason) { return window.liveHub.server.suspendLive(sessionId, reason); },
+            action: function (reason) {
+                return window.liveHub.server.suspendLive(sessionId, reason);
+            },
             success: function () {
                 document.getElementById("suspensionDialog").close();
             }
@@ -246,8 +260,12 @@
     function showEndedState() {
         sessionClosed = true;
         cleanup();
-        document.querySelectorAll(".admin-action").forEach(function (button) { button.disabled = true; });
-        document.querySelectorAll(".admin-moderation-dialog[open]").forEach(function (dialog) { dialog.close(); });
+        document.querySelectorAll(".admin-action").forEach(function (button) {
+            button.disabled = true;
+        });
+        document.querySelectorAll(".admin-moderation-dialog[open]").forEach(function (dialog) {
+            dialog.close();
+        });
 
         var container = document.getElementById("jitsi-container");
         container.innerHTML = "";
@@ -266,8 +284,12 @@
     function showSuspendedState(event) {
         sessionClosed = true;
         cleanup();
-        document.querySelectorAll(".admin-action").forEach(function (button) { button.disabled = true; });
-        document.querySelectorAll(".admin-moderation-dialog[open]").forEach(function (dialog) { dialog.close(); });
+        document.querySelectorAll(".admin-action").forEach(function (button) {
+            button.disabled = true;
+        });
+        document.querySelectorAll(".admin-moderation-dialog[open]").forEach(function (dialog) {
+            dialog.close();
+        });
         document.getElementById("txtChatMessage").disabled = true;
         document.getElementById("btnSendMessage").disabled = true;
 

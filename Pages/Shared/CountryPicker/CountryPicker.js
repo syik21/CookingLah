@@ -15,7 +15,9 @@
         var noResults = picker.querySelector('[data-country-empty]');
         var close = picker.querySelector('[data-country-close]');
         var label = picker.querySelector('label[for]');
-        var countries = Array.from(select.options).filter(function (option) { return option.value; });
+        var countries = Array.from(select.options).filter(function (option) {
+            return option.value;
+        });
 
         function normalize(value) {
             return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -49,7 +51,9 @@
                 button.append(name, code);
                 button.addEventListener('click', function () {
                     select.value = country.value;
-                    select.dispatchEvent(new Event('change', { bubbles: true }));
+                    select.dispatchEvent(new Event('change', {
+                        bubbles: true
+                    }));
                     dialog.close();
                 });
                 results.appendChild(button);
@@ -74,7 +78,9 @@
             search.focus();
         });
 
-        close.addEventListener('click', function () { dialog.close(); });
+        close.addEventListener('click', function () {
+            dialog.close();
+        });
         dialog.addEventListener('close', function () {
             document.body.classList.remove('country-picker-open');
             trigger.focus();

@@ -13,8 +13,10 @@
     var mapZoom = 1;
     var minZoom = 1;
     var maxZoom = 6;
-    var centerX = 500, centerY = 252;
-    var baseWidth = 1040, baseHeight = 544;
+    var centerX = 500,
+        centerY = 252;
+    var baseWidth = 1040,
+        baseHeight = 544;
     var zoomStep = 0.2;
 
     var countryAnchors = new WeakMap();
@@ -74,7 +76,10 @@
         });
 
         var polygon = polygons[0];
-        var point = polygon ? polygon.center : { x: 500, y: 252 };
+        var point = polygon ? polygon.center : {
+            x: 500,
+            y: 252
+        };
 
         countryAnchors.set(path, point);
         return point;
@@ -102,7 +107,8 @@
     }
 
     function renderCamera() {
-        var width = baseWidth / mapZoom, height = baseHeight / mapZoom;
+        var width = baseWidth / mapZoom,
+            height = baseHeight / mapZoom;
         centerX = width >= 1040 ? 500 : clamp(centerX, -20 + width / 2, 1020 - width / 2);
         centerY = height >= 544 ? 252 : clamp(centerY, -20 + height / 2, 524 - height / 2);
         worldMap.setAttribute('viewBox', [centerX - width / 2, centerY - height / 2, width, height].join(' '));
@@ -308,7 +314,9 @@
             var direction = event.deltaY < 0 ? 1 : -1;
 
             setZoom(mapZoom + direction * zoomStep, pointerX, pointerY);
-        }, { passive: false });
+        }, {
+            passive: false
+        });
     }
 
     function getCountries() {
@@ -362,9 +370,15 @@
             else if (event.key === 'ArrowRight') centerX += amount;
             else if (event.key === 'ArrowUp') centerY -= amount;
             else if (event.key === 'ArrowDown') centerY += amount;
-            else if (event.key === '+' || event.key === '=') { event.preventDefault(); setZoom(mapZoom + zoomStep); return; }
-            else if (event.key === '-') { event.preventDefault(); setZoom(mapZoom - zoomStep); return; }
-            else return;
+            else if (event.key === '+' || event.key === '=') {
+                event.preventDefault();
+                setZoom(mapZoom + zoomStep);
+                return;
+            } else if (event.key === '-') {
+                event.preventDefault();
+                setZoom(mapZoom - zoomStep);
+                return;
+            } else return;
             event.preventDefault();
             renderCamera();
         });

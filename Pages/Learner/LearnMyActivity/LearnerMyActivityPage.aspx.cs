@@ -14,8 +14,14 @@ namespace CookingLah.Pages.Learner.LearnMyActivity
         private int LearnerId { get; set; }
         private int CurrentPage
         {
-            get { return (int?)ViewState["CurrentPage"] ?? 0; }
-            set { ViewState["CurrentPage"] = value; }
+            get
+            {
+                return (int?)ViewState["CurrentPage"] ?? 0;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
         }
 
         protected override void OnInit(EventArgs e)
@@ -306,6 +312,7 @@ namespace CookingLah.Pages.Learner.LearnMyActivity
             ddlSort.SelectedIndex = 0;
             ResetPageAndLoad();
         }
+
         private void ResetPageAndLoad()
         {
             CurrentPage = 0;

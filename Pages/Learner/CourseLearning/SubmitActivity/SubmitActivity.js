@@ -37,9 +37,9 @@
 
         if (!['image/jpeg', 'image/png'].includes(file.type) || file.size > 3 * 1024 * 1024) {
             fileInput.value = '';
-            showUploadFeedback(file.size > 3 * 1024 * 1024
-                ? 'Choose an image smaller than 3 MB.'
-                : 'Choose a JPG or PNG image.');
+            showUploadFeedback(file.size > 3 * 1024 * 1024 ?
+                'Choose an image smaller than 3 MB.' :
+                'Choose a JPG or PNG image.');
             return;
         }
 

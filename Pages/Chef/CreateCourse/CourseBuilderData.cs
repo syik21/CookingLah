@@ -23,10 +23,14 @@ namespace CookingLah.Pages.Chef.CreateCourse
         public static Ingredient[] ReadIngredients(string value)
         {
             value = (value ?? "").Trim();
-            if (value.Length == 0) return new Ingredient[0];
+            if (value.Length == 0)
+                return new Ingredient[0];
             if (value.StartsWith("["))
             {
-                try { return new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Ingredient[]>(value) ?? new Ingredient[0]; }
+                try
+                {
+                    return new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Ingredient[]>(value) ?? new Ingredient[0];
+                }
                 catch (ArgumentException) { }
                 catch (InvalidOperationException) { }
             }
@@ -42,7 +46,10 @@ namespace CookingLah.Pages.Chef.CreateCourse
         public static string ValidateIngredientsJson(string value)
         {
             Ingredient[] rows;
-            try { rows = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Ingredient[]>(value ?? ""); }
+            try
+            {
+                rows = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Ingredient[]>(value ?? "");
+            }
             catch (ArgumentException) { throw new InvalidOperationException("Please enter valid ingredient rows."); }
             catch (InvalidOperationException) { throw new InvalidOperationException("Please enter valid ingredient rows."); }
             if (rows == null || rows.Length == 0 || rows.Length > 100)
@@ -270,7 +277,8 @@ namespace CookingLah.Pages.Chef.CreateCourse
 
         public static string SaveUpload(FileUpload upload, string existingPath, string subfolder, bool video = false)
         {
-            if (!upload.HasFile) return existingPath;
+            if (!upload.HasFile)
+                return existingPath;
             int limit = video ? 20 * 1024 * 1024 : 3 * 1024 * 1024;
             if (upload.PostedFile.ContentLength > limit)
                 throw new InvalidOperationException(video ? "Choose a video smaller than 20 MB." : "Choose an image smaller than 3 MB.");

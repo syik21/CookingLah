@@ -5,8 +5,11 @@
 <%@ Register Src="Quiz/CourseQuiz.ascx" TagPrefix="course" TagName="Quiz" %>
 <%@ Register Src="Activity/CourseActivity.ascx" TagPrefix="course" TagName="Activity" %>
 <%@ Register Src="Review/CourseReview.ascx" TagPrefix="course" TagName="Review" %>
-<asp:Content ID="Head" ContentPlaceHolderID="ChefHead" runat="server">
-    <link href="ManageCoursePage.css?v=20261101-setup" rel="stylesheet" />
+<asp:Content
+    ID="Head"
+    ContentPlaceHolderID="ChefHead"
+    runat="server">
+    <link href="ManageCoursePage.css?v=20261102-error-banner" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Shared/CountryPicker/CountryPicker.css") %>" rel="stylesheet" />
     <link href="Overview/CourseOverview.css" rel="stylesheet" />
     <link href="Recipe/CourseRecipe.css" rel="stylesheet" />
@@ -15,105 +18,314 @@
     <link href="Activity/CourseActivity.css" rel="stylesheet" />
     <link href="Review/CourseReview.css" rel="stylesheet" />
 </asp:Content>
-<asp:Content ID="Content" ContentPlaceHolderID="ChefContent" runat="server">
-<asp:ScriptManager ID="ManageCourseScriptManager" runat="server" />
-<div class="manage-course course-builder" data-builder="" data-course-id="<%= CourseId %>" data-reorder-token="<%= System.Web.HttpUtility.HtmlAttributeEncode(ReorderToken) %>" data-reorder-url="<%= ResolveUrl("~/Pages/Chef/ManageCourse/CourseOrderHandler.ashx") %>">
-    <div class="mc-backFeedback-row">
-        <asp:LinkButton ID="btnBackToCourses" runat="server" CssClass="mc-back" CausesValidation="false" OnClick="btnBackToCourses_Click">&larr; Back to My Courses</asp:LinkButton>
-        <p id="builderFeedback" role="status" aria-live="polite"><asp:Literal ID="litSaveState" runat="server" Mode="Encode" /></p>
-    </div>
-    <asp:Panel ID="pnlMessage" runat="server" Visible="false" ClientIDMode="Static" tabindex="-1"><asp:Literal ID="litMessage" runat="server" Mode="Encode" /></asp:Panel>
-    <asp:Panel ID="pnlSetup" runat="server" CssClass="builder-setup" Visible="false">
-        <h2 class="builder-setup-heading">Course setup <span><%= SetupPercent %>% complete</span></h2>
-        <progress max="100" value="<%= SetupPercent %>" aria-label="Course setup completeness"><%= SetupPercent %>%</progress>
-        <div class="builder-checklist"><asp:Repeater ID="rptSetup" runat="server"><ItemTemplate><span><%#: Eval("Marker") %> <%#: Eval("Name") %></span></ItemTemplate></asp:Repeater></div>
-    </asp:Panel>
-    <div class="course-header-card">
-        <header class="manage-course-header">
-            <div class="course-heading"><h1><asp:Literal ID="litCourseTitle" runat="server" Mode="Encode" /></h1>
-                <p class="course-meta"><asp:Literal ID="litCourseMeta" runat="server" Mode="Encode" /></p>
-                <p class="course-updated">Last updated: <asp:Literal ID="litUpdated" runat="server" Mode="Encode" /></p>
+<asp:Content
+    ID="Content"
+    ContentPlaceHolderID="ChefContent"
+    runat="server">
+    <asp:ScriptManager ID="ManageCourseScriptManager" runat="server" />
+    <div
+        class="manage-course course-builder"
+        data-builder=""
+        data-course-id="<%= CourseId %>"
+        data-reorder-token="<%= System.Web.HttpUtility.HtmlAttributeEncode(ReorderToken) %>"
+        data-reorder-url="<%= ResolveUrl("~/Pages/Chef/ManageCourse/CourseOrderHandler.ashx") %>">
+        <div class="mc-backFeedback-row">
+            <asp:LinkButton
+                ID="btnBackToCourses"
+                runat="server"
+                CssClass="mc-back"
+                CausesValidation="false"
+                OnClick="btnBackToCourses_Click">&larr; Back to My Courses</asp:LinkButton>
+            <p id="builderFeedback" role="status" aria-live="polite"><asp:Literal
+                    ID="litSaveState"
+                    runat="server"
+                    Mode="Encode" /></p>
+        </div>
+        <asp:Panel
+            ID="pnlMessage"
+            runat="server"
+            Visible="false"
+            ClientIDMode="Static"
+            tabindex="-1"><asp:Literal
+                ID="litMessage"
+                runat="server"
+                Mode="Encode" /></asp:Panel>
+        <asp:Panel ID="pnlSetup"
+            runat="server"
+            CssClass="builder-setup"
+            Visible="false">
+            <h2 class="builder-setup-heading">Course setup <span><%= SetupPercent %>% complete</span></h2>
+            <progress max="100" value="<%= SetupPercent %>" aria-label="Course setup completeness"><%= SetupPercent %>%</progress>
+            <div class="builder-checklist">
+                <asp:Repeater ID="rptSetup" runat="server">
+                    <ItemTemplate><span><%#: Eval("Marker") %> <%#: Eval("Name") %></span></ItemTemplate>
+                </asp:Repeater>
             </div>
-            <div class="course-header-right"><asp:Label ID="lblCourseStatus" runat="server" />
-                <div class="course-header-buttons">
-                    <asp:Button ID="btnEditCourse" runat="server" Text="Edit Course" CssClass="btn btn-primary" OnClick="btnEditCourse_Click" />
-                    <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn" OnClick="btnCancel_Click" />
-                    <asp:Button ID="btnSaveChanges" runat="server" Text="Save Changes" CssClass="btn btn-primary" OnClick="btnSaveChanges_Click" />
-                    <asp:Button ID="btnDeleteCourse" runat="server" Text="Delete Course" CssClass="btn mc-danger" OnClick="btnDeleteCourse_Click" CausesValidation="false"
-                        OnClientClick="return window.CookingLahConfirm.open(this, 'delete');" />
-                    <a class="btn" target="_blank" rel="noopener"
-                        href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.aspx?courseId=" + CourseId + "&preview=chef") %>">Learner View</a>
+        </asp:Panel>
+        <div class="course-header-card">
+            <header class="manage-course-header">
+                <div class="course-heading">
+                    <h1><asp:Literal
+                            ID="litCourseTitle"
+                            runat="server"
+                            Mode="Encode" /></h1>
+                    <p class="course-meta"><asp:Literal
+                            ID="litCourseMeta"
+                            runat="server"
+                            Mode="Encode" /></p>
+                    <p class="course-updated">Last updated: <asp:Literal
+                            ID="litUpdated"
+                            runat="server"
+                            Mode="Encode" /></p>
                 </div>
-            </div>
-        </header>
-        <nav class="course-section-tabs" role="tablist" aria-label="Course sections">
-            <button type="button" id="tab-overview" class="course-section-tab" role="tab" data-course-tab="overview" aria-controls="section-overview" aria-selected='<%= CurrentTab == "overview" ? "true" : "false" %>' tabindex='<%= CurrentTab == "overview" ? "0" : "-1" %>'>Overview</button>
-            <button type="button" id="tab-recipe" class="course-section-tab" role="tab" data-course-tab="recipe" aria-controls="section-recipe" aria-selected='<%= CurrentTab == "recipe" ? "true" : "false" %>' tabindex='<%= CurrentTab == "recipe" ? "0" : "-1" %>'>Recipe</button>
-            <button type="button" id="tab-lessons" class="course-section-tab" role="tab" data-course-tab="lessons" aria-controls="section-lessons" aria-selected='<%= CurrentTab == "lessons" ? "true" : "false" %>' tabindex='<%= CurrentTab == "lessons" ? "0" : "-1" %>'>Lessons</button>
-            <button type="button" id="tab-quiz" class="course-section-tab" role="tab" data-course-tab="quiz" aria-controls="section-quiz" aria-selected='<%= CurrentTab == "quiz" ? "true" : "false" %>' tabindex='<%= CurrentTab == "quiz" ? "0" : "-1" %>'>Quiz</button>
-            <button type="button" id="tab-activity" class="course-section-tab" role="tab" data-course-tab="activity" aria-controls="section-activity" aria-selected='<%= CurrentTab == "activity" ? "true" : "false" %>' tabindex='<%= CurrentTab == "activity" ? "0" : "-1" %>'>Activity</button>
-            <button type="button" id="tab-review" class="course-section-tab" role="tab" data-course-tab="review" aria-controls="section-review" aria-selected='<%= CurrentTab == "review" ? "true" : "false" %>' tabindex='<%= CurrentTab == "review" ? "0" : "-1" %>'>Review</button>
-        </nav>
+                <div class="course-header-right"><asp:Label ID="lblCourseStatus" runat="server" />
+                    <div class="course-header-buttons">
+                        <asp:Button
+                            ID="btnEditCourse"
+                            runat="server"
+                            Text="Edit Course"
+                            CssClass="btn btn-primary"
+                            OnClick="btnEditCourse_Click" />
+                        <asp:Button
+                            ID="btnCancel"
+                            runat="server"
+                            Text="Cancel"
+                            CssClass="btn"
+                            OnClick="btnCancel_Click" />
+                        <asp:Button
+                            ID="btnSaveChanges"
+                            runat="server"
+                            Text="Save Changes"
+                            CssClass="btn btn-primary"
+                            OnClick="btnSaveChanges_Click" />
+                        <asp:Button
+                            ID="btnDeleteCourse"
+                            runat="server"
+                            Text="Delete Course"
+                            CssClass="btn mc-danger"
+                            OnClick="btnDeleteCourse_Click"
+                            CausesValidation="false"
+                            OnClientClick="return window.CookingLahConfirm.open(this, 'delete');" />
+                        <a
+                            class="btn"
+                            target="_blank"
+                            rel="noopener"
+                            href="<%= ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.aspx?courseId=" + CourseId + "&preview=chef") %>">Learner View</a>
+                    </div>
+                </div>
+            </header>
+            <nav class="course-section-tabs" role="tablist" aria-label="Course sections">
+                <button
+                    type="button"
+                    id="tab-overview"
+                    class="course-section-tab"
+                    role="tab"
+                    data-course-tab="overview"
+                    aria-controls="section-overview"
+                    aria-selected='<%= CurrentTab == "overview" ? "true" : "false" %>'
+                    tabindex='<%= CurrentTab == "overview" ? "0" : "-1" %>'>Overview</button>
+                <button
+                    type="button"
+                    id="tab-recipe"
+                    class="course-section-tab"
+                    role="tab"
+                    data-course-tab="recipe"
+                    aria-controls="section-recipe"
+                    aria-selected='<%= CurrentTab == "recipe" ? "true" : "false" %>'
+                    tabindex='<%= CurrentTab == "recipe" ? "0" : "-1" %>'>Recipe</button>
+                <button
+                    type="button"
+                    id="tab-lessons"
+                    class="course-section-tab"
+                    role="tab"
+                    data-course-tab="lessons"
+                    aria-controls="section-lessons"
+                    aria-selected='<%= CurrentTab == "lessons" ? "true" : "false" %>'
+                    tabindex='<%= CurrentTab == "lessons" ? "0" : "-1" %>'>Lessons</button>
+                <button
+                    type="button"
+                    id="tab-quiz"
+                    class="course-section-tab"
+                    role="tab"
+                    data-course-tab="quiz"
+                    aria-controls="section-quiz"
+                    aria-selected='<%= CurrentTab == "quiz" ? "true" : "false" %>'
+                    tabindex='<%= CurrentTab == "quiz" ? "0" : "-1" %>'>Quiz</button>
+                <button
+                    type="button"
+                    id="tab-activity"
+                    class="course-section-tab"
+                    role="tab"
+                    data-course-tab="activity"
+                    aria-controls="section-activity"
+                    aria-selected='<%= CurrentTab == "activity" ? "true" : "false" %>'
+                    tabindex='<%= CurrentTab == "activity" ? "0" : "-1" %>'>Activity</button>
+                <button
+                    type="button"
+                    id="tab-review"
+                    class="course-section-tab"
+                    role="tab"
+                    data-course-tab="review"
+                    aria-controls="section-review"
+                    aria-selected='<%= CurrentTab == "review" ? "true" : "false" %>'
+                    tabindex='<%= CurrentTab == "review" ? "0" : "-1" %>'>Review</button>
+            </nav>
+        </div>
+        <asp:HiddenField
+            ID="hfActiveTab"
+            runat="server"
+            ClientIDMode="Static" />
+        <asp:Panel
+            ID="pnlPending"
+            runat="server"
+            CssClass="mc-message mc-warning"><strong>Pending Review</strong><p>This course is currently being reviewed. Editing is temporarily disabled.</p>
+        </asp:Panel>
+        <asp:Panel
+            ID="pnlRejected"
+            runat="server"
+            CssClass="mc-message mc-error">
+            <h2>Admin Feedback</h2><asp:Literal
+                ID="litRejection"
+                runat="server"
+                Mode="Encode" /></asp:Panel>
+        <div class="manage-course-content" id="courseContent">
+            <section
+                id="section-overview"
+                class="course-section"
+                data-course-section="overview"
+                role="tabpanel"
+                aria-labelledby="tab-overview"
+                tabindex="0"
+                <%= CurrentTab == "overview" ? "" : "hidden" %>>
+                <course:Overview ID="Overview" runat="server" />
+            </section>
+            <section
+                id="section-recipe"
+                class="course-section"
+                data-course-section="recipe"
+                role="tabpanel"
+                aria-labelledby="tab-recipe"
+                tabindex="0"
+                <%= CurrentTab == "recipe" ? "" : "hidden" %>>
+                <course:Recipe ID="Recipe" runat="server" />
+            </section>
+            <section
+                id="section-lessons"
+                class="course-section"
+                data-course-section="lessons"
+                role="tabpanel"
+                aria-labelledby="tab-lessons"
+                tabindex="0"
+                <%= CurrentTab == "lessons" ? "" : "hidden" %>>
+                <asp:UpdatePanel
+                    ID="upLessons"
+                    runat="server"
+                    UpdateMode="Conditional"
+                    ChildrenAsTriggers="false">
+                    <ContentTemplate><course:Lessons ID="Lessons" runat="server" /></ContentTemplate>
+                </asp:UpdatePanel>
+            </section>
+            <section
+                id="section-quiz"
+                class="course-section"
+                data-course-section="quiz"
+                role="tabpanel"
+                aria-labelledby="tab-quiz"
+                tabindex="0"
+                <%= CurrentTab == "quiz" ? "" : "hidden" %>>
+                <course:Quiz ID="Quiz" runat="server" />
+            </section>
+            <section
+                id="section-activity"
+                class="course-section"
+                data-course-section="activity"
+                role="tabpanel"
+                aria-labelledby="tab-activity"
+                tabindex="0"
+                <%= CurrentTab == "activity" ? "" : "hidden" %>>
+                <course:Activity ID="Activity" runat="server" />
+            </section>
+            <section
+                id="section-review"
+                class="course-section"
+                data-course-section="review"
+                role="tabpanel"
+                aria-labelledby="tab-review"
+                tabindex="0"
+                <%= CurrentTab == "review" ? "" : "hidden" %>>
+                <course:Review ID="Review" runat="server" />
+            </section>
+        </div>
+        <asp:Panel
+            ID="pnlReadiness"
+            runat="server"
+            CssClass="card builder-readiness">
+            <h2>Ready to Submit?</h2>
+            <p><asp:Literal
+                    ID="litReadiness"
+                    runat="server"
+                    Mode="Encode" /></p>
+            <asp:Button
+                ID="btnSubmitReview"
+                runat="server"
+                Text="Submit for Review"
+                CssClass="btn btn-primary"
+                OnClick="btnSubmitReview_Click"
+                OnClientClick="return window.CookingLahConfirm.open(this, 'submit');" />
+        </asp:Panel>
+        <asp:HiddenField
+            ID="hfOrderKind"
+            runat="server"
+            ClientIDMode="Static" />
+        <asp:HiddenField
+            ID="hfOrderIds"
+            runat="server"
+            ClientIDMode="Static" />
+        <asp:HiddenField
+            ID="hfOrderParent"
+            runat="server"
+            ClientIDMode="Static" />
+        <asp:Button
+            ID="btnReorder"
+            runat="server"
+            ClientIDMode="Static"
+            Text="Apply order"
+            OnClick="btnReorder_Click"
+            CssClass="builder-order-submit" />
     </div>
-    <asp:HiddenField ID="hfActiveTab" runat="server" ClientIDMode="Static" />
-    <asp:Panel ID="pnlPending" runat="server" CssClass="mc-message mc-warning"><strong>Pending Review</strong><p>This course is currently being reviewed. Editing is temporarily disabled.</p></asp:Panel>
-    <asp:Panel ID="pnlRejected" runat="server" CssClass="mc-message mc-error"><h2>Admin Feedback</h2><asp:Literal ID="litRejection" runat="server" Mode="Encode" /></asp:Panel>
-    <div class="manage-course-content" id="courseContent">
-        <section id="section-overview" class="course-section" data-course-section="overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0" <%= CurrentTab == "overview" ? "" : "hidden" %>>
-            <course:Overview ID="Overview" runat="server" />
-        </section>
-        <section id="section-recipe" class="course-section" data-course-section="recipe" role="tabpanel" aria-labelledby="tab-recipe" tabindex="0" <%= CurrentTab == "recipe" ? "" : "hidden" %>>
-            <course:Recipe ID="Recipe" runat="server" />
-        </section>
-        <section id="section-lessons" class="course-section" data-course-section="lessons" role="tabpanel" aria-labelledby="tab-lessons" tabindex="0" <%= CurrentTab == "lessons" ? "" : "hidden" %>>
-            <asp:UpdatePanel ID="upLessons" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
-                <ContentTemplate><course:Lessons ID="Lessons" runat="server" /></ContentTemplate>
-            </asp:UpdatePanel>
-        </section>
-        <section id="section-quiz" class="course-section" data-course-section="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="0" <%= CurrentTab == "quiz" ? "" : "hidden" %>>
-            <course:Quiz ID="Quiz" runat="server" />
-        </section>
-        <section id="section-activity" class="course-section" data-course-section="activity" role="tabpanel" aria-labelledby="tab-activity" tabindex="0" <%= CurrentTab == "activity" ? "" : "hidden" %>>
-            <course:Activity ID="Activity" runat="server" />
-        </section>
-        <section id="section-review" class="course-section" data-course-section="review" role="tabpanel" aria-labelledby="tab-review" tabindex="0" <%= CurrentTab == "review" ? "" : "hidden" %>>
-            <course:Review ID="Review" runat="server" />
-        </section>
-    </div>
-    <asp:Panel ID="pnlReadiness" runat="server" CssClass="card builder-readiness"><h2>Ready to Submit?</h2>
-        <p><asp:Literal ID="litReadiness" runat="server" Mode="Encode" /></p>
-        <asp:Button ID="btnSubmitReview" runat="server" Text="Submit for Review" CssClass="btn btn-primary" OnClick="btnSubmitReview_Click"
-            OnClientClick="return window.CookingLahConfirm.open(this, 'submit');" />
-    </asp:Panel>
-    <asp:HiddenField ID="hfOrderKind" runat="server" ClientIDMode="Static" />
-    <asp:HiddenField ID="hfOrderIds" runat="server" ClientIDMode="Static" />
-    <asp:HiddenField ID="hfOrderParent" runat="server" ClientIDMode="Static" />
-    <asp:Button ID="btnReorder" runat="server" ClientIDMode="Static" Text="Apply order" OnClick="btnReorder_Click" CssClass="builder-order-submit" />
-</div>
-<dialog id="courseConfirmationDialog" class="course-confirm-dialog" aria-labelledby="courseConfirmTitle" aria-describedby="courseConfirmMessage courseConfirmDetail">
-    <div class="course-confirm-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" focusable="false"><path d="M12 9v4m0 4h.01M10.3 3.7 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z" /></svg>
-    </div>
-    <div class="course-confirm-copy">
-        <p class="course-confirm-eyebrow" id="courseConfirmEyebrow">Please confirm</p>
-        <h2 id="courseConfirmTitle">Confirm action</h2>
-        <p id="courseConfirmMessage"></p>
-        <p id="courseConfirmDetail" class="course-confirm-detail"></p>
-    </div>
-    <div class="course-confirm-actions">
-        <button id="courseConfirmCancel" type="button" class="btn">Cancel</button>
-        <button id="courseConfirmProceed" type="button" class="btn btn-primary">Continue</button>
-    </div>
-</dialog>
+    <dialog
+        id="courseConfirmationDialog"
+        class="course-confirm-dialog"
+        aria-labelledby="courseConfirmTitle"
+        aria-describedby="courseConfirmMessage courseConfirmDetail">
+        <div class="course-confirm-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false"><path d="M12 9v4m0 4h.01M10.3 3.7 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z" /></svg>
+        </div>
+        <div class="course-confirm-copy">
+            <p class="course-confirm-eyebrow" id="courseConfirmEyebrow">Please confirm</p>
+            <h2 id="courseConfirmTitle">Confirm action</h2>
+            <p id="courseConfirmMessage">
+            </p>
+            <p id="courseConfirmDetail" class="course-confirm-detail">
+            </p>
+        </div>
+        <div class="course-confirm-actions">
+            <button id="courseConfirmCancel" type="button" class="btn">Cancel</button>
+            <button id="courseConfirmProceed" type="button" class="btn btn-primary">Continue</button>
+        </div>
+    </dialog>
 </asp:Content>
-<asp:Content ID="Scripts" ContentPlaceHolderID="ChefScripts" runat="server">
+<asp:Content
+    ID="Scripts"
+    ContentPlaceHolderID="ChefScripts"
+    runat="server">
     <script src="<%= ResolveUrl("~/Pages/Shared/CountryPicker/CountryPicker.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/UploadValidation.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/IngredientEditor.js") %>" defer></script>
     <script src="ManageCoursePage.js?v=20261029-confirm1" defer></script>
     <script src="Overview/CourseOverview.js" defer></script>
     <script src="Recipe/CourseRecipe.js" defer></script>
-    <script src="Lessons/CourseLessons.js?v=20261029-select2" defer></script>
+    <script src="Lessons/CourseLessons.js?v=20261102-working-copy" defer></script>
     <script src="Quiz/CourseQuiz.js?v=20261028-reorder4" defer></script>
     <script src="Activity/CourseActivity.js" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/LessonVideoDialog.js") %>" defer></script>

@@ -10,7 +10,8 @@ namespace CookingLah.F_Services
         public static string GenerateResetToken()
         {
             var bytes = new byte[32];
-            using (var generator = RandomNumberGenerator.Create()) generator.GetBytes(bytes);
+            using (var generator = RandomNumberGenerator.Create())
+                generator.GetBytes(bytes);
             return Convert.ToBase64String(bytes).Replace('+', '-').Replace('/', '_').TrimEnd('=');
         }
 

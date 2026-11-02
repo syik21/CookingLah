@@ -17,8 +17,15 @@
         var form = button.form;
         var submitting = false;
         form.addEventListener('submit', function (event) {
-            if (submitting) { event.preventDefault(); return; }
-            if (!form.checkValidity()) { event.preventDefault(); form.reportValidity(); return; }
+            if (submitting) {
+                event.preventDefault();
+                return;
+            }
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                form.reportValidity();
+                return;
+            }
             submitting = true;
             button.value = 'Signing in...';
             button.setAttribute('aria-disabled', 'true');

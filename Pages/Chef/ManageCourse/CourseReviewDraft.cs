@@ -11,18 +11,52 @@ namespace CookingLah.Pages.Chef.ManageCourse
     [Serializable]
     public sealed class CourseReviewDraft
     {
-        public DataTable Courses { get; private set; }
-        public DataTable Recipes { get; private set; }
-        public DataTable Lessons { get; private set; }
-        public DataTable LessonContent { get; private set; }
-        public DataTable Quizzes { get; private set; }
-        public DataTable Questions { get; private set; }
-        public DataTable Options { get; private set; }
-        public DataTable Activities { get; private set; }
+        public DataTable Courses
+        {
+            get; private set;
+        }
+
+        public DataTable Recipes
+        {
+            get; private set;
+        }
+
+        public DataTable Lessons
+        {
+            get; private set;
+        }
+
+        public DataTable LessonContent
+        {
+            get; private set;
+        }
+
+        public DataTable Quizzes
+        {
+            get; private set;
+        }
+
+        public DataTable Questions
+        {
+            get; private set;
+        }
+
+        public DataTable Options
+        {
+            get; private set;
+        }
+
+        public DataTable Activities
+        {
+            get; private set;
+        }
+
         private HashSet<string> OriginalMediaPaths { get; set; }
         private HashSet<string> StagedUploadPaths { get; set; }
 
-        private CourseReviewDraft() { }
+        private CourseReviewDraft()
+        {
+        }
 
         internal static CourseReviewDraft Load(int courseId)
         {
@@ -32,10 +66,16 @@ namespace CookingLah.Pages.Chef.ManageCourse
             draft.Courses.Columns.Add("NewFoodCountry", typeof(string));
             draft.Recipes = Read("SELECT * FROM CourseRecipes WHERE CourseID=@id", Parameter("@id", courseId));
             draft.Lessons = Read("SELECT * FROM Lessons WHERE CourseID=@id ORDER BY LessonOrder,LessonID", Parameter("@id", courseId));
-            draft.LessonContent = Read("SELECT lc.* FROM LessonContent lc JOIN Lessons l ON l.LessonID=lc.LessonID WHERE l.CourseID=@id ORDER BY lc.ContentOrder", Parameter("@id", courseId));
+            draft.LessonContent = Read(
+"SELECT lc.* FROM LessonContent lc JOIN Lessons l ON l.LessonID=lc.LessonID WHERE l.CourseID=@id ORDER BY lc.ContentOrder",
+Parameter("@id", courseId));
             draft.Quizzes = Read("SELECT * FROM Quizzes WHERE CourseID=@id ORDER BY QuizID", Parameter("@id", courseId));
-            draft.Questions = Read("SELECT qq.* FROM QuizQuestions qq JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@id ORDER BY qq.QuestionOrder,qq.QuestionID", Parameter("@id", courseId));
-            draft.Options = Read("SELECT o.* FROM QuizOptions o JOIN QuizQuestions qq ON qq.QuestionID=o.QuestionID JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@id ORDER BY o.OptionID", Parameter("@id", courseId));
+            draft.Questions = Read(
+"SELECT qq.* FROM QuizQuestions qq JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@id ORDER BY qq.QuestionOrder,qq.QuestionID",
+Parameter("@id", courseId));
+            draft.Options = Read(
+"SELECT o.* FROM QuizOptions o JOIN QuizQuestions qq ON qq.QuestionID=o.QuestionID JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@id ORDER BY o.OptionID",
+Parameter("@id", courseId));
             draft.Activities = Read("SELECT * FROM PracticalActivities WHERE CourseID=@id ORDER BY ActivityID", Parameter("@id", courseId));
             draft.OriginalMediaPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             draft.StagedUploadPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -47,17 +87,20 @@ namespace CookingLah.Pages.Chef.ManageCourse
 
         private static void AddMediaColumn(DataTable table, string column, HashSet<string> paths)
         {
-            if (!table.Columns.Contains(column)) return;
+            if (!table.Columns.Contains(column))
+                return;
             foreach (DataRow row in table.Rows)
             {
                 string path = Convert.ToString(row[column]);
-                if (!string.IsNullOrWhiteSpace(path)) paths.Add(path);
+                if (!string.IsNullOrWhiteSpace(path))
+                    paths.Add(path);
             }
         }
 
         public void TrackMediaUpload(string path)
         {
-            if (!string.IsNullOrWhiteSpace(path) && !OriginalMediaPaths.Contains(path)) StagedUploadPaths.Add(path);
+            if (!string.IsNullOrWhiteSpace(path) && !OriginalMediaPaths.Contains(path))
+                StagedUploadPaths.Add(path);
         }
 
         public IEnumerable<string> MediaPathsToClean()
@@ -79,14 +122,16 @@ namespace CookingLah.Pages.Chef.ManageCourse
         public static DataRow FindRow(DataTable table, string idColumn, int id)
         {
             foreach (DataRow row in table.Rows)
-                if (row.RowState != DataRowState.Deleted && Convert.ToInt32(row[idColumn]) == id) return row;
+                if (row.RowState != DataRowState.Deleted && Convert.ToInt32(row[idColumn]) == id)
+                    return row;
             return null;
         }
 
         public void NormalizeLessons()
         {
             var ordered = Lessons.Select("", "LessonOrder ASC,LessonID ASC");
-            for (int index = 0; index < ordered.Length; index++) ordered[index]["LessonOrder"] = index + 1;
+            for (int index = 0; index < ordered.Length; index++)
+                ordered[index]["LessonOrder"] = index + 1;
         }
 
         private static bool Filled(DataRow row, string column)
@@ -107,9 +152,11 @@ namespace CookingLah.Pages.Chef.ManageCourse
             var course = Courses.Rows[0];
             bool quizReady = Quizzes.Rows.Count > 0 && Quizzes.AsEnumerable().All(quiz =>
                 Filled(quiz, "Title") && Questions.Select("QuizID=" + quiz["QuizID"]).Length > 0 &&
-                Questions.Select("QuizID=" + quiz["QuizID"]).All(question => {
+                Questions.Select("QuizID=" + quiz["QuizID"]).All(question =>
+                {
                     var options = Options.Select("QuestionID=" + question["QuestionID"]);
-                    return Filled(question, "QuestionText") && options.Length >= 2 && options.All(option => Filled(option, "OptionText")) && options.Count(option => Convert.ToBoolean(option["IsCorrect"])) == 1;
+                    return Filled(question, "QuestionText") && options.Length >= 2 && options.All(option => Filled(option, "OptionText")) &&
+options.Count(option => Convert.ToBoolean(option["IsCorrect"])) == 1;
                 }));
             bool information = Filled(course, "Title") && Filled(course, "Description") && Filled(course, "Thumbnail") &&
                 course["CategoryID"] != DBNull.Value && Filled(course, "DifficultyLevel");
@@ -130,14 +177,29 @@ namespace CookingLah.Pages.Chef.ManageCourse
             string idColumn, orderColumn, filter = "";
             switch (kind)
             {
-                case "lessons": table = Lessons; idColumn = "LessonID"; orderColumn = "LessonOrder"; break;
+                case "lessons":
+                    table = Lessons;
+                    idColumn = "LessonID";
+                    orderColumn = "LessonOrder";
+                    break;
                 case "content":
-                    if (FindRow(Lessons, "LessonID", parentId) == null) throw new InvalidOperationException("Lesson not found.");
-                    table = LessonContent; idColumn = "LessonContentID"; orderColumn = "ContentOrder"; filter = "LessonID=" + parentId; break;
+                    if (FindRow(Lessons, "LessonID", parentId) == null)
+                        throw new InvalidOperationException("Lesson not found.");
+                    table = LessonContent;
+                    idColumn = "LessonContentID";
+                    orderColumn = "ContentOrder";
+                    filter = "LessonID=" + parentId;
+                    break;
                 case "questions":
-                    if (FindRow(Quizzes, "QuizID", parentId) == null) throw new InvalidOperationException("Quiz not found.");
-                    table = Questions; idColumn = "QuestionID"; orderColumn = "QuestionOrder"; filter = "QuizID=" + parentId; break;
-                default: throw new InvalidOperationException("Invalid order request.");
+                    if (FindRow(Quizzes, "QuizID", parentId) == null)
+                        throw new InvalidOperationException("Quiz not found.");
+                    table = Questions;
+                    idColumn = "QuestionID";
+                    orderColumn = "QuestionOrder";
+                    filter = "QuizID=" + parentId;
+                    break;
+                default:
+                    throw new InvalidOperationException("Invalid order request.");
             }
             var rows = table.Select(filter);
             var parts = submittedIds.Split(',');
@@ -145,21 +207,34 @@ namespace CookingLah.Pages.Chef.ManageCourse
             foreach (string part in parts)
             {
                 int id;
-                if (!int.TryParse(part, out id)) throw new InvalidOperationException("Invalid order request.");
+                if (!int.TryParse(part, out id))
+                    throw new InvalidOperationException("Invalid order request.");
                 ids.Add(id);
             }
             if (ids.Count != rows.Length || ids.Distinct().Count() != rows.Length || rows.Any(row => !ids.Contains((int)row[idColumn])))
                 throw new InvalidOperationException("The list changed. Reload it before reordering.");
-            for (int index = 0; index < ids.Count; index++) FindRow(table, idColumn, ids[index])[orderColumn] = index + 1;
+            for (int index = 0; index < ids.Count; index++)
+                FindRow(table, idColumn, ids[index])[orderColumn] = index + 1;
         }
 
         public void ValidateLessons()
         {
             ValidateOrder(Lessons.Select(), "LessonOrder");
-            foreach (DataRow lesson in Lessons.Rows)
+            foreach (DataRow lesson in Lessons.Select("", "LessonOrder ASC"))
             {
                 if (!LessonReady((int)lesson["LessonID"]))
-                    throw new InvalidOperationException("Lesson " + lesson["LessonOrder"] + ": add a title, description and valid content before saving.");
+                {
+                    var missing = new List<string>();
+                    if (!Filled(lesson, "Title"))
+                        missing.Add("a title");
+                    if (!Filled(lesson, "Description"))
+                        missing.Add("a description");
+                    var content = LessonContent.Select("LessonID=" + lesson["LessonID"]);
+                    if (content.Length == 0 ||
+content.Any(block => Convert.ToString(block["ContentType"]) == "Article" ? !Filled(block, "ContentText") : !Filled(block, "MediaPath")))
+                        missing.Add("valid content");
+                    throw new InvalidOperationException("Lesson " + lesson["LessonOrder"] + ": add " + string.Join(", ", missing) + " before saving.");
+                }
                 if (Convert.ToString(lesson["Title"]).Length > 150 || Convert.ToString(lesson["Description"]).Length > 500)
                     throw new InvalidOperationException("Keep lesson titles within 150 characters and descriptions within 500 characters.");
                 var blocks = LessonContent.Select("LessonID=" + lesson["LessonID"]);
@@ -293,10 +368,25 @@ namespace CookingLah.Pages.Chef.ManageCourse
             var current = ReadTransaction(connection, transaction, "SELECT LessonID FROM Lessons WHERE CourseID=@id", Parameter("@id", courseId));
             foreach (DataRow row in current.Rows)
                 if (!savedIds.Contains((int)row["LessonID"]))
-                    Execute(connection, transaction, "DELETE FROM Lessons WHERE LessonID=@id AND CourseID=@course", Parameter("@id", row["LessonID"]), Parameter("@course", courseId));
+                    Execute(
+connection,
+transaction,
+"DELETE FROM Lessons WHERE LessonID=@id AND CourseID=@course",
+Parameter("@id", row["LessonID"]),
+Parameter("@course", courseId));
 
-            int offset = Convert.ToInt32(Execute(connection, transaction, "SELECT ISNULL(MAX(LessonOrder),0)+@count+1 FROM Lessons WHERE CourseID=@id", Parameter("@count", Lessons.Rows.Count), Parameter("@id", courseId)));
-            Execute(connection, transaction, "UPDATE Lessons SET LessonOrder=LessonOrder+@offset WHERE CourseID=@id", Parameter("@offset", offset), Parameter("@id", courseId));
+            int offset = Convert.ToInt32(Execute(
+connection,
+transaction,
+"SELECT ISNULL(MAX(LessonOrder),0)+@count+1 FROM Lessons WHERE CourseID=@id",
+Parameter("@count", Lessons.Rows.Count),
+Parameter("@id", courseId)));
+            Execute(
+connection,
+transaction,
+"UPDATE Lessons SET LessonOrder=LessonOrder+@offset WHERE CourseID=@id",
+Parameter("@offset", offset),
+Parameter("@id", courseId));
             foreach (DataRow row in Lessons.Rows)
             {
                 int oldId = (int)row["LessonID"];
@@ -320,7 +410,12 @@ namespace CookingLah.Pages.Chef.ManageCourse
             var current = ReadTransaction(connection, transaction, "SELECT LessonContentID FROM LessonContent WHERE LessonID=@id", Parameter("@id", lessonId));
             foreach (DataRow row in current.Rows)
                 if (!ids.Contains((int)row["LessonContentID"]))
-                    Execute(connection, transaction, "DELETE FROM LessonContent WHERE LessonContentID=@id AND LessonID=@lesson", Parameter("@id", row["LessonContentID"]), Parameter("@lesson", lessonId));
+                    Execute(
+connection,
+transaction,
+"DELETE FROM LessonContent WHERE LessonContentID=@id AND LessonID=@lesson",
+Parameter("@id", row["LessonContentID"]),
+Parameter("@lesson", lessonId));
             Execute(connection, transaction, @"DECLARE @offset INT=(SELECT ISNULL(MAX(ContentOrder),0)+@count+1 FROM LessonContent WHERE LessonID=@lesson);
                 UPDATE LessonContent SET ContentOrder=ContentOrder+@offset WHERE LessonID=@lesson;", Parameter("@lesson", lessonId), Parameter("@count", blocks.Length));
             foreach (DataRow block in blocks)
@@ -346,13 +441,15 @@ namespace CookingLah.Pages.Chef.ManageCourse
             foreach (DataRow row in original.Rows)
             {
                 int id = Convert.ToInt32(row["QuizID"]);
-                if (!draftIds.Contains(id)) Execute(connection, transaction, "DELETE FROM Quizzes WHERE QuizID=@id AND CourseID=@course", Parameter("@id", id), Parameter("@course", courseId));
+                if (!draftIds.Contains(id))
+                    Execute(connection, transaction, "DELETE FROM Quizzes WHERE QuizID=@id AND CourseID=@course", Parameter("@id", id), Parameter("@course", courseId));
             }
 
             var quizIds = new Dictionary<int, int>();
             foreach (DataRow quiz in Quizzes.Rows)
             {
-                if (quiz.RowState == DataRowState.Deleted) continue;
+                if (quiz.RowState == DataRowState.Deleted)
+                    continue;
                 int oldId = Convert.ToInt32(quiz["QuizID"]);
                 int realId;
                 if (oldId > 0)
@@ -369,13 +466,18 @@ namespace CookingLah.Pages.Chef.ManageCourse
                 quizIds[oldId] = realId;
             }
 
-            var oldQuestions = ReadTransaction(connection, transaction, "SELECT qq.QuestionID FROM QuizQuestions qq JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@id", Parameter("@id", courseId));
+            var oldQuestions = ReadTransaction(
+connection,
+transaction,
+"SELECT qq.QuestionID FROM QuizQuestions qq JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@id",
+Parameter("@id", courseId));
             Execute(connection, transaction, @"DECLARE @offset INT=(SELECT ISNULL(MAX(qq.QuestionOrder),0)+@count+1 FROM QuizQuestions qq JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@course);
                 UPDATE qq SET QuestionOrder=QuestionOrder+@offset
                 FROM QuizQuestions qq JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@course", Parameter("@course", courseId), Parameter("@count", Questions.Rows.Count));
             foreach (DataRow question in Questions.Rows)
             {
-                if (question.RowState == DataRowState.Deleted) continue;
+                if (question.RowState == DataRowState.Deleted)
+                    continue;
                 int oldQuizId = Convert.ToInt32(question["QuizID"]);
                 int realQuizId = quizIds.ContainsKey(oldQuizId) ? quizIds[oldQuizId] : oldQuizId;
                 int oldQuestionId = Convert.ToInt32(question["QuestionID"]);
@@ -394,7 +496,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
                 var stagedOptionIds = new HashSet<int>();
                 foreach (DataRow option in Options.Rows)
                 {
-                    if (option.RowState == DataRowState.Deleted || Convert.ToInt32(option["QuestionID"]) != Convert.ToInt32(question["QuestionID"])) continue;
+                    if (option.RowState == DataRowState.Deleted || Convert.ToInt32(option["QuestionID"]) != Convert.ToInt32(question["QuestionID"]))
+                        continue;
                     int oldOptionId = Convert.ToInt32(option["OptionID"]);
                     if (oldOptionId > 0)
                     {
@@ -402,12 +505,18 @@ namespace CookingLah.Pages.Chef.ManageCourse
                         Execute(connection, transaction, "UPDATE QuizOptions SET OptionText=@text,IsCorrect=@correct WHERE OptionID=@id AND QuestionID=@question",
                             Parameter("@text", option["OptionText"]), Parameter("@correct", option["IsCorrect"]), Parameter("@id", oldOptionId), Parameter("@question", realQuestionId));
                     }
-                    else Execute(connection, transaction, "INSERT INTO QuizOptions (QuestionID,OptionText,IsCorrect) VALUES (@question,@text,@correct)",
+                    else
+                        Execute(connection, transaction, "INSERT INTO QuizOptions (QuestionID,OptionText,IsCorrect) VALUES (@question,@text,@correct)",
                         Parameter("@question", realQuestionId), Parameter("@text", option["OptionText"]), Parameter("@correct", option["IsCorrect"]));
                 }
                 foreach (DataRow oldOption in existingOptions.Rows)
                     if (!stagedOptionIds.Contains(Convert.ToInt32(oldOption["OptionID"])))
-                        Execute(connection, transaction, "DELETE FROM QuizOptions WHERE OptionID=@id AND QuestionID=@question", Parameter("@id", oldOption["OptionID"]), Parameter("@question", realQuestionId));
+                        Execute(
+connection,
+transaction,
+"DELETE FROM QuizOptions WHERE OptionID=@id AND QuestionID=@question",
+Parameter("@id", oldOption["OptionID"]),
+Parameter("@question", realQuestionId));
             }
 
             var stagedQuestionIds = new HashSet<int>();
@@ -424,7 +533,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
         {
             using (var command = new SqlCommand(sql, connection, transaction))
             {
-                if (parameters != null) command.Parameters.AddRange(parameters);
+                if (parameters != null)
+                    command.Parameters.AddRange(parameters);
                 using (var adapter = new SqlDataAdapter(command))
                 {
                     var table = new DataTable();
@@ -444,11 +554,18 @@ namespace CookingLah.Pages.Chef.ManageCourse
             foreach (DataRow row in current.Rows)
             {
                 int id = Convert.ToInt32(row["ActivityID"]);
-                if (!savedIds.Contains(id)) Execute(connection, transaction, "DELETE FROM PracticalActivities WHERE ActivityID=@id AND CourseID=@course", Parameter("@id", id), Parameter("@course", courseId));
+                if (!savedIds.Contains(id))
+                    Execute(
+connection,
+transaction,
+"DELETE FROM PracticalActivities WHERE ActivityID=@id AND CourseID=@course",
+Parameter("@id", id),
+Parameter("@course", courseId));
             }
             foreach (DataRow row in Activities.Rows)
             {
-                if (row.RowState == DataRowState.Deleted) continue;
+                if (row.RowState == DataRowState.Deleted)
+                    continue;
                 if (Convert.ToInt32(row["ActivityID"]) > 0)
                     Execute(connection, transaction, "UPDATE PracticalActivities SET Title=@title,Instructions=@instructions WHERE ActivityID=@id AND CourseID=@course",
                         Parameter("@title", row["Title"]), Parameter("@instructions", row["Instructions"]), Parameter("@id", row["ActivityID"]), Parameter("@course", courseId));

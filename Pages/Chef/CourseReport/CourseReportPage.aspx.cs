@@ -26,8 +26,14 @@ namespace CookingLah.Pages.Chef.CourseReport
 
         private int CurrentPage
         {
-            get { return (int)(ViewState["CurrentPage"] ?? 1); }
-            set { ViewState["CurrentPage"] = value; }
+            get
+            {
+                return (int)(ViewState["CurrentPage"] ?? 1);
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
         }
 
         private sealed class ReportRange

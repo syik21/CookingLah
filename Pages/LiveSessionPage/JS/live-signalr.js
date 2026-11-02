@@ -55,14 +55,19 @@
     hub.client.adminWarning = function (reason, warningNumber) {
         appendSystemMessage("Warning " + warningNumber + " issued: " + reason, "warning");
         window.dispatchEvent(new CustomEvent("cookinglah:admin-warning", {
-            detail: { reason: reason, warningNumber: Number(warningNumber) }
+            detail: {
+                reason: reason,
+                warningNumber: Number(warningNumber)
+            }
         }));
     };
 
     hub.client.liveSuspended = function (reason) {
         appendSystemMessage("This livestream was suspended: " + reason, "suspended");
         window.dispatchEvent(new CustomEvent("cookinglah:live-suspended", {
-            detail: { reason: reason }
+            detail: {
+                reason: reason
+            }
         }));
     };
 
@@ -74,7 +79,9 @@
 
     hub.client.streamPresence = function (chefIsPresent) {
         window.dispatchEvent(new CustomEvent("cookinglah:chef-presence", {
-            detail: { present: Boolean(chefIsPresent) }
+            detail: {
+                present: Boolean(chefIsPresent)
+            }
         }));
     };
 

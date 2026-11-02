@@ -12,9 +12,11 @@ namespace CookingLah.Pages.LiveSessionPage
         {
             int chefId;
             if (!string.Equals(Convert.ToString(Session["Role"]), "Instructor", StringComparison.OrdinalIgnoreCase) ||
-                !int.TryParse(Convert.ToString(Session["UserId"]), out chefId)) return;
+                !int.TryParse(Convert.ToString(Session["UserId"]), out chefId))
+                return;
 
-            if (IsPostBack) return;
+            if (IsPostBack)
+                return;
 
             using (SqlConnection connection = DatabaseManager.ConnectDB())
             using (SqlCommand command = new SqlCommand(@"
@@ -53,7 +55,8 @@ namespace CookingLah.Pages.LiveSessionPage
         private void LoadMessages()
         {
             int chefId;
-            if (!int.TryParse(Convert.ToString(Session["UserId"]), out chefId)) return;
+            if (!int.TryParse(Convert.ToString(Session["UserId"]), out chefId))
+                return;
 
             hfChefID.Value = chefId.ToString();
 

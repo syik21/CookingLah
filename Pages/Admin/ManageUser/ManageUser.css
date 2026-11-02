@@ -5,307 +5,307 @@
     padding: 12px 0 40px;
 }
 
-    .manage-users .mu-heading,
-    .manage-users .mu-section-heading {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-    }
+.manage-users .mu-heading,
+.manage-users .mu-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
 
-    .manage-users .mu-heading {
-        margin-bottom: 28px;
-        flex-wrap: wrap;
-    }
+.manage-users .mu-heading {
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
 
-    .manage-users h1 {
-        font-size: clamp(42px, 6vw, 68px);
-    }
+.manage-users h1 {
+    font-size: clamp(42px, 6vw, 68px);
+}
 
-    .manage-users h2 {
-        font: 400 32px/1.15 var(--font-hand);
-        text-align: left;
-        margin: 0;
-    }
+.manage-users h2 {
+    font: 400 32px/1.15 var(--font-hand);
+    text-align: left;
+    margin: 0;
+}
 
-    .manage-users p {
-        margin: 8px 0 16px;
-    }
+.manage-users p {
+    margin: 8px 0 16px;
+}
 
-    .manage-users .mu-eyebrow {
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: .08em;
-        margin: 0 0 10px;
-    }
+.manage-users .mu-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    margin: 0 0 10px;
+}
 
-    /* ===== Panels and section labels ===== */
-    .manage-users .mu-panel {
-        background: var(--color-bg);
-        border: var(--border);
-        border-radius: var(--radius-md);
-        padding: 24px;
-        margin-bottom: 24px;
-        box-shadow: var(--shadow-sm);
-    }
+/* ===== Panels and section labels ===== */
+.manage-users .mu-panel {
+    background: var(--color-bg);
+    border: var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+}
 
-    .manage-users .mu-section-heading {
-        margin-bottom: 20px;
-    }
+.manage-users .mu-section-heading {
+    margin-bottom: 20px;
+}
 
-    .manage-users .mu-count,
-    .manage-users .mu-you {
-        background: var(--color-lavender);
-        border-radius: var(--radius-pill);
-        padding: 4px 12px;
-        white-space: nowrap;
-        font-size: 12px;
-    }
+.manage-users .mu-count,
+.manage-users .mu-you {
+    background: var(--color-lavender);
+    border-radius: var(--radius-pill);
+    padding: 4px 12px;
+    white-space: nowrap;
+    font-size: 12px;
+}
 
-    .manage-users .mu-you {
-        background: var(--color-yellow);
-        padding: 2px 8px;
-    }
+.manage-users .mu-you {
+    background: var(--color-yellow);
+    padding: 2px 8px;
+}
 
-    /* ===== Filters and form fields ===== */
-    .manage-users .mu-filters {
-        display: flex;
-        align-items: end;
-        flex-wrap: wrap;
-        gap: 14px;
-        margin: 24px 0;
-    }
+/* ===== Filters and form fields ===== */
+.manage-users .mu-filters {
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 24px 0;
+}
 
-    .manage-users .mu-field {
-        display: flex;
-        flex-direction: column;
-        gap: 7px;
-        min-width: 0;
-    }
+.manage-users .mu-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
 
-    .manage-users .mu-search {
-        flex: 1 1 240px;
-    }
+.manage-users .mu-search {
+    flex: 1 1 240px;
+}
 
-    .manage-users label {
-        font-size: 13px;
-        font-weight: 700;
-    }
+.manage-users label {
+    font-size: 13px;
+    font-weight: 700;
+}
 
-        .manage-users label span,
-        .manage-users small {
-            font-size: 12px;
-            color: var(--color-text-soft);
-            font-weight: 400;
-        }
+.manage-users label span,
+.manage-users small {
+    font-size: 12px;
+    color: var(--color-text-soft);
+    font-weight: 400;
+}
 
-    .manage-users input:not([type=hidden]),
-    .manage-users select {
-        width: 100%;
-        min-height: 46px;
-        border: 1px solid var(--color-ink);
-        border-radius: var(--radius-sm);
-        background: var(--color-bg);
-        color: var(--color-ink);
-        padding: 10px 12px;
-        font: inherit;
-        font-size: 14px;
-    }
+.manage-users input:not([type=hidden]),
+.manage-users select {
+    width: 100%;
+    min-height: 46px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-ink);
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 14px;
+}
 
-    .manage-users .mu-fields {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 20px;
-        border: 0;
-        padding: 0;
-        margin: 24px 0;
-    }
+.manage-users .mu-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    border: 0;
+    padding: 0;
+    margin: 24px 0;
+}
 
-    /* ===== Action buttons and links ===== */
-    .manage-users .mu-form-actions,
-    .manage-users .mu-row-actions,
-    .manage-users .mu-pagination {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-    }
+/* ===== Action buttons and links ===== */
+.manage-users .mu-form-actions,
+.manage-users .mu-row-actions,
+.manage-users .mu-pagination {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
 
-    .manage-users .mu-link {
-        display: inline-flex;
-        align-items: center;
-        min-height: 44px;
-        text-underline-offset: 4px;
-    }
+.manage-users .mu-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-underline-offset: 4px;
+}
 
-    .manage-users .mu-action {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 44px;
-        padding: 6px 12px;
-        border: 1px solid var(--color-ink);
-        border-radius: var(--radius-sm);
-        text-decoration: none;
-        font-size: 13px;
-        transition: background-color 160ms ease;
-    }
+.manage-users .mu-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 6px 12px;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-size: 13px;
+    transition: background-color 160ms ease;
+}
 
-        .manage-users .mu-action:hover {
-            background: var(--color-tan);
-        }
+.manage-users .mu-action:hover {
+    background: var(--color-tan);
+}
 
-    .manage-users .mu-remove-link {
-        text-decoration: underline;
-        text-underline-offset: 3px;
-        border-color: transparent;
-    }
+.manage-users .mu-remove-link {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    border-color: transparent;
+}
 
-    .manage-users .mu-danger {
-        background: var(--color-ink);
-        color: var(--color-bg);
-    }
+.manage-users .mu-danger {
+    background: var(--color-ink);
+    color: var(--color-bg);
+}
 
-    .manage-users .mu-removal {
-        border-left: 6px solid var(--color-ink);
-        background: var(--color-tan-light);
-    }
+.manage-users .mu-removal {
+    border-left: 6px solid var(--color-ink);
+    background: var(--color-tan-light);
+}
 
-        .manage-users .mu-removal p {
-            max-width: 800px;
-        }
+.manage-users .mu-removal p {
+    max-width: 800px;
+}
 
-    /* ===== User directory table ===== */
-    .manage-users .mu-table {
-        width: 100%;
-        border-collapse: collapse;
-        text-align: left;
-    }
+/* ===== User directory table ===== */
+.manage-users .mu-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
 
-        .manage-users .mu-table th {
-            padding: 12px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            background: var(--color-tan-light);
-            border-bottom: var(--border);
-        }
+.manage-users .mu-table th {
+    padding: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    background: var(--color-tan-light);
+    border-bottom: var(--border);
+}
 
-        .manage-users .mu-table td {
-            padding: 18px 12px;
-            border-bottom: 1px solid var(--color-tan);
-            vertical-align: middle;
-            overflow-wrap: anywhere;
-        }
+.manage-users .mu-table td {
+    padding: 18px 12px;
+    border-bottom: 1px solid var(--color-tan);
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+}
 
-            .manage-users .mu-table td:first-child {
-                max-width: 340px;
-            }
+.manage-users .mu-table td:first-child {
+    max-width: 340px;
+}
 
-        .manage-users .mu-table tr:last-child td {
-            border-bottom: 0;
-        }
+.manage-users .mu-table tr:last-child td {
+    border-bottom: 0;
+}
 
-    .manage-users .mu-user-detail {
-        display: block;
-        color: var(--color-text-soft);
-        font-size: 13px;
-        margin-top: 3px;
-    }
+.manage-users .mu-user-detail {
+    display: block;
+    color: var(--color-text-soft);
+    font-size: 13px;
+    margin-top: 3px;
+}
 
-    /* ===== User status labels ===== */
-    .manage-users .mu-status {
-        display: inline-block;
-        border: 1px solid var(--color-ink);
-        border-radius: var(--radius-pill);
-        padding: 3px 10px;
-        font-size: 12px;
-    }
+/* ===== User status labels ===== */
+.manage-users .mu-status {
+    display: inline-block;
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    padding: 3px 10px;
+    font-size: 12px;
+}
 
-    .manage-users .mu-active {
-        background: var(--color-lime);
-    }
+.manage-users .mu-active {
+    background: var(--color-lime);
+}
 
-    .manage-users .mu-inactive {
-        background: var(--color-tan);
-    }
+.manage-users .mu-inactive {
+    background: var(--color-tan);
+}
 
-    .manage-users .mu-suspended {
-        background: var(--color-pink);
-    }
+.manage-users .mu-suspended {
+    background: var(--color-pink);
+}
 
-    /* ===== Table footer and empty state ===== */
-    .manage-users .mu-directory-footer {
-        border-top: 1px solid var(--color-ink);
-        padding-top: 18px;
-        margin-top: 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 16px;
-        font-size: 12px;
-    }
+/* ===== Table footer and empty state ===== */
+.manage-users .mu-directory-footer {
+    border-top: 1px solid var(--color-ink);
+    padding-top: 18px;
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 12px;
+}
 
-        .manage-users .mu-directory-footer p {
-            max-width: 410px;
-            margin: 0;
-            color: var(--color-text-soft);
-        }
+.manage-users .mu-directory-footer p {
+    max-width: 410px;
+    margin: 0;
+    color: var(--color-text-soft);
+}
 
-    .manage-users .mu-empty {
-        padding: 36px 12px;
-        text-align: center;
-    }
+.manage-users .mu-empty {
+    padding: 36px 12px;
+    text-align: center;
+}
 
-        .manage-users .mu-empty h3 {
-            margin: 0;
-        }
+.manage-users .mu-empty h3 {
+    margin: 0;
+}
 
-    /* ===== Success and error messages ===== */
-    .manage-users .mu-feedback {
-        padding: 16px 20px;
-        background: var(--color-lime);
-        border: var(--border);
-        border-radius: var(--radius-sm);
-        margin-bottom: 24px;
-    }
+/* ===== Success and error messages ===== */
+.manage-users .mu-feedback {
+    padding: 16px 20px;
+    background: var(--color-lime);
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 24px;
+}
 
-    .manage-users .mu-error {
-        background: var(--color-pink);
-    }
+.manage-users .mu-error {
+    background: var(--color-pink);
+}
 
-    .manage-users #lblError {
-        display: block;
-        font: inherit;
-    }
+.manage-users #lblError {
+    display: block;
+    font: inherit;
+}
 
-    /* ===== Pop-up dialogs ===== */
-    .manage-users .mu-modal {
-        position: fixed;
-        inset: 0;
-        width: min(720px, calc(100% - 32px));
-        max-height: calc(100dvh - 32px);
-        margin: auto;
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        color: var(--color-ink);
-        box-sizing: border-box;
-    }
+/* ===== Pop-up dialogs ===== */
+.manage-users .mu-modal {
+    position: fixed;
+    inset: 0;
+    width: min(720px, calc(100% - 32px));
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    color: var(--color-ink);
+    box-sizing: border-box;
+}
 
-        .manage-users .mu-modal::backdrop {
-            background: rgb(0 0 0 / 55%);
-        }
+.manage-users .mu-modal::backdrop {
+    background: rgb(0 0 0 / 55%);
+}
 
-        .manage-users .mu-modal.mu-removal {
-            width: min(580px, calc(100% - 32px));
-        }
+.manage-users .mu-modal.mu-removal {
+    width: min(580px, calc(100% - 32px));
+}
 
-    .manage-users .mu-close {
-        flex: 0 0 44px;
-        min-width: 44px;
-        font-size: 24px;
-    }
+.manage-users .mu-close {
+    flex: 0 0 44px;
+    min-width: 44px;
+    font-size: 24px;
+}
 
 html.mu-modal-open {
     overflow: hidden;
@@ -374,11 +374,11 @@ html.mu-modal-open {
         grid-template-columns: 1fr;
     }
 
-    .manage-users .mu-filters > .mu-field {
+    .manage-users .mu-filters>.mu-field {
         flex: 1 1 150px;
     }
 
-    .manage-users .mu-filters > .mu-search {
+    .manage-users .mu-filters>.mu-search {
         flex-basis: 100%;
     }
 
@@ -399,36 +399,37 @@ html.mu-modal-open {
         width: 100%;
     }
 
-        .manage-users .mu-table tr {
-            padding: 12px 0;
-            border-bottom: var(--border);
-        }
+    .manage-users .mu-table tr {
+        padding: 12px 0;
+        border-bottom: var(--border);
+    }
 
-        .manage-users .mu-table td {
-            border: 0;
-            padding: 6px 0;
-        }
+    .manage-users .mu-table td {
+        border: 0;
+        padding: 6px 0;
+    }
 
-            .manage-users .mu-table td:first-child {
-                max-width: none;
-            }
+    .manage-users .mu-table td:first-child {
+        max-width: none;
+    }
 
-            .manage-users .mu-table td:not(:first-child)::before {
-                content: attr(data-label);
-                display: inline-block;
-                min-width: 75px;
-                font-size: 12px;
-                color: var(--color-text-soft);
-            }
+    .manage-users .mu-table td:not(:first-child)::before {
+        content: attr(data-label);
+        display: inline-block;
+        min-width: 75px;
+        font-size: 12px;
+        color: var(--color-text-soft);
+    }
 
-            .manage-users .mu-table td:last-child {
-                display: flex;
-                align-items: center;
-            }
+    .manage-users .mu-table td:last-child {
+        display: flex;
+        align-items: center;
+    }
 }
 
 /* ===== Disable animations when reduced motion is preferred ===== */
 @media (prefers-reduced-motion: reduce) {
+
     .manage-users *,
     .manage-users *::before {
         animation: none !important;
@@ -466,12 +467,12 @@ html.mu-modal-open {
     background: #fff;
 }
 
-    .manage-users .sk-search::before {
-        content: "";
-        flex: 0 0 44px;
-        border-right: 2.5px solid #35030C;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 3 L11 19' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3 11 L19 11' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") no-repeat center / 22px 22px;
-    }
+.manage-users .sk-search::before {
+    content: "";
+    flex: 0 0 44px;
+    border-right: 2.5px solid #35030C;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 3 L11 19' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3 11 L19 11' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") no-repeat center / 22px 22px;
+}
 
 .manage-users .mu-search .sk-search input {
     flex: 1 1 auto;
@@ -489,15 +490,15 @@ html.mu-modal-open {
     appearance: none;
 }
 
-    .manage-users .mu-search .sk-search input::placeholder {
-        color: #8a8378;
-        opacity: 1;
-    }
+.manage-users .mu-search .sk-search input::placeholder {
+    color: #8a8378;
+    opacity: 1;
+}
 
-    .manage-users .mu-search .sk-search input:focus,
-    .manage-users .mu-search .sk-search input:focus-visible {
-        outline: 0;
-    }
+.manage-users .mu-search .sk-search input:focus,
+.manage-users .mu-search .sk-search input:focus-visible {
+    outline: 0;
+}
 
 .manage-users .sk-search:focus-within {
     outline: 3px solid #F93209;
@@ -525,6 +526,7 @@ html.mu-modal-open {
 }
 
 @supports (appearance: base-select) {
+
     .manage-users .mu-filters select,
     .manage-users .mu-fields select,
     .manage-users .mu-filters select::picker(select),
@@ -532,46 +534,46 @@ html.mu-modal-open {
         appearance: base-select;
     }
 
-        .manage-users .mu-filters select::picker(select),
-        .manage-users .mu-fields select::picker(select) {
-            position-area: block-end span-inline-end;
-            position-try-fallbacks: none;
-            min-width: anchor-size(width);
-            max-height: 260px;
-            overflow-y: auto;
-            margin-top: 8px;
-            padding: 6px;
-            border: 2.5px solid #35030C;
-            border-width: 2.9px 2.4px 3px 2.6px;
-            border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
-            background: #fff;
-            box-shadow: 3px 3px 0 #35030C;
-        }
+    .manage-users .mu-filters select::picker(select),
+    .manage-users .mu-fields select::picker(select) {
+        position-area: block-end span-inline-end;
+        position-try-fallbacks: none;
+        min-width: anchor-size(width);
+        max-height: 260px;
+        overflow-y: auto;
+        margin-top: 8px;
+        padding: 6px;
+        border: 2.5px solid #35030C;
+        border-width: 2.9px 2.4px 3px 2.6px;
+        border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+        background: #fff;
+        box-shadow: 3px 3px 0 #35030C;
+    }
 
-        .manage-users .mu-filters select option,
-        .manage-users .mu-fields select option {
-            padding: 10px 12px;
-            border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
-            background: #fff;
-            color: #35030C;
-            cursor: pointer;
-        }
+    .manage-users .mu-filters select option,
+    .manage-users .mu-fields select option {
+        padding: 10px 12px;
+        border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
+        background: #fff;
+        color: #35030C;
+        cursor: pointer;
+    }
 
-            .manage-users .mu-filters select option:hover,
-            .manage-users .mu-fields select option:hover {
-                background: #FFD24C;
-            }
+    .manage-users .mu-filters select option:hover,
+    .manage-users .mu-fields select option:hover {
+        background: #FFD24C;
+    }
 
-            .manage-users .mu-filters select option:checked,
-            .manage-users .mu-fields select option:checked {
-                background: #CDF58A;
-                font-weight: 700;
-            }
+    .manage-users .mu-filters select option:checked,
+    .manage-users .mu-fields select option:checked {
+        background: #CDF58A;
+        font-weight: 700;
+    }
 
-            .manage-users .mu-filters select option::checkmark,
-            .manage-users .mu-fields select option::checkmark {
-                display: none;
-            }
+    .manage-users .mu-filters select option::checkmark,
+    .manage-users .mu-fields select option::checkmark {
+        display: none;
+    }
 }
 
 /* Buttons (.btn) */
@@ -589,25 +591,25 @@ html.mu-modal-open {
     transition: transform .1s ease, background-color .1s ease;
 }
 
-    .manage-users .btn:hover {
-        background: #FFD24C;
-        transform: none;
-        box-shadow: none;
-    }
+.manage-users .btn:hover {
+    background: #FFD24C;
+    transform: none;
+    box-shadow: none;
+}
 
-    .manage-users .btn:active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.manage-users .btn:active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
-    .manage-users .btn.mu-danger {
-        background: #35030C;
-        color: #FFF9EB;
-    }
+.manage-users .btn.mu-danger {
+    background: #35030C;
+    color: #FFF9EB;
+}
 
-        .manage-users .btn.mu-danger:hover {
-            background: #F93209;
-            color: #35030C;
-        }
+.manage-users .btn.mu-danger:hover {
+    background: #F93209;
+    color: #35030C;
+}
 
 /* Edit / Previous / Next / close buttons (Delete & Deactivate stay as links) */
 .manage-users .mu-action:not(.mu-remove-link) {
@@ -618,13 +620,13 @@ html.mu-modal-open {
     font-weight: 700;
 }
 
-    .manage-users .mu-action:not(.mu-remove-link):hover {
-        background: #FFD24C;
-    }
+.manage-users .mu-action:not(.mu-remove-link):hover {
+    background: #FFD24C;
+}
 
-    .manage-users .mu-action:not(.mu-remove-link):active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.manage-users .mu-action:not(.mu-remove-link):active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
 /* Table: sketch header line and dashed row dividers */
 .manage-users .mu-table th {

@@ -16,17 +16,34 @@ namespace CookingLah.Pages.Shared.Profile
     {
         protected string DeleteFeedback = "";
         private string ProfileRole = "";
-        protected bool CanDeleteProfile { get { return ProfileRole == "Learner" || ProfileRole == "Instructor"; } }
-        protected string DeleteActionLabel { get { return ProfileRole == "Instructor" ? "Deactivate profile" : "Delete profile"; } }
+        protected bool CanDeleteProfile
+        {
+            get
+            {
+                return ProfileRole == "Learner" || ProfileRole == "Instructor";
+            }
+        }
+
+        protected string DeleteActionLabel
+        {
+            get
+            {
+                return ProfileRole == "Instructor" ? "Deactivate profile" : "Delete profile";
+            }
+        }
+
         protected string DeleteDescription
         {
             get
             {
-                if (ProfileRole == "Learner") return "Permanently delete your account and its associated learning records. This cannot be undone.";
-                if (ProfileRole == "Instructor") return "Deactivate your account and stop access to Cooking LAH. Your profile and courses will be retained. Contact an administrator if you need to reactivate your account.";
+                if (ProfileRole == "Learner")
+                    return "Permanently delete your account and its associated learning records. This cannot be undone.";
+                if (ProfileRole == "Instructor")
+                    return "Deactivate your account and stop access to Cooking LAH. Your profile and courses will be retained. Contact an administrator if you need to reactivate your account.";
                 return "To close an admin account, ask another administrator to deactivate it in Manage users.";
             }
         }
+
         protected string DetailsFeedback = "";
         protected string PasswordFeedback = "";
         protected bool PasswordFeedbackIsError
@@ -41,9 +58,24 @@ namespace CookingLah.Pages.Shared.Profile
                     PasswordFeedback.StartsWith("Your password changed elsewhere", StringComparison.OrdinalIgnoreCase);
             }
         }
+
         protected string PhotoFeedback = "";
-        protected string CsrfToken { get { return Convert.ToString(Session["ProfileCsrf"]); } }
-        private int UserId { get { return Convert.ToInt32(Session["UserId"]); } }
+        protected string CsrfToken
+        {
+            get
+            {
+                return Convert.ToString(Session["ProfileCsrf"]);
+            }
+        }
+
+        private int UserId
+        {
+            get
+            {
+                return Convert.ToInt32(Session["UserId"]);
+            }
+        }
+
         private const string PhotoFolder = "~/F_Assets/ProfilePicture/";
 
         protected override void OnInit(EventArgs e)
@@ -53,12 +85,37 @@ namespace CookingLah.Pages.Shared.Profile
             ViewStateUserKey = CsrfToken;
             base.OnInit(e);
         }
-        protected string FullName { get { return (string)ViewState["FullName"] ?? ""; } }
-        protected string Username { get { return (string)ViewState["Username"] ?? ""; } }
-        protected string Email { get { return (string)ViewState["Email"] ?? ""; } }
+
+        protected string FullName
+        {
+            get
+            {
+                return (string)ViewState["FullName"] ?? "";
+            }
+        }
+
+        protected string Username
+        {
+            get
+            {
+                return (string)ViewState["Username"] ?? "";
+            }
+        }
+
+        protected string Email
+        {
+            get
+            {
+                return (string)ViewState["Email"] ?? "";
+            }
+        }
+
         protected string ProfileImageUrl
         {
-            get { return (string)ViewState["ProfileImageUrl"] ?? ResolveUrl("~/F_Assets/mascot.png"); }
+            get
+            {
+                return (string)ViewState["ProfileImageUrl"] ?? ResolveUrl("~/F_Assets/mascot.png");
+            }
         }
 
         protected override void OnPreInit(EventArgs e)
@@ -106,10 +163,19 @@ namespace CookingLah.Pages.Shared.Profile
                     {
                         switch (action)
                         {
-                            case "details": SaveProfile_Click(sender, e); break;
-                            case "upload": UploadPhoto_Click(sender, e); break;
-                            case "remove": RemovePhoto_Click(sender, e); break;
-                            case "delete": if (DeleteProfile()) return; break;
+                            case "details":
+                                SaveProfile_Click(sender, e);
+                                break;
+                            case "upload":
+                                UploadPhoto_Click(sender, e);
+                                break;
+                            case "remove":
+                                RemovePhoto_Click(sender, e);
+                                break;
+                            case "delete":
+                                if (DeleteProfile())
+                                    return;
+                                break;
                         }
                     }
                     catch (SqlException ex)
@@ -201,7 +267,11 @@ namespace CookingLah.Pages.Shared.Profile
                         }
                     }
                 }
-                if (cmd.ExecuteNonQuery() != 1) { DetailsFeedback = "Your account could not be updated."; return; }
+                if (cmd.ExecuteNonQuery() != 1)
+                {
+                    DetailsFeedback = "Your account could not be updated.";
+                    return;
+                }
             }
             Session["Username"] = username;
             Session["Email"] = email;
@@ -212,7 +282,10 @@ namespace CookingLah.Pages.Shared.Profile
         {
             var file = Request.Files["profilePhoto"];
             if (file == null || file.ContentLength == 0 || file.ContentLength > 2 * 1024 * 1024)
-            { PhotoFeedback = "Choose a JPG or PNG image up to 2 MB."; return; }
+            {
+                PhotoFeedback = "Choose a JPG or PNG image up to 2 MB.";
+                return;
+            }
             string newPath = PhotoFolder + UserId + "_" + Guid.NewGuid().ToString("N") + ".png";
             byte[] encoded;
             try
@@ -221,7 +294,10 @@ namespace CookingLah.Pages.Shared.Profile
                 {
                     if ((source.RawFormat.Guid != ImageFormat.Jpeg.Guid && source.RawFormat.Guid != ImageFormat.Png.Guid) ||
                         source.Width > 4096 || source.Height > 4096 || (long)source.Width * source.Height > 16000000)
-                    { PhotoFeedback = "Choose a JPG or PNG no larger than 4096 pixels per side and 16 megapixels."; return; }
+                    {
+                        PhotoFeedback = "Choose a JPG or PNG no larger than 4096 pixels per side and 16 megapixels.";
+                        return;
+                    }
                     using (var clean = new Bitmap(source.Width, source.Height))
                     using (var graphics = Graphics.FromImage(clean))
                     using (var output = new MemoryStream())
@@ -237,7 +313,10 @@ namespace CookingLah.Pages.Shared.Profile
             catch (OutOfMemoryException) { PhotoFeedback = "This image could not be processed. Choose a smaller JPG or PNG."; return; }
             Directory.CreateDirectory(Server.MapPath(PhotoFolder));
             File.WriteAllBytes(Server.MapPath(newPath), encoded);
-            try { ReplacePhoto(newPath); }
+            try
+            {
+                ReplacePhoto(newPath);
+            }
             catch { DeleteOwnedPhoto(newPath); throw; }
             PhotoFeedback = "Your profile photo has been saved.";
         }
@@ -397,9 +476,15 @@ namespace CookingLah.Pages.Shared.Profile
         {
             string password = Request.Form["deletePassword"] ?? "";
             if (Request.Form["confirmDeleteProfile"] != "yes")
-            { DeleteFeedback = "Please confirm that you understand before continuing."; return false; }
+            {
+                DeleteFeedback = "Please confirm that you understand before continuing.";
+                return false;
+            }
             if (password.Length == 0 || Encoding.UTF8.GetByteCount(password) > 72)
-            { DeleteFeedback = "Enter your current password to confirm."; return false; }
+            {
+                DeleteFeedback = "Enter your current password to confirm.";
+                return false;
+            }
 
             string oldPhoto = null;
             bool permanentlyDeleted = false;
@@ -414,7 +499,11 @@ namespace CookingLah.Pages.Shared.Profile
                         command.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
                         using (var reader = command.ExecuteReader())
                         {
-                            if (!reader.Read()) { DeleteFeedback = "Your account is no longer available."; return false; }
+                            if (!reader.Read())
+                            {
+                                DeleteFeedback = "Your account is no longer available.";
+                                return false;
+                            }
                             role = Convert.ToString(reader["Role"]);
                             hash = Convert.ToString(reader["Password"]);
                             status = Convert.ToString(reader["AccountStatus"]);
@@ -422,9 +511,15 @@ namespace CookingLah.Pages.Shared.Profile
                         }
                     }
                     if (status != "Active" || (role != "Learner" && role != "Instructor"))
-                    { DeleteFeedback = "This account cannot be closed here. Please contact another administrator."; return false; }
+                    {
+                        DeleteFeedback = "This account cannot be closed here. Please contact another administrator.";
+                        return false;
+                    }
                     if (string.IsNullOrEmpty(hash) || !PasswordManager.isPasswordValid(password, hash))
-                    { DeleteFeedback = "Your current password is incorrect."; return false; }
+                    {
+                        DeleteFeedback = "Your current password is incorrect.";
+                        return false;
+                    }
                     permanentlyDeleted = role == "Learner";
                     if (permanentlyDeleted)
                     {
@@ -445,12 +540,16 @@ namespace CookingLah.Pages.Shared.Profile
                     {
                         command.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
                         if (command.ExecuteNonQuery() != 1)
-                        { DeleteFeedback = "Your account changed. Reload the page and try again."; return false; }
+                        {
+                            DeleteFeedback = "Your account changed. Reload the page and try again.";
+                            return false;
+                        }
                     }
                     transaction.Commit();
                 }
             }
-            if (permanentlyDeleted) DeleteOwnedPhoto(oldPhoto);
+            if (permanentlyDeleted)
+                DeleteOwnedPhoto(oldPhoto);
             System.Web.Security.FormsAuthentication.SignOut();
             Session.Clear();
             Session.Abandon();
@@ -462,10 +561,14 @@ namespace CookingLah.Pages.Shared.Profile
 
         private void SetFeedback(string action, string message)
         {
-            if (action == "delete") DeleteFeedback = message;
-            else if (action == "password") PasswordFeedback = message;
-            else if (action == "upload" || action == "remove") PhotoFeedback = message;
-            else DetailsFeedback = message;
+            if (action == "delete")
+                DeleteFeedback = message;
+            else if (action == "password")
+                PasswordFeedback = message;
+            else if (action == "upload" || action == "remove")
+                PhotoFeedback = message;
+            else
+                DetailsFeedback = message;
         }
 
         private void ReplacePhoto(string path)
@@ -478,7 +581,8 @@ namespace CookingLah.Pages.Shared.Profile
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = UserId;
                 con.Open();
                 object result = cmd.ExecuteScalar();
-                if (result == null) throw new InvalidOperationException("The profile account no longer exists.");
+                if (result == null)
+                    throw new InvalidOperationException("The profile account no longer exists.");
                 oldPath = Convert.ToString(result);
             }
             DeleteOwnedPhoto(oldPath);
@@ -487,8 +591,12 @@ namespace CookingLah.Pages.Shared.Profile
         private void DeleteOwnedPhoto(string path)
         {
             if (string.IsNullOrEmpty(path) || !Regex.IsMatch(path,
-                "^" + Regex.Escape(PhotoFolder + UserId + "_") + "[a-f0-9]{32}\\.png$")) return;
-            try { File.Delete(Server.MapPath(path)); }
+                "^" + Regex.Escape(PhotoFolder + UserId + "_") + "[a-f0-9]{32}\\.png$"))
+                return;
+            try
+            {
+                File.Delete(Server.MapPath(path));
+            }
             catch (IOException) { /* A locked obsolete photo can be cleaned up later. */ }
             catch (UnauthorizedAccessException) { /* Keep the successfully saved profile. */ }
         }

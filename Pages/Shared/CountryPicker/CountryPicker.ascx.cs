@@ -10,8 +10,14 @@ namespace CookingLah.Pages.Shared.CountryPicker
     {
         public string LabelText
         {
-            get { return lblCountry.Text; }
-            set { lblCountry.Text = value; }
+            get
+            {
+                return lblCountry.Text;
+            }
+            set
+            {
+                lblCountry.Text = value;
+            }
         }
 
         public string SelectedCountryName

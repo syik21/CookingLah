@@ -32,7 +32,8 @@ namespace CookingLah.Pages.Chef.CreateCourse
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (InstructorId <= 0) return;
+            if (InstructorId <= 0)
+                return;
             Form.Enctype = "multipart/form-data";
 
             if (!IsPostBack)
@@ -50,7 +51,8 @@ namespace CookingLah.Pages.Chef.CreateCourse
             bool validSession = string.Equals(Convert.ToString(Session["Role"]), "Instructor", StringComparison.OrdinalIgnoreCase)
                 && int.TryParse(Convert.ToString(Session["UserId"]), out instructorId)
                 && instructorId > 0;
-            if (!validSession) return 0;
+            if (!validSession)
+                return 0;
 
             DataTable instructor = Read("SELECT UserID FROM Users WHERE UserID=@id AND Role='Instructor' AND AccountStatus='Active'", Parameter("@id", instructorId));
             return instructor.Rows.Count == 1 ? instructorId : 0;
@@ -59,11 +61,15 @@ namespace CookingLah.Pages.Chef.CreateCourse
         // Existing drafts are edited in Manage Course.
         private void RedirectExistingCourse()
         {
-            if (Request.QueryString["courseId"] == null) return;
+            if (Request.QueryString["courseId"] == null)
+                return;
 
             int courseId;
             if (!int.TryParse(Request.QueryString["courseId"], out courseId) || courseId <= 0 ||
-                Read("SELECT CourseID FROM Courses WHERE CourseID=@id AND InstructorID=@instructorId", Parameter("@id", courseId), Parameter("@instructorId", InstructorId)).Rows.Count != 1)
+                Read(
+"SELECT CourseID FROM Courses WHERE CourseID=@id AND InstructorID=@instructorId",
+Parameter("@id", courseId),
+Parameter("@instructorId", InstructorId)).Rows.Count != 1)
             {
                 SetErrors(new[] { "This course link is not valid or the course is unavailable." });
                 return;
@@ -125,14 +131,20 @@ namespace CookingLah.Pages.Chef.CreateCourse
         private List<string> ValidateBasicInformation()
         {
             List<string> errors = new List<string>();
-            if (string.IsNullOrWhiteSpace(txtCourseTitle.Text)) errors.Add("Enter a course title.");
-            if (txtCourseTitle.Text.Trim().Length > 150) errors.Add("Keep the course title within 150 characters.");
-            if (string.IsNullOrWhiteSpace(txtDescription.Text)) errors.Add("Describe what learners will make and learn.");
-            if (txtDescription.Text.Trim().Length > 2000) errors.Add("Keep the description within 2,000 characters.");
+            if (string.IsNullOrWhiteSpace(txtCourseTitle.Text))
+                errors.Add("Enter a course title.");
+            if (txtCourseTitle.Text.Trim().Length > 150)
+                errors.Add("Keep the course title within 150 characters.");
+            if (string.IsNullOrWhiteSpace(txtDescription.Text))
+                errors.Add("Describe what learners will make and learn.");
+            if (txtDescription.Text.Trim().Length > 2000)
+                errors.Add("Keep the description within 2,000 characters.");
 
             int categoryId;
-            if (!int.TryParse(ddlCategory.SelectedValue, out categoryId)) errors.Add("Select a course category.");
-            if (ddlDifficulty.SelectedValue != "Beginner" && ddlDifficulty.SelectedValue != "Intermediate" && ddlDifficulty.SelectedValue != "Advanced") errors.Add("Select a difficulty level.");
+            if (!int.TryParse(ddlCategory.SelectedValue, out categoryId))
+                errors.Add("Select a course category.");
+            if (ddlDifficulty.SelectedValue != "Beginner" && ddlDifficulty.SelectedValue != "Intermediate" && ddlDifficulty.SelectedValue != "Advanced")
+                errors.Add("Select a difficulty level.");
             return errors;
         }
 
@@ -173,7 +185,8 @@ namespace CookingLah.Pages.Chef.CreateCourse
                         Parameter("@difficulty", ddlDifficulty.SelectedValue),
                         Parameter("@thumbnail", thumbnail));
 
-                    if (result == null) throw new InvalidOperationException("Your account cannot create a course right now.");
+                    if (result == null)
+                        throw new InvalidOperationException("Your account cannot create a course right now.");
                     courseId = Convert.ToInt32(result);
                     transaction.Commit();
                 }

@@ -9,8 +9,26 @@ namespace CookingLah.Pages.Chef.MyCourse
     public partial class ChefMyCourse : System.Web.UI.Page
     {
         private const int PageSize = 9;
-        private int InstructorId { get { return Convert.ToInt32(Session["UserId"]); } }
-        private int ListPage { get { return (int?)ViewState["ListPage"] ?? 0; } set { ViewState["ListPage"] = value; } }
+        private int InstructorId
+        {
+            get
+            {
+                return Convert.ToInt32(Session["UserId"]);
+            }
+        }
+
+        private int ListPage
+        {
+            get
+            {
+                return (int?)ViewState["ListPage"] ?? 0;
+            }
+            set
+            {
+                ViewState["ListPage"] = value;
+            }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -34,12 +52,30 @@ namespace CookingLah.Pages.Chef.MyCourse
                 ddlCategory.Items.Insert(0, new ListItem("All categories", "0"));
             }
         }
-        protected override void OnPreRender(EventArgs e) { BindMyCourses(); base.OnPreRender(e); }
-        private string ListStatus { get { return (string)ViewState["ListStatus"] ?? "All"; } set { ViewState["ListStatus"] = value; } }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            BindMyCourses();
+            base.OnPreRender(e);
+        }
+
+        private string ListStatus
+        {
+            get
+            {
+                return (string)ViewState["ListStatus"] ?? "All";
+            }
+            set
+            {
+                ViewState["ListStatus"] = value;
+            }
+        }
+
         protected void CourseStatus_Command(object sender, CommandEventArgs e)
         {
             string status = Convert.ToString(e.CommandArgument);
-            if (Array.IndexOf(new[] { "All", "Draft", "Pending", "Published", "Rejected" }, status) < 0) return;
+            if (Array.IndexOf(new[] { "All", "Draft", "Pending", "Published", "Rejected" }, status) < 0)
+                return;
             ListStatus = status;
             ListPage = 0;
         }
@@ -69,7 +105,8 @@ namespace CookingLah.Pages.Chef.MyCourse
                 }
             }
             var view = new DataView(rows);
-            if (ListStatus != "All") view.RowFilter = "Status='" + ListStatus + "'";
+            if (ListStatus != "All")
+                view.RowFilter = "Status='" + ListStatus + "'";
             int totalPages = Math.Max(1, (view.Count + PageSize - 1) / PageSize);
             ListPage = Math.Min(ListPage, totalPages - 1);
             rptCourses.DataSource = new PagedDataSource { DataSource = view, AllowPaging = true, PageSize = PageSize, CurrentPageIndex = ListPage };
@@ -82,9 +119,26 @@ namespace CookingLah.Pages.Chef.MyCourse
             btnNextCourses.Enabled = ListPage < totalPages - 1;
             lblCoursesPage.Text = "Page " + (ListPage + 1) + " of " + totalPages;
         }
-        protected void btnPreviousCourses_Click(object sender, EventArgs e) { ListPage = Math.Max(0, ListPage - 1); }
-        protected void btnSearchCourses_Click(object sender, EventArgs e) { ListPage = 0; }
-        protected void btnClearCourseSearch_Click(object sender, EventArgs e) { txtCourseSearch.Text = ""; ListPage = 0; }
-        protected void btnNextCourses_Click(object sender, EventArgs e) { ListPage++; }
+
+        protected void btnPreviousCourses_Click(object sender, EventArgs e)
+        {
+            ListPage = Math.Max(0, ListPage - 1);
+        }
+
+        protected void btnSearchCourses_Click(object sender, EventArgs e)
+        {
+            ListPage = 0;
+        }
+
+        protected void btnClearCourseSearch_Click(object sender, EventArgs e)
+        {
+            txtCourseSearch.Text = "";
+            ListPage = 0;
+        }
+
+        protected void btnNextCourses_Click(object sender, EventArgs e)
+        {
+            ListPage++;
+        }
     }
 }

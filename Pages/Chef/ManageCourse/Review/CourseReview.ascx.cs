@@ -12,11 +12,23 @@ namespace CookingLah.Pages.Chef.ManageCourse.Review
         private const int PageSize = 10;
         private int CurrentPage
         {
-            get { return (int?)ViewState["CurrentPage"] ?? 0; }
-            set { ViewState["CurrentPage"] = value; }
+            get
+            {
+                return (int?)ViewState["CurrentPage"] ?? 0;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
         }
 
-        private ManageCoursePage ManagePage { get { return (ManageCoursePage)Page; } }
+        private ManageCoursePage ManagePage
+        {
+            get
+            {
+                return (ManageCoursePage)Page;
+            }
+        }
 
         protected override void OnPreRender(EventArgs e)
         {
@@ -29,7 +41,8 @@ namespace CookingLah.Pages.Chef.ManageCourse.Review
         {
             int courseId = ManagePage.CourseId;
             int chefId;
-            if (!int.TryParse(Convert.ToString(Session["UserId"]), out chefId)) throw new HttpException(403, "Access denied.");
+            if (!int.TryParse(Convert.ToString(Session["UserId"]), out chefId))
+                throw new HttpException(403, "Access denied.");
 
             DataTable summary = Read(@"
                 SELECT COUNT(r.ReviewID) AS ReviewCount,
@@ -43,7 +56,8 @@ namespace CookingLah.Pages.Chef.ManageCourse.Review
                 LEFT JOIN Reviews r ON r.CourseID=c.CourseID
                 WHERE c.CourseID=@courseId AND c.InstructorID=@chefId",
                 Parameter("@courseId", courseId), Parameter("@chefId", chefId));
-            if (summary.Rows.Count != 1) throw new HttpException(404, "Course not found or access denied.");
+            if (summary.Rows.Count != 1)
+                throw new HttpException(404, "Course not found or access denied.");
 
             DataRow totals = summary.Rows[0];
             int reviewCount = Convert.ToInt32(totals["ReviewCount"]);
@@ -71,7 +85,8 @@ namespace CookingLah.Pages.Chef.ManageCourse.Review
             pnlSummary.Visible = reviewCount > 0;
             pnlReviews.Visible = reviewCount > 0;
             pnlEmpty.Visible = reviewCount == 0;
-            if (reviewCount == 0) return;
+            if (reviewCount == 0)
+                return;
 
             litAverageRating.Text = "★ " + Convert.ToDecimal(row["AverageRating"]).ToString("0.0") + " / 5";
             litReviewCount.Text = CountText(reviewCount);
@@ -89,12 +104,42 @@ namespace CookingLah.Pages.Chef.ManageCourse.Review
             btnNext.Enabled = CurrentPage < pageCount - 1;
         }
 
-        private static string CountText(int count) { return count + (count == 1 ? " Review" : " Reviews"); }
-        protected string StarText(object value) { int rating = Convert.ToInt32(value); return new string('\u2605', rating) + new string('\u2606', 5 - rating); }
-        protected string ReviewDate(object value) { return Convert.ToDateTime(value).ToString("d MMM yyyy"); }
-        protected string ReviewDateValue(object value) { return Convert.ToDateTime(value).ToString("yyyy-MM-dd"); }
-        protected void btnPrevious_Click(object sender, EventArgs e) { KeepReviewActive(); CurrentPage = Math.Max(0, CurrentPage - 1); }
-        protected void btnNext_Click(object sender, EventArgs e) { KeepReviewActive(); CurrentPage++; }
-        private void KeepReviewActive() { ManagePage.SetCurrentTab("review"); }
+        private static string CountText(int count)
+        {
+            return count + (count == 1 ? " Review" : " Reviews");
+        }
+
+        protected string StarText(object value)
+        {
+            int rating = Convert.ToInt32(value);
+            return new string('\u2605', rating) + new string('\u2606', 5 - rating);
+        }
+
+        protected string ReviewDate(object value)
+        {
+            return Convert.ToDateTime(value).ToString("d MMM yyyy");
+        }
+
+        protected string ReviewDateValue(object value)
+        {
+            return Convert.ToDateTime(value).ToString("yyyy-MM-dd");
+        }
+
+        protected void btnPrevious_Click(object sender, EventArgs e)
+        {
+            KeepReviewActive();
+            CurrentPage = Math.Max(0, CurrentPage - 1);
+        }
+
+        protected void btnNext_Click(object sender, EventArgs e)
+        {
+            KeepReviewActive();
+            CurrentPage++;
+        }
+
+        private void KeepReviewActive()
+        {
+            ManagePage.SetCurrentTab("review");
+        }
     }
 }

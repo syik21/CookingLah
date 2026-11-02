@@ -23,6 +23,7 @@ namespace CookingLah.Pages.Admin.CourseContentReview
                 ViewState["CurrentPage"] = value;
             }
         }
+
         private string CurrentStatusFilter
         {
             get
@@ -37,7 +38,8 @@ namespace CookingLah.Pages.Admin.CourseContentReview
         // Verify that the current user is an active administrator.
         protected override void OnInit(EventArgs e)
         {
-            if (Session["ReviewCsrf"] == null) Session["ReviewCsrf"] = Guid.NewGuid().ToString("N");
+            if (Session["ReviewCsrf"] == null)
+                Session["ReviewCsrf"] = Guid.NewGuid().ToString("N");
             ViewStateUserKey = Convert.ToString(Session["ReviewCsrf"]);
             base.OnInit(e);
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -215,36 +217,44 @@ namespace CookingLah.Pages.Admin.CourseContentReview
             CurrentStatusFilter = status;
             CurrentPage = 0;
         }
+
         protected void btnAllCourses_Click(object sender, EventArgs e)
         {
             SelectStatus("All");
         }
+
         protected void btnPending_Click(object sender, EventArgs e)
         {
             SelectStatus("Pending");
         }
+
         protected void btnApproved_Click(object sender, EventArgs e)
         {
             SelectStatus("Published");
         }
+
         protected void btnRejected_Click(object sender, EventArgs e)
         {
             SelectStatus("Rejected");
         }
+
         protected void Search_Click(object sender, EventArgs e)
         {
             CurrentPage = 0;
         }
+
         protected void ClearSearch_Click(object sender, EventArgs e)
         {
             txtSearchCourses.Text = "";
             ddlChefFilter.SelectedIndex = 0;
             CurrentPage = 0;
         }
+
         protected void Previous_Click(object sender, EventArgs e)
         {
             CurrentPage--;
         }
+
         protected void Next_Click(object sender, EventArgs e)
         {
             CurrentPage++;
@@ -263,24 +273,29 @@ namespace CookingLah.Pages.Admin.CourseContentReview
             pnlViewCourse.Visible = true;
             ViewCourse1.LoadCourse(courseId);
         }
+
         private void ShowCourseList()
         {
             pnlViewCourse.Visible = false;
             pnlCourseList.Visible = true;
         }
+
         private void ShowMessage(string message)
         {
             pnlMessage.Visible = true;
             litMessage.Text = message;
         }
+
         protected string MediaUrl(object value)
         {
             return ReviewData.MediaUrl(value);
         }
+
         protected string StatusLabel(object value)
         {
             return ReviewData.StatusLabel(value);
         }
+
         protected string StatusClass(object value)
         {
             return Convert.ToString(value) == "Published" ? "approved" : Convert.ToString(value) == "Rejected" ? "rejected" : "pending";
@@ -296,6 +311,7 @@ namespace CookingLah.Pages.Admin.CourseContentReview
                 Value = value
             };
         }
+
         internal static DataTable Read(string sql, params SqlParameter[] parameters)
         {
             using (var connection = DatabaseManager.ConnectDB())
@@ -308,10 +324,12 @@ namespace CookingLah.Pages.Admin.CourseContentReview
                 return rows;
             }
         }
+
         internal static string StatusLabel(object status)
         {
             return Convert.ToString(status) == "Published" ? "Approved" : Convert.ToString(status);
         }
+
         internal static string MediaUrl(object value)
         {
             return CookingLah.Pages.Chef.CreateCourse.CourseBuilderData.MediaUrl(Convert.ToString(value));

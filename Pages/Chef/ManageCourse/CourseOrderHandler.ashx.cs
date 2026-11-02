@@ -19,7 +19,13 @@ namespace CookingLah.Pages.Chef.ManageCourse
             public string token { get; set; }
         }
 
-        public bool IsReusable { get { return false; } }
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         // Save a drag-and-drop order without running the Web Forms page lifecycle.
         public void ProcessRequest(HttpContext context)
@@ -37,7 +43,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
                 using (var reader = new StreamReader(context.Request.InputStream))
                     json = reader.ReadToEnd();
                 var request = serializer.Deserialize<OrderRequest>(json);
-                if (request == null) throw new InvalidOperationException("Invalid order request.");
+                if (request == null)
+                    throw new InvalidOperationException("Invalid order request.");
 
                 string expectedToken = Convert.ToString(context.Session["ManageCourseReorderToken"]);
                 if (string.IsNullOrEmpty(expectedToken) || !string.Equals(expectedToken, request.token, StringComparison.Ordinal))
@@ -62,7 +69,11 @@ namespace CookingLah.Pages.Chef.ManageCourse
 
         private static void WriteJson(HttpContext context, JavaScriptSerializer serializer, bool success, string message)
         {
-            context.Response.Write(serializer.Serialize(new { success = success, message = message }));
+            context.Response.Write(serializer.Serialize(new
+            {
+                success = success,
+                message = message
+            }));
         }
     }
 }

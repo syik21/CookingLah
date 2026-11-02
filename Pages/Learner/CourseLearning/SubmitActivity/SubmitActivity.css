@@ -17,7 +17,7 @@
     text-align: left;
 }
 
-.activity-heading > p:last-child {
+.activity-heading>p:last-child {
     margin: 10px 0 0;
     color: var(--color-text-soft);
     font-size: 12px;
@@ -61,7 +61,7 @@
     font: 400 25px/1.1 var(--font-hand);
 }
 
-.activity-submission-heading > p {
+.activity-submission-heading>p {
     margin: 0;
     color: var(--color-text-soft);
     font-size: 10px;
@@ -123,7 +123,7 @@
     border-top: 1px dashed var(--color-grid);
 }
 
-.activity-submit-form > h3 {
+.activity-submit-form>h3 {
     margin: 0;
     font: 400 29px/1.1 var(--font-hand);
 }

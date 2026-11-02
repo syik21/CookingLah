@@ -18,14 +18,26 @@ namespace CookingLah.Pages.Chef.ChefReviewSubmission
 
         private int CurrentPage
         {
-            get { return (int?)ViewState["CurrentPage"] ?? 0; }
-            set { ViewState["CurrentPage"] = value; }
+            get
+            {
+                return (int?)ViewState["CurrentPage"] ?? 0;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
         }
 
         private int SelectedSubmissionId
         {
-            get { return (int?)ViewState["SelectedSubmissionId"] ?? 0; }
-            set { ViewState["SelectedSubmissionId"] = value; }
+            get
+            {
+                return (int?)ViewState["SelectedSubmissionId"] ?? 0;
+            }
+            set
+            {
+                ViewState["SelectedSubmissionId"] = value;
+            }
         }
 
         protected override void OnInit(EventArgs e)
@@ -184,7 +196,7 @@ namespace CookingLah.Pages.Chef.ChefReviewSubmission
                       OR learner.FullName LIKE '%' + @searchText + '%'
                       OR c.Title LIKE '%' + @searchText + '%'
                   )
-                ORDER BY " + orderBy,
+                ORDER BY CASE WHEN s.Status='Submitted' THEN 0 ELSE 1 END," + orderBy,
                 Parameter("@chefId", ChefId),
                 Parameter("@courseId", courseId),
                 Parameter("@status", status),

@@ -9,11 +9,50 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
     public partial class LessonForm : System.Web.UI.UserControl
     {
         private const int LessonPageSize = 5;
-        public int CurrentPage { get { return (int?)ViewState["CurrentPage"] ?? 0; } set { ViewState["CurrentPage"] = value; } }
-        public int PageSize { get { return LessonPageSize; } }
-        public int TotalPages { get { return Math.Max(1, (LessonCount + PageSize - 1) / PageSize); } }
-        protected int LessonCount { get { return Lessons.Rows.Count; } }
-        private CreateCoursePage Builder { get { return (CreateCoursePage)Page; } }
+        public int CurrentPage
+        {
+            get
+            {
+                return (int?)ViewState["CurrentPage"] ?? 0;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
+        }
+
+        public int PageSize
+        {
+            get
+            {
+                return LessonPageSize;
+            }
+        }
+
+        public int TotalPages
+        {
+            get
+            {
+                return Math.Max(1, (LessonCount + PageSize - 1) / PageSize);
+            }
+        }
+
+        protected int LessonCount
+        {
+            get
+            {
+                return Lessons.Rows.Count;
+            }
+        }
+
+        private CreateCoursePage Builder
+        {
+            get
+            {
+                return (CreateCoursePage)Page;
+            }
+        }
+
         private DataTable Lessons
         {
             get
@@ -28,12 +67,16 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
                 }
                 return (DataTable)ViewState["Lessons"];
             }
-            set { ViewState["Lessons"] = value; }
+            set
+            {
+                ViewState["Lessons"] = value;
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) BindLessons();
+            if (!IsPostBack)
+                BindLessons();
         }
 
         public void LoadLessons(int courseId)
@@ -49,7 +92,8 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
 
         private void BindLessons()
         {
-            for (int index = 0; index < LessonCount; index++) Lessons.Rows[index]["LessonOrder"] = index + 1;
+            for (int index = 0; index < LessonCount; index++)
+                Lessons.Rows[index]["LessonOrder"] = index + 1;
             CurrentPage = Math.Min(CurrentPage, TotalPages - 1);
             var pages = new PagedDataSource { DataSource = Lessons.DefaultView, AllowPaging = true, PageSize = PageSize, CurrentPageIndex = CurrentPage };
             rptLessons.DataSource = pages;
@@ -81,14 +125,19 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
         public List<string> ValidateLessons()
         {
             var errors = new List<string>();
-            if (LessonCount == 0) errors.Add("Please add at least one lesson.");
+            if (LessonCount == 0)
+                errors.Add("Please add at least one lesson.");
             foreach (DataRow lesson in Lessons.Rows)
             {
                 string number = Convert.ToString(lesson["LessonOrder"]);
-                if (string.IsNullOrWhiteSpace(Convert.ToString(lesson["Title"]))) errors.Add("Please enter the title for Lesson " + number + ".");
-                if (Convert.ToString(lesson["Title"]).Length > 150) errors.Add("Keep the title for Lesson " + number + " within 150 characters.");
-                if (Convert.ToString(lesson["Description"]).Length > 500) errors.Add("Keep the description for Lesson " + number + " within 500 characters.");
-                if (string.IsNullOrWhiteSpace(Convert.ToString(lesson["ArticleText"]))) errors.Add("Please enter instructions for Lesson " + number + ".");
+                if (string.IsNullOrWhiteSpace(Convert.ToString(lesson["Title"])))
+                    errors.Add("Please enter the title for Lesson " + number + ".");
+                if (Convert.ToString(lesson["Title"]).Length > 150)
+                    errors.Add("Keep the title for Lesson " + number + " within 150 characters.");
+                if (Convert.ToString(lesson["Description"]).Length > 500)
+                    errors.Add("Keep the description for Lesson " + number + " within 500 characters.");
+                if (string.IsNullOrWhiteSpace(Convert.ToString(lesson["ArticleText"])))
+                    errors.Add("Please enter instructions for Lesson " + number + ".");
             }
             return errors;
         }
@@ -96,7 +145,8 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
         public void SaveLessons(int courseId)
         {
             // Only editable drafts reach this transaction; replace their ordered lesson list together.
-            EditDraft(courseId, (connection, transaction) => {
+            EditDraft(courseId, (connection, transaction) =>
+            {
                 Execute(connection, transaction, "DELETE FROM Lessons WHERE CourseID=@id", Parameter("@id", courseId));
                 foreach (DataRow lesson in Lessons.Rows)
                 {
@@ -111,7 +161,8 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
                     for (int index = 0; index < fields.Length; index++)
                     {
                         string value = Convert.ToString(lesson[fields[index]]);
-                        if (string.IsNullOrWhiteSpace(value)) continue;
+                        if (string.IsNullOrWhiteSpace(value))
+                            continue;
                         Execute(connection, transaction, @"INSERT INTO LessonContent
                             (LessonID,ContentType,ContentTitle,ContentText,MediaPath,ContentOrder)
                             VALUES (@lesson,@type,@title,@text,@path,@order)",
@@ -126,7 +177,8 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
 
         protected void btnAddLesson_Click(object sender, EventArgs e)
         {
-            Builder.RunAction(() => {
+            Builder.RunAction(() =>
+            {
                 CaptureLessons();
                 Lessons.Rows.Add(LessonCount + 1, "", "", "", "", "");
                 CurrentPage = TotalPages - 1;
@@ -137,14 +189,17 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
 
         protected void rptLessons_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            Builder.RunAction(() => {
+            Builder.RunAction(() =>
+            {
                 CaptureLessons();
                 int index = CurrentPage * PageSize + e.Item.ItemIndex;
-                if (e.CommandName == "DeleteLesson") Lessons.Rows.RemoveAt(index);
+                if (e.CommandName == "DeleteLesson")
+                    Lessons.Rows.RemoveAt(index);
                 else
                 {
                     int destination = e.CommandName == "MoveUp" ? index - 1 : index + 1;
-                    if (destination < 0 || destination >= LessonCount) return;
+                    if (destination < 0 || destination >= LessonCount)
+                        return;
                     object[] lesson = Lessons.Rows[index].ItemArray;
                     Lessons.Rows[index].ItemArray = Lessons.Rows[destination].ItemArray;
                     Lessons.Rows[destination].ItemArray = lesson;
@@ -157,13 +212,22 @@ namespace CookingLah.Pages.Chef.CreateCourse.Lesson
 
         private void ChangePage(int direction)
         {
-            Builder.RunAction(() => {
+            Builder.RunAction(() =>
+            {
                 CaptureLessons();
                 CurrentPage = Math.Max(0, Math.Min(TotalPages - 1, CurrentPage + direction));
                 BindLessons();
             });
         }
-        protected void btnPreviousLessons_Click(object sender, EventArgs e) { ChangePage(-1); }
-        protected void btnNextLessons_Click(object sender, EventArgs e) { ChangePage(1); }
+
+        protected void btnPreviousLessons_Click(object sender, EventArgs e)
+        {
+            ChangePage(-1);
+        }
+
+        protected void btnNextLessons_Click(object sender, EventArgs e)
+        {
+            ChangePage(1);
+        }
     }
 }

@@ -10,12 +10,13 @@ namespace CookingLah.F_Services
     {
         public static bool isAccActive(string status)
         {
-            if(status == "Active")
+            if (status == "Active")
             {
                 return true;
             }
             return false;
         }
+
         public static bool IsEmail(string s)
         {
             return s.Length <= 256 && Regex.IsMatch(s, @"^\S+@\S+\.\S+$");

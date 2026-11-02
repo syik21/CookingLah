@@ -12,28 +12,52 @@ namespace CookingLah.Pages.Shared.CourseSearch
         private const int PageSize = 9;
         private int CurrentPage
         {
-            get { return (int?)ViewState["CurrentPage"] ?? 0; }
-            set { ViewState["CurrentPage"] = value; }
+            get
+            {
+                return (int?)ViewState["CurrentPage"] ?? 0;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
         }
 
         private int SelectedCourseId
         {
-            get { return (int?)ViewState["SelectedCourseId"] ?? 0; }
-            set { ViewState["SelectedCourseId"] = value; }
+            get
+            {
+                return (int?)ViewState["SelectedCourseId"] ?? 0;
+            }
+            set
+            {
+                ViewState["SelectedCourseId"] = value;
+            }
         }
 
         public bool IsLearner { get; set; }
 
         private int SelectedFoodCultureId
         {
-            get { return (int?)ViewState["SelectedFoodCultureId"] ?? 0; }
-            set { ViewState["SelectedFoodCultureId"] = value; }
+            get
+            {
+                return (int?)ViewState["SelectedFoodCultureId"] ?? 0;
+            }
+            set
+            {
+                ViewState["SelectedFoodCultureId"] = value;
+            }
         }
 
         protected string SelectedDishName
         {
-            get { return (string)ViewState["SelectedDishName"] ?? ""; }
-            set { ViewState["SelectedDishName"] = value; }
+            get
+            {
+                return (string)ViewState["SelectedDishName"] ?? "";
+            }
+            set
+            {
+                ViewState["SelectedDishName"] = value;
+            }
         }
 
         protected override void OnInit(EventArgs e)
@@ -62,7 +86,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
             {
                 LoadCategories();
                 txtSearch.Text = (Request.QueryString["search"] ?? "").Trim();
-                if (txtSearch.Text.Length > 100) txtSearch.Text = txtSearch.Text.Substring(0, 100);
+                if (txtSearch.Text.Length > 100)
+                    txtSearch.Text = txtSearch.Text.Substring(0, 100);
                 int foodCultureId;
                 if (int.TryParse(Request.QueryString["foodCultureId"], out foodCultureId) && foodCultureId > 0)
                 {
@@ -102,7 +127,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
         private void LoadCourses()
         {
             int categoryId;
-            if (!int.TryParse(ddlCategory.SelectedValue, out categoryId)) categoryId = 0;
+            if (!int.TryParse(ddlCategory.SelectedValue, out categoryId))
+                categoryId = 0;
 
             string searchText = txtSearch.Text.Trim();
             string difficulty = ddlDifficulty.SelectedValue;
@@ -187,10 +213,12 @@ namespace CookingLah.Pages.Shared.CourseSearch
 
         protected int CourseProgressValue(object progressStatus, object progressPercentage)
         {
-            if (Convert.ToString(progressStatus) == "Completed") return 100;
+            if (Convert.ToString(progressStatus) == "Completed")
+                return 100;
 
             int percentage;
-            if (!int.TryParse(Convert.ToString(progressPercentage), out percentage)) return 0;
+            if (!int.TryParse(Convert.ToString(progressPercentage), out percentage))
+                return 0;
 
             return Math.Max(0, Math.Min(100, percentage));
         }
@@ -212,7 +240,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
         protected string FormatRating(object averageRating, object reviewCount)
         {
             int count = Convert.ToInt32(reviewCount);
-            if (count == 0 || averageRating == DBNull.Value) return "No ratings yet";
+            if (count == 0 || averageRating == DBNull.Value)
+                return "No ratings yet";
             return "★ " + Convert.ToDecimal(averageRating).ToString("0.0") + " · " + count + (count == 1 ? " review" : " reviews");
         }
 
@@ -225,7 +254,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
         protected string FormatCourseRating(object averageRating, object reviewCount)
         {
             int count = Convert.ToInt32(reviewCount);
-            if (count == 0 || averageRating == DBNull.Value) return "No reviews yet";
+            if (count == 0 || averageRating == DBNull.Value)
+                return "No reviews yet";
             return "★ " + Convert.ToDecimal(averageRating).ToString("0.0") + " • " + count + (count == 1 ? " review" : " reviews");
         }
 
@@ -250,7 +280,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
         protected void rptCourses_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             int courseId;
-            if (!int.TryParse(Convert.ToString(e.CommandArgument), out courseId) || courseId <= 0) return;
+            if (!int.TryParse(Convert.ToString(e.CommandArgument), out courseId) || courseId <= 0)
+                return;
 
             if (e.CommandName == "ViewCourse")
             {
@@ -271,7 +302,8 @@ namespace CookingLah.Pages.Shared.CourseSearch
 
         public void OpenCourse(int courseId)
         {
-            if (courseId > 0) ShowCourseOverview(courseId);
+            if (courseId > 0)
+                ShowCourseOverview(courseId);
         }
 
         private void ShowCourseSearch()

@@ -8,7 +8,10 @@ namespace CookingLah.Pages.Learner
     public partial class LearnerDashboard : Page
     {
         private int LearnerId { get; set; }
-        protected int ContinueProgress { get; private set; }
+        protected int ContinueProgress
+        {
+            get; private set;
+        }
 
         protected override void OnInit(EventArgs e)
         {
@@ -27,8 +30,10 @@ namespace CookingLah.Pages.Learner
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (LearnerId <= 0) return;
-            if (!IsPostBack) LoadLearnerDashboard();
+            if (LearnerId <= 0)
+                return;
+            if (!IsPostBack)
+                LoadLearnerDashboard();
             ContinueProgress = (int?)ViewState["ContinueProgress"] ?? 0;
         }
 
@@ -91,7 +96,11 @@ namespace CookingLah.Pages.Learner
             SetContinueProgress(progress);
         }
 
-        private void SetContinueProgress(int progress) { ContinueProgress = progress; ViewState["ContinueProgress"] = progress; }
+        private void SetContinueProgress(int progress)
+        {
+            ContinueProgress = progress;
+            ViewState["ContinueProgress"] = progress;
+        }
 
         private void LoadCurrentCourses()
         {
@@ -128,14 +137,47 @@ namespace CookingLah.Pages.Learner
                 ORDER BY AVG(CONVERT(DECIMAL(5,2),r.Rating)) DESC,c.CreatedAt DESC,c.CourseID DESC", Parameter("@id", LearnerId)));
         }
 
-        private static void Bind(System.Web.UI.WebControls.Repeater repeater, DataTable rows) { repeater.DataSource = rows; repeater.DataBind(); }
-        protected string CourseImage(object value) { return MediaUrl(Convert.ToString(value)); }
-        protected bool HasCourseImage(object value) { return CourseImage(value).Length > 0; }
-        protected string CourseLearningUrl(object courseId) { return ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.aspx?courseId=" + Convert.ToInt32(courseId)); }
-        protected string CourseOverviewUrl(object courseId) { return ResolveUrl("~/Pages/Learner/SearchCourse/SearchCoursePage.aspx?courseId=" + Convert.ToInt32(courseId)); }
-        protected string ActivityStatus(object value) { return value == DBNull.Value ? "Not Submitted" : Convert.ToString(value); }
-        protected string ActivityStatusClass(object value) { string status = ActivityStatus(value); return status == "Approved" ? "status-success" : status == "Rejected" ? "status-danger" : "status-pending"; }
-        protected string ActivityUrl(object courseId, object submissionId) { return submissionId == DBNull.Value ? CourseLearningUrl(courseId) + "&section=activity" : ResolveUrl("~/Pages/Learner/LearnMyActivity/LearnerMyActivityPage.aspx"); }
+        private static void Bind(System.Web.UI.WebControls.Repeater repeater, DataTable rows)
+        {
+            repeater.DataSource = rows;
+            repeater.DataBind();
+        }
+
+        protected string CourseImage(object value)
+        {
+            return MediaUrl(Convert.ToString(value));
+        }
+
+        protected bool HasCourseImage(object value)
+        {
+            return CourseImage(value).Length > 0;
+        }
+
+        protected string CourseLearningUrl(object courseId)
+        {
+            return ResolveUrl("~/Pages/Learner/CourseLearning/CourseLearningPage.aspx?courseId=" + Convert.ToInt32(courseId));
+        }
+
+        protected string CourseOverviewUrl(object courseId)
+        {
+            return ResolveUrl("~/Pages/Learner/SearchCourse/SearchCoursePage.aspx?courseId=" + Convert.ToInt32(courseId));
+        }
+
+        protected string ActivityStatus(object value)
+        {
+            return value == DBNull.Value ? "Not Submitted" : Convert.ToString(value);
+        }
+
+        protected string ActivityStatusClass(object value)
+        {
+            string status = ActivityStatus(value);
+            return status == "Approved" ? "status-success" : status == "Rejected" ? "status-danger" : "status-pending";
+        }
+
+        protected string ActivityUrl(object courseId, object submissionId)
+        {
+            return submissionId == DBNull.Value ? CourseLearningUrl(courseId) + "&section=activity" : ResolveUrl("~/Pages/Learner/LearnMyActivity/LearnerMyActivityPage.aspx");
+        }
 
         protected void ContinueCourse_Click(object sender, EventArgs e)
         {

@@ -1,7 +1,7 @@
-﻿
-let api = null;
+﻿let api = null;
 let chefId = null;
 
+// Start the Chef's Jitsi session using the page's session details.
 function loadJitsi() {
 
     const sessionId =
@@ -198,4 +198,3 @@ window.addEventListener("cookinglah:live-suspended", function (event) {
     document.getElementById("liveParticipantCount").textContent = "Suspended";
     $.connection.hub.stop();
 });
-

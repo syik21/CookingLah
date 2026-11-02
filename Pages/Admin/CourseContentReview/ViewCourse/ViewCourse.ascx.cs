@@ -11,32 +11,55 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         // Events used to notify the parent review page.
         public event EventHandler BackRequested;
         public event EventHandler CourseReviewed;
-        public string ReviewMessage { get; private set; }
+        public string ReviewMessage
+        {
+            get; private set;
+        }
         // Keep the selected course and pagination positions across postbacks.
         private int CourseId
         {
-            get { return (int)(ViewState["CourseId"] ?? 0); }
-            set { ViewState["CourseId"] = value; }
+            get
+            {
+                return (int)(ViewState["CourseId"] ?? 0);
+            }
+            set
+            {
+                ViewState["CourseId"] = value;
+            }
         }
 
         private int LessonPage
         {
-            get { return (int)(ViewState["LessonPage"] ?? 0); }
-            set { ViewState["LessonPage"] = value; }
+            get
+            {
+                return (int)(ViewState["LessonPage"] ?? 0);
+            }
+            set
+            {
+                ViewState["LessonPage"] = value;
+            }
         }
 
         private int QuestionPage
         {
-            get { return (int)(ViewState["QuestionPage"] ?? 0); }
-            set { ViewState["QuestionPage"] = value; }
+            get
+            {
+                return (int)(ViewState["QuestionPage"] ?? 0);
+            }
+            set
+            {
+                ViewState["QuestionPage"] = value;
+            }
         }
+
         private DataTable questionOptions;
         private DataTable lessonBlocks;
         private int selectedLessonId;
 
         protected void Lesson_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)
+                return;
             var lesson = (DataRowView)e.Item.DataItem;
             var blocks = (CookingLah.Pages.Shared.LessonBlocks.LessonBlocks)e.Item.FindControl("LessonBlocks");
             blocks.BindBlocks(lessonBlocks, Convert.ToInt32(lesson["LessonID"]));
@@ -146,7 +169,10 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         private void LoadRecipe()
         {
             // Recipe description is the course description in the existing schema.
-            BindSection(rptRecipe, litRecipeEmpty, ReadCourse("SELECT r.*,c.Title,c.Description FROM CourseRecipes r JOIN Courses c ON c.CourseID=r.CourseID WHERE r.CourseID=@id"));
+            BindSection(
+rptRecipe,
+litRecipeEmpty,
+ReadCourse("SELECT r.*,c.Title,c.Description FROM CourseRecipes r JOIN Courses c ON c.CourseID=r.CourseID WHERE r.CourseID=@id"));
         }
 
         // Load the lesson selector and the selected lesson's content.
@@ -172,7 +198,8 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
 
         protected void LessonSelector_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            if (e.CommandName != "SelectLesson") return;
+            if (e.CommandName != "SelectLesson")
+                return;
             var rows = ReadCourse("SELECT LessonID FROM Lessons WHERE CourseID=@id ORDER BY LessonOrder,LessonID");
             int lessonId = Convert.ToInt32(e.CommandArgument);
             for (int index = 0; index < rows.Rows.Count; index++)
@@ -189,7 +216,10 @@ namespace CookingLah.Pages.Admin.CourseContentReview.ViewCourse
         // Load quizzes, questions, and answer options.
         private void LoadQuiz()
         {
-            BindSection(rptQuizzes, litQuizEmpty, ReadCourse("SELECT q.*,(SELECT COUNT(*) FROM QuizQuestions WHERE QuizID=q.QuizID) AS QuestionCount FROM Quizzes q WHERE CourseID=@id ORDER BY QuizID"));
+            BindSection(
+rptQuizzes,
+litQuizEmpty,
+ReadCourse("SELECT q.*,(SELECT COUNT(*) FROM QuizQuestions WHERE QuizID=q.QuizID) AS QuestionCount FROM Quizzes q WHERE CourseID=@id ORDER BY QuizID"));
             questionOptions = ReadCourse("SELECT o.* FROM QuizOptions o JOIN QuizQuestions qq ON qq.QuestionID=o.QuestionID JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@id ORDER BY o.OptionID");
             var questions = ReadCourse("SELECT qq.*,q.Title AS QuizTitle FROM QuizQuestions qq JOIN Quizzes q ON q.QuizID=qq.QuizID WHERE q.CourseID=@id ORDER BY q.QuizID,qq.QuestionOrder,qq.QuestionID");
             litQuestionsEmpty.Visible = questions.Rows.Count == 0 && rptQuizzes.Items.Count > 0;

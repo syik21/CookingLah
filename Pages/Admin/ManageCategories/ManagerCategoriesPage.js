@@ -4,7 +4,10 @@
     var counter = document.getElementById("categoryDescriptionCount");
     if (description && counter) {
         description.maxLength = 500;
-        function updateCount() { counter.textContent = description.value.length + "/500"; }
+
+        function updateCount() {
+            counter.textContent = description.value.length + "/500";
+        }
         description.addEventListener("input", updateCount);
         updateCount();
     }
@@ -35,4 +38,3 @@
     var target = feedback || cancelDelete || name;
     if (target) target.focus();
 }());
-

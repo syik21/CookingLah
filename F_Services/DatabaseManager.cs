@@ -22,7 +22,8 @@ namespace CookingLah.F_Services
             profileImage = "~/F_Assets/mascot.png";
 
             int userId;
-            if (!int.TryParse(Convert.ToString(userIdValue), out userId) || userId <= 0) return false;
+            if (!int.TryParse(Convert.ToString(userIdValue), out userId) || userId <= 0)
+                return false;
 
             using (SqlConnection connection = ConnectDB())
             using (SqlCommand command = new SqlCommand(@"
@@ -36,7 +37,8 @@ namespace CookingLah.F_Services
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (!reader.Read()) return false;
+                    if (!reader.Read())
+                        return false;
 
                     username = Convert.ToString(reader["Username"]);
                     profileImage = SafeProfileImage(Convert.ToString(reader["ProfileImage"]));
@@ -48,7 +50,8 @@ namespace CookingLah.F_Services
         private static string SafeProfileImage(string path)
         {
             path = (path ?? "").Trim();
-            if (path.Length == 0 || path.StartsWith("//") || path.Contains("\\")) return "~/F_Assets/mascot.png";
+            if (path.Length == 0 || path.StartsWith("//") || path.Contains("\\"))
+                return "~/F_Assets/mascot.png";
 
             Uri absoluteUrl;
             if (Uri.TryCreate(path, UriKind.Absolute, out absoluteUrl) &&

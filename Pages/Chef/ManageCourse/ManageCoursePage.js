@@ -1,5 +1,6 @@
 (function () {
     "use strict";
+
     function initSection(selector) {
         var section = document.querySelector(selector);
         if (!section) return;
@@ -26,7 +27,10 @@
                 panel.addEventListener("keydown", function (event) {
                     if (event.key === "Enter" && event.target.matches("input[type=text]")) {
                         var save = panel.querySelector("input.btn-primary");
-                        if (save) { event.preventDefault(); save.click(); }
+                        if (save) {
+                            event.preventDefault();
+                            save.click();
+                        }
                     }
                 });
                 var initial = feedback || (panel.classList.contains("mc-delete") ? cancel : panel.querySelector("input[type=text], textarea"));
@@ -42,12 +46,16 @@
                 if (imageUrl) URL.revokeObjectURL(imageUrl);
                 var file = input.files[0];
                 preview.hidden = !file || !/^image\/(jpeg|png)$/.test(file.type);
-                if (!preview.hidden) { imageUrl = URL.createObjectURL(file); preview.src = imageUrl; }
+                if (!preview.hidden) {
+                    imageUrl = URL.createObjectURL(file);
+                    preview.src = imageUrl;
+                }
             });
         });
     }
     var builderRoot = document.querySelector("[data-builder]");
     var orderSave = Promise.resolve();
+
     function saveOrder(kind, parentId, ids, state) {
         if (!builderRoot) return Promise.reject(new Error("Course builder not found."));
         if (state) state.textContent = "Saving order...";
@@ -55,7 +63,9 @@
             return fetch(builderRoot.dataset.reorderUrl, {
                 method: "POST",
                 credentials: "same-origin",
-                headers: { "Content-Type": "application/json; charset=utf-8" },
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
                 body: JSON.stringify({
                     courseId: Number(builderRoot.dataset.courseId),
                     kind: kind,
@@ -77,12 +87,18 @@
             throw error;
         });
     }
-    window.CookingLahManage = { initSection: initSection, saveOrder: saveOrder };
+    window.CookingLahManage = {
+        initSection: initSection,
+        saveOrder: saveOrder
+    };
     var tabField = document.getElementById("hfActiveTab");
     var tabs = Array.from(document.querySelectorAll("[data-course-tab]"));
     var sections = Array.from(document.querySelectorAll("[data-course-section]"));
+
     function selectTab(name, moveFocus) {
-        if (!tabs.some(function (tab) { return tab.dataset.courseTab === name; })) return;
+        if (!tabs.some(function (tab) {
+                return tab.dataset.courseTab === name;
+            })) return;
         tabField.value = name;
         tabs.forEach(function (tab) {
             var selected = tab.dataset.courseTab === name;
@@ -92,12 +108,18 @@
         });
         sections.forEach(function (section) {
             section.hidden = section.dataset.courseSection !== name;
-            if (section.hidden) section.querySelectorAll("video").forEach(function (video) { video.pause(); });
+            if (section.hidden) section.querySelectorAll("video").forEach(function (video) {
+                video.pause();
+            });
         });
-        document.dispatchEvent(new CustomEvent("course:tabchange", { detail: name }));
+        document.dispatchEvent(new CustomEvent("course:tabchange", {
+            detail: name
+        }));
     }
     tabs.forEach(function (tab, index) {
-        tab.addEventListener("click", function () { selectTab(tab.dataset.courseTab, false); });
+        tab.addEventListener("click", function () {
+            selectTab(tab.dataset.courseTab, false);
+        });
         tab.addEventListener("keydown", function (event) {
             var destination;
             if (event.key === "ArrowRight") destination = (index + 1) % tabs.length;
@@ -124,9 +146,9 @@
         var newFields = traditionalFoodSection.querySelector("[data-food-new-fields]");
 
         function updateFoodFields() {
-            var selectedCategory = categorySelect && categorySelect.selectedIndex >= 0
-                ? categorySelect.options[categorySelect.selectedIndex].text.trim()
-                : "";
+            var selectedCategory = categorySelect && categorySelect.selectedIndex >= 0 ?
+                categorySelect.options[categorySelect.selectedIndex].text.trim() :
+                "";
             var isTraditionalDishes = selectedCategory.toLowerCase() === "traditional dishes";
             var addNewFood = Array.prototype.some.call(foodModeInputs, function (input) {
                 return input.checked && input.value === "New";
@@ -139,24 +161,34 @@
         }
 
         if (categorySelect) categorySelect.addEventListener("change", updateFoodFields);
-        foodModeInputs.forEach(function (input) { input.addEventListener("change", updateFoodFields); });
+        foodModeInputs.forEach(function (input) {
+            input.addEventListener("change", updateFoodFields);
+        });
         updateFoodFields();
     }
 
     document.querySelectorAll("[data-order-group]").forEach(function (group) {
         var dragged;
+
         function save() {
-            var ids = Array.from(group.querySelectorAll(":scope > [data-order-id]")).map(function (row) { return row.dataset.orderId; });
+            var ids = Array.from(group.querySelectorAll(":scope > [data-order-id]")).map(function (row) {
+                return row.dataset.orderId;
+            });
             saveOrder(group.dataset.orderGroup, group.dataset.orderParent || 0, ids, document.getElementById("builderFeedback"))
                 .catch(function () {});
         }
         group.addEventListener("dragstart", function (event) {
-            if (!event.target.matches(".drag-handle") || event.target.hidden) { event.preventDefault(); return; }
+            if (!event.target.matches(".drag-handle") || event.target.hidden) {
+                event.preventDefault();
+                return;
+            }
             dragged = event.target.closest("[data-order-id]");
             event.dataTransfer.setData("text/plain", dragged.dataset.orderId);
             event.dataTransfer.effectAllowed = "move";
         });
-        group.addEventListener("dragover", function (event) { if (dragged) event.preventDefault(); });
+        group.addEventListener("dragover", function (event) {
+            if (dragged) event.preventDefault();
+        });
         group.addEventListener("drop", function (event) {
             var target = event.target.closest("[data-order-id]");
             if (!dragged || !target || target.parentNode !== group) return;
@@ -168,7 +200,9 @@
             }
             dragged = null;
         });
-        group.addEventListener("dragend", function () { dragged = null; });
+        group.addEventListener("dragend", function () {
+            dragged = null;
+        });
         group.addEventListener("click", function (event) {
             var button = event.target.closest("[data-move]");
             if (!button) return;
@@ -181,10 +215,20 @@
     });
     var dirty = false;
     document.querySelectorAll(".mc-modal input, .mc-modal textarea, .mc-modal select").forEach(function (input) {
-        input.addEventListener("change", function () { dirty = true; document.getElementById("builderFeedback").textContent = "Unsaved changes"; });
+        input.addEventListener("change", function () {
+            dirty = true;
+            document.getElementById("builderFeedback").textContent = "Unsaved changes";
+        });
     });
-    document.querySelector("form").addEventListener("submit", function () { dirty = false; });
-    window.addEventListener("beforeunload", function (event) { if (dirty) { event.preventDefault(); event.returnValue = ""; } });
+    document.querySelector("form").addEventListener("submit", function () {
+        dirty = false;
+    });
+    window.addEventListener("beforeunload", function (event) {
+        if (dirty) {
+            event.preventDefault();
+            event.returnValue = "";
+        }
+    });
 }());
 
 (function () {

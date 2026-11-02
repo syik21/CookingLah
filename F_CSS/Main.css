@@ -11,10 +11,10 @@
     padding: 30px 0 0;
 }
 
-    .main-hero h1 {
-        margin: 0 auto 22px;
-        max-width: 900px;
-    }
+.main-hero h1 {
+    margin: 0 auto 22px;
+    max-width: 900px;
+}
 
 .main-hero__text {
     max-width: 520px;
@@ -61,12 +61,13 @@
     padding-bottom: 180px;
 }
 
-    .main-hero .container {
-        z-index: 1;
-    }
+.main-hero .container {
+    z-index: 1;
+}
 
 .main-falling {
-    --k: 1; /* overall size scale */
+    --k: 1;
+    /* overall size scale */
     position: absolute;
     inset: 0;
     z-index: 0;
@@ -74,20 +75,22 @@
     pointer-events: none;
 }
 
-    .main-falling img {
-        --h: calc(var(--s) * var(--k) * var(--ar)); /* picture height */
-        --land: calc(100% - var(--h) - var(--b)); /* resting spot at the bottom */
-        position: absolute;
-        left: var(--x);
-        top: var(--land);
-        width: calc(var(--s) * var(--k));
-        height: auto;
-        transform: rotate(var(--rot));
-    }
+.main-falling img {
+    --h: calc(var(--s) * var(--k) * var(--ar));
+    /* picture height */
+    --land: calc(100% - var(--h) - var(--b));
+    /* resting spot at the bottom */
+    position: absolute;
+    left: var(--x);
+    top: var(--land);
+    width: calc(var(--s) * var(--k));
+    height: auto;
+    transform: rotate(var(--rot));
+}
 
-    .main-falling.is-dropping img {
-        animation: foodDrop var(--d) ease var(--dl) both;
-    }
+.main-falling.is-dropping img {
+    animation: foodDrop var(--d) ease var(--dl) both;
+}
 
 @keyframes foodDrop {
     0% {
@@ -128,15 +131,16 @@
         --k: .6;
     }
 
-        .main-falling img:nth-child(even) {
-            display: none;
-        }
+    .main-falling img:nth-child(even) {
+        display: none;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .main-falling.is-dropping img {
         animation: none;
     }
+
     /* foods just sit at the bottom */
 }
 
@@ -150,10 +154,10 @@
     margin: 0 auto;
 }
 
-    .main-stickers .sticker {
-        position: absolute;
-        animation: bob 5s ease-in-out infinite;
-    }
+.main-stickers .sticker {
+    position: absolute;
+    animation: bob 5s ease-in-out infinite;
+}
 
 .main-sticker-a {
     left: 4%;
@@ -181,6 +185,7 @@
     transform: rotate(-4deg);
     animation-delay: -4s;
 }
+
 /* =========================
    6. Recipes
    ========================= */
@@ -199,9 +204,9 @@
     color: var(--color-ink);
 }
 
-    .recipe-row:last-child {
-        border-bottom: var(--border-dashed);
-    }
+.recipe-row:last-child {
+    border-bottom: var(--border-dashed);
+}
 
 .recipe-row__time {
     font: 400 40px/1 var(--font-hand);
@@ -230,13 +235,13 @@
     display: block;
 }
 
-    .recipe-frame img {
-        display: block;
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        border-radius: 12px;
-    }
+.recipe-frame img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 12px;
+}
 
 /* Time above level, on the right */
 .recipe-row__meta {
@@ -318,20 +323,20 @@
     padding-bottom: 48px;
 }
 
-    .main-about h2 {
-        font-size: clamp(38px, 4.5vw, 56px);
-        line-height: 1.08;
-        text-align: left;
-        text-transform: none;
-    }
+.main-about h2 {
+    font-size: clamp(38px, 4.5vw, 56px);
+    line-height: 1.08;
+    text-align: left;
+    text-transform: none;
+}
 
-    .main-about p {
-        margin: 0 0 16px;
-    }
+.main-about p {
+    margin: 0 0 16px;
+}
 
-        .main-about p:last-child {
-            color: var(--color-text-soft);
-        }
+.main-about p:last-child {
+    color: var(--color-text-soft);
+}
 
 @media (max-width: 760px) {
     .main-about {
@@ -374,10 +379,10 @@
     overflow-wrap: anywhere;
 }
 
-    .box__link:hover {
-        text-decoration: underline wavy var(--color-primary);
-        text-underline-offset: 4px;
-    }
+.box__link:hover {
+    text-decoration: underline wavy var(--color-primary);
+    text-underline-offset: 4px;
+}
 
 @media (max-width: 760px) {
     .boxes {
@@ -412,7 +417,7 @@
     width: 154px;
     height: 154px;
     object-fit: cover;
-;
+    ;
 }
 
 .social-link {
@@ -425,18 +430,18 @@
     transition: background-color .1s ease, transform .1s ease;
 }
 
-    .social-link:hover {
-        background: var(--color-yellow);
-    }
+.social-link:hover {
+    background: var(--color-yellow);
+}
 
-    .social-link:active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.social-link:active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
-    .social-link:focus-visible {
-        outline: 3px solid var(--color-primary);
-        outline-offset: 3px;
-    }
+.social-link:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
 
 .social-ig-icon {
     display: block;

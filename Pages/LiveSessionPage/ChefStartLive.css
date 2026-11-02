@@ -24,10 +24,10 @@
     font-size: 23px;
 }
 
-.chef-live-status-card > p,
+.chef-live-status-card>p,
 .chef-live-form header p,
 .chef-live-unavailable p,
-.chef-live-content > p {
+.chef-live-content>p {
     color: var(--color-text-soft);
 }
 
@@ -183,8 +183,8 @@
     display: none;
 }
 
-.chef-live-content > h2,
-.chef-live-content > p {
+.chef-live-content>h2,
+.chef-live-content>p {
     margin-right: 24px;
     margin-left: 24px;
 }
@@ -342,6 +342,7 @@
 }
 
 @media (max-width: 850px) {
+
     .chef-live-hero,
     .chef-live-form__layout {
         grid-template-columns: 1fr;

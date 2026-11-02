@@ -2,18 +2,32 @@
 <%@ Register Src="~/Pages/Admin/CourseContentReview/ViewCourse/ViewCourse.ascx" TagPrefix="review" TagName="ViewCourse" %>
 
 <%-- Page stylesheets --%>
-<asp:Content ID="ReviewHead" ContentPlaceHolderID="AdminHead" runat="server">
+<asp:Content
+    ID="ReviewHead"
+    ContentPlaceHolderID="AdminHead"
+    runat="server">
     <link href="<%= ResolveUrl("~/Pages/Admin/CourseContentReview/ReviewCoursesPage.css") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Pages/Admin/CourseContentReview/ReviewCoursesPage.css")).Ticks %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Pages/Admin/CourseContentReview/ViewCourse/ViewCourse.css") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Pages/Admin/CourseContentReview/ViewCourse/ViewCourse.css")).Ticks %>" rel="stylesheet" />
 </asp:Content>
 
 <%-- Main course review content --%>
-<asp:Content ID="ReviewContent" ContentPlaceHolderID="AdminContent" runat="server">
+<asp:Content
+    ID="ReviewContent"
+    ContentPlaceHolderID="AdminContent"
+    runat="server">
     <div class="review-page">
 
         <%-- Feedback message after an action --%>
-        <asp:Panel ID="pnlMessage" runat="server" Visible="false" CssClass="review-message" role="status">
-            <asp:Literal ID="litMessage" runat="server" Mode="Encode" />
+        <asp:Panel
+            ID="pnlMessage"
+            runat="server"
+            Visible="false"
+            CssClass="review-message"
+            role="status">
+            <asp:Literal
+                ID="litMessage"
+                runat="server"
+                Mode="Encode" />
         </asp:Panel>
 
         <%-- Course list view --%>
@@ -26,40 +40,82 @@
                 <p>Review submitted courses before they are published.</p>
             </header>
 
-           <asp:Panel ID="pnlToolbar" runat="server" CssClass="sk-toolbar sketch-panel" DefaultButton="btnSearch">
+            <asp:Panel
+                ID="pnlToolbar"
+                runat="server"
+                CssClass="sk-toolbar sketch-panel"
+                DefaultButton="btnSearch">
                 <div class="sk-field sk-grow">
-                    <asp:Label runat="server" AssociatedControlID="txtSearchCourses" Text="Search courses" />
+                    <asp:Label
+                        runat="server"
+                        AssociatedControlID="txtSearchCourses"
+                        Text="Search courses" />
                     <div class="sk-row">
                         <div class="sk-search">
-                            <asp:TextBox ID="txtSearchCourses" runat="server" MaxLength="150" placeholder="Search by course name or chef" />
+                            <asp:TextBox
+                                ID="txtSearchCourses"
+                                runat="server"
+                                MaxLength="150"
+                                placeholder="Search by course name or chef" />
                         </div>
-                        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="Search_Click" />
+                        <asp:Button
+                            ID="btnSearch"
+                            runat="server"
+                            Text="Search"
+                            CssClass="btn btn-primary"
+                            OnClick="Search_Click" />
                     </div>
                 </div>
 
                 <div class="sk-field sk-select-field">
-                    <asp:Label runat="server" AssociatedControlID="ddlChefFilter" Text="Chef" />
-                    <asp:DropDownList ID="ddlChefFilter" runat="server" CssClass="sk-select" AutoPostBack="true" OnSelectedIndexChanged="Search_Click" />
+                    <asp:Label
+                        runat="server"
+                        AssociatedControlID="ddlChefFilter"
+                        Text="Chef" />
+                    <asp:DropDownList
+                        ID="ddlChefFilter"
+                        runat="server"
+                        CssClass="sk-select"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="Search_Click" />
                 </div>
             </asp:Panel>
 
             <%-- Filter courses by review status --%>
             <nav class="review-status-filters" aria-label="Filter courses by status">
-                <asp:LinkButton ID="btnAllCourses" runat="server" OnClick="btnAllCourses_Click" />
-                <asp:LinkButton ID="btnPending" runat="server" OnClick="btnPending_Click" />
-                <asp:LinkButton ID="btnApproved" runat="server" OnClick="btnApproved_Click" />
-                <asp:LinkButton ID="btnRejected" runat="server" OnClick="btnRejected_Click" />
+                <asp:LinkButton
+                    ID="btnAllCourses"
+                    runat="server"
+                    OnClick="btnAllCourses_Click" />
+                <asp:LinkButton
+                    ID="btnPending"
+                    runat="server"
+                    OnClick="btnPending_Click" />
+                <asp:LinkButton
+                    ID="btnApproved"
+                    runat="server"
+                    OnClick="btnApproved_Click" />
+                <asp:LinkButton
+                    ID="btnRejected"
+                    runat="server"
+                    OnClick="btnRejected_Click" />
             </nav>
 
             <%-- Course list heading and result count --%>
             <div class="review-list-heading">
                 <h2>Course List</h2>
-                <asp:Literal ID="litResults" runat="server" Mode="Encode" />
+                <asp:Literal
+                    ID="litResults"
+                    runat="server"
+                    Mode="Encode" />
             </div>
 
             <%-- Display each course using a repeater --%>
             <div class="review-course-list">
-                <asp:Repeater ID="rptCourses" runat="server" OnItemCommand="rptCourses_ItemCommand">
+                <asp:Repeater
+                    ID="rptCourses"
+                    runat="server"
+                    OnItemCommand="rptCourses_ItemCommand">
                     <ItemTemplate>
                         <article class="review-course-card">
 
@@ -71,7 +127,10 @@
                                     Visible='<%# MediaUrl(Eval("Thumbnail")).Length > 0 %>'
                                     AlternateText='<%# Eval("Title") %>' />
 
-                                <asp:Panel runat="server" CssClass="course-image-placeholder" Visible='<%# MediaUrl(Eval("Thumbnail")).Length == 0 %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
+                                <asp:Panel
+                                    runat="server"
+                                    CssClass="course-image-placeholder"
+                                    Visible='<%# MediaUrl(Eval("Thumbnail")).Length == 0 %>'><img runat="server" src="~/F_Assets/mascot.png" alt="" /><span>Food Image Coming Soon</span></asp:Panel>
                             </div>
 
                             <%-- Course details --%>
@@ -108,28 +167,59 @@
             </div>
 
             <%-- Message shown when no courses match --%>
-            <asp:Panel ID="pnlEmpty" runat="server" Visible="false" CssClass="review-empty">
-                <h3><asp:Literal ID="litEmpty" runat="server" Mode="Encode" /></h3>
-                <asp:LinkButton ID="btnClearSearch" runat="server" CssClass="btn" OnClick="ClearSearch_Click" Text="Clear Search" />
+            <asp:Panel
+                ID="pnlEmpty"
+                runat="server"
+                Visible="false"
+                CssClass="review-empty">
+                <h3><asp:Literal
+                        ID="litEmpty"
+                        runat="server"
+                        Mode="Encode" /></h3>
+                <asp:LinkButton
+                    ID="btnClearSearch"
+                    runat="server"
+                    CssClass="btn"
+                    OnClick="ClearSearch_Click"
+                    Text="Clear Search" />
             </asp:Panel>
 
             <%-- Previous and next page controls --%>
-            <asp:Panel ID="pnlPagination" runat="server" CssClass="review-pagination">
-                <asp:LinkButton ID="btnPrevious" runat="server" CssClass="btn" Text="‹ Previous" OnClick="Previous_Click" />
+            <asp:Panel
+                ID="pnlPagination"
+                runat="server"
+                CssClass="review-pagination">
+                <asp:LinkButton
+                    ID="btnPrevious"
+                    runat="server"
+                    CssClass="btn"
+                    Text="‹ Previous"
+                    OnClick="Previous_Click" />
                 <asp:Literal ID="litPage" runat="server" />
-                <asp:LinkButton ID="btnNext" runat="server" CssClass="btn" Text="Next ›" OnClick="Next_Click" />
+                <asp:LinkButton
+                    ID="btnNext"
+                    runat="server"
+                    CssClass="btn"
+                    Text="Next ›"
+                    OnClick="Next_Click" />
             </asp:Panel>
         </asp:Panel>
 
         <%-- Selected course detail view --%>
-        <asp:Panel ID="pnlViewCourse" runat="server" Visible="false">
+        <asp:Panel
+            ID="pnlViewCourse"
+            runat="server"
+            Visible="false">
             <review:ViewCourse ID="ViewCourse1" runat="server" />
         </asp:Panel>
     </div>
 </asp:Content>
 
 <%-- Page JavaScript files --%>
-<asp:Content ID="ReviewScripts" ContentPlaceHolderID="AdminScripts" runat="server">
+<asp:Content
+    ID="ReviewScripts"
+    ContentPlaceHolderID="AdminScripts"
+    runat="server">
     <script src="<%= ResolveUrl("~/Pages/Admin/CourseContentReview/ReviewCoursesPage.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/Pages/Admin/CourseContentReview/ViewCourse/ViewCourse.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/F_JavaScripts/LessonVideoDialog.js") %>" defer></script>

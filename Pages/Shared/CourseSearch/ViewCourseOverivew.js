@@ -13,12 +13,28 @@
         var link = event.target.closest(".js-scroll-link");
         if (link && link.hash) {
             var target = document.querySelector(link.hash);
-            if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); target.focus({ preventScroll: true }); history.replaceState(null, "", link.hash); }
+            if (target) {
+                event.preventDefault();
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+                target.focus({
+                    preventScroll: true
+                });
+                history.replaceState(null, "", link.hash);
+            }
         }
     });
     document.querySelectorAll(".star-rating-options input").forEach(function (radio) {
         radio.setAttribute("aria-label", radio.value + (radio.value === "1" ? " star" : " stars"));
     });
     var dialog = document.querySelector(".course-login-backdrop");
-    if (dialog) { var close = dialog.querySelector(".course-dialog-close"); if (close) close.focus(); document.addEventListener("keydown", function (e) { if (e.key === "Escape" && close) close.click(); }); }
+    if (dialog) {
+        var close = dialog.querySelector(".course-dialog-close");
+        if (close) close.focus();
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && close) close.click();
+        });
+    }
 }());

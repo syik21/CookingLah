@@ -5,33 +5,33 @@
     min-width: 0;
 }
 
-    /* Page headings */
-    .review-page h1 {
-        font-size: clamp(38px, 5vw, 64px);
-        line-height: 1.05;
-        overflow-wrap: anywhere;
-    }
+/* Page headings */
+.review-page h1 {
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+}
 
-    .review-page h2 {
-        font: 400 30px/1.2 var(--font-hand);
-        text-align: left;
-        margin: 0 0 16px;
-    }
+.review-page h2 {
+    font: 400 30px/1.2 var(--font-hand);
+    text-align: left;
+    margin: 0 0 16px;
+}
 
-    .review-page h3 {
-        font: 400 19px/1.5 var(--font-display);
-        margin: 0 0 10px;
-        overflow-wrap: anywhere;
-    }
+.review-page h3 {
+    font: 400 19px/1.5 var(--font-display);
+    margin: 0 0 10px;
+    overflow-wrap: anywhere;
+}
 
 /* ===== Page Header ===== */
 .review-page-header {
     margin-bottom: 28px;
 }
 
-    .review-page-header p {
-        margin: 12px 0 0;
-    }
+.review-page-header p {
+    margin: 12px 0 0;
+}
 
 .review-page .review-eyebrow {
     font-size: 12px;
@@ -48,19 +48,19 @@
     gap: 24px;
 }
 
-    .review-toolbar label {
-        display: block;
-        font-weight: 700;
-        font-size: 13px;
-        margin-bottom: 8px;
-    }
+.review-toolbar label {
+    display: block;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
 
 .review-search-input {
     display: flex;
     gap: 12px;
 }
 
-    
+
 
 /* ===== Course Status Filters ===== */
 .review-status-filters {
@@ -86,26 +86,26 @@
     font-size: 13px;
 }
 
-    .review-status-filter span {
-        border-radius: var(--radius-pill);
-        padding: 1px 8px;
-        background: var(--color-tan);
-        color: var(--color-ink);
-    }
+.review-status-filter span {
+    border-radius: var(--radius-pill);
+    padding: 1px 8px;
+    background: var(--color-tan);
+    color: var(--color-ink);
+}
 
-    .review-status-filter:hover {
-        background: var(--color-tan-light);
-    }
+.review-status-filter:hover {
+    background: var(--color-tan-light);
+}
 
-    /* Highlight the selected filter */
-    .review-status-filter.active {
-        background: var(--color-ink);
-        color: var(--color-bg);
-    }
+/* Highlight the selected filter */
+.review-status-filter.active {
+    background: var(--color-ink);
+    color: var(--color-bg);
+}
 
-        .review-status-filter.active span {
-            background: var(--color-lime);
-        }
+.review-status-filter.active span {
+    background: var(--color-lime);
+}
 
 /* ===== Course List ===== */
 .review-list-heading {
@@ -146,12 +146,12 @@
     text-align: center;
 }
 
-    .review-course-thumbnail img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        max-height: 200px;
-    }
+.review-course-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 200px;
+}
 
 /* Course information */
 .review-course-info p {
@@ -189,17 +189,17 @@
     font-size: 12px;
 }
 
-    .review-badge.pending {
-        background: var(--color-yellow);
-    }
+.review-badge.pending {
+    background: var(--color-yellow);
+}
 
-    .review-badge.approved {
-        background: var(--color-lime);
-    }
+.review-badge.approved {
+    background: var(--color-lime);
+}
 
-    .review-badge.rejected {
-        background: var(--color-pink);
-    }
+.review-badge.rejected {
+    background: var(--color-pink);
+}
 
 /* ===== Pagination ===== */
 .review-pagination {
@@ -219,7 +219,8 @@
 }
 
 /* ===== Messages and Empty State ===== */
-.review-message, .review-empty {
+.review-message,
+.review-empty {
     background: var(--color-tan-light);
     border: var(--border);
     border-radius: var(--radius-sm);
@@ -272,9 +273,9 @@
         height: 180px;
     }
 
-        .review-course-thumbnail img {
-            max-height: none;
-        }
+    .review-course-thumbnail img {
+        max-height: none;
+    }
 
     .review-status-filters {
         gap: 8px;
@@ -310,11 +311,11 @@
     min-width: 0;
 }
 
-    .review-page .sk-field label {
-        margin: 0;
-        font-size: 13px;
-        font-weight: 700;
-    }
+.review-page .sk-field label {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+}
 
 .review-page .sk-grow {
     flex: 1 1 380px;
@@ -347,15 +348,15 @@
     transition: transform .1s ease, background-color .1s ease;
 }
 
-    .review-page .sk-toolbar .btn:hover {
-        background: #FFD24C;
-        transform: none;
-        box-shadow: none;
-    }
+.review-page .sk-toolbar .btn:hover {
+    background: #FFD24C;
+    transform: none;
+    box-shadow: none;
+}
 
-    .review-page .sk-toolbar .btn:active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.review-page .sk-toolbar .btn:active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
 /* Search frame: "+" | divider | input */
 .review-page .sk-search {
@@ -370,40 +371,40 @@
     background: #fff;
 }
 
-    .review-page .sk-search::before {
-        content: "";
-        flex: 0 0 44px;
-        border-right: 2.5px solid #35030C;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 3 L11 19' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3 11 L19 11' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") no-repeat center / 22px 22px;
-    }
+.review-page .sk-search::before {
+    content: "";
+    flex: 0 0 44px;
+    border-right: 2.5px solid #35030C;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'%3E%3Cpath d='M11 3 L11 19' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M3 11 L19 11' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") no-repeat center / 22px 22px;
+}
 
-    .review-page .sk-search input[type=text] {
-        flex: 1 1 auto;
-        width: 100%;
-        min-width: 0;
-        margin: 0;
-        padding: 10px 16px;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        color: #35030C;
-        font: inherit;
-        font-size: 15px;
-    }
+.review-page .sk-search input[type=text] {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #35030C;
+    font: inherit;
+    font-size: 15px;
+}
 
-        .review-page .sk-search input[type=text]::placeholder {
-            color: #8a8378;
-            opacity: 1;
-        }
+.review-page .sk-search input[type=text]::placeholder {
+    color: #8a8378;
+    opacity: 1;
+}
 
-        .review-page .sk-search input[type=text]:focus {
-            outline: 0;
-        }
+.review-page .sk-search input[type=text]:focus {
+    outline: 0;
+}
 
-    .review-page .sk-search:focus-within {
-        outline: 3px solid #F93209;
-        outline-offset: 3px;
-    }
+.review-page .sk-search:focus-within {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}
 
 /* Chef dropdown */
 .review-page .sk-select {
@@ -420,53 +421,54 @@
     cursor: pointer;
 }
 
-    .review-page .sk-select:hover {
-        background: #fff;
-        transform: none;
-        box-shadow: none;
-    }
+.review-page .sk-select:hover {
+    background: #fff;
+    transform: none;
+    box-shadow: none;
+}
 
 @supports (appearance: base-select) {
+
     .review-page .sk-select,
     .review-page .sk-select::picker(select) {
         appearance: base-select;
     }
 
-        .review-page .sk-select::picker(select) {
-            position-area: block-end span-inline-end;
-            position-try-fallbacks: none;
-            min-width: anchor-size(width);
-            max-height: 260px;
-            overflow-y: auto;
-            margin-top: 8px;
-            padding: 6px;
-            border: 2.5px solid #35030C;
-            border-width: 2.9px 2.4px 3px 2.6px;
-            border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
-            background: #fff;
-            box-shadow: 3px 3px 0 #35030C;
-        }
+    .review-page .sk-select::picker(select) {
+        position-area: block-end span-inline-end;
+        position-try-fallbacks: none;
+        min-width: anchor-size(width);
+        max-height: 260px;
+        overflow-y: auto;
+        margin-top: 8px;
+        padding: 6px;
+        border: 2.5px solid #35030C;
+        border-width: 2.9px 2.4px 3px 2.6px;
+        border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+        background: #fff;
+        box-shadow: 3px 3px 0 #35030C;
+    }
 
-        .review-page .sk-select option {
-            padding: 10px 12px;
-            border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
-            background: #fff;
-            color: #35030C;
-            cursor: pointer;
-        }
+    .review-page .sk-select option {
+        padding: 10px 12px;
+        border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
+        background: #fff;
+        color: #35030C;
+        cursor: pointer;
+    }
 
-            .review-page .sk-select option:hover {
-                background: #FFD24C;
-            }
+    .review-page .sk-select option:hover {
+        background: #FFD24C;
+    }
 
-            .review-page .sk-select option:checked {
-                background: #CDF58A;
-                font-weight: 700;
-            }
+    .review-page .sk-select option:checked {
+        background: #CDF58A;
+        font-weight: 700;
+    }
 
-            .review-page .sk-select option::checkmark {
-                display: none;
-            }
+    .review-page .sk-select option::checkmark {
+        display: none;
+    }
 }
 
 @media (max-width: 700px) {

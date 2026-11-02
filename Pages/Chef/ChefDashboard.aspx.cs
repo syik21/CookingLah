@@ -29,7 +29,8 @@ namespace CookingLah.Pages.Chef
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (ChefId <= 0 || IsPostBack) return;
+            if (ChefId <= 0 || IsPostBack)
+                return;
 
             LoadChefProfile();
             LoadCourseStatistics();
@@ -45,7 +46,8 @@ namespace CookingLah.Pages.Chef
             bool validSession = string.Equals(Convert.ToString(Session["Role"]), "Instructor", StringComparison.OrdinalIgnoreCase)
                 && int.TryParse(Convert.ToString(Session["UserId"]), out chefId)
                 && chefId > 0;
-            if (!validSession) return 0;
+            if (!validSession)
+                return 0;
 
             DataTable chef = Read("SELECT UserID FROM Users WHERE UserID=@chefId AND Role='Instructor' AND AccountStatus='Active'", Parameter("@chefId", chefId));
             return chef.Rows.Count == 1 ? chefId : 0;
@@ -150,12 +152,40 @@ namespace CookingLah.Pages.Chef
             pnlNoReviews.Visible = reviews.Rows.Count == 0;
         }
 
-        private static int Value(object value) { return value == DBNull.Value ? 0 : Convert.ToInt32(value); }
-        private static int Percentage(int count, int total) { return total == 0 ? 0 : (int)Math.Round(count * 100m / total); }
-        protected string StatusRowClass(object status, object count) { return Convert.ToString(status) == "Rejected" && Convert.ToInt32(count) > 0 ? "chef-status-row is-rejected" : "chef-status-row"; }
-        protected string StarText(object value) { int rating = Convert.ToInt32(value); return new string('\u2605', rating) + new string('\u2606', 5 - rating); }
-        protected string DisplayDate(object value) { return Convert.ToDateTime(value).ToString("d MMM yyyy"); }
-        protected string DateValue(object value) { return Convert.ToDateTime(value).ToString("yyyy-MM-dd"); }
-        protected string SubmissionUrl(object value) { return ResolveUrl("~/Pages/Chef/ChefReviewSubmission/ChefReviewSubmissionPage.aspx?submissionId=" + Convert.ToInt32(value)); }
+        private static int Value(object value)
+        {
+            return value == DBNull.Value ? 0 : Convert.ToInt32(value);
+        }
+
+        private static int Percentage(int count, int total)
+        {
+            return total == 0 ? 0 : (int)Math.Round(count * 100m / total);
+        }
+
+        protected string StatusRowClass(object status, object count)
+        {
+            return Convert.ToString(status) == "Rejected" && Convert.ToInt32(count) > 0 ? "chef-status-row is-rejected" : "chef-status-row";
+        }
+
+        protected string StarText(object value)
+        {
+            int rating = Convert.ToInt32(value);
+            return new string('\u2605', rating) + new string('\u2606', 5 - rating);
+        }
+
+        protected string DisplayDate(object value)
+        {
+            return Convert.ToDateTime(value).ToString("d MMM yyyy");
+        }
+
+        protected string DateValue(object value)
+        {
+            return Convert.ToDateTime(value).ToString("yyyy-MM-dd");
+        }
+
+        protected string SubmissionUrl(object value)
+        {
+            return ResolveUrl("~/Pages/Chef/ChefReviewSubmission/ChefReviewSubmissionPage.aspx?submissionId=" + Convert.ToInt32(value));
+        }
     }
 }

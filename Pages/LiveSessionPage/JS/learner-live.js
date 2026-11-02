@@ -1,5 +1,4 @@
-﻿
-let api = null;
+﻿let api = null;
 let chefParticipantId = null;
 let chefSearchTimer = null;
 let resizeObserver = null;

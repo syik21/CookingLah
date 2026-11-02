@@ -12,7 +12,10 @@ namespace CookingLah.Pages.Chef.ManageCourse
     // All content writes lock and recheck the parent course in the same transaction.
     public static class CourseManagementData
     {
-        private static string ReviewChangesKey(int courseId) { return "ManageCourseReviewChanges_" + courseId; }
+        private static string ReviewChangesKey(int courseId)
+        {
+            return "ManageCourseReviewChanges_" + courseId;
+        }
 
         public static bool HasChangesAwaitingReview(int courseId)
         {
@@ -22,18 +25,22 @@ namespace CookingLah.Pages.Chef.ManageCourse
         public static void DiscardChangesAwaitingReview(int courseId)
         {
             var draft = GetReviewDraft(courseId, false);
-            if (draft != null) CleanupUnreferencedMedia(draft.MediaPathsToClean());
+            if (draft != null)
+                CleanupUnreferencedMedia(draft.MediaPathsToClean());
             HttpContext.Current.Session.Remove(ReviewChangesKey(courseId));
         }
 
         public static void CleanupUnreferencedMedia(IEnumerable<string> paths)
         {
-            if (paths == null) return;
+            if (paths == null)
+                return;
             foreach (string path in paths)
             {
-                if (string.IsNullOrWhiteSpace(path) || !path.StartsWith("~/F_Assets/CourseMedia/", StringComparison.OrdinalIgnoreCase)) continue;
+                if (string.IsNullOrWhiteSpace(path) || !path.StartsWith("~/F_Assets/CourseMedia/", StringComparison.OrdinalIgnoreCase))
+                    continue;
                 string fileName = path.Substring("~/F_Assets/CourseMedia/".Length);
-                if (!System.Text.RegularExpressions.Regex.IsMatch(fileName, @"\A(?:(?:Thumbnail|Recipe|Lesson|Submission)/)?[a-f0-9]{32}\.(?:jpg|mp4)\z")) continue;
+                if (!System.Text.RegularExpressions.Regex.IsMatch(fileName, @"\A(?:(?:Thumbnail|Recipe|Lesson|Submission)/)?[a-f0-9]{32}\.(?:jpg|mp4)\z"))
+                    continue;
                 try
                 {
                     int references = Convert.ToInt32(Read(@"
@@ -41,10 +48,12 @@ namespace CookingLah.Pages.Chef.ManageCourse
                              + (SELECT COUNT(*) FROM CourseRecipes WHERE RecipeImage=@path)
                              + (SELECT COUNT(*) FROM LessonContent WHERE MediaPath=@path)
                              + (SELECT COUNT(*) FROM ActivitySubmissions WHERE ImagePath=@path)", Parameter("@path", path)).Rows[0][0]);
-                    if (references != 0) continue;
+                    if (references != 0)
+                        continue;
                     string mediaRoot = Path.GetFullPath(HttpContext.Current.Server.MapPath("~/F_Assets/CourseMedia/"));
                     string fullPath = Path.GetFullPath(HttpContext.Current.Server.MapPath(path));
-                    if (fullPath.StartsWith(mediaRoot, StringComparison.OrdinalIgnoreCase) && File.Exists(fullPath)) File.Delete(fullPath);
+                    if (fullPath.StartsWith(mediaRoot, StringComparison.OrdinalIgnoreCase) && File.Exists(fullPath))
+                        File.Delete(fullPath);
                 }
                 catch (Exception ex)
                 {
@@ -87,14 +96,22 @@ namespace CookingLah.Pages.Chef.ManageCourse
             {
                 switch (section)
                 {
-                    case "Courses": return draft.Courses.Copy();
-                    case "CourseRecipes": return draft.Recipes.Copy();
-                    case "Lessons": return draft.Lessons.Copy();
-                    case "LessonContent": return draft.LessonContent.Copy();
-                    case "Quizzes": return draft.Quizzes.Copy();
-                    case "QuizQuestions": return draft.Questions.Copy();
-                    case "QuizOptions": return draft.Options.Copy();
-                    case "PracticalActivities": return draft.Activities.Copy();
+                    case "Courses":
+                        return draft.Courses.Copy();
+                    case "CourseRecipes":
+                        return draft.Recipes.Copy();
+                    case "Lessons":
+                        return draft.Lessons.Copy();
+                    case "LessonContent":
+                        return draft.LessonContent.Copy();
+                    case "Quizzes":
+                        return draft.Quizzes.Copy();
+                    case "QuizQuestions":
+                        return draft.Questions.Copy();
+                    case "QuizOptions":
+                        return draft.Options.Copy();
+                    case "PracticalActivities":
+                        return draft.Activities.Copy();
                 }
             }
             return Read(sql, parameters);
@@ -103,7 +120,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
         public static void ApplyDraftCourse(int courseId, DataRow target)
         {
             var draft = GetReviewDraft(courseId, false);
-            if (draft == null || draft.Courses.Rows.Count == 0) return;
+            if (draft == null || draft.Courses.Rows.Count == 0)
+                return;
             DataRow staged = draft.Courses.Rows[0];
             foreach (string column in new[] { "Title", "Description", "CategoryID", "FoodCultureID", "DifficultyLevel", "Thumbnail" })
                 target[column] = staged[column];
@@ -132,7 +150,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
                     : Convert.ToString(food.Rows[0]["FoodDisplayName"]);
             }
             var category = Read("SELECT CategoryName FROM Categories WHERE CategoryID=@id", Parameter("@id", staged["CategoryID"]));
-            if (category.Rows.Count > 0) target["CategoryName"] = category.Rows[0]["CategoryName"];
+            if (category.Rows.Count > 0)
+                target["CategoryName"] = category.Rows[0]["CategoryName"];
         }
 
         public static bool IsPublishedCourse(int courseId)
@@ -157,7 +176,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
                         "SELECT c.Status FROM Courses c WITH (UPDLOCK,HOLDLOCK) JOIN Users u ON u.UserID=c.InstructorID " +
                         "WHERE c.CourseID=@id AND c.InstructorID=@user AND u.Role='Instructor' AND u.AccountStatus='Active'",
                         Parameter("@id", courseId), Parameter("@user", instructorId));
-                    if (status == null) throw new InvalidOperationException("You do not have permission to manage this course.");
+                    if (status == null)
+                        throw new InvalidOperationException("You do not have permission to manage this course.");
                     if (Convert.ToString(status) != "Draft" && Convert.ToString(status) != "Rejected")
                         throw new InvalidOperationException("Only Draft or Rejected courses can be edited.");
                     save(connection, transaction);
@@ -166,7 +186,8 @@ namespace CookingLah.Pages.Chef.ManageCourse
                     if (submittingForReview)
                     {
                         var draft = GetReviewDraft(courseId, false);
-                        if (draft != null) CleanupUnreferencedMedia(draft.MediaPathsToClean());
+                        if (draft != null)
+                            CleanupUnreferencedMedia(draft.MediaPathsToClean());
                         HttpContext.Current.Session.Remove(ReviewChangesKey(courseId));
                     }
                 }
@@ -176,21 +197,25 @@ namespace CookingLah.Pages.Chef.ManageCourse
         public static string Required(string text, string label, int maxLength = int.MaxValue)
         {
             text = text.Trim();
-            if (text.Length == 0) throw new InvalidOperationException("Please enter " + label + ".");
-            if (text.Length > maxLength) throw new InvalidOperationException("Keep " + label + " within " + maxLength + " characters.");
+            if (text.Length == 0)
+                throw new InvalidOperationException("Please enter " + label + ".");
+            if (text.Length > maxLength)
+                throw new InvalidOperationException("Keep " + label + " within " + maxLength + " characters.");
             return text;
         }
 
         public static string Optional(string text, string label, int maxLength = int.MaxValue)
         {
             text = text.Trim();
-            if (text.Length > maxLength) throw new InvalidOperationException("Keep " + label + " within " + maxLength + " characters.");
+            if (text.Length > maxLength)
+                throw new InvalidOperationException("Keep " + label + " within " + maxLength + " characters.");
             return text;
         }
 
         public static object PositiveNumber(string text, string label)
         {
-            if (string.IsNullOrWhiteSpace(text)) return DBNull.Value;
+            if (string.IsNullOrWhiteSpace(text))
+                return DBNull.Value;
             int number;
             if (!int.TryParse(text, out number) || number < 1)
                 throw new InvalidOperationException(label + " must be a positive whole number.");
@@ -220,16 +245,57 @@ namespace CookingLah.Pages.Chef.ManageCourse
 
     public class CourseManagementControl : System.Web.UI.UserControl
     {
-        protected ManageCoursePage Host { get { return (ManageCoursePage)Page; } }
-        protected int CourseId { get { return Host.CourseId; } }
-        protected bool CanEdit { get { return Host.CanEdit; } }
-        protected bool IsPublishedCourse { get { return Host.Course != null && Convert.ToString(Host.Course["Status"]) == "Published"; } }
-        protected void Run(Action action) { Host.RunAction(action); }
-        protected void Saved(string message) { Host.Saved(message); }
-        protected void Saved(string message, int currentPage) { Host.Saved(message, currentPage); }
+        protected ManageCoursePage Host
+        {
+            get
+            {
+                return (ManageCoursePage)Page;
+            }
+        }
+
+        protected int CourseId
+        {
+            get
+            {
+                return Host.CourseId;
+            }
+        }
+
+        protected bool CanEdit
+        {
+            get
+            {
+                return Host.CanEdit;
+            }
+        }
+
+        protected bool IsPublishedCourse
+        {
+            get
+            {
+                return Host.Course != null && Convert.ToString(Host.Course["Status"]) == "Published";
+            }
+        }
+
+        protected void Run(Action action)
+        {
+            Host.RunAction(action);
+        }
+
+        protected void Saved(string message)
+        {
+            Host.Saved(message);
+        }
+
+        protected void Saved(string message, int currentPage)
+        {
+            Host.Saved(message, currentPage);
+        }
+
         protected void EnsureEditable()
         {
-            if (!CanEdit) throw new InvalidOperationException("This course cannot be edited while it is under review.");
+            if (!CanEdit)
+                throw new InvalidOperationException("This course cannot be edited while it is under review.");
         }
     }
 }

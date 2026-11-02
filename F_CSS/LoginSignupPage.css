@@ -11,12 +11,12 @@
     --sun: #ffd24c;
     --lav: #b99cff;
     --grid: #f1e6cc;
-    --serif: 'Caveat Brush','Marker Felt',cursive;
-    --display: 'Archivo Black','Arial Black',sans-serif;
-    --mono: 'Space Mono',ui-monospace,monospace;
+    --serif: 'Caveat Brush', 'Marker Felt', cursive;
+    --display: 'Archivo Black', 'Arial Black', sans-serif;
+    --mono: 'Space Mono', ui-monospace, monospace;
     box-sizing: border-box;
-    padding-top: env(safe-area-inset-top,0px);
-    padding-bottom: env(safe-area-inset-bottom,0px);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,10 +36,12 @@
 }
 
 html {
-    scroll-padding-top: env(safe-area-inset-top,0px);
+    scroll-padding-top: env(safe-area-inset-top, 0px);
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
     box-sizing: border-box;
 }
 
@@ -48,11 +50,11 @@ body {
     min-height: 100vh;
     min-height: 100dvh;
     background-color: #FFF9EB;
-    background-image: linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
     background-size: 28px 28px;
     color: var(--ink);
     font: 400 15px/1.65 var(--mono);
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 :focus-visible {
@@ -91,16 +93,16 @@ header {
     box-shadow: 4px 4px 0 var(--ink);
     display: inline-block;
     cursor: pointer;
-    transition: transform .12s,box-shadow .12s;
+    transition: transform .12s, box-shadow .12s;
 }
 
 .btn:hover {
-    transform: translate(2px,2px);
+    transform: translate(2px, 2px);
     box-shadow: 2px 2px 0 var(--ink);
 }
 
 .btn:active {
-    transform: translate(4px,4px);
+    transform: translate(4px, 4px);
     box-shadow: 0 0 0 var(--ink);
 }
 
@@ -132,7 +134,7 @@ main {
 }
 
 h1 {
-    font: 400 clamp(40px,6vw,2px)/.92 var(--serif);
+    font: 400 clamp(40px, 6vw, 2px)/.92 var(--serif);
     text-transform: uppercase;
     margin: 0 0 12px;
 }
@@ -157,24 +159,25 @@ mark {
     position: relative;
     width: 100%;
     max-width: 460px;
-    aspect-ratio: 460 / 380; /* the area the stickers scatter in */
+    aspect-ratio: 460 / 380;
+    /* the area the stickers scatter in */
 }
 
-    .stickers .st {
-        --r: 0deg;
-        position: absolute;
-        width: 28%;
-        aspect-ratio: 1;
-        transform: rotate(var(--r));
-        animation: fl 5s ease-in-out infinite;
-    }
+.stickers .st {
+    --r: 0deg;
+    position: absolute;
+    width: 28%;
+    aspect-ratio: 1;
+    transform: rotate(var(--r));
+    animation: fl 5s ease-in-out infinite;
+}
 
-        .stickers .st img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+.stickers .st img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 
 /* Positions */
 .st.a {
@@ -233,7 +236,7 @@ mark {
     border-radius: 16px;
     box-shadow: 6px 6px 0 var(--ink);
     padding: 18px 22px;
-    animation: up .6s cubic-bezier(.2,1.3,.4,1) both;
+    animation: up .6s cubic-bezier(.2, 1.3, .4, 1) both;
 }
 
 /* Tabs and role selection */
@@ -244,7 +247,8 @@ mark {
     margin-bottom: 12px;
 }
 
-.chip, .roles label {
+.chip,
+.roles label {
     font: 400 12px var(--display);
     color: var(--ink);
     background: var(--bg);
@@ -256,7 +260,9 @@ mark {
     transition: background .15s;
 }
 
-.chip:hover, .chip.on, .roles input:checked+label {
+.chip:hover,
+.chip.on,
+.roles input:checked+label {
     background: var(--hot);
 }
 
@@ -285,7 +291,7 @@ mark {
 
 h2 {
     text-align: left;
-    font: clamp(30px,4vw,40px)/1 var(--serif);
+    font: clamp(30px, 4vw, 40px)/1 var(--serif);
     text-transform: uppercase;
     margin: 0 0 6px;
 }
@@ -296,7 +302,8 @@ h2 {
     font-size: 13px;
 }
 
-label.l, .lab {
+label.l,
+.lab {
     display: block;
     font: 700 12px var(--mono);
     text-transform: uppercase;
@@ -309,7 +316,9 @@ label.l, .lab {
     position: relative;
 }
 
-input[type=text], input[type=email], input[type=password] {
+input[type=text],
+input[type=email],
+input[type=password] {
     width: 100%;
     font: 400 15px var(--mono);
     color: var(--ink);
@@ -317,13 +326,15 @@ input[type=text], input[type=email], input[type=password] {
     border: 2px solid var(--ink);
     border-radius: 10px;
     padding: 12px 14px;
-    transition: box-shadow .12s,transform .12s;
+    transition: box-shadow .12s, transform .12s;
 }
 
-input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=password]:focus {
     outline: 0;
     box-shadow: 4px 4px 0 var(--lime);
-    transform: translate(-2px,-2px);
+    transform: translate(-2px, -2px);
 }
 
 input[aria-invalid=true] {
@@ -336,7 +347,7 @@ input[aria-invalid=true] {
     grid-template-columns: minmax(0, 1fr);
 }
 
-.f:has(> .eye) > input {
+.f:has(> .eye)>input {
     grid-area: 2 / 1;
     padding-right: 90px;
 }
@@ -409,7 +420,8 @@ input[aria-invalid=true] {
     line-height: 1;
 }
 
-a.lk, button.lk {
+a.lk,
+button.lk {
     color: var(--ink);
     background: none;
     border: 0;
@@ -470,7 +482,8 @@ a.lk, button.lk {
         transform: translateY(-8px) rotate(var(--r));
     }
 
-    0%, 100% {
+    0%,
+    100% {
         transform: rotate(var(--r));
     }
 }
@@ -509,13 +522,13 @@ a.lk, button.lk {
 
 @media (max-width: 860px) {
     main {
-        
+
         grid-template-columns: 1fr;
         gap: 28px;
     }
 
     h1 {
-        font-size: clamp(52px,16vw,80px);
+        font-size: clamp(52px, 16vw, 80px);
     }
 }
 
@@ -523,8 +536,8 @@ a.lk, button.lk {
 
 @media (prefers-reduced-motion: reduce) {
     * {
-        animation: none!important;
-        transition: none!important;
+        animation: none !important;
+        transition: none !important;
     }
 }
 
@@ -552,28 +565,172 @@ input.btn {
 }
 
 /* Country selection: quiet paper surface and a fine ink border. */
-.country-trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding: 12px 14px; background: var(--color-bg); color: var(--color-text-soft); border: var(--border); border-radius: 10px 12px 9px 11px; font: 400 15px/1.5 var(--font-body); text-align: left; cursor: pointer; }
-.country-trigger.has-country { color: var(--color-ink); }
-.country-trigger svg { width: 22px; height: 22px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.8; }
-.country-trigger[hidden], .country-field select[hidden] { display: none; }
-.country-picker-open { overflow: hidden; }
-.country-dialog { width: min(520px, calc(100vw - 32px)); max-height: min(720px, calc(100dvh - 40px)); margin: auto; padding: 28px; color: var(--color-ink); background: var(--color-bg); border: var(--border); border-radius: 16px 19px 15px 18px; box-shadow: var(--shadow-sm); overflow-y: auto; }
-.country-dialog::backdrop { background: rgb(53 3 12 / 45%); }
-.country-dialog-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.country-dialog h2 { margin: 0; font: 400 36px/1.15 var(--font-hand); text-transform: none; }
-.country-close { width: 44px; height: 44px; flex-shrink: 0; border: 1px solid var(--color-tan); border-radius: var(--radius-sm); background: transparent; color: var(--color-ink); font: 400 28px/1 sans-serif; cursor: pointer; }
-.country-dialog > p { color: var(--color-text-soft); font-size: 13px; }
-.country-dialog .l { margin-top: 22px; text-transform: none; letter-spacing: 0; }
-.country-dialog input[type=search] { width: 100%; min-height: 48px; padding: 12px 14px; border: 1.5px solid var(--color-ink); border-radius: var(--radius-sm); color: var(--color-ink); background: var(--color-bg); font: 400 16px/1.5 var(--font-body); }
-.country-result-count { margin: 12px 0; }
-.country-results { max-height: min(350px, 42dvh); overflow-y: auto; overscroll-behavior: contain; padding: 4px; scroll-padding: 6px; }
-.country-option { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 48px; padding: 12px; margin-bottom: 8px; text-align: left; font: 400 14px/1.5 var(--font-body); color: var(--color-ink); background: transparent; border: 1px solid transparent; border-radius: 8px; cursor: pointer; }
-.country-option:hover, .country-close:hover { background: var(--color-tan-light); }
-.country-option[aria-pressed=true] { background: var(--color-tan-light); border-color: var(--color-ink); font-weight: 700; }
-.country-code { color: var(--color-text-soft); font-size: 12px; }
-.country-empty { padding: 24px 8px; text-align: center; }
-.country-dialog :is(button, input):focus-visible, .country-trigger:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+.country-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 48px;
+    padding: 12px 14px;
+    background: var(--color-bg);
+    color: var(--color-text-soft);
+    border: var(--border);
+    border-radius: 10px 12px 9px 11px;
+    font: 400 15px/1.5 var(--font-body);
+    text-align: left;
+    cursor: pointer;
+}
+
+.country-trigger.has-country {
+    color: var(--color-ink);
+}
+
+.country-trigger svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+}
+
+.country-trigger[hidden],
+.country-field select[hidden] {
+    display: none;
+}
+
+.country-picker-open {
+    overflow: hidden;
+}
+
+.country-dialog {
+    width: min(520px, calc(100vw - 32px));
+    max-height: min(720px, calc(100dvh - 40px));
+    margin: auto;
+    padding: 28px;
+    color: var(--color-ink);
+    background: var(--color-bg);
+    border: var(--border);
+    border-radius: 16px 19px 15px 18px;
+    box-shadow: var(--shadow-sm);
+    overflow-y: auto;
+}
+
+.country-dialog::backdrop {
+    background: rgb(53 3 12 / 45%);
+}
+
+.country-dialog-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.country-dialog h2 {
+    margin: 0;
+    font: 400 36px/1.15 var(--font-hand);
+    text-transform: none;
+}
+
+.country-close {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border: 1px solid var(--color-tan);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-ink);
+    font: 400 28px/1 sans-serif;
+    cursor: pointer;
+}
+
+.country-dialog>p {
+    color: var(--color-text-soft);
+    font-size: 13px;
+}
+
+.country-dialog .l {
+    margin-top: 22px;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.country-dialog input[type=search] {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink);
+    background: var(--color-bg);
+    font: 400 16px/1.5 var(--font-body);
+}
+
+.country-result-count {
+    margin: 12px 0;
+}
+
+.country-results {
+    max-height: min(350px, 42dvh);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 4px;
+    scroll-padding: 6px;
+}
+
+.country-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px;
+    margin-bottom: 8px;
+    text-align: left;
+    font: 400 14px/1.5 var(--font-body);
+    color: var(--color-ink);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.country-option:hover,
+.country-close:hover {
+    background: var(--color-tan-light);
+}
+
+.country-option[aria-pressed=true] {
+    background: var(--color-tan-light);
+    border-color: var(--color-ink);
+    font-weight: 700;
+}
+
+.country-code {
+    color: var(--color-text-soft);
+    font-size: 12px;
+}
+
+.country-empty {
+    padding: 24px 8px;
+    text-align: center;
+}
+
+.country-dialog :is(button, input):focus-visible,
+.country-trigger:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+}
+
 @media (max-width: 420px) {
-    .country-dialog { padding: 20px 16px; }
-    .country-dialog h2 { font-size: 30px; }
+    .country-dialog {
+        padding: 20px 16px;
+    }
+
+    .country-dialog h2 {
+        font-size: 30px;
+    }
 }

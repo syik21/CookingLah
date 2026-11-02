@@ -159,10 +159,16 @@ body:has(.chef-preview-mode) .master-main {
     transform: rotate(-3deg);
 }
 
-.learning-course-media .handwritten-note { font-size: 22px; }
-.learning-cooking-doodle { width: 54px; height: 34px; }
+.learning-course-media .handwritten-note {
+    font-size: 22px;
+}
 
-.learning-course-heading > .learning-eyebrow {
+.learning-cooking-doodle {
+    width: 54px;
+    height: 34px;
+}
+
+.learning-course-heading>.learning-eyebrow {
     margin-bottom: 12px;
     color: var(--color-primary);
     font-size: 11px;
@@ -203,13 +209,13 @@ body:has(.chef-preview-mode) .master-main {
     border-top: var(--border-dashed);
 }
 
-.learning-course-facts > div {
+.learning-course-facts>div {
     min-width: 0;
     margin: 0;
     overflow-wrap: anywhere;
 }
 
-.learning-course-facts > .is-dish {
+.learning-course-facts>.is-dish {
     grid-column: 1 / -1;
 }
 
@@ -283,7 +289,7 @@ body:has(.chef-preview-mode) .master-main {
     text-align: left;
 }
 
-.learning-section-heading > p {
+.learning-section-heading>p {
     margin: 0;
     color: var(--color-text-soft);
     font-size: 10px;
@@ -497,7 +503,7 @@ body:has(.chef-preview-mode) .master-main {
     font-size: 13px;
 }
 
-.learning-complete-message div > span {
+.learning-complete-message div>span {
     margin-top: 5px;
     color: var(--color-text-soft);
     font-size: 10px;
@@ -547,7 +553,7 @@ body:has(.chef-preview-mode) .master-main {
     text-align: left;
 }
 
-.curriculum-heading > span {
+.curriculum-heading>span {
     display: block;
     margin-top: 4px;
     color: var(--color-text-soft);
@@ -570,6 +576,7 @@ body:has(.chef-preview-mode) .master-main {
     margin-bottom: 10px;
     border: 1px solid var(--color-ink);
 }
+
 .curriculum-item,
 .curriculum-special-item {
     display: flex;
@@ -604,10 +611,11 @@ body:has(.chef-preview-mode) .master-main {
 .curriculum-special-item.is-completed .curriculum-state {
     background: var(--color-lime);
 }
-    .curriculum-item.is-completed,
-    .curriculum-special-item.is-completed {
-        background: var(--color-lime);
-    }
+
+.curriculum-item.is-completed,
+.curriculum-special-item.is-completed {
+    background: var(--color-lime);
+}
 
 .curriculum-state {
     display: grid;
@@ -669,7 +677,7 @@ body:has(.chef-preview-mode) .master-main {
     min-width: 0;
 }
 
-.learning-workspace > div {
+.learning-workspace>div {
     min-width: 0;
 }
 
@@ -765,7 +773,9 @@ body:has(.chef-preview-mode) .master-main {
         gap: 26px;
     }
 
-    .learning-course-header .notebook-spread::before { display: none; }
+    .learning-course-header .notebook-spread::before {
+        display: none;
+    }
 
     .learning-recipe-card {
         grid-template-columns: minmax(170px, 220px) minmax(0, 1fr);
@@ -820,19 +830,19 @@ body:has(.chef-preview-mode) .master-main {
     }
 }
 
-    .learning-course-header::after {
-        content: "";
-        position: absolute;
-        inset: -42px -12px;
-        z-index: 3;
-        border: 0;
-        border-radius: 0;
-        transform: none;
-        pointer-events: none;
-        background-repeat: no-repeat;
-        background-size: 48px 64px, 48px 64px, 60px 60px, 64px 64px;
-        background-position: center top, center bottom, right 0 top 30px, left 0 bottom 30px;
-        background-image:
+.learning-course-header::after {
+    content: "";
+    position: absolute;
+    inset: -42px -12px;
+    z-index: 3;
+    border: 0;
+    border-radius: 0;
+    transform: none;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-size: 48px 64px, 48px 64px, 60px 60px, 64px 64px;
+    background-position: center top, center bottom, right 0 top 30px, left 0 bottom 30px;
+    background-image:
         /* top binder clip */
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 80' fill='none' stroke='%2335030C' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 42C12 22 17 5 30 5s18 17 13 37'/%3E%3Cpath d='M24 42c-2-14 1-26 6-26s8 12 6 26'/%3E%3Cpath d='M7 42h46l-4 32H11z' fill='%23FFFDF4'/%3E%3Cpath d='M19 50v16M41 50v16' stroke-width='1.8'/%3E%3C/svg%3E"),
         /* bottom binder clip (flipped) */
@@ -841,11 +851,22 @@ body:has(.chef-preview-mode) .master-main {
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 108 108' fill='none' stroke='%2335030C' stroke-linejoin='round' stroke-linecap='round'%3E%3Cg transform='rotate(14 50 52)'%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' fill='%23FFFDF4' stroke-width='3'/%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' transform='translate(10 10.4) scale(.8)' stroke-width='2' stroke-dasharray='4 4'/%3E%3C/g%3E%3C/svg%3E"),
         /* star, bottom-left */
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 108 108' fill='none' stroke='%2335030C' stroke-linejoin='round' stroke-linecap='round'%3E%3Cg transform='rotate(-16 50 52)'%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' fill='%23FFFDF4' stroke-width='3'/%3E%3Cpath d='M50 6 61.8 35.8 93.8 37.8 69 58.2 77 89.2 50 72 23 89.2 31 58.2 6.2 37.8 38.2 35.8Z' transform='translate(10 10.4) scale(.8)' stroke-width='2' stroke-dasharray='4 4'/%3E%3C/g%3E%3C/svg%3E");
-    }
+}
 
 @media (max-width: 480px) {
-    .learning-course-header { padding: 16px 12px 28px; }
-    .learning-course-header .notebook-page { padding: 22px 14px; }
-    .learning-course-heading { padding: 22px 16px; }
-    .learning-course-header::after { background-size: 40px 56px, 40px 56px, 0 0, 0 0; }
+    .learning-course-header {
+        padding: 16px 12px 28px;
+    }
+
+    .learning-course-header .notebook-page {
+        padding: 22px 14px;
+    }
+
+    .learning-course-heading {
+        padding: 22px 16px;
+    }
+
+    .learning-course-header::after {
+        background-size: 40px 56px, 40px 56px, 0 0, 0 0;
+    }
 }

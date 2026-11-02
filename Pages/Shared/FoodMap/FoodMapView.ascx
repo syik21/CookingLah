@@ -2,26 +2,40 @@
 <%@ Register Src="~/Pages/Shared/WorldMap/WorldMap.ascx" TagPrefix="shared" TagName="WorldMap" %>
 
 <link rel="stylesheet" href="<%= ResolveUrl("~/Pages/Shared/FoodMap/FoodMapView.css") %>" />
-<section class="food-map-shell" id="foodMapShell"
-         data-selected-country="<%= Server.HtmlEncode(SelectedCountry) %>"
-         data-app-root="<%= ResolveUrl("~/") %>"
-         data-course-search-url="<%= Server.HtmlEncode(CourseSearchUrl) %>"
-         data-placeholder="<%= ResolveUrl("~/F_Assets/placeholder-food.svg") %>">
+<section
+    class="food-map-shell"
+    id="foodMapShell"
+    data-selected-country="<%= Server.HtmlEncode(SelectedCountry) %>"
+    data-app-root="<%= ResolveUrl("~/") %>"
+    data-course-search-url="<%= Server.HtmlEncode(CourseSearchUrl) %>"
+    data-placeholder="<%= ResolveUrl("~/F_Assets/placeholder-food.svg") %>">
     <div class="food-map-canvas" aria-label="World food map">
         <shared:WorldMap ID="WorldMap1" runat="server" />
     </div>
-    <button id="foodPanelToggle" type="button" class="btn btn-primary food-map-panel-toggle"
-            aria-controls="foodExplorerPanel" aria-expanded="true">Hide food explorer</button>
+    <button
+        id="foodPanelToggle"
+        type="button"
+        class="btn btn-primary food-map-panel-toggle"
+        aria-controls="foodExplorerPanel"
+        aria-expanded="true">Hide food explorer</button>
     <aside id="foodExplorerPanel" class="food-map-panel" aria-label="Food explorer">
         <div class="food-map-panel__header">
             <%-- NEW: top row with the smaller / bigger buttons --%>
             <div class="food-map-panel__top">
                 <p class="food-map-panel__eyebrow">Food Explorer</p>
                 <div class="food-map-panel__size" role="group" aria-label="Panel size">
-                    <button id="foodPanelSmaller" type="button" class="btn food-map-size-btn"
-                            aria-label="Make the panel smaller" title="Smaller">&minus;</button>
-                    <button id="foodPanelBigger" type="button" class="btn food-map-size-btn"
-                            aria-label="Make the panel bigger" title="Bigger">+</button>
+                    <button
+                        id="foodPanelSmaller"
+                        type="button"
+                        class="btn food-map-size-btn"
+                        aria-label="Make the panel smaller"
+                        title="Smaller">&minus;</button>
+                    <button
+                        id="foodPanelBigger"
+                        type="button"
+                        class="btn food-map-size-btn"
+                        aria-label="Make the panel bigger"
+                        title="Bigger">+</button>
                 </div>
             </div>
             <h1 class="food-map-panel__title">Explore traditional food</h1>
@@ -30,19 +44,27 @@
             <label class="food-map-label" for="foodCountrySelector">Country</label>
             <select id="foodCountrySelector" class="food-map-select"></select>
             <label class="food-map-label" for="foodDishSearch">Search dishes</label>
-            <input id="foodDishSearch" type="search" class="food-map-search__input" maxlength="100" autocomplete="off" />
+            <input
+                id="foodDishSearch"
+                type="search"
+                class="food-map-search__input"
+                maxlength="100"
+                autocomplete="off" />
         </div>
         <div class="food-map-panel__summary" role="status" aria-atomic="true">
             <span id="foodCountryName" class="food-map-country-name"></span>
             <span id="foodDishCount" class="food-map-dish-count"></span>
         </div>
         <div class="food-map-results">
-            <div id="foodDishList" class="food-map-dish-list"></div>
+            <div id="foodDishList" class="food-map-dish-list">
+            </div>
             <div id="foodComingSoon" class="food-map-empty" hidden>
-                <h2>Coming Soon.</h2><p>The food is on the way.</p>
+                <h2>Coming Soon.</h2>
+                <p>The food is on the way.</p>
             </div>
             <div id="foodNoMatches" class="food-map-empty" hidden>
-                <h2>No dishes found.</h2><p>Try another dish name.</p>
+                <h2>No dishes found.</h2>
+                <p>Try another dish name.</p>
             </div>
         </div>
         <div id="foodPagination" class="food-map-pagination" hidden>
@@ -56,30 +78,47 @@
 <script src="<%= ResolveUrl("~/Pages/Shared/FoodMap/FoodMapView.js") %>"></script>
 <%-- NEW: panel size buttons (separate from FoodMapView.js) --%>
 <script>
-(function () {
-    var shell = document.getElementById('foodMapShell');
-    var smaller = document.getElementById('foodPanelSmaller');
-    var bigger = document.getElementById('foodPanelBigger');
-    if (!shell || !smaller || !bigger) { return; }
+    (function () {
+        var shell = document.getElementById('foodMapShell');
+        var smaller = document.getElementById('foodPanelSmaller');
+        var bigger = document.getElementById('foodPanelBigger');
+        if (!shell || !smaller || !bigger) {
+            return;
+        }
 
-    var sizes = ['small', 'medium', 'large'];
-    var storageKey = 'foodPanelSize';
-    var index = 1; // medium is the default
+        var sizes = ['small', 'medium', 'large'];
+        var storageKey = 'foodPanelSize';
+        var index = 1; // medium is the default
 
-    try {
-        var saved = localStorage.getItem(storageKey);
-        if (sizes.indexOf(saved) > -1) { index = sizes.indexOf(saved); }
-    } catch (e) { /* storage blocked: keep the default */ }
+        try {
+            var saved = localStorage.getItem(storageKey);
+            if (sizes.indexOf(saved) > -1) {
+                index = sizes.indexOf(saved);
+            }
+        } catch (e) {
+            /* storage blocked: keep the default */ }
 
-    function apply() {
-        shell.setAttribute('data-panel-size', sizes[index]);
-        smaller.disabled = index === 0;
-        bigger.disabled = index === sizes.length - 1;
-        try { localStorage.setItem(storageKey, sizes[index]); } catch (e) { }
-    }
+        function apply() {
+            shell.setAttribute('data-panel-size', sizes[index]);
+            smaller.disabled = index === 0;
+            bigger.disabled = index === sizes.length - 1;
+            try {
+                localStorage.setItem(storageKey, sizes[index]);
+            } catch (e) {}
+        }
 
-    smaller.addEventListener('click', function () { if (index > 0) { index--; apply(); } });
-    bigger.addEventListener('click', function () { if (index < sizes.length - 1) { index++; apply(); } });
-    apply();
-})();
+        smaller.addEventListener('click', function () {
+            if (index > 0) {
+                index--;
+                apply();
+            }
+        });
+        bigger.addEventListener('click', function () {
+            if (index < sizes.length - 1) {
+                index++;
+                apply();
+            }
+        });
+        apply();
+    })();
 </script>

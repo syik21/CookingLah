@@ -18,14 +18,26 @@ namespace CookingLah.Pages.Learner.LearnerReview
 
         private int CurrentPage
         {
-            get { return (int?)ViewState["CurrentPage"] ?? 0; }
-            set { ViewState["CurrentPage"] = value; }
+            get
+            {
+                return (int?)ViewState["CurrentPage"] ?? 0;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
         }
 
         private int EditingReviewId
         {
-            get { return (int?)ViewState["EditingReviewId"] ?? 0; }
-            set { ViewState["EditingReviewId"] = value; }
+            get
+            {
+                return (int?)ViewState["EditingReviewId"] ?? 0;
+            }
+            set
+            {
+                ViewState["EditingReviewId"] = value;
+            }
         }
 
         protected override void OnInit(EventArgs e)

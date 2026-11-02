@@ -7,11 +7,17 @@
     Inherits="CookingLah.Pages.LiveSessionPage.ChefLivePage" %>
 
 
-<asp:Content ID="ChefLiveHead" ContentPlaceHolderID="ChefHead" runat="server">
+<asp:Content
+    ID="ChefLiveHead"
+    ContentPlaceHolderID="ChefHead"
+    runat="server">
     <link href="<%= ResolveUrl("~/Pages/LiveSessionPage/CSS/ChefLivePage.css") %>" rel="stylesheet" />
 </asp:Content>
 
-<asp:Content ID="ChefLiveContent" ContentPlaceHolderID="ChefContent" runat="server">
+<asp:Content
+    ID="ChefLiveContent"
+    ContentPlaceHolderID="ChefContent"
+    runat="server">
     <div class="chef-live-page">
 
         <!-- LIVE HEADER -->
@@ -23,7 +29,10 @@
             </div>
             <div class="live-header-actions">
                 <span class="chef-warning-count" aria-live="polite">
-                    Warnings <strong><asp:Label ID="lblWarningCount" runat="server" ClientIDMode="Static" /> / 3</strong>
+                    Warnings <strong><asp:Label
+                            ID="lblWarningCount"
+                            runat="server"
+                            ClientIDMode="Static" /> / 3</strong>
                 </span>
                 <span class="live-participant-count">
                     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3" /><path d="M3 19v-2a6 6 0 0 1 12 0v2" /><circle cx="17" cy="9" r="2.5" /><path d="M16 14a5 5 0 0 1 5 5" /></svg>
@@ -38,7 +47,8 @@
                 <p>An administrator has issued a warning for this livestream.</p>
                 <div class="chef-warning-dialog__reason">
                     <strong>Reason</strong>
-                    <p id="warningReason"></p>
+                    <p id="warningReason">
+                    </p>
                 </div>
                 <div class="chef-warning-dialog__actions">
                     <button type="button" id="btnAcknowledgeWarning" class="btn btn-primary">I understand</button>
@@ -46,21 +56,17 @@
             </div>
         </dialog>
 
-
         <!-- MAIN LIVE AREA -->
         <section class="live-layout">
             <!-- JITSI -->
             <div class="live-video-section">
-                <div
-                    id="jitsi-container"
-                    class="jitsi-container">
+                <div id="jitsi-container" class="jitsi-container">
                 </div>
                 <div class="live-details">
                     <h1><asp:Literal ID="litLiveTitle" runat="server" /></h1>
                     <p><asp:Literal ID="litLiveDescription" runat="server" /></p>
                 </div>
             </div>
-
 
             <!-- LIVE CHAT -->
             <div class="live-right-panel">
@@ -71,16 +77,13 @@
                         </h2>
                     </div>
 
-
                     <!-- Existing + new messages -->
                     <div
                         id="messageList"
                         class="chat-messages"
                         role="log"
                         aria-live="polite">
-                        <asp:Repeater
-                            ID="rptMessages"
-                            runat="server">
+                        <asp:Repeater ID="rptMessages" runat="server">
                             <ItemTemplate>
                                 <div class="chat-message">
                                     <div class="chat-message-info">
@@ -88,7 +91,10 @@
                                             <%#: Eval("Username") %>
                                         </strong>
 
-                                        <asp:Label runat="server" CssClass="chat-role-badge" Text="ADMIN"
+                                        <asp:Label
+                                            runat="server"
+                                            CssClass="chat-role-badge"
+                                            Text="ADMIN"
                                             Visible='<%# string.Equals(Convert.ToString(Eval("Role")), "Admin", StringComparison.OrdinalIgnoreCase) %>' />
 
                                         <span>
@@ -105,7 +111,6 @@
                             </ItemTemplate>
                         </asp:Repeater>
                     </div>
-
 
                     <!-- CHAT INPUT -->
                     <div class="chat-input-area">
@@ -138,7 +143,6 @@
             </div>
         </section>
 
-
         <!-- VALUES FOR JAVASCRIPT -->
         <asp:HiddenField
             ID="hfLiveSessionID"
@@ -163,15 +167,22 @@
     </div>
 </asp:Content>
 
-<asp:Content ID="ChefLiveScripts" ContentPlaceHolderID="LiveScripts" runat="server">
+<asp:Content
+    ID="ChefLiveScripts"
+    ContentPlaceHolderID="LiveScripts"
+    runat="server">
     <!-- jQuery -->
     <script src='<%= ResolveUrl("~/Scripts/jquery-3.7.1.min.js") %>'></script>
     <!-- SignalR -->
     <script src='<%= ResolveUrl("~/Scripts/jquery.signalR-2.4.3.min.js") %>'></script>
     <script src='<%= ResolveUrl("~/signalr/hubs") %>'></script>
     <!-- Jitsi -->
-    <script>window.jitsiDomain = '<%= System.Web.HttpUtility.JavaScriptStringEncode(System.Configuration.ConfigurationManager.AppSettings["JitsiDomain"]) %>';</script>
-    <script>window.liveSessionId = Number(document.getElementById("hfLiveSessionID").value);</script>
+    <script>
+        window.jitsiDomain = '<%= System.Web.HttpUtility.JavaScriptStringEncode(System.Configuration.ConfigurationManager.AppSettings["JitsiDomain"]) %>';
+    </script>
+    <script>
+        window.liveSessionId = Number(document.getElementById("hfLiveSessionID").value);
+    </script>
     <script src="<%= "https://" + System.Configuration.ConfigurationManager.AppSettings["JitsiDomain"] + "/external_api.js" %>"></script>
 
     <!-- Shared SignalR logic -->

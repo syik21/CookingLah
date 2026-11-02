@@ -58,7 +58,8 @@ namespace CookingLah.Pages.LiveSessionPage
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (!reader.Read()) return false;
+                    if (!reader.Read())
+                        return false;
 
                     hfLiveSessionID.Value = Convert.ToString(reader["LiveSessionID"]);
                     hfJitsiRoomName.Value = Convert.ToString(reader["JitsiRoomName"]);

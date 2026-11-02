@@ -71,7 +71,10 @@
             submitAction('delete', byId('confirmDeleteButton'));
         });
         deletePassword.addEventListener('keydown', event => {
-            if (event.key === 'Enter') { event.preventDefault(); byId('confirmDeleteButton').click(); }
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                byId('confirmDeleteButton').click();
+            }
         });
         if (deleteDialog.dataset.reopen === 'true') {
             deleteDialog.showModal();
@@ -80,6 +83,7 @@
     }
     const fields = ['fullName', 'username', 'email'].map(byId);
     let initial = fields.map(field => field.value);
+
     function setDetailsEditing(editing) {
         byId('personalDetailsFields').disabled = !editing;
         byId('editDetails').hidden = editing;
@@ -145,7 +149,10 @@
         submitAction('details', byId('previewDetails'));
     });
     byId('resetDetails').addEventListener('click', () => {
-        fields.forEach((field, index) => { field.value = initial[index]; field.setCustomValidity(''); });
+        fields.forEach((field, index) => {
+            field.value = initial[index];
+            field.setCustomValidity('');
+        });
         byId('profileName').textContent = initial[0] || 'Your name';
         byId('profileHandle').textContent = '@' + (initial[1] || 'yourusername');
         setDetailsEditing(false);
@@ -167,7 +174,10 @@
         feedback.textContent = 'Loading photo preview...';
         const probe = new Image();
         probe.onload = () => {
-            if (version !== photoVersion) { URL.revokeObjectURL(candidate); return; }
+            if (version !== photoVersion) {
+                URL.revokeObjectURL(candidate);
+                return;
+            }
             if (probe.width > 4096 || probe.height > 4096 || probe.width * probe.height > 16000000) {
                 URL.revokeObjectURL(candidate);
                 byId('profilePhoto').value = '';

@@ -18,12 +18,20 @@ namespace CookingLah.Pages.Admin.ManageUser
         protected string NameValue = "", UsernameValue = "", EmailValue = "", CountryValue = "", ProfessionValue = "", StatusValue = "Active", RoleValue = "Learner";
         protected string CsrfToken
         {
-            get { return Convert.ToString(Session["ManageUsersCsrf"]); }
+            get
+            {
+                return Convert.ToString(Session["ManageUsersCsrf"]);
+            }
         }
+
         protected int ActorId
         {
-            get { return Convert.ToInt32(Session["UserId"]); }
+            get
+            {
+                return Convert.ToInt32(Session["UserId"]);
+            }
         }
+
         protected static readonly string[] Roles = { "Learner", "Instructor", "Admin" };
         protected static readonly string[] Statuses = { "Active", "Inactive", "Suspended" };
         protected static readonly string[] Countries = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
@@ -32,6 +40,7 @@ namespace CookingLah.Pages.Admin.ManageUser
         {
             return HttpUtility.HtmlEncode(Convert.ToString(value));
         }
+
         protected string RoleLabel(string role)
         {
             return role;
@@ -164,9 +173,11 @@ namespace CookingLah.Pages.Admin.ManageUser
                         Feedback = Convert.ToString(Session["ManageUsersFeedback"]);
                         Session.Remove("ManageUsersFeedback");
                         Mode = Request.QueryString["mode"] ?? "";
-                        if (Mode != "create" && Mode != "edit" && Mode != "remove") Mode = "";
+                        if (Mode != "create" && Mode != "edit" && Mode != "remove")
+                            Mode = "";
                         int.TryParse(Request.QueryString["id"], out TargetId);
-                        if (Mode == "edit" || Mode == "remove") LoadTarget(con);
+                        if (Mode == "edit" || Mode == "remove")
+                            LoadTarget(con);
                     }
                     LoadUsers(con);
                 }
@@ -343,7 +354,10 @@ namespace CookingLah.Pages.Admin.ManageUser
                 else
                 {
                     // Exclude the edited user so an unchanged username/email remains valid.
-                    using (var duplicate = new SqlCommand("SELECT TOP (1) CASE WHEN Username=@username THEN 'username' ELSE 'email' END FROM dbo.Users WHERE UserID<>@id AND (Username=@username OR Email=@email) ORDER BY CASE WHEN Username=@username THEN 0 ELSE 1 END", con, tx))
+                    using (var duplicate = new SqlCommand(
+"SELECT TOP (1) CASE WHEN Username=@username THEN 'username' ELSE 'email' END FROM dbo.Users WHERE UserID<>@id AND (Username=@username OR Email=@email) ORDER BY CASE WHEN Username=@username THEN 0 ELSE 1 END",
+con,
+tx))
                     {
                         duplicate.Parameters.Add("@username", SqlDbType.NVarChar, 50).Value = UsernameValue;
                         duplicate.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = EmailValue;
@@ -380,7 +394,10 @@ namespace CookingLah.Pages.Admin.ManageUser
                     }
                     if (RoleValue == "Instructor")
                     {
-                        using (var cmd = new SqlCommand("UPDATE dbo.ChefProfession SET Profession=@profession WHERE ChefID=@id; IF @@ROWCOUNT=0 INSERT INTO dbo.ChefProfession (ChefID,Profession) VALUES (@id,@profession);", con, tx))
+                        using (var cmd = new SqlCommand(
+"UPDATE dbo.ChefProfession SET Profession=@profession WHERE ChefID=@id; IF @@ROWCOUNT=0 INSERT INTO dbo.ChefProfession (ChefID,Profession) VALUES (@id,@profession);",
+con,
+tx))
                         {
                             cmd.Parameters.Add("@id", SqlDbType.Int).Value = TargetId;
                             cmd.Parameters.Add("@profession", SqlDbType.NVarChar, 100).Value = ProfessionValue;

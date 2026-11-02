@@ -23,7 +23,8 @@ namespace CookingLah.Pages.Shared.FoodMap
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack) return;
+            if (IsPostBack)
+                return;
 
             string requestedCountry = (Request.QueryString["country"] ?? "").Trim();
             if (requestedCountry.Length > 0 && requestedCountry.Length <= 150)

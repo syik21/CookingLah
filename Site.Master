@@ -1,44 +1,69 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="CookingLah.SiteMaster" %>
 <!DOCTYPE html>
 <html lang="en">
-<head runat="server">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title></title>
-    <link runat="server" rel="icon" type="image/x-icon" href="~/favicon.ico?v=2" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link runat="server" href="~/F_CSS/Style.css" rel="stylesheet" />
-    <link runat="server" href="~/F_CSS/SiteMaster.css?v=2" rel="stylesheet" />
-    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
-    <asp:ContentPlaceHolder ID="ProfileHead" runat="server" />
-</head>
-<body class="public-site">
-<form runat="server">
-    <a class="public-skip" href="#siteMain">Skip to content</a>
-    <header class="site-header public-header" id="publicHeader">
-        <a class="site-logo public-logo" runat="server" href="~/Main.aspx" aria-label="Cooking LAH home">
-            <img runat="server" src="~/F_Assets/CookingLahLogo.png" alt="Cooking LAH" />
-        </a>
-        <button type="button" class="public-menu-toggle" id="publicMenuToggle" aria-expanded="false" aria-controls="publicNavigation">
-            <span>Menu</span><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6q9-1 18 0M3 12h18M3 18q9 1 18 0" /></svg>
-        </button>
-        <nav class="public-nav" id="publicNavigation" aria-label="Main navigation">
-            <a runat="server" href="~/Main.aspx" class="public-nav-link" data-section="home">Home</a>
-            <a runat="server" href="~/Pages/Guest/SearchCourse/SearchCoursePage.aspx" class="public-nav-link" data-section="course">Course</a>
-            <a runat="server" href="~/Pages/Guest/Map.aspx" class="public-nav-link" data-section="map">World Map</a>
-        </nav>
-        <a runat="server" href="~/Pages/Shared/LoginSignupPage.aspx" class="btn btn-primary public-join">Join Us!</a>
-    </header>
-    <main id="siteMain" tabindex="-1">
-        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-            <asp:ContentPlaceHolder ID="ProfileContent" runat="server" />
-    </main>
-    <asp:ContentPlaceHolder ID="FooterContent" runat="server" />
-    <script src="<%= ResolveUrl("~/F_JavaScripts/connectionChecker.js") %>" defer></script>
-    <script src="<%= ResolveUrl("~/F_JavaScripts/SiteMaster.js") %>" defer></script>
-    <asp:ContentPlaceHolder ID="ScriptsContent" runat="server" />
-    <asp:ContentPlaceHolder ID="ProfileScripts" runat="server" />
-</form>
-</body>
+    <head runat="server">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title></title>
+        <link
+            runat="server"
+            rel="icon"
+            type="image/x-icon"
+            href="~/favicon.ico?v=2" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+        <link runat="server" href="~/F_CSS/Style.css" rel="stylesheet" />
+        <link runat="server" href="~/F_CSS/SiteMaster.css?v=2" rel="stylesheet" />
+        <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+        <asp:ContentPlaceHolder ID="ProfileHead" runat="server" />
+    </head>
+    <body class="public-site">
+        <form runat="server">
+            <a class="public-skip" href="#siteMain">Skip to content</a>
+            <header class="site-header public-header" id="publicHeader">
+                <a
+                    class="site-logo public-logo"
+                    runat="server"
+                    href="~/Main.aspx"
+                    aria-label="Cooking LAH home">
+                    <img runat="server" src="~/F_Assets/CookingLahLogo.png" alt="Cooking LAH" />
+                </a>
+                <button
+                    type="button"
+                    class="public-menu-toggle"
+                    id="publicMenuToggle"
+                    aria-expanded="false"
+                    aria-controls="publicNavigation">
+                    <span>Menu</span><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6q9-1 18 0M3 12h18M3 18q9 1 18 0" /></svg>
+                </button>
+                <nav class="public-nav" id="publicNavigation" aria-label="Main navigation">
+                    <a
+                        runat="server"
+                        href="~/Main.aspx"
+                        class="public-nav-link"
+                        data-section="home">Home</a>
+                    <a
+                        runat="server"
+                        href="~/Pages/Guest/SearchCourse/SearchCoursePage.aspx"
+                        class="public-nav-link"
+                        data-section="course">Course</a>
+                    <a
+                        runat="server"
+                        href="~/Pages/Guest/Map.aspx"
+                        class="public-nav-link"
+                        data-section="map">World Map</a>
+                </nav>
+                <a runat="server" href="~/Pages/Shared/LoginSignupPage.aspx" class="btn btn-primary public-join">Join Us!</a>
+            </header>
+            <main id="siteMain" tabindex="-1">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                <asp:ContentPlaceHolder ID="ProfileContent" runat="server" />
+            </main>
+            <asp:ContentPlaceHolder ID="FooterContent" runat="server" />
+            <script src="<%= ResolveUrl("~/F_JavaScripts/connectionChecker.js") %>" defer></script>
+            <script src="<%= ResolveUrl("~/F_JavaScripts/SiteMaster.js") %>" defer></script>
+            <asp:ContentPlaceHolder ID="ScriptsContent" runat="server" />
+            <asp:ContentPlaceHolder ID="ProfileScripts" runat="server" />
+        </form>
+    </body>
 </html>

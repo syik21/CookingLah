@@ -68,29 +68,30 @@
     transition: background-color .15s ease, border-color .15s ease;
 }
 
-    .public-nav-link:hover {
-        background: var(--color-tan-light);
-    }
+.public-nav-link:hover {
+    background: var(--color-tan-light);
+}
 
-    .public-nav-link[aria-current] {
-        color: var(--color-ink);
-    }
+.public-nav-link[aria-current] {
+    color: var(--color-ink);
+}
 
-        .public-nav-link[aria-current]::after {
-            content: "";
-            position: absolute;
-            bottom: 4px;
-            left: 18px;
-            right: 18px;
-            height: 3px;
-            background: var(--color-primary);
-            border-radius: 70% 30% 60% 40%;
-            transform: rotate(-1deg);
-        }
+.public-nav-link[aria-current]::after {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    left: 18px;
+    right: 18px;
+    height: 3px;
+    background: var(--color-primary);
+    border-radius: 70% 30% 60% 40%;
+    transform: rotate(-1deg);
+}
 
-    .public-nav-link:focus-visible {
-        outline-offset: 1px;
-    }
+.public-nav-link:focus-visible {
+    outline-offset: 1px;
+}
+
 /* Layout only: retain Style.css primary-button typography, border and shadow. */
 .public-join {
     grid-column: 3;
@@ -114,18 +115,18 @@
     cursor: pointer;
 }
 
-    .public-menu-toggle svg {
-        width: 22px;
-        height: 22px;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 2;
-        stroke-linecap: round;
-    }
+.public-menu-toggle svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
 
-    .public-menu-toggle[aria-expanded="true"] {
-        background: var(--color-tan-light);
-    }
+.public-menu-toggle[aria-expanded="true"] {
+    background: var(--color-tan-light);
+}
 
 .public-skip {
     position: absolute;
@@ -137,9 +138,9 @@
     border: var(--border);
 }
 
-    .public-skip:focus {
-        top: 12px;
-    }
+.public-skip:focus {
+    top: 12px;
+}
 
 .public-site :is(a, button):focus-visible {
     outline: 3px solid var(--color-ink);
@@ -155,9 +156,9 @@
         gap: 20px;
     }
 
-        .public-header .public-logo img {
-            height: 62px;
-        }
+    .public-header .public-logo img {
+        height: 62px;
+    }
 
     .public-nav-link {
         padding-inline: 12px;
@@ -205,9 +206,9 @@
         padding-inline: 20px;
     }
 
-        .public-header .public-logo img {
-            height: 54px;
-        }
+    .public-header .public-logo img {
+        height: 54px;
+    }
 
     .public-join {
         grid-column: 2;

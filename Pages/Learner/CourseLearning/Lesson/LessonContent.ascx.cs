@@ -11,8 +11,16 @@ namespace CookingLah.Pages.Learner.CourseLearning.Lesson
         public event EventHandler NextLessonRequested;
         public event EventHandler LessonCompleted;
 
-        public int CurrentLessonId { get; private set; }
-        public int RequestedLessonId { get; private set; }
+        public int CurrentLessonId
+        {
+            get; private set;
+        }
+
+        public int RequestedLessonId
+        {
+            get; private set;
+        }
+
         public bool ChefPreview { get; set; }
 
         public void LoadLesson(
@@ -97,7 +105,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.Lesson
 
         protected void btnMarkComplete_Click(object sender, EventArgs e)
         {
-            if (ChefPreview || CurrentLessonId <= 0) return;
+            if (ChefPreview || CurrentLessonId <= 0)
+                return;
 
             EventHandler handler = LessonCompleted;
             if (handler != null)
@@ -108,7 +117,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.Lesson
 
         private void RaiseLessonRequest(EventHandler handler)
         {
-            if (RequestedLessonId <= 0 || handler == null) return;
+            if (RequestedLessonId <= 0 || handler == null)
+                return;
 
             handler(this, EventArgs.Empty);
         }

@@ -14,12 +14,16 @@
     };
 
     let savedView = 'cards';
-    try { savedView = localStorage.getItem('chefCourseView') || 'cards'; } catch (_) { }
+    try {
+        savedView = localStorage.getItem('chefCourseView') || 'cards';
+    } catch (_) {}
     setView(savedView === 'list' ? 'list' : 'cards');
 
     viewButtons.forEach(button => button.addEventListener('click', () => {
         const view = button.dataset.courseView;
         setView(view);
-        try { localStorage.setItem('chefCourseView', view); } catch (_) { }
+        try {
+            localStorage.setItem('chefCourseView', view);
+        } catch (_) {}
     }));
 })();

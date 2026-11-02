@@ -8,7 +8,13 @@ namespace CookingLah.Pages.Admin.LoginPage
 {
     public partial class AdminLoginPage : System.Web.UI.Page
     {
-        protected string CsrfToken { get { return Convert.ToString(Session["AdminLoginCsrf"]); } }
+        protected string CsrfToken
+        {
+            get
+            {
+                return Convert.ToString(Session["AdminLoginCsrf"]);
+            }
+        }
 
         protected override void OnInit(EventArgs e)
         {
@@ -72,7 +78,11 @@ namespace CookingLah.Pages.Admin.LoginPage
                     con.Open();
                     using (var reader = cmd.ExecuteReader())
                     {
-                        if (!reader.Read()) { ShowError("Unable to sign in. Check your admin credentials and account status."); return; }
+                        if (!reader.Read())
+                        {
+                            ShowError("Unable to sign in. Check your admin credentials and account status.");
+                            return;
+                        }
                         userId = Convert.ToInt32(reader["UserID"]);
                         username = Convert.ToString(reader["Username"]);
                         email = Convert.ToString(reader["Email"]);
@@ -115,6 +125,7 @@ namespace CookingLah.Pages.Admin.LoginPage
                 ShowError("Unable to sign in. Contact another administrator for help with your account.");
             }
         }
+
         private void UpdateLastLoginTime(int userId)
         {
             string query = @"

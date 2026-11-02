@@ -135,10 +135,22 @@ namespace CookingLah.Pages.ErrorPage
                 Illustration = illustration;
             }
 
-            public string PageTitle { get; private set; }
-            public string Heading { get; private set; }
-            public string Message { get; private set; }
-            public string Illustration { get; private set; }
+            public string PageTitle
+            {
+                get; private set;
+            }
+            public string Heading
+            {
+                get; private set;
+            }
+            public string Message
+            {
+                get; private set;
+            }
+            public string Illustration
+            {
+                get; private set;
+            }
         }
     }
 }

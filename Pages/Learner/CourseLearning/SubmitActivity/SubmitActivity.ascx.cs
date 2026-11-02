@@ -17,8 +17,16 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
         private int CourseId { get; set; }
         private int LearnerId { get; set; }
         private int ActivityId { get; set; }
-        public bool HasSubmission { get; private set; }
-        public bool HasActivity { get; private set; }
+        public bool HasSubmission
+        {
+            get; private set;
+        }
+
+        public bool HasActivity
+        {
+            get; private set;
+        }
+
         private bool ChefPreview { get; set; }
 
         public void LoadActivity(int courseId, int learnerId, bool chefPreview = false)
@@ -60,7 +68,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
                 pnlExistingSubmission.Visible = false;
                 pnlSubmissionForm.Visible = false;
             }
-            else LoadExistingSubmission();
+            else
+                LoadExistingSubmission();
         }
 
         private void LoadExistingSubmission()
@@ -109,7 +118,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
 
         protected void btnSubmitActivity_Click(object sender, EventArgs e)
         {
-            if (ChefPreview) return;
+            if (ChefPreview)
+                return;
             string description = txtActivityDescription.Text.Trim();
             if (description.Length > 1000)
             {
@@ -166,7 +176,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.SubmitActivity
             pnlActivityFeedback.Visible = true;
 
             EventHandler handler = ActivitySubmitted;
-            if (handler != null) handler(this, EventArgs.Empty);
+            if (handler != null)
+                handler(this, EventArgs.Empty);
         }
 
         private bool ActivityBelongsToLearnerCourse()

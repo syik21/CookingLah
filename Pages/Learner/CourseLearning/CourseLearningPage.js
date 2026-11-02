@@ -35,4 +35,3 @@
         document.body.classList.add('chef-preview-shell');
     }
 }());
-

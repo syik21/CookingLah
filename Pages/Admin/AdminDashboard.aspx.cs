@@ -10,15 +10,50 @@ namespace CookingLah.Pages.Admin
 {
     public partial class AdminDashboard : Page
     {
-        protected int TotalUserCount { get; private set; }
-        protected int LearnerCount { get; private set; }
-        protected int InstructorCount { get; private set; }
-        protected int AdminCount { get; private set; }
-        protected int TotalCourseCount { get; private set; }
-        protected int PublishedCount { get; private set; }
-        protected int DraftCount { get; private set; }
-        protected int PendingCount { get; private set; }
-        protected int RejectedCount { get; private set; }
+        protected int TotalUserCount
+        {
+            get; private set;
+        }
+
+        protected int LearnerCount
+        {
+            get; private set;
+        }
+
+        protected int InstructorCount
+        {
+            get; private set;
+        }
+
+        protected int AdminCount
+        {
+            get; private set;
+        }
+
+        protected int TotalCourseCount
+        {
+            get; private set;
+        }
+
+        protected int PublishedCount
+        {
+            get; private set;
+        }
+
+        protected int DraftCount
+        {
+            get; private set;
+        }
+
+        protected int PendingCount
+        {
+            get; private set;
+        }
+
+        protected int RejectedCount
+        {
+            get; private set;
+        }
 
         // Verify that the current session belongs to an active administrator.
         protected override void OnInit(EventArgs e)
@@ -43,7 +78,8 @@ namespace CookingLah.Pages.Admin
                 {
                     command.Parameters.Add("@adminId", SqlDbType.Int).Value = adminId;
                     connection.Open();
-                    if ((int)command.ExecuteScalar() != 1) RedirectToLogin();
+                    if ((int)command.ExecuteScalar() != 1)
+                        RedirectToLogin();
                 }
             }
             catch (SqlException ex)
@@ -55,7 +91,8 @@ namespace CookingLah.Pages.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack || Response.IsRequestBeingRedirected) return;
+            if (IsPostBack || Response.IsRequestBeingRedirected)
+                return;
             try
             {
                 using (SqlConnection connection = DatabaseManager.ConnectDB())
@@ -137,16 +174,23 @@ namespace CookingLah.Pages.Admin
                     string item = Convert.ToString(reader["ItemName"]);
                     if (Convert.ToString(reader["GroupName"]) == "User")
                     {
-                        if (item == "Learner") LearnerCount = total;
-                        else if (item == "Instructor") InstructorCount = total;
-                        else if (item == "Admin") AdminCount = total;
+                        if (item == "Learner")
+                            LearnerCount = total;
+                        else if (item == "Instructor")
+                            InstructorCount = total;
+                        else if (item == "Admin")
+                            AdminCount = total;
                     }
                     else
                     {
-                        if (item == "Published") PublishedCount = total;
-                        else if (item == "Draft") DraftCount = total;
-                        else if (item == "Pending") PendingCount = total;
-                        else if (item == "Rejected") RejectedCount = total;
+                        if (item == "Published")
+                            PublishedCount = total;
+                        else if (item == "Draft")
+                            DraftCount = total;
+                        else if (item == "Pending")
+                            PendingCount = total;
+                        else if (item == "Rejected")
+                            RejectedCount = total;
                     }
                 }
             }
@@ -173,7 +217,10 @@ namespace CookingLah.Pages.Admin
                 ORDER BY COALESCE(c.UpdatedAt,c.CreatedAt) DESC,c.CourseID DESC", connection))
             {
                 DataTable courses = new DataTable();
-                using (SqlDataReader reader = command.ExecuteReader()) { courses.Load(reader); }
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    courses.Load(reader);
+                }
                 rptPendingCourses.DataSource = courses;
                 rptPendingCourses.DataBind();
             }
@@ -197,7 +244,10 @@ namespace CookingLah.Pages.Admin
                 ORDER BY LastLogin DESC,UserID DESC", connection))
             {
                 DataTable users = new DataTable();
-                using (SqlDataReader reader = command.ExecuteReader()) { users.Load(reader); }
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    users.Load(reader);
+                }
                 rptRecentUsers.DataSource = users;
                 rptRecentUsers.DataBind();
                 pnlNoActivity.Visible = users.Rows.Count == 0;
@@ -243,13 +293,18 @@ namespace CookingLah.Pages.Admin
             return ResolveUrl("~/Pages/Admin/CourseContentReview/ReviewCoursesPage.aspx?courseId=" + Convert.ToInt32(courseId));
         }
 
-        protected string DateTimeIso(object value) { return Convert.ToDateTime(value).ToString("s"); }
+        protected string DateTimeIso(object value)
+        {
+            return Convert.ToDateTime(value).ToString("s");
+        }
 
         protected string RelativeLogin(object value)
         {
             DateTime login = Convert.ToDateTime(value);
-            if (login.Date == DateTime.Today) return "Today, " + login.ToString("h:mm tt");
-            if (login.Date == DateTime.Today.AddDays(-1)) return "Yesterday, " + login.ToString("h:mm tt");
+            if (login.Date == DateTime.Today)
+                return "Today, " + login.ToString("h:mm tt");
+            if (login.Date == DateTime.Today.AddDays(-1))
+                return "Yesterday, " + login.ToString("h:mm tt");
             return login.ToString("dd MMM yyyy, h:mm tt");
         }
     }

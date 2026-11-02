@@ -39,7 +39,8 @@ namespace CookingLah.Pages.LiveSessionPage
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (!reader.Read()) return;
+                    if (!reader.Read())
+                        return;
                     litLiveTitle.Text = Server.HtmlEncode(Convert.ToString(reader["Title"]));
                     litLiveDescription.Text = Server.HtmlEncode(Convert.ToString(reader["Description"]));
                     hfJitsiRoomName.Value = Convert.ToString(reader["JitsiRoomName"]);

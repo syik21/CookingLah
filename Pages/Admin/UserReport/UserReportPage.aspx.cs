@@ -18,8 +18,14 @@ namespace CookingLah.Pages.Admin.UserReport
 
         private int CurrentPage
         {
-            get { return (int)(ViewState["CurrentPage"] ?? 1); }
-            set { ViewState["CurrentPage"] = value; }
+            get
+            {
+                return (int)(ViewState["CurrentPage"] ?? 1);
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
         }
 
         private sealed class ReportRange
@@ -125,7 +131,11 @@ namespace CookingLah.Pages.Admin.UserReport
         {
             LoadYearFilter(connection);
             LoadFilter(connection, ddlRole, "SELECT DISTINCT Role FROM dbo.Users WHERE Role IS NOT NULL AND Role<>'' ORDER BY Role", "All Roles");
-            LoadFilter(connection, ddlStatus, "SELECT DISTINCT AccountStatus FROM dbo.Users WHERE AccountStatus IS NOT NULL AND AccountStatus<>'' ORDER BY AccountStatus", "All Status");
+            LoadFilter(
+connection,
+ddlStatus,
+"SELECT DISTINCT AccountStatus FROM dbo.Users WHERE AccountStatus IS NOT NULL AND AccountStatus<>'' ORDER BY AccountStatus",
+"All Status");
         }
 
         private void LoadYearFilter(SqlConnection connection)

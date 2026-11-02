@@ -13,7 +13,8 @@ namespace CookingLah.Pages.Shared.LessonBlocks
             base.OnInit(e);
             if (Page.Header != null && Page.Header.FindControl("LessonBlocksStyles") == null)
             {
-                Page.Header.Controls.Add(new HtmlLink {
+                Page.Header.Controls.Add(new HtmlLink
+                {
                     ID = "LessonBlocksStyles",
                     Href = ResolveUrl("~/Pages/Shared/LessonBlocks/LessonBlocks.css"),
                     Attributes = { ["rel"] = "stylesheet" }
@@ -24,7 +25,8 @@ namespace CookingLah.Pages.Shared.LessonBlocks
         // The parent supplies content only after checking course access.
         public void BindBlocks(DataTable blocks, int lessonId)
         {
-            rptBlocks.DataSource = new DataView(blocks) {
+            rptBlocks.DataSource = new DataView(blocks)
+            {
                 RowFilter = "LessonID=" + lessonId,
                 Sort = "ContentOrder ASC,LessonContentID ASC"
             };

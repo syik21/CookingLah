@@ -1,49 +1,330 @@
-.chef-dashboard { display: grid; gap: 30px; max-width: var(--content-width); margin: 0 auto; padding: 12px 4px 32px 0; color: var(--color-ink); }
-.chef-dashboard-welcome { max-width: 760px; }
-.chef-dashboard-welcome h1 { margin: 0; font: 400 clamp(44px, 6vw, 68px)/1 var(--font-hand); text-transform: none; }
-.chef-dashboard-welcome p { margin: 8px 0 0; color: var(--color-text-soft); }
-.chef-dashboard-welcome .chef-dashboard-greeting { margin-top: 16px; color: var(--color-ink); font: 400 clamp(22px, 2.5vw, 30px)/1.2 var(--font-hand); }
-.chef-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.chef-dashboard-overview { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(260px, .75fr); gap: 22px; }
-.chef-dashboard-panel { min-width: 0; padding: 24px; border: 2px solid var(--color-ink); border-radius: 15px 7px 17px 8px; background: var(--color-bg); }
-.chef-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 20px; }
-.chef-section-heading h2, .chef-dashboard-empty h2 { margin: 0; font: 400 clamp(27px, 3vw, 36px)/1.1 var(--font-hand); text-transform: none; }
-.chef-section-heading p { margin: 6px 0 0; color: var(--color-text-soft); font-size: 12px; }
-.chef-section-heading > a { min-height: 44px; padding: 10px 0; color: var(--color-ink); font-size: 12px; font-weight: 700; text-underline-offset: 4px; }
-.chef-status-list { display: grid; gap: 14px; }
-.chef-status-row { display: grid; grid-template-columns: minmax(110px, .6fr) minmax(100px, 1.4fr) 32px; align-items: center; gap: 14px; padding: 4px 0; }
-.chef-status-label { display: flex; min-width: 0; flex-direction: column; font-size: 13px; font-weight: 700; }
-.chef-status-label small { color: var(--color-error); font-size: 10px; }
-.chef-status-track { height: 12px; overflow: hidden; border: 1.5px solid var(--color-ink); border-radius: 8px 3px 7px 3px; background: var(--color-paper); }
-.chef-status-track i { display: block; height: 100%; min-width: 0; background: var(--color-lime); border-right: 1px solid var(--color-ink); }
-.chef-status-row.is-rejected { padding: 8px 10px; border: 1px dashed var(--color-error); border-radius: var(--radius-sm); background: #fff3f3; }
-.chef-status-row.is-rejected .chef-status-track i { background: #e89b9b; }
-.chef-status-row > strong { font: 400 24px/1 var(--font-hand); text-align: right; }
-.chef-quick-actions nav { display: grid; gap: 12px; }
-.chef-quick-actions .btn { display: block; min-height: 44px; text-align: center; }
-.chef-dashboard-list-section { padding-bottom: 12px; }
-.chef-dashboard-rows { border-top: 1px dashed #ac998c; }
-.chef-dashboard-row { padding: 18px 4px; border-bottom: 1px dashed #ac998c; }
-.chef-dashboard-row h3 { margin: 0; font: 400 19px/1.35 var(--font-display); }
-.chef-dashboard-row p { margin: 5px 0 0; }
-.submission-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px; }
-.submission-row .chef-row-course { margin-top: 8px; font-weight: 700; }
-.submission-row > div > p:last-child { color: var(--color-text-soft); font-size: 13px; }
-.chef-row-action { display: flex; align-items: flex-end; flex-direction: column; gap: 12px; }
-.chef-dashboard-row time { color: var(--color-text-soft); font-size: 11px; }
-.review-row-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
-.review-row-heading > div > p { color: var(--color-text-soft); font-size: 12px; }
-.dashboard-rating { flex: 0 0 auto; color: var(--color-primary); font-size: 13px; font-weight: 700; white-space: nowrap; }
-.dashboard-review-comment { display: -webkit-box; max-width: 850px; overflow: hidden; line-height: 1.65; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.review-row > time { display: block; margin-top: 10px; }
-.chef-dashboard-empty { padding: 24px; border: 2px dashed var(--color-ink); border-radius: 12px 5px 14px 6px; background: var(--color-paper); text-align: center; }
-.chef-dashboard-empty p { margin: 0; color: var(--color-text-soft); }
-.chef-dashboard-start { display: flex; align-items: center; justify-content: space-between; gap: 24px; text-align: left; }
-.chef-dashboard-start p { margin-top: 8px; }
-.chef-dashboard .btn { min-height: 44px; border-radius: 12px 5px 14px 5px; font-size: 12px; }
-@media (max-width: 1050px) { .chef-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 780px) { .chef-dashboard-overview { grid-template-columns: 1fr; } .chef-section-heading { align-items: flex-start; flex-direction: column; gap: 6px; } .chef-section-heading > a { padding-bottom: 0; } }
-@media (max-width: 560px) { .chef-dashboard { gap: 24px; } .chef-summary-grid { grid-template-columns: 1fr; } .chef-summary-card { min-height: 125px; } .chef-dashboard-panel { padding: 19px 16px; } .submission-row { grid-template-columns: 1fr; } .chef-row-action { align-items: flex-start; } .review-row-heading { flex-direction: column; gap: 6px; } .chef-dashboard-start { align-items: flex-start; flex-direction: column; } .chef-status-row { grid-template-columns: 95px minmax(70px, 1fr) 28px; gap: 9px; } }
+.chef-dashboard {
+    display: grid;
+    gap: 30px;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 12px 4px 32px 0;
+    color: var(--color-ink);
+}
+
+.chef-dashboard-welcome {
+    max-width: 760px;
+}
+
+.chef-dashboard-welcome h1 {
+    margin: 0;
+    font: 400 clamp(44px, 6vw, 68px)/1 var(--font-hand);
+    text-transform: none;
+}
+
+.chef-dashboard-welcome p {
+    margin: 8px 0 0;
+    color: var(--color-text-soft);
+}
+
+.chef-dashboard-welcome .chef-dashboard-greeting {
+    margin-top: 16px;
+    color: var(--color-ink);
+    font: 400 clamp(22px, 2.5vw, 30px)/1.2 var(--font-hand);
+}
+
+.chef-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.chef-dashboard-overview {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(260px, .75fr);
+    gap: 22px;
+}
+
+.chef-dashboard-panel {
+    min-width: 0;
+    padding: 24px;
+    border: 2px solid var(--color-ink);
+    border-radius: 15px 7px 17px 8px;
+    background: var(--color-bg);
+}
+
+.chef-section-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.chef-section-heading h2,
+.chef-dashboard-empty h2 {
+    margin: 0;
+    font: 400 clamp(27px, 3vw, 36px)/1.1 var(--font-hand);
+    text-transform: none;
+}
+
+.chef-section-heading p {
+    margin: 6px 0 0;
+    color: var(--color-text-soft);
+    font-size: 12px;
+}
+
+.chef-section-heading>a {
+    min-height: 44px;
+    padding: 10px 0;
+    color: var(--color-ink);
+    font-size: 12px;
+    font-weight: 700;
+    text-underline-offset: 4px;
+}
+
+.chef-status-list {
+    display: grid;
+    gap: 14px;
+}
+
+.chef-status-row {
+    display: grid;
+    grid-template-columns: minmax(110px, .6fr) minmax(100px, 1.4fr) 32px;
+    align-items: center;
+    gap: 14px;
+    padding: 4px 0;
+}
+
+.chef-status-label {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.chef-status-label small {
+    color: var(--color-error);
+    font-size: 10px;
+}
+
+.chef-status-track {
+    height: 12px;
+    overflow: hidden;
+    border: 1.5px solid var(--color-ink);
+    border-radius: 8px 3px 7px 3px;
+    background: var(--color-paper);
+}
+
+.chef-status-track i {
+    display: block;
+    height: 100%;
+    min-width: 0;
+    background: var(--color-lime);
+    border-right: 1px solid var(--color-ink);
+}
+
+.chef-status-row.is-rejected {
+    padding: 8px 10px;
+    border: 1px dashed var(--color-error);
+    border-radius: var(--radius-sm);
+    background: #fff3f3;
+}
+
+.chef-status-row.is-rejected .chef-status-track i {
+    background: #e89b9b;
+}
+
+.chef-status-row>strong {
+    font: 400 24px/1 var(--font-hand);
+    text-align: right;
+}
+
+.chef-quick-actions nav {
+    display: grid;
+    gap: 12px;
+}
+
+.chef-quick-actions .btn {
+    display: block;
+    min-height: 44px;
+    text-align: center;
+}
+
+.chef-dashboard-list-section {
+    padding-bottom: 12px;
+}
+
+.chef-dashboard-rows {
+    border-top: 1px dashed #ac998c;
+}
+
+.chef-dashboard-row {
+    padding: 18px 4px;
+    border-bottom: 1px dashed #ac998c;
+}
+
+.chef-dashboard-row h3 {
+    margin: 0;
+    font: 400 19px/1.35 var(--font-display);
+}
+
+.chef-dashboard-row p {
+    margin: 5px 0 0;
+}
+
+.submission-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px;
+}
+
+.submission-row .chef-row-course {
+    margin-top: 8px;
+    font-weight: 700;
+}
+
+.submission-row>div>p:last-child {
+    color: var(--color-text-soft);
+    font-size: 13px;
+}
+
+.chef-row-action {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chef-dashboard-row time {
+    color: var(--color-text-soft);
+    font-size: 11px;
+}
+
+.review-row-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.review-row-heading>div>p {
+    color: var(--color-text-soft);
+    font-size: 12px;
+}
+
+.dashboard-rating {
+    flex: 0 0 auto;
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.dashboard-review-comment {
+    display: -webkit-box;
+    max-width: 850px;
+    overflow: hidden;
+    line-height: 1.65;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.review-row>time {
+    display: block;
+    margin-top: 10px;
+}
+
+.chef-dashboard-empty {
+    padding: 24px;
+    border: 2px dashed var(--color-ink);
+    border-radius: 12px 5px 14px 6px;
+    background: var(--color-paper);
+    text-align: center;
+}
+
+.chef-dashboard-empty p {
+    margin: 0;
+    color: var(--color-text-soft);
+}
+
+.chef-dashboard-start {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    text-align: left;
+}
+
+.chef-dashboard-start p {
+    margin-top: 8px;
+}
+
+.chef-dashboard .btn {
+    min-height: 44px;
+    border-radius: 12px 5px 14px 5px;
+    font-size: 12px;
+}
+
+@media (max-width: 1050px) {
+    .chef-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 780px) {
+    .chef-dashboard-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .chef-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .chef-section-heading>a {
+        padding-bottom: 0;
+    }
+}
+
+@media (max-width: 560px) {
+    .chef-dashboard {
+        gap: 24px;
+    }
+
+    .chef-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chef-summary-card {
+        min-height: 125px;
+    }
+
+    .chef-dashboard-panel {
+        padding: 19px 16px;
+    }
+
+    .submission-row {
+        grid-template-columns: 1fr;
+    }
+
+    .chef-row-action {
+        align-items: flex-start;
+    }
+
+    .review-row-heading {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .chef-dashboard-start {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .chef-status-row {
+        grid-template-columns: 95px minmax(70px, 1fr) 28px;
+        gap: 9px;
+    }
+}
 
 
 /* ===== Chef summary: sketched folders in one row ===== */
@@ -55,7 +336,8 @@
 
 .chef-dashboard .chef-summary-grid {
     display: grid !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important; /* always one row */
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    /* always one row */
     gap: 20px;
     padding-top: 4px;
 }
@@ -69,23 +351,23 @@
     transition: transform .15s;
 }
 
-    .chef-stat:nth-child(odd) {
-        transform: rotate(-.8deg);
-    }
+.chef-stat:nth-child(odd) {
+    transform: rotate(-.8deg);
+}
 
-    .chef-stat:nth-child(even) {
-        transform: rotate(.7deg);
-    }
+.chef-stat:nth-child(even) {
+    transform: rotate(.7deg);
+}
 
-    .chef-stat:hover {
-        transform: rotate(0) translateY(-2px);
-    }
+.chef-stat:hover {
+    transform: rotate(0) translateY(-2px);
+}
 
-    .chef-stat:focus-visible {
-        outline: 3px solid var(--color-primary);
-        outline-offset: 6px;
-        border-radius: 12px;
-    }
+.chef-stat:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 6px;
+    border-radius: 12px;
+}
 
 /* Tab */
 .chef-stat-tab {
@@ -103,17 +385,17 @@
     white-space: nowrap;
 }
 
-    .chef-stat-tab::before {
-        content: "";
-        position: absolute;
-        inset: -2px -2px 0;
-        z-index: -1;
-        border: 2px solid var(--color-ink);
-        border-bottom: 0;
-        border-radius: inherit;
-        filter: url(#chefRoughInk);
-        pointer-events: none;
-    }
+.chef-stat-tab::before {
+    content: "";
+    position: absolute;
+    inset: -2px -2px 0;
+    z-index: -1;
+    border: 2px solid var(--color-ink);
+    border-bottom: 0;
+    border-radius: inherit;
+    filter: url(#chefRoughInk);
+    pointer-events: none;
+}
 
 /* Folder body with wobbly outline */
 .chef-stat-body {
@@ -127,16 +409,16 @@
     border-radius: var(--radius-ink);
 }
 
-    .chef-stat-body::before {
-        content: "";
-        position: absolute;
-        inset: -2px;
-        z-index: -1;
-        border: 2px solid var(--color-ink);
-        border-radius: inherit;
-        filter: url(#chefRoughInk);
-        pointer-events: none;
-    }
+.chef-stat-body::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    border: 2px solid var(--color-ink);
+    border-radius: inherit;
+    filter: url(#chefRoughInk);
+    pointer-events: none;
+}
 
 /* Inner dashed sheet with punched holes */
 .chef-stat-sheet {
@@ -149,18 +431,18 @@
     border-radius: 12px 7px 14px 8px / 8px 13px 8px 12px;
 }
 
-    .chef-stat-sheet::before {
-        content: "";
-        position: absolute;
-        top: 11px;
-        left: 14px;
-        right: 14px;
-        height: 16px;
-        background-image: radial-gradient(circle at center, transparent 0 4.5px, var(--color-ink) 5px 6px, transparent 6.5px);
-        background-size: 26px 16px;
-        background-repeat: space no-repeat;
-        pointer-events: none;
-    }
+.chef-stat-sheet::before {
+    content: "";
+    position: absolute;
+    top: 11px;
+    left: 14px;
+    right: 14px;
+    height: 16px;
+    background-image: radial-gradient(circle at center, transparent 0 4.5px, var(--color-ink) 5px 6px, transparent 6.5px);
+    background-size: 26px 16px;
+    background-repeat: space no-repeat;
+    pointer-events: none;
+}
 
 .chef-stat-value {
     display: block;
@@ -202,11 +484,11 @@
         padding: 34px 8px 10px;
     }
 
-        .chef-stat-sheet::before {
-            left: 8px;
-            right: 8px;
-            background-size: 20px 16px;
-        }
+    .chef-stat-sheet::before {
+        left: 8px;
+        right: 8px;
+        background-size: 20px 16px;
+    }
 
     .chef-stat-value {
         font-size: 28px;
@@ -316,43 +598,43 @@
     transition: transform .1s ease, box-shadow .1s ease, background-color .1s ease;
 }
 
-    .chef-dashboard .chef-quick-actions .btn:nth-child(even) {
-        border-width: 2.5px 3px 2.7px 2.3px;
-        border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
-    }
+.chef-dashboard .chef-quick-actions .btn:nth-child(even) {
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+}
 
-    /* Arrow on the right */
-    .chef-dashboard .chef-quick-actions .btn::after {
-        position: absolute;
-        top: 50%;
-        right: 16px;
-        width: 18px;
-        height: 18px;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Cpath d='M3 9.2 L14.5 8.8' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M9.5 3.8 L15 9 L9.3 14.4' stroke='%2335030C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat center / contain;
-        content: "";
-        transform: translateY(-50%);
-        transition: transform .1s ease;
-    }
+/* Arrow on the right */
+.chef-dashboard .chef-quick-actions .btn::after {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    width: 18px;
+    height: 18px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Cpath d='M3 9.2 L14.5 8.8' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M9.5 3.8 L15 9 L9.3 14.4' stroke='%2335030C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat center / contain;
+    content: "";
+    transform: translateY(-50%);
+    transition: transform .1s ease;
+}
 
-    .chef-dashboard .chef-quick-actions .btn:hover {
-        background: #FFD24C;
-        transform: translate(2px, 2px);
-        box-shadow: 1px 1px 0 #35030C;
-    }
+.chef-dashboard .chef-quick-actions .btn:hover {
+    background: #FFD24C;
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #35030C;
+}
 
-        .chef-dashboard .chef-quick-actions .btn:hover::after {
-            transform: translate(3px, -50%);
-        }
+.chef-dashboard .chef-quick-actions .btn:hover::after {
+    transform: translate(3px, -50%);
+}
 
-    .chef-dashboard .chef-quick-actions .btn:active {
-        transform: translate(3px, 3px) rotate(-.5deg);
-        box-shadow: none;
-    }
+.chef-dashboard .chef-quick-actions .btn:active {
+    transform: translate(3px, 3px) rotate(-.5deg);
+    box-shadow: none;
+}
 
-    .chef-dashboard .chef-quick-actions .btn:focus-visible {
-        outline: 3px solid #F93209;
-        outline-offset: 3px;
-    }
+.chef-dashboard .chef-quick-actions .btn:focus-visible {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}
 
 /* ===== Chef dashboard: sketch panels, bars, quick actions ===== */
 
@@ -430,40 +712,40 @@
     transition: transform .1s ease, box-shadow .1s ease, background-color .1s ease;
 }
 
-    .chef-dashboard .chef-quick-actions .btn:nth-child(even) {
-        border-width: 2.5px 3px 2.7px 2.3px;
-        border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
-    }
+.chef-dashboard .chef-quick-actions .btn:nth-child(even) {
+    border-width: 2.5px 3px 2.7px 2.3px;
+    border-radius: 20px 13px 22px 14px / 15px 21px 13px 22px;
+}
 
-    /* Arrow on the right */
-    .chef-dashboard .chef-quick-actions .btn::after {
-        position: absolute;
-        top: 50%;
-        right: 16px;
-        width: 18px;
-        height: 18px;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Cpath d='M3 9.2 L14.5 8.8' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M9.5 3.8 L15 9 L9.3 14.4' stroke='%2335030C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat center / contain;
-        content: "";
-        transform: translateY(-50%);
-        transition: transform .1s ease;
-    }
+/* Arrow on the right */
+.chef-dashboard .chef-quick-actions .btn::after {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    width: 18px;
+    height: 18px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Cpath d='M3 9.2 L14.5 8.8' stroke='%2335030C' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M9.5 3.8 L15 9 L9.3 14.4' stroke='%2335030C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat center / contain;
+    content: "";
+    transform: translateY(-50%);
+    transition: transform .1s ease;
+}
 
-    .chef-dashboard .chef-quick-actions .btn:hover {
-        background: #FFD24C;
-        transform: translate(2px, 2px);
-        box-shadow: 1px 1px 0 #35030C;
-    }
+.chef-dashboard .chef-quick-actions .btn:hover {
+    background: #FFD24C;
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #35030C;
+}
 
-        .chef-dashboard .chef-quick-actions .btn:hover::after {
-            transform: translate(3px, -50%);
-        }
+.chef-dashboard .chef-quick-actions .btn:hover::after {
+    transform: translate(3px, -50%);
+}
 
-    .chef-dashboard .chef-quick-actions .btn:active {
-        transform: translate(3px, 3px) rotate(-.5deg);
-        box-shadow: none;
-    }
+.chef-dashboard .chef-quick-actions .btn:active {
+    transform: translate(3px, 3px) rotate(-.5deg);
+    box-shadow: none;
+}
 
-    .chef-dashboard .chef-quick-actions .btn:focus-visible {
-        outline: 3px solid #F93209;
-        outline-offset: 3px;
-    }
+.chef-dashboard .chef-quick-actions .btn:focus-visible {
+    outline: 3px solid #F93209;
+    outline-offset: 3px;
+}

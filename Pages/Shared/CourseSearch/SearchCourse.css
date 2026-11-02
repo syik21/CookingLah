@@ -603,6 +603,7 @@
 }
 
 @media (max-width: 680px) {
+
     .course-search-panel,
     .course-overview-panel {
         width: calc(100% - 28px);
@@ -731,7 +732,7 @@
     text-transform: uppercase;
 }
 
-.course-search-heading > p:last-child {
+.course-search-heading>p:last-child {
     margin: 0;
     color: var(--color-text-soft);
     line-height: 1.6;
@@ -927,60 +928,60 @@
     border-radius: 26px 15px 28px 16px / 16px 26px 15px 28px;
 }
 
-    /* Hand-drawn search bar: the magnifier is replaced by a "+" cell with a divider (pure CSS) */
-    .course-search-toolbar .search-input-wrap svg {
-        display: none;
-    }
+/* Hand-drawn search bar: the magnifier is replaced by a "+" cell with a divider (pure CSS) */
+.course-search-toolbar .search-input-wrap svg {
+    display: none;
+}
 
-    .course-search-toolbar .search-input-wrap input {
-        padding-left: 62px;
-        border-width: var(--sketch-width-a);
-        border-radius: var(--sketch-radius-a);
-        background-color: #fff;
-    }
+.course-search-toolbar .search-input-wrap input {
+    padding-left: 62px;
+    border-width: var(--sketch-width-a);
+    border-radius: var(--sketch-radius-a);
+    background-color: #fff;
+}
 
-        .course-search-toolbar .search-input-wrap input::-webkit-search-cancel-button {
-            display: none;
-        }
+.course-search-toolbar .search-input-wrap input::-webkit-search-cancel-button {
+    display: none;
+}
 
-    .course-search-toolbar .search-input-wrap::before {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 46px;
-        z-index: 1;
-        width: 2.8px;
-        background: var(--color-ink);
-        content: "";
-        pointer-events: none;
-    }
+.course-search-toolbar .search-input-wrap::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 46px;
+    z-index: 1;
+    width: 2.8px;
+    background: var(--color-ink);
+    content: "";
+    pointer-events: none;
+}
 
-    .course-search-toolbar .search-input-wrap::after {
-        position: absolute;
-        top: 50%;
-        left: 12px;
-        z-index: 1;
-        width: 22px;
-        height: 22px;
-        background: var(--color-ink);
-        content: "";
-        pointer-events: none;
-        transform: translateY(-50%);
-        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12.2 4.5C12 9 12.3 15 11.8 19.6'/%3E%3Cpath d='M4.4 12.3C9 11.8 15 12.4 19.7 11.7'/%3E%3C/svg%3E") center / contain no-repeat;
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12.2 4.5C12 9 12.3 15 11.8 19.6'/%3E%3Cpath d='M4.4 12.3C9 11.8 15 12.4 19.7 11.7'/%3E%3C/svg%3E") center / contain no-repeat;
-    }
+.course-search-toolbar .search-input-wrap::after {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    z-index: 1;
+    width: 22px;
+    height: 22px;
+    background: var(--color-ink);
+    content: "";
+    pointer-events: none;
+    transform: translateY(-50%);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12.2 4.5C12 9 12.3 15 11.8 19.6'/%3E%3Cpath d='M4.4 12.3C9 11.8 15 12.4 19.7 11.7'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12.2 4.5C12 9 12.3 15 11.8 19.6'/%3E%3Cpath d='M4.4 12.3C9 11.8 15 12.4 19.7 11.7'/%3E%3C/svg%3E") center / contain no-repeat;
+}
 
-    /* Hand-drawn dropdowns */
-    .course-search-toolbar .search-field select {
-        border-width: var(--sketch-width-a);
-        border-radius: var(--sketch-radius-b);
-        background-color: #fff;
-    }
+/* Hand-drawn dropdowns */
+.course-search-toolbar .search-field select {
+    border-width: var(--sketch-width-a);
+    border-radius: var(--sketch-radius-b);
+    background-color: #fff;
+}
 
-    .course-search-toolbar .search-field:nth-child(even) select {
-        border-width: var(--sketch-width-b);
-        border-radius: var(--sketch-radius-a);
-    }
+.course-search-toolbar .search-field:nth-child(even) select {
+    border-width: var(--sketch-width-b);
+    border-radius: var(--sketch-radius-a);
+}
 
 .search-field select option {
     background: #fff;
@@ -990,6 +991,7 @@
 
 /* Opened list (Chrome/Edge 135+; other browsers keep the native list). Opens below the field. */
 @supports (appearance: base-select) {
+
     .search-field select,
     .search-field select::picker(select) {
         appearance: base-select;
@@ -1000,41 +1002,41 @@
         cursor: pointer;
     }
 
-        .search-field select::picker(select) {
-            position-area: block-end span-inline-end;
-            position-try-fallbacks: none;
-            min-width: anchor-size(width);
-            max-height: 260px;
-            overflow-y: auto;
-            margin-top: 8px;
-            padding: 6px;
-            border: 2.5px solid var(--color-ink);
-            border-width: var(--sketch-width-b);
-            border-radius: var(--sketch-radius-a);
-            background: #fff;
-            box-shadow: 3px 3px 0 var(--color-ink);
-        }
+    .search-field select::picker(select) {
+        position-area: block-end span-inline-end;
+        position-try-fallbacks: none;
+        min-width: anchor-size(width);
+        max-height: 260px;
+        overflow-y: auto;
+        margin-top: 8px;
+        padding: 6px;
+        border: 2.5px solid var(--color-ink);
+        border-width: var(--sketch-width-b);
+        border-radius: var(--sketch-radius-a);
+        background: #fff;
+        box-shadow: 3px 3px 0 var(--color-ink);
+    }
 
-        .search-field select option {
-            padding: 10px 12px;
-            border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
-            cursor: pointer;
-        }
+    .search-field select option {
+        padding: 10px 12px;
+        border-radius: 10px 12px 9px 13px / 12px 9px 13px 10px;
+        cursor: pointer;
+    }
 
-            .search-field select option:hover,
-            .search-field select option:focus-visible {
-                background: var(--color-yellow);
-                outline: 0;
-            }
+    .search-field select option:hover,
+    .search-field select option:focus-visible {
+        background: var(--color-yellow);
+        outline: 0;
+    }
 
-            .search-field select option:checked {
-                background: var(--color-lime);
-                font-weight: 700;
-            }
+    .search-field select option:checked {
+        background: var(--color-lime);
+        font-weight: 700;
+    }
 
-            .search-field select option::checkmark {
-                display: none;
-            }
+    .search-field select option::checkmark {
+        display: none;
+    }
 }
 
 /* Hand-drawn buttons: search, pager, card actions */
@@ -1052,17 +1054,17 @@
     transition: transform .1s ease, background-color .1s ease;
 }
 
-    .course-search-toolbar .search-submit:hover,
-    .pager-button:hover:not(:disabled),
-    .course-card-actions .btn:hover {
-        background: var(--color-yellow);
-    }
+.course-search-toolbar .search-submit:hover,
+.pager-button:hover:not(:disabled),
+.course-card-actions .btn:hover {
+    background: var(--color-yellow);
+}
 
-    .course-search-toolbar .search-submit:active,
-    .pager-button:active:not(:disabled),
-    .course-card-actions .btn:active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.course-search-toolbar .search-submit:active,
+.pager-button:active:not(:disabled),
+.course-card-actions .btn:active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
 /* "Clear Filters" button inside the "No courses found" box */
 .course-search-empty .btn {
@@ -1077,13 +1079,13 @@
     transition: transform .1s ease, background-color .1s ease;
 }
 
-    .course-search-empty .btn:hover {
-        background: var(--color-yellow);
-    }
+.course-search-empty .btn:hover {
+    background: var(--color-yellow);
+}
 
-    .course-search-empty .btn:active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.course-search-empty .btn:active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
 /* Clear filters: underlined link becomes a sketch button */
 .course-search-toolbar .search-clear {
@@ -1103,15 +1105,16 @@
     transition: transform .1s ease, background-color .1s ease;
 }
 
-    .course-search-toolbar .search-clear:hover {
-        background: var(--color-yellow);
-    }
+.course-search-toolbar .search-clear:hover {
+    background: var(--color-yellow);
+}
 
-    .course-search-toolbar .search-clear:active {
-        transform: translateY(1px) rotate(-1deg);
-    }
+.course-search-toolbar .search-clear:active {
+    transform: translateY(1px) rotate(-1deg);
+}
 
 @media (prefers-reduced-motion: reduce) {
+
     .course-search-toolbar .search-submit,
     .pager-button,
     .course-card-actions .btn,

@@ -14,8 +14,14 @@ namespace CookingLah.Pages.Learner.MyCourse
 
         private int CurrentPage
         {
-            get { return (int?)ViewState["CurrentPage"] ?? 0; }
-            set { ViewState["CurrentPage"] = value; }
+            get
+            {
+                return (int?)ViewState["CurrentPage"] ?? 0;
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
         }
 
         private string CurrentStatusFilter
@@ -25,7 +31,10 @@ namespace CookingLah.Pages.Learner.MyCourse
                 string status = Convert.ToString(ViewState["CurrentStatusFilter"]);
                 return string.IsNullOrEmpty(status) ? "All" : status;
             }
-            set { ViewState["CurrentStatusFilter"] = value; }
+            set
+            {
+                ViewState["CurrentStatusFilter"] = value;
+            }
         }
 
         private int TotalStartedCourseCount { get; set; }
@@ -65,7 +74,8 @@ namespace CookingLah.Pages.Learner.MyCourse
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (LearnerId <= 0) return;
+            if (LearnerId <= 0)
+                return;
 
             if (!IsPostBack)
             {
@@ -110,7 +120,8 @@ namespace CookingLah.Pages.Learner.MyCourse
                   AND c.Status='Published'",
                 Parameter("@learnerId", LearnerId));
 
-            if (counts.Rows.Count == 0) return;
+            if (counts.Rows.Count == 0)
+                return;
 
             DataRow countRow = counts.Rows[0];
             lblAllCoursesCount.Text = Convert.ToString(countRow["AllCount"]);
@@ -240,7 +251,8 @@ namespace CookingLah.Pages.Learner.MyCourse
         protected string CourseActionText(object progressStatus)
         {
             string status = Convert.ToString(progressStatus);
-            if (status == "Completed") return "Review course";
+            if (status == "Completed")
+                return "Review course";
             return status == "Submitted" ? "View submission status" : "Continue learning";
         }
 
@@ -307,7 +319,8 @@ namespace CookingLah.Pages.Learner.MyCourse
 
         protected void rptMyCourses_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            if (e.CommandName != "GoToCourse") return;
+            if (e.CommandName != "GoToCourse")
+                return;
 
             int courseId;
             if (!int.TryParse(Convert.ToString(e.CommandArgument), out courseId) || courseId <= 0)
@@ -326,7 +339,8 @@ namespace CookingLah.Pages.Learner.MyCourse
                 Parameter("@learnerId", LearnerId),
                 Parameter("@courseId", courseId));
 
-            if (learnerCourse.Rows.Count == 0) return;
+            if (learnerCourse.Rows.Count == 0)
+                return;
 
             NavigateToCourse(courseId);
         }

@@ -10,19 +10,24 @@ namespace CookingLah.Pages.Chef.ManageCourse.Overview
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Visible && CanEdit && !IsPostBack && Request.QueryString["edit"] == "1") Run(OpenEditor);
+            if (Visible && CanEdit && !IsPostBack && Request.QueryString["edit"] == "1")
+                Run(OpenEditor);
         }
+
         public void LoadCourse(int courseId)
         {
             rptOverview.DataSource = new[] { Host.Course }.CopyToDataTable();
             rptOverview.DataBind();
             btnEdit.Visible = CanEdit;
         }
+
         protected override void OnPreRender(EventArgs e)
         {
-            if (Visible) Run(() => LoadCourse(CourseId));
+            if (Visible)
+                Run(() => LoadCourse(CourseId));
             base.OnPreRender(e);
         }
+
         private void OpenEditor()
         {
             EnsureEditable();
@@ -58,20 +63,32 @@ namespace CookingLah.Pages.Chef.ManageCourse.Overview
 
             pnlEditor.Visible = true;
         }
-        protected void btnEdit_Click(object sender, EventArgs e) { Run(OpenEditor); }
-        protected void btnCancel_Click(object sender, EventArgs e) { pnlEditor.Visible = false; }
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            Run(OpenEditor);
+        }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            pnlEditor.Visible = false;
+        }
+
         protected void btnSaveCourse_Click(object sender, EventArgs e)
         {
-            if (!pnlEditor.Visible) return;
+            if (!pnlEditor.Visible)
+                return;
             Run(() =>
             {
                 EnsureEditable();
                 string title = Required(txtTitle.Text, "a course title", 150);
                 string description = Required(txtDescription.Text, "a course description");
                 int categoryId;
-                if (!int.TryParse(ddlCategory.SelectedValue, out categoryId)) throw new InvalidOperationException("Please select a category.");
+                if (!int.TryParse(ddlCategory.SelectedValue, out categoryId))
+                    throw new InvalidOperationException("Please select a category.");
                 string difficulty = ddlDifficulty.SelectedValue;
-                if (Array.IndexOf(new[] { "Beginner", "Intermediate", "Advanced" }, difficulty) < 0) throw new InvalidOperationException("Please select a difficulty level.");
+                if (Array.IndexOf(new[] { "Beginner", "Intermediate", "Advanced" }, difficulty) < 0)
+                    throw new InvalidOperationException("Please select a difficulty level.");
                 if (CanEdit)
                 {
                     var draft = GetReviewDraft(CourseId, true);
@@ -103,8 +120,11 @@ namespace CookingLah.Pages.Chef.ManageCourse.Overview
                         }
                     }
 
-                    staged["Title"] = title; staged["Description"] = description; staged["CategoryID"] = categoryId;
-                    staged["DifficultyLevel"] = difficulty; staged["Thumbnail"] = image;
+                    staged["Title"] = title;
+                    staged["Description"] = description;
+                    staged["CategoryID"] = categoryId;
+                    staged["DifficultyLevel"] = difficulty;
+                    staged["Thumbnail"] = image;
                     staged["FoodCultureID"] = foodCultureId.HasValue ? (object)foodCultureId.Value : DBNull.Value;
                     staged["NewFoodDishName"] = newDishName;
                     staged["NewFoodCountry"] = newCountry;

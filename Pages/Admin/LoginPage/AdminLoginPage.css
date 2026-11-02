@@ -123,6 +123,7 @@ body.admin-login {
 
 /* ===== Accessibility: Reduced Motion ===== */
 @media (prefers-reduced-motion: reduce) {
+
     .admin-login *,
     .admin-login *::before,
     .admin-login *::after {

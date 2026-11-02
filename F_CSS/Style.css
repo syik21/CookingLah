@@ -11,17 +11,22 @@
    ========================= */
 :root {
     /* Colour */
-    --color-bg: #FFF9EB; /* main cream */
-    --color-primary: #F93209; /* red-orange highlight */
+    --color-bg: #FFF9EB;
+    /* main cream */
+    --color-primary: #F93209;
+    /* red-orange highlight */
     --color-error: #a61b35;
-    --color-ink: #35030C; /* all text, borders, shadows */
+    --color-ink: #35030C;
+    /* all text, borders, shadows */
     --color-text-soft: #555555;
     --color-lime: #CDF58A;
     --color-pink: #FBB8EE;
     --color-yellow: #FFD24C;
     --color-lavender: #B99CFF;
-    --color-grid: #F1E6CC; /* grid lines */
-    --color-tan: #F3E5C3; /* "available" surface */
+    --color-grid: #F1E6CC;
+    /* grid lines */
+    --color-tan: #F3E5C3;
+    /* "available" surface */
     --color-tan-light: #F7EFD9;
     /* Typography */
     --font-hand: 'Caveat Brush', 'Marker Felt', cursive;
@@ -65,7 +70,9 @@ html {
     scroll-behavior: smooth;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -78,7 +85,8 @@ body {
     font: 400 15px/1.65 var(--font-body);
 }
 
-img, svg {
+img,
+svg {
     max-width: 100%;
 }
 
@@ -133,13 +141,15 @@ a {
 /* =========================
    3. Typography
    ========================= */
-h1, .display-title {
+h1,
+.display-title {
     font: 400 clamp(58px, 10vw, 112px)/.92 var(--font-hand);
     text-transform: uppercase;
     margin: 0;
 }
 
-h2, .section-title {
+h2,
+.section-title {
     font: 400 clamp(46px, 6vw, 72px)/1 var(--font-hand);
     text-transform: uppercase;
     margin: 0 0 12px;
@@ -158,7 +168,8 @@ h2, .section-title {
 }
 
 /* Highlighted phrase inside a heading */
-mark, .highlight {
+mark,
+.highlight {
     background: var(--color-primary);
     color: var(--color-bg);
     padding: 0 .14em;
@@ -182,8 +193,7 @@ mark, .highlight {
 
 /* Shared page frame: matches the Manage Users content width and top spacing.
    Food map pages are intentionally omitted because they use a full-canvas layout. */
-:where(
-    .admin-dashboard,
+:where(.admin-dashboard,
     .review-page,
     .course-report,
     .categories-page,
@@ -200,8 +210,7 @@ mark, .highlight {
     .my-activity-page,
     .my-courses-page,
     .course-overview-panel,
-    .profile-page
-) {
+    .profile-page) {
     box-sizing: border-box;
     width: 100% !important;
     max-width: var(--content-width) !important;
@@ -226,11 +235,11 @@ mark, .highlight {
     line-height: 0;
 }
 
-    .site-logo img {
-        height: 68px;
-        width: auto;
-        display: block;
-    }
+.site-logo img {
+    height: 68px;
+    width: auto;
+    display: block;
+}
 
 .site-footer {
     padding: 40px var(--gutter) 50px;
@@ -245,9 +254,9 @@ mark, .highlight {
     font-size: 13px;
 }
 
-    .site-footer .site-logo img {
-        height: 56px;
-    }
+.site-footer .site-logo img {
+    height: 56px;
+}
 
 /* =========================
    5. Buttons
@@ -266,10 +275,10 @@ mark, .highlight {
     cursor: pointer;
 }
 
-    .btn:hover {
-        transform: translate(2px, 2px);
-        box-shadow: var(--shadow-sm-hover);
-    }
+.btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-sm-hover);
+}
 
 /* Explicit button variants must override page-level base and hover backgrounds. */
 .btn-primary {
@@ -376,10 +385,11 @@ mark, .highlight {
     cursor: pointer;
 }
 
-    .pill:hover, .pill.is-active {
-        background: var(--color-primary);
-        color: var(--color-ink);
-    }
+.pill:hover,
+.pill.is-active {
+    background: var(--color-primary);
+    color: var(--color-ink);
+}
 
 .tag-list {
     display: flex;
@@ -420,33 +430,33 @@ mark, .highlight {
     transition: background-color .15s, box-shadow .15s, transform .15s;
 }
 
-    .form-select:hover:not(:disabled) {
-        background-color: var(--color-tan-light);
-        transform: translate(2px, 2px);
-        box-shadow: var(--shadow-sm-hover);
-    }
+.form-select:hover:not(:disabled) {
+    background-color: var(--color-tan-light);
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-sm-hover);
+}
 
-    .form-select:focus-visible {
-        outline: 3px solid var(--color-primary);
-        outline-offset: 4px;
-        box-shadow: 4px 4px 0 var(--color-lime);
-    }
+.form-select:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 4px;
+    box-shadow: 4px 4px 0 var(--color-lime);
+}
 
-    .form-select:disabled {
-        opacity: .6;
-        cursor: not-allowed;
-        box-shadow: none;
-    }
+.form-select:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
 
-    .form-select[aria-invalid="true"] {
-        border-color: var(--color-primary);
-        background-color: #ffe9e3;
-    }
+.form-select[aria-invalid="true"] {
+    border-color: var(--color-primary);
+    background-color: #ffe9e3;
+}
 
-    .form-select option {
-        background: var(--color-bg);
-        color: var(--color-ink);
-    }
+.form-select option {
+    background: var(--color-bg);
+    color: var(--color-ink);
+}
 
 @media (forced-colors: active) {
     .form-select {
@@ -501,7 +511,9 @@ mark, .highlight {
         scroll-behavior: auto;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         transition: none !important;
         animation: none !important;
     }
@@ -570,36 +582,36 @@ mark, .highlight {
     overflow: hidden;
 }
 
-    .world-map svg {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
+.world-map svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
 
-    .world-map path {
-        fill: var(--color-bg);
-        stroke: var(--color-ink);
-        stroke-width: 0.8px;
-        stroke-linejoin: round;
-        transition: fill .15s;
-    }
+.world-map path {
+    fill: var(--color-bg);
+    stroke: var(--color-ink);
+    stroke-width: 0.8px;
+    stroke-linejoin: round;
+    transition: fill .15s;
+}
 
-        .world-map path.has {
-            fill: var(--color-tan);
-            cursor: pointer;
-        }
+.world-map path.has {
+    fill: var(--color-tan);
+    cursor: pointer;
+}
 
-            .world-map path.has:hover {
-                fill: var(--color-ink);
-            }
+.world-map path.has:hover {
+    fill: var(--color-ink);
+}
 
-        .world-map path.no:hover {
-            fill: var(--color-tan-light);
-        }
+.world-map path.no:hover {
+    fill: var(--color-tan-light);
+}
 
-        .world-map path.is-selected {
-            fill: var(--color-primary) !important;
-        }
+.world-map path.is-selected {
+    fill: var(--color-primary) !important;
+}
 
 .map-controls {
     display: flex;
@@ -612,11 +624,11 @@ mark, .highlight {
     margin-bottom: 8px;
 }
 
-    .map-controls .btn {
-        min-width: 44px;
-        min-height: 44px;
-        padding: 8px 12px;
-    }
+.map-controls .btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px 12px;
+}
 
 #mapZoomLevel {
     min-width: 5ch;
@@ -660,21 +672,21 @@ mark, .highlight {
     -ms-overflow-style: none;
 }
 
-    .map-viewport,
-    .map-viewport path[data-n] {
-        cursor: grab;
-        user-select: none;
-    }
+.map-viewport,
+.map-viewport path[data-n] {
+    cursor: grab;
+    user-select: none;
+}
 
-        .map-viewport.is-dragging,
-        .map-viewport.is-dragging path[data-n] {
-            cursor: grabbing;
-            scroll-behavior: auto;
-        }
+.map-viewport.is-dragging,
+.map-viewport.is-dragging path[data-n] {
+    cursor: grabbing;
+    scroll-behavior: auto;
+}
 
-        .map-viewport::-webkit-scrollbar {
-            display: none;
-        }
+.map-viewport::-webkit-scrollbar {
+    display: none;
+}
 
 #worldMap {
     max-width: none;
@@ -716,10 +728,10 @@ mark, .highlight {
     overflow: auto;
 }
 
-    .map-dialog::backdrop {
-        background: var(--color-ink);
-        opacity: .7;
-    }
+.map-dialog::backdrop {
+    background: var(--color-ink);
+    opacity: .7;
+}
 
 body.map-dialog-open {
     overflow: hidden;
@@ -749,14 +761,14 @@ body.map-dialog-open {
     align-items: center;
 }
 
-    .country-card .card-eyebrow {
-        margin: 0 0 8px;
-    }
+.country-card .card-eyebrow {
+    margin: 0 0 8px;
+}
 
-    .country-card .country-card__description {
-        margin: 8px 0 0;
-        max-width: 560px;
-    }
+.country-card .country-card__description {
+    margin: 8px 0 0;
+    max-width: 560px;
+}
 
 /* Learner progress map variants (available to any map page) */
 /* progress map */
@@ -779,10 +791,10 @@ body.map-dialog-open {
     min-width: 220px;
 }
 
-    .pm-meta .bar {
-        height: 20px;
-        margin: 6px 0;
-    }
+.pm-meta .bar {
+    height: 20px;
+    margin: 6px 0;
+}
 
 .pm-legend {
     display: flex;
@@ -793,15 +805,15 @@ body.map-dialog-open {
     margin: 0 0 14px;
 }
 
-    .pm-legend i {
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        border: 2px solid var(--color-ink);
-        border-radius: 4px;
-        vertical-align: -2px;
-        margin-right: 6px;
-    }
+.pm-legend i {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-ink);
+    border-radius: 4px;
+    vertical-align: -2px;
+    margin-right: 6px;
+}
 
 .pm-stage {
     position: relative;
@@ -815,9 +827,9 @@ body.map-dialog-open {
     cursor: pointer;
 }
 
-    .pm-map path.done:hover {
-        fill: #1f7a37;
-    }
+.pm-map path.done:hover {
+    fill: #1f7a37;
+}
 
 .pm-map path.sel {
     stroke: var(--color-primary);
@@ -831,19 +843,19 @@ body.map-dialog-open {
     align-items: center;
 }
 
-    .pm-card h3 {
-        font: 400 clamp(36px, 5vw, 56px)/1 var(--font-hand);
-        margin: 0;
-    }
+.pm-card h3 {
+    font: 400 clamp(36px, 5vw, 56px)/1 var(--font-hand);
+    margin: 0;
+}
 
-    .pm-card .c {
-        font: 700 13px var(--font-body);
-        margin: 0 0 6px;
-    }
+.pm-card .c {
+    font: 700 13px var(--font-body);
+    margin: 0 0 6px;
+}
 
-    .pm-card p {
-        margin: 0;
-    }
+.pm-card p {
+    margin: 0;
+}
 
 .pm-tags {
     display: flex;
@@ -852,13 +864,13 @@ body.map-dialog-open {
     margin-top: 12px;
 }
 
-    .pm-tags span {
-        background: var(--color-lime);
-        border: 2px solid var(--color-ink);
-        border-radius: 999px;
-        font: 700 11px var(--font-body);
-        padding: 2px 10px;
-    }
+.pm-tags span {
+    background: var(--color-lime);
+    border: 2px solid var(--color-ink);
+    border-radius: 999px;
+    font: 700 11px var(--font-body);
+    padding: 2px 10px;
+}
 
 .pm-badge {
     display: inline-block;
@@ -869,13 +881,13 @@ body.map-dialog-open {
     margin-bottom: 8px;
 }
 
-    .pm-badge.done {
-        background: #3fbf5f;
-    }
+.pm-badge.done {
+    background: #3fbf5f;
+}
 
-    .pm-badge.todo {
-        background: var(--color-yellow);
-    }
+.pm-badge.todo {
+    background: var(--color-yellow);
+}
 
 .pm-lesson {
     display: none;
@@ -884,15 +896,15 @@ body.map-dialog-open {
     border-top: 2px dashed var(--color-ink);
 }
 
-    .pm-lesson.on {
-        display: block;
-        animation: in .35s;
-    }
+.pm-lesson.on {
+    display: block;
+    animation: in .35s;
+}
 
-    .pm-lesson ol {
-        margin: 8px 0 16px;
-        padding-left: 20px;
-    }
+.pm-lesson ol {
+    margin: 8px 0 16px;
+    padding-left: 20px;
+}
 
 .pm-dish-img {
     height: 150px;
@@ -962,7 +974,8 @@ body.map-dialog-open {
     pointer-events: none;
 }
 
-.handwritten-note, .notebook-caption {
+.handwritten-note,
+.notebook-caption {
     font: 400 24px/1.2 var(--font-hand);
 }
 
@@ -1014,9 +1027,9 @@ body.map-dialog-open {
     box-shadow: 0 5px 0 var(--color-paper), 0 7px 0 var(--color-ink), 0 11px 0 var(--color-paper), 0 13px 0 var(--color-ink);
 }
 
-    .notebook-page + .notebook-page {
-        border-radius: 5px 17px 19px 6px / 7px 9px 13px 5px;
-    }
+.notebook-page+.notebook-page {
+    border-radius: 5px 17px 19px 6px / 7px 9px 13px 5px;
+}
 
 .notebook-coil {
     position: absolute;
@@ -1043,6 +1056,7 @@ body.map-dialog-open {
     color: var(--color-ink);
     text-align: center;
 }
+
 .course-image-placeholder img {
     display: block;
     width: min(42%, 110px) !important;
@@ -1053,6 +1067,7 @@ body.map-dialog-open {
     border: 0 !important;
     border-radius: 0 !important;
 }
+
 .dashboard-title-icon {
     display: inline-block;
     width: 1em;
@@ -1071,6 +1086,7 @@ body.map-dialog-open {
     font-weight: 700;
     line-height: 1.35;
 }
+
 @media (max-width: 760px) {
     .notebook {
         padding: 16px 12px 28px;
@@ -1089,5 +1105,3 @@ body.map-dialog-open {
         display: none;
     }
 }
-
-

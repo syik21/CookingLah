@@ -38,7 +38,8 @@ namespace CookingLah.Pages.Learner.SearchCourse
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsAuthorized) return;
+            if (!IsAuthorized)
+                return;
             SearchCourse1.IsLearner = true;
             int courseId;
             if (!IsPostBack && int.TryParse(Request.QueryString["courseId"], out courseId) && courseId > 0)

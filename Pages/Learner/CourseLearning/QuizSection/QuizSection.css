@@ -17,7 +17,7 @@
     text-align: left;
 }
 
-.quiz-heading > p:last-child {
+.quiz-heading>p:last-child {
     margin: 12px 0 0;
     color: var(--color-text-soft);
     font-size: 13px;
@@ -44,7 +44,7 @@
     font-size: 10px;
 }
 
-.quiz-intro > p {
+.quiz-intro>p {
     max-width: 600px;
     margin: 18px 0;
     font-size: 12px;
@@ -171,7 +171,7 @@
 }
 
 .quiz-result-score span,
-.quiz-result > p:not(.learning-eyebrow) {
+.quiz-result>p:not(.learning-eyebrow) {
     font-size: 11px;
 }
 

@@ -26,7 +26,8 @@ namespace CookingLah.Pages.Admin
         {
             string username;
             string profileImage;
-            if (!DatabaseManager.TryLoadMasterProfile(Session["UserId"], out username, out profileImage)) return;
+            if (!DatabaseManager.TryLoadMasterProfile(Session["UserId"], out username, out profileImage))
+                return;
 
             Session["Username"] = username;
             lblProfileName.Text = username;

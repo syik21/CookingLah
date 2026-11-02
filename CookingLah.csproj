@@ -397,7 +397,6 @@
     <Content Include="Pages\Shared\WorldMap\WorldMap.ascx" />
     <Content Include="Pages\Shared\WorldMap\WorldMap.css" />
     <Content Include="Pages\Shared\WorldMap\WorldMap.js" />
-    <Content Include="Rules\DESIGN_GUIDELINES.md" />
     <Content Include=".editorconfig" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

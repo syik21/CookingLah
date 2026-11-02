@@ -52,7 +52,9 @@
             image.alt = food.dishName;
             image.addEventListener('error', function () {
                 image.src = shell.dataset.placeholder;
-            }, { once: true });
+            }, {
+                once: true
+            });
             image.src = getDishImage(food.dishImage);
             imageWrap.appendChild(image);
             var body = createElement('div', 'food-dish-card__body');
@@ -89,9 +91,9 @@
         renderDishCards(filteredFoods.slice(startIndex, startIndex + pageSize));
         renderPagination(totalPages);
         document.getElementById('foodCountryName').textContent = displayCountryName(selectedCountry);
-        document.getElementById('foodDishCount').textContent = currentSearch
-            ? filteredFoods.length + ' of ' + countryFoods.length + ' dishes found'
-            : countryFoods.length + (countryFoods.length === 1 ? ' dish' : ' dishes');
+        document.getElementById('foodDishCount').textContent = currentSearch ?
+            filteredFoods.length + ' of ' + countryFoods.length + ' dishes found' :
+            countryFoods.length + (countryFoods.length === 1 ? ' dish' : ' dishes');
         document.getElementById('foodComingSoon').hidden = countryFoods.length !== 0;
         document.getElementById('foodNoMatches').hidden = countryFoods.length === 0 || filteredFoods.length !== 0;
     }
@@ -121,11 +123,15 @@
             }
         });
         countrySelector.addEventListener('change', function () {
-            map.selectCountry(countrySelector.value, { focus: true });
+            map.selectCountry(countrySelector.value, {
+                focus: true
+            });
         });
         var initialCountry = shell.dataset.selectedCountry;
         if (initialCountry === 'United States') initialCountry = 'United States of America';
-        map.selectCountry(countries.includes(initialCountry) ? initialCountry : 'Malaysia', { focus: true });
+        map.selectCountry(countries.includes(initialCountry) ? initialCountry : 'Malaysia', {
+            focus: true
+        });
     }
 
     function initialize() {
@@ -145,6 +151,7 @@
         });
 
         var header = document.querySelector('.master-header, .public-header');
+
         function updateLayout() {
             shell.style.setProperty('--food-map-top', header.getBoundingClientRect().bottom + 'px');
         }
@@ -169,7 +176,9 @@
             renderFoodCultures();
         });
         if (window.CookingLahWorldMap) initializeCountryInteraction();
-        else document.addEventListener('worldmap:ready', initializeCountryInteraction, { once: true });
+        else document.addEventListener('worldmap:ready', initializeCountryInteraction, {
+            once: true
+        });
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize);

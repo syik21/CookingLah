@@ -15,23 +15,50 @@ namespace CookingLah.Pages.Admin.ManageCategories
         // Store page, edit, delete and search values across postbacks.
         private int CurrentPage
         {
-            get { return (int)(ViewState["CurrentPage"] ?? 1); }
-            set { ViewState["CurrentPage"] = value; }
+            get
+            {
+                return (int)(ViewState["CurrentPage"] ?? 1);
+            }
+            set
+            {
+                ViewState["CurrentPage"] = value;
+            }
         }
+
         private int EditCategoryId
         {
-            get { return (int)(ViewState["EditCategoryId"] ?? 0); }
-            set { ViewState["EditCategoryId"] = value; }
+            get
+            {
+                return (int)(ViewState["EditCategoryId"] ?? 0);
+            }
+            set
+            {
+                ViewState["EditCategoryId"] = value;
+            }
         }
+
         private int DeleteCategoryId
         {
-            get { return (int)(ViewState["DeleteCategoryId"] ?? 0); }
-            set { ViewState["DeleteCategoryId"] = value; }
+            get
+            {
+                return (int)(ViewState["DeleteCategoryId"] ?? 0);
+            }
+            set
+            {
+                ViewState["DeleteCategoryId"] = value;
+            }
         }
+
         private string SearchTerm
         {
-            get { return Convert.ToString(ViewState["SearchTerm"]); }
-            set { ViewState["SearchTerm"] = value; }
+            get
+            {
+                return Convert.ToString(ViewState["SearchTerm"]);
+            }
+            set
+            {
+                ViewState["SearchTerm"] = value;
+            }
         }
 
         // Verify that the current user is an active administrator.

@@ -24,9 +24,9 @@
         if (previewNextButton) {
             previewNextButton.hidden = currentQuestion === questionCards.length - 1;
         } else {
-            submitButton.value = currentQuestion === questionCards.length - 1
-                ? 'Submit quiz'
-                : 'Next question';
+            submitButton.value = currentQuestion === questionCards.length - 1 ?
+                'Submit quiz' :
+                'Next question';
         }
 
         const questionNumber = currentQuestion + 1;

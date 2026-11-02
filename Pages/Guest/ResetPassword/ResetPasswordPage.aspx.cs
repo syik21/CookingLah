@@ -12,15 +12,18 @@ namespace CookingLah.Pages.Guest.ResetPassword
         {
             if (!IsPostBack)
             {
-                if (ValidateResetToken(Request.QueryString["token"])) ShowResetForm();
-                else ShowInvalidTokenState();
+                if (ValidateResetToken(Request.QueryString["token"]))
+                    ShowResetForm();
+                else
+                    ShowInvalidTokenState();
             }
         }
 
         // Validate that the reset token is unused and not expired.
         private bool ValidateResetToken(string token)
         {
-            if (string.IsNullOrWhiteSpace(token) || token.Length > 128) return false;
+            if (string.IsNullOrWhiteSpace(token) || token.Length > 128)
+                return false;
             using (SqlConnection connection = DatabaseManager.ConnectDB())
             using (SqlCommand command = new SqlCommand(@"
                 SELECT TOP (1) t.ResetTokenID
@@ -40,14 +43,29 @@ namespace CookingLah.Pages.Guest.ResetPassword
             lblResetError.Visible = false;
             string password = txtNewPassword.Text;
             string confirmation = txtConfirmPassword.Text;
-            if (password.Length == 0 || confirmation.Length == 0) { ShowError("Enter and confirm your new password."); return; }
-            if (password != confirmation) { ShowError("The passwords do not match. Please enter them again."); return; }
+            if (password.Length == 0 || confirmation.Length == 0)
+            {
+                ShowError("Enter and confirm your new password.");
+                return;
+            }
+            if (password != confirmation)
+            {
+                ShowError("The passwords do not match. Please enter them again.");
+                return;
+            }
             if (!PasswordManager.MeetsPasswordPolicy(password))
-            { ShowError("Use at least 8 characters including a letter, number and symbol, and at most 72 UTF-8 bytes for your password."); return; }
+            {
+                ShowError("Use at least 8 characters including a letter, number and symbol, and at most 72 UTF-8 bytes for your password.");
+                return;
+            }
 
             try
             {
-                if (!ResetPassword(Request.QueryString["token"], password)) { ShowInvalidTokenState(); return; }
+                if (!ResetPassword(Request.QueryString["token"], password))
+                {
+                    ShowInvalidTokenState();
+                    return;
+                }
                 ShowSuccessState();
             }
             catch (Exception ex)
@@ -60,7 +78,8 @@ namespace CookingLah.Pages.Guest.ResetPassword
         // Update the user's password and invalidate reset tokens.
         private bool ResetPassword(string token, string newPassword)
         {
-            if (string.IsNullOrWhiteSpace(token) || token.Length > 128) return false;
+            if (string.IsNullOrWhiteSpace(token) || token.Length > 128)
+                return false;
             using (SqlConnection connection = DatabaseManager.ConnectDB())
             {
                 connection.Open();
@@ -76,14 +95,20 @@ namespace CookingLah.Pages.Guest.ResetPassword
                     {
                         command.Parameters.Add("@tokenHash", SqlDbType.NVarChar, 255).Value = PasswordResetTokenManager.HashToken(token);
                         object result = command.ExecuteScalar();
-                        if (result != null) userId = Convert.ToInt32(result);
+                        if (result != null)
+                            userId = Convert.ToInt32(result);
                     }
-                    if (!userId.HasValue) { transaction.Rollback(); return false; }
+                    if (!userId.HasValue)
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
                     using (SqlCommand command = new SqlCommand("UPDATE Users SET Password=@password,UpdatedAt=GETDATE() WHERE UserID=@userId", connection, transaction))
                     {
                         command.Parameters.Add("@password", SqlDbType.NVarChar, 255).Value = PasswordManager.HashPassword(newPassword);
                         command.Parameters.Add("@userId", SqlDbType.Int).Value = userId.Value;
-                        if (command.ExecuteNonQuery() != 1) throw new InvalidOperationException("The reset account no longer exists.");
+                        if (command.ExecuteNonQuery() != 1)
+                            throw new InvalidOperationException("The reset account no longer exists.");
                     }
                     using (SqlCommand command = new SqlCommand("UPDATE PasswordResetTokens SET IsUsed=1 WHERE UserID=@userId AND IsUsed=0", connection, transaction))
                     {
@@ -99,9 +124,32 @@ namespace CookingLah.Pages.Guest.ResetPassword
             }
         }
 
-        private void ShowResetForm() { pnlResetForm.Visible = true; pnlInvalid.Visible = false; pnlSuccess.Visible = false; }
-        private void ShowInvalidTokenState() { pnlResetForm.Visible = false; pnlInvalid.Visible = true; pnlSuccess.Visible = false; }
-        private void ShowSuccessState() { pnlResetForm.Visible = false; pnlInvalid.Visible = false; pnlSuccess.Visible = true; }
-        private void ShowError(string message) { ShowResetForm(); lblResetError.Text = message; lblResetError.Visible = true; }
+        private void ShowResetForm()
+        {
+            pnlResetForm.Visible = true;
+            pnlInvalid.Visible = false;
+            pnlSuccess.Visible = false;
+        }
+
+        private void ShowInvalidTokenState()
+        {
+            pnlResetForm.Visible = false;
+            pnlInvalid.Visible = true;
+            pnlSuccess.Visible = false;
+        }
+
+        private void ShowSuccessState()
+        {
+            pnlResetForm.Visible = false;
+            pnlInvalid.Visible = false;
+            pnlSuccess.Visible = true;
+        }
+
+        private void ShowError(string message)
+        {
+            ShowResetForm();
+            lblResetError.Text = message;
+            lblResetError.Visible = true;
+        }
     }
 }

@@ -32,16 +32,24 @@
         });
     }
     var search = document.getElementById('userSearch');
+
     function filterUsers() {
         var url = new URL('ManageUserPage.aspx', window.location.href);
-        [['q', search.value.trim()], ['role', document.getElementById('roleFilter').value], ['status', document.getElementById('statusFilter').value]].forEach(function (item) {
+        [
+            ['q', search.value.trim()],
+            ['role', document.getElementById('roleFilter').value],
+            ['status', document.getElementById('statusFilter').value]
+        ].forEach(function (item) {
             if (item[1]) url.searchParams.set(item[0], item[1]);
         });
         window.location.assign(url.href);
     }
     document.getElementById('applyFilters').addEventListener('click', filterUsers);
     search.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') { event.preventDefault(); filterUsers(); }
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            filterUsers();
+        }
     });
     var role = document.getElementById('newRole');
     var profession = document.getElementById('profession');
@@ -84,7 +92,10 @@
     form.addEventListener('submit', function (event) {
         var button = event.submitter;
         if (!button || !button.hasAttribute('data-save-user')) return;
-        if (submitted) { event.preventDefault(); return; }
+        if (submitted) {
+            event.preventDefault();
+            return;
+        }
         submitted = true;
         button.setAttribute('aria-disabled', 'true');
         button.textContent = button.value === 'remove' ? 'Removing...' : 'Saving...';

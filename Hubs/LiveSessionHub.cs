@@ -17,6 +17,7 @@ namespace CookingLah.Hubs
         private static readonly ConcurrentDictionary<string, int> AdminConnections =
             new ConcurrentDictionary<string, int>();
 
+        // Join the chat after checking access to the live session.
         public Task JoinChat(int liveSessionId)
         {
             int userId = GetUserId();
@@ -25,11 +26,13 @@ namespace CookingLah.Hubs
 
             return Groups.Add(Context.ConnectionId, GroupName(liveSessionId)).ContinueWith(task =>
             {
-                if (task.IsFaulted) return;
+                if (task.IsFaulted)
+                    return;
                 Clients.Caller.streamPresence(ChefConnections.Values.Contains(liveSessionId));
             });
         }
 
+        // Tell viewers when the session's Chef is connected.
         public void ReportChefPresent(int liveSessionId)
         {
             int userId = GetUserId();
@@ -72,6 +75,7 @@ namespace CookingLah.Hubs
             }
         }
 
+        // Record an admin warning for the live session.
         public void IssueWarning(int liveSessionId, string reason)
         {
             int adminId = GetAdminId();
@@ -178,7 +182,8 @@ namespace CookingLah.Hubs
                     {
                         sessionCommand.Parameters.Add("@liveSessionId", SqlDbType.Int).Value = liveSessionId;
                         object result = sessionCommand.ExecuteScalar();
-                        if (result == null) throw new HubException("This live session is unavailable.");
+                        if (result == null)
+                            throw new HubException("This live session is unavailable.");
                         chefId = Convert.ToInt32(result);
                     }
 
@@ -246,7 +251,8 @@ namespace CookingLah.Hubs
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (!reader.Read()) throw new HubException("This live session is unavailable.");
+                    if (!reader.Read())
+                        throw new HubException("This live session is unavailable.");
                     username = Convert.ToString(reader["Username"]);
                     role = Convert.ToString(reader["Role"]);
                 }
@@ -275,7 +281,8 @@ namespace CookingLah.Hubs
                 command.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = Context.User.Identity.Name;
                 connection.Open();
                 object userId = command.ExecuteScalar();
-                if (userId == null) throw new HubException("Please sign in again.");
+                if (userId == null)
+                    throw new HubException("Please sign in again.");
                 return Convert.ToInt32(userId);
             }
         }
@@ -307,7 +314,8 @@ namespace CookingLah.Hubs
 
         private static bool CanUseLiveSession(int userId, int liveSessionId)
         {
-            if (liveSessionId <= 0) return false;
+            if (liveSessionId <= 0)
+                return false;
             using (SqlConnection connection = DatabaseManager.ConnectDB())
             using (SqlCommand command = new SqlCommand(@"
                 SELECT COUNT(*)

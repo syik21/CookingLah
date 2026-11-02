@@ -16,70 +16,144 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
 
         private int CourseId
         {
-            get { return (int?)ViewState["CourseId"] ?? 0; }
-            set { ViewState["CourseId"] = value; }
+            get
+            {
+                return (int?)ViewState["CourseId"] ?? 0;
+            }
+            set
+            {
+                ViewState["CourseId"] = value;
+            }
         }
 
         private int LearnerId
         {
-            get { return (int?)ViewState["LearnerId"] ?? 0; }
-            set { ViewState["LearnerId"] = value; }
+            get
+            {
+                return (int?)ViewState["LearnerId"] ?? 0;
+            }
+            set
+            {
+                ViewState["LearnerId"] = value;
+            }
         }
 
         private int QuizId
         {
-            get { return (int?)ViewState["QuizId"] ?? 0; }
-            set { ViewState["QuizId"] = value; }
+            get
+            {
+                return (int?)ViewState["QuizId"] ?? 0;
+            }
+            set
+            {
+                ViewState["QuizId"] = value;
+            }
         }
 
         private int PassingScore
         {
-            get { return (int?)ViewState["PassingScore"] ?? 0; }
-            set { ViewState["PassingScore"] = value; }
+            get
+            {
+                return (int?)ViewState["PassingScore"] ?? 0;
+            }
+            set
+            {
+                ViewState["PassingScore"] = value;
+            }
         }
 
         private bool QuizStarted
         {
-            get { return (bool?)ViewState["QuizStarted"] ?? false; }
-            set { ViewState["QuizStarted"] = value; }
+            get
+            {
+                return (bool?)ViewState["QuizStarted"] ?? false;
+            }
+            set
+            {
+                ViewState["QuizStarted"] = value;
+            }
         }
 
         private bool ShowResult
         {
-            get { return (bool?)ViewState["ShowResult"] ?? false; }
-            set { ViewState["ShowResult"] = value; }
+            get
+            {
+                return (bool?)ViewState["ShowResult"] ?? false;
+            }
+            set
+            {
+                ViewState["ShowResult"] = value;
+            }
         }
 
         private bool ReviewCorrectAnswers
         {
-            get { return (bool?)ViewState["ReviewCorrectAnswers"] ?? false; }
-            set { ViewState["ReviewCorrectAnswers"] = value; }
+            get
+            {
+                return (bool?)ViewState["ReviewCorrectAnswers"] ?? false;
+            }
+            set
+            {
+                ViewState["ReviewCorrectAnswers"] = value;
+            }
         }
 
         private bool LastAttemptPassed
         {
-            get { return (bool?)ViewState["LastAttemptPassed"] ?? false; }
-            set { ViewState["LastAttemptPassed"] = value; }
+            get
+            {
+                return (bool?)ViewState["LastAttemptPassed"] ?? false;
+            }
+            set
+            {
+                ViewState["LastAttemptPassed"] = value;
+            }
         }
 
         private int LastAttemptScore
         {
-            get { return (int?)ViewState["LastAttemptScore"] ?? 0; }
-            set { ViewState["LastAttemptScore"] = value; }
+            get
+            {
+                return (int?)ViewState["LastAttemptScore"] ?? 0;
+            }
+            set
+            {
+                ViewState["LastAttemptScore"] = value;
+            }
         }
 
         private int LastAttemptCorrectCount
         {
-            get { return (int?)ViewState["LastAttemptCorrectCount"] ?? 0; }
-            set { ViewState["LastAttemptCorrectCount"] = value; }
+            get
+            {
+                return (int?)ViewState["LastAttemptCorrectCount"] ?? 0;
+            }
+            set
+            {
+                ViewState["LastAttemptCorrectCount"] = value;
+            }
         }
 
-        public bool HasPassed { get; private set; }
-        public bool HasQuiz { get; private set; }
+        public bool HasPassed
+        {
+            get; private set;
+        }
+
+        public bool HasQuiz
+        {
+            get; private set;
+        }
+
         private bool ChefPreview
         {
-            get { return (bool?)ViewState["ChefPreview"] ?? false; }
-            set { ViewState["ChefPreview"] = value; }
+            get
+            {
+                return (bool?)ViewState["ChefPreview"] ?? false;
+            }
+            set
+            {
+                ViewState["ChefPreview"] = value;
+            }
         }
 
         public void LoadQuiz(int courseId, int learnerId, bool chefPreview = false)
@@ -160,7 +234,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
                 Parameter("@quizId", QuizId),
                 Parameter("@learnerId", LearnerId));
 
-            if (attempts.Rows.Count == 0) return false;
+            if (attempts.Rows.Count == 0)
+                return false;
             LastAttemptPassed = true;
             LastAttemptScore = Convert.ToInt32(attempts.Rows[0]["Score"]);
             int totalQuestions = Convert.ToInt32(attempts.Rows[0]["TotalQuestions"]);
@@ -209,14 +284,17 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
 
         protected string AnswerInputAttributes(object questionId, object optionId)
         {
-            if (ReviewCorrectAnswers) return "checked=\"checked\" disabled=\"disabled\"";
+            if (ReviewCorrectAnswers)
+                return "checked=\"checked\" disabled=\"disabled\"";
             return IsAnswerSelected(questionId, optionId) ? "checked=\"checked\"" : "";
         }
 
         protected void btnStartQuiz_Click(object sender, EventArgs e)
         {
-            if (ChefPreview || HasPassed) return;
-            if (QuizId <= 0 || !ValidateQuizAccess()) return;
+            if (ChefPreview || HasPassed)
+                return;
+            if (QuizId <= 0 || !ValidateQuizAccess())
+                return;
 
             QuizStarted = true;
             ShowResult = false;
@@ -228,7 +306,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
 
         protected void btnSubmitQuiz_Click(object sender, EventArgs e)
         {
-            if (ChefPreview) return;
+            if (ChefPreview)
+                return;
             if (!ValidateQuizAccess())
             {
                 ShowFeedback("This quiz is no longer available to your account.");
@@ -265,7 +344,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
             if (passed)
             {
                 EventHandler handler = QuizPassed;
-                if (handler != null) handler(this, EventArgs.Empty);
+                if (handler != null)
+                    handler(this, EventArgs.Empty);
             }
         }
 
@@ -418,7 +498,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
 
         protected void btnReviewAnswers_Click(object sender, EventArgs e)
         {
-            if (!HasPassed || ChefPreview) return;
+            if (!HasPassed || ChefPreview)
+                return;
             ReviewCorrectAnswers = true;
             QuizStarted = true;
             ShowResult = false;
@@ -433,7 +514,8 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
 
         protected void btnBackToQuizResult_Click(object sender, EventArgs e)
         {
-            if (!HasPassed || ChefPreview) return;
+            if (!HasPassed || ChefPreview)
+                return;
             ReviewCorrectAnswers = false;
             QuizStarted = false;
             ShowResult = true;
@@ -447,13 +529,15 @@ namespace CookingLah.Pages.Learner.CourseLearning.QuizSection
         protected void btnReviewLessons_Click(object sender, EventArgs e)
         {
             EventHandler handler = ReviewLessonsRequested;
-            if (handler != null) handler(this, EventArgs.Empty);
+            if (handler != null)
+                handler(this, EventArgs.Empty);
         }
 
         protected void btnContinueActivity_Click(object sender, EventArgs e)
         {
             EventHandler handler = OpenActivityRequested;
-            if (handler != null) handler(this, EventArgs.Empty);
+            if (handler != null)
+                handler(this, EventArgs.Empty);
         }
     }
 }

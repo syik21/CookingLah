@@ -5,10 +5,19 @@
         var list = editor.querySelector("[data-ingredient-rows]");
         var add = editor.querySelector("[data-ingredient-add]");
         var values;
-        try { values = JSON.parse(source.value || "[]"); }
-        catch (_) { values = source.value.split(/\r?\n/).filter(Boolean).map(function (name) { return { name: name, amount: "" }; }); }
+        try {
+            values = JSON.parse(source.value || "[]");
+        } catch (_) {
+            values = source.value.split(/\r?\n/).filter(Boolean).map(function (name) {
+                return {
+                    name: name,
+                    amount: ""
+                };
+            });
+        }
         if (!Array.isArray(values)) values = [];
         source.hidden = true;
+
         function sync() {
             var rows = Array.from(list.children);
             source.value = JSON.stringify(rows.map(function (row, index) {
@@ -16,10 +25,14 @@
                 var remove = row.querySelector("button");
                 remove.disabled = rows.length === 1;
                 remove.setAttribute("aria-label", "Remove ingredient " + (index + 1));
-                return { name: inputs[0].value, amount: inputs[1].value };
+                return {
+                    name: inputs[0].value,
+                    amount: inputs[1].value
+                };
             }));
             add.disabled = rows.length >= 100;
         }
+
         function append(value, focus) {
             var row = document.createElement("div");
             row.className = "ingredient-row";
@@ -52,7 +65,11 @@
             sync();
             if (focus) row.querySelector("input").focus();
         }
-        (values.length ? values : [{}]).forEach(function (value) { append(value, false); });
-        add.addEventListener("click", function () { if (list.children.length < 100) append({}, true); });
+        (values.length ? values : [{}]).forEach(function (value) {
+            append(value, false);
+        });
+        add.addEventListener("click", function () {
+            if (list.children.length < 100) append({}, true);
+        });
     });
 }());

@@ -7,12 +7,23 @@ namespace CookingLah.Pages.Chef.CreateCourse.Recipes
 {
     public partial class RecipeForm : System.Web.UI.UserControl
     {
-        private string ImagePath { get { return (string)ViewState["ImagePath"] ?? ""; } set { ViewState["ImagePath"] = value; } }
+        private string ImagePath
+        {
+            get
+            {
+                return (string)ViewState["ImagePath"] ?? "";
+            }
+            set
+            {
+                ViewState["ImagePath"] = value;
+            }
+        }
 
         public void LoadRecipe(int courseId)
         {
             var rows = Read("SELECT * FROM CourseRecipes WHERE CourseID=@id", Parameter("@id", courseId));
-            if (rows.Rows.Count == 0) return;
+            if (rows.Rows.Count == 0)
+                return;
             var recipe = rows.Rows[0];
             txtIngredients.Text = IngredientsForEditor(Convert.ToString(recipe["Ingredients"]));
             txtCookingTime.Text = Convert.ToString(recipe["CookingTime"]);
@@ -23,7 +34,10 @@ namespace CookingLah.Pages.Chef.CreateCourse.Recipes
         public List<string> ValidateRecipe()
         {
             var errors = new List<string>();
-            try { ValidateIngredientsJson(txtIngredients.Text); }
+            try
+            {
+                ValidateIngredientsJson(txtIngredients.Text);
+            }
             catch (InvalidOperationException ex) { errors.Add(ex.Message); }
             CheckNumber(txtCookingTime.Text, "Cooking time", errors);
             CheckNumber(txtServingSize.Text, "Serving size", errors);
@@ -42,10 +56,12 @@ namespace CookingLah.Pages.Chef.CreateCourse.Recipes
             var errors = new List<string>();
             CheckNumber(txtCookingTime.Text, "Cooking time", errors);
             CheckNumber(txtServingSize.Text, "Serving size", errors);
-            if (errors.Count > 0) throw new InvalidOperationException(string.Join(" ", errors));
+            if (errors.Count > 0)
+                throw new InvalidOperationException(string.Join(" ", errors));
             string ingredients = ValidateIngredientsJson(txtIngredients.Text);
             ImagePath = SaveUpload(fuRecipeImage, ImagePath, "Recipe");
-            EditDraft(courseId, (connection, transaction) => {
+            EditDraft(courseId, (connection, transaction) =>
+            {
                 Execute(connection, transaction,
                     "IF EXISTS (SELECT 1 FROM CourseRecipes WHERE CourseID=@id) " +
                     "UPDATE CourseRecipes SET Ingredients=@ingredients, " +

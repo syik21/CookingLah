@@ -16,7 +16,9 @@
     var confirmation = document.getElementById("txtConfirmPassword");
     var submit = document.getElementById("btnResetPassword");
     if (form && password && confirmation && submit) {
-        confirmation.addEventListener("input", function () { confirmation.setCustomValidity(""); });
+        confirmation.addEventListener("input", function () {
+            confirmation.setCustomValidity("");
+        });
         form.addEventListener("submit", function (event) {
             if (password.value !== confirmation.value) {
                 confirmation.setCustomValidity("The passwords do not match.");

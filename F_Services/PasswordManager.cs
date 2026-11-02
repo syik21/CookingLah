@@ -22,6 +22,7 @@ namespace CookingLah.F_Services
             string hashed = BCrypt.Net.BCrypt.HashPassword(plain);
             return hashed;
         }
+
         public static bool isPasswordValid(string enterPassword, string storedPassword)
         {
             return BCrypt.Net.BCrypt.Verify(enterPassword, storedPassword);
