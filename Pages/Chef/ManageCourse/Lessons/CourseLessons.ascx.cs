@@ -55,15 +55,16 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
             rptLessons.DataSource = new DataView(lessons) { Sort = "LessonOrder ASC" };
             rptLessons.DataBind();
             ScriptManager manager = ScriptManager.GetCurrent(Page);
-            manager.RegisterAsyncPostBackControl(btnAddLesson);
-            manager.RegisterAsyncPostBackControl(btnAddArticle);
-            manager.RegisterAsyncPostBackControl(btnAddImage);
-            manager.RegisterAsyncPostBackControl(btnAddVideo);
+            // Full postbacks include selected media before changing the lesson structure.
+            manager.RegisterPostBackControl(btnAddLesson);
+            manager.RegisterPostBackControl(btnAddArticle);
+            manager.RegisterPostBackControl(btnAddImage);
+            manager.RegisterPostBackControl(btnAddVideo);
             foreach (RepeaterItem item in rptLessons.Items)
             {
-                manager.RegisterAsyncPostBackControl(item.FindControl("btnSelectLesson"));
+                manager.RegisterPostBackControl(item.FindControl("btnSelectLesson"));
                 Control deleteLesson = item.FindControl("btnDeleteLesson");
-                if (deleteLesson != null) manager.RegisterAsyncPostBackControl(deleteLesson);
+                if (deleteLesson != null) manager.RegisterPostBackControl(deleteLesson);
             }
             hfSelectedLesson.Value = SelectedLessonId.ToString();
             var lesson = CourseReviewDraft.FindRow(draft.Lessons, "LessonID", SelectedLessonId);
@@ -92,7 +93,7 @@ namespace CookingLah.Pages.Chef.ManageCourse.Lessons
             foreach (RepeaterItem item in rptLessonContent.Items)
             {
                 Control deleteBlock = item.FindControl("btnDeleteBlock");
-                if (deleteBlock != null) manager.RegisterAsyncPostBackControl(deleteBlock);
+                if (deleteBlock != null) manager.RegisterPostBackControl(deleteBlock);
             }
         }
 

@@ -331,10 +331,22 @@ input[aria-invalid=true] {
     border-color: var(--hot);
 }
 
+.f:has(> .eye) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.f:has(> .eye) > input {
+    grid-area: 2 / 1;
+    padding-right: 90px;
+}
+
 .eye {
-    position: absolute;
-    right: 8px;
-    bottom: 8px;
+    grid-area: 2 / 1;
+    align-self: center;
+    justify-self: end;
+    margin-right: 8px;
+    z-index: 1;
     font: 400 11px var(--display);
     background: var(--sun);
     color: var(--ink);

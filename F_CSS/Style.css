@@ -280,6 +280,38 @@ mark, .highlight {
     background: var(--color-bg);
 }
 
+/* Keep destructive actions distinct from page-specific button colours. */
+:is(.mc-danger, .mc-danger-link, .lb-delete, .qb-delete-quiz,
+    .category-danger, .category-delete, .mu-danger, .mu-remove-link,
+    .profile-delete-button, .review-delete, .lesson-delete, .option-remove,
+    .quiz-delete-confirm, .ingredient-remove, [data-delete-question], #removePhoto) {
+    background: var(--color-error) !important;
+    color: #fff !important;
+    border: 2px solid var(--color-error) !important;
+    border-radius: var(--radius-sm);
+    min-height: 44px;
+    padding: 10px 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+:is(.mc-danger, .mc-danger-link, .lb-delete, .qb-delete-quiz,
+    .category-danger, .category-delete, .mu-danger, .mu-remove-link,
+    .profile-delete-button, .review-delete, .lesson-delete, .option-remove,
+    .quiz-delete-confirm, .ingredient-remove, [data-delete-question], #removePhoto):hover:not(:disabled):not([aria-disabled="true"]) {
+    background: #851329 !important;
+    border-color: #851329 !important;
+}
+
+:is(.mc-danger, .mc-danger-link, .lb-delete, .qb-delete-quiz,
+    .category-danger, .category-delete, .mu-danger, .mu-remove-link,
+    .profile-delete-button, .review-delete, .lesson-delete, .option-remove,
+    .quiz-delete-confirm, .ingredient-remove, [data-delete-question], #removePhoto):focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+}
+
 /* =========================
    6. Cards
    ========================= */
