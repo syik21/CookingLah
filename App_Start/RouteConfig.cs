@@ -10,6 +10,7 @@ namespace CookingLah
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.MapPageRoute("Home", "", "~/Main.aspx");
             var settings = new FriendlyUrlSettings();
             settings.AutoRedirectMode = RedirectMode.Permanent;
             routes.EnableFriendlyUrls(settings);

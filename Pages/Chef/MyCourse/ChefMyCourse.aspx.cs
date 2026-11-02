@@ -17,12 +17,10 @@ namespace CookingLah.Pages.Chef.MyCourse
             int instructorId;
             if (!int.TryParse(Convert.ToString(Session["UserId"]), out instructorId))
             {
-                Response.Redirect(NavigationHelper.GetUrl("Main"));
                 throw new HttpException(401, "Please sign in as a Chef.");
             }
             if (Read("SELECT UserID FROM Users WHERE UserID=@id AND Role='Instructor' AND AccountStatus='Active'", Parameter("@id", instructorId)).Rows.Count == 0)
             {
-                Response.Redirect(NavigationHelper.GetUrl("Main"));
                 throw new HttpException(403, "Please sign in as a Chef.");
             }
             ViewStateUserKey = Session.SessionID;

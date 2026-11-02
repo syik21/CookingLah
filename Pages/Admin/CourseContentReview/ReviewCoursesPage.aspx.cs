@@ -62,7 +62,6 @@ namespace CookingLah.Pages.Admin.CourseContentReview
             catch (SqlException ex)
             {
                 System.Diagnostics.Trace.TraceError("Course review authorization: {0}", ex);
-                Response.Redirect(NavigationHelper.GetUrl("Main"));
                 throw new HttpException(503, "Course review is temporarily unavailable. Please try again.");
             }
             ViewCourse1.BackRequested += delegate

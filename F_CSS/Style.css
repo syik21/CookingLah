@@ -274,7 +274,6 @@ mark, .highlight {
 /* Explicit button variants must override page-level base and hover backgrounds. */
 .btn-primary {
     background: var(--color-primary) !important;
-    color: var(--color-bg);
 }
 
 .btn-secondary {

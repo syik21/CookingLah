@@ -11,6 +11,7 @@ namespace CookingLah.Pages.ErrorPage
             ErrorDetails details = GetErrorDetails(statusCode);
 
             Response.StatusCode = statusCode;
+            Response.SuppressFormsAuthenticationRedirect = true;
             Response.TrySkipIisCustomErrors = true;
             Response.Cache.SetNoStore();
 

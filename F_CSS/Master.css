@@ -48,7 +48,7 @@
 }
 
     .master-profile-link:hover .master-profile-copy {
-        color: var(--color-primary);
+        color: var(--color-bg);
     }
 
     .master-profile-link:focus-visible {
