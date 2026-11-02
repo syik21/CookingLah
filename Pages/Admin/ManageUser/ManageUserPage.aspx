@@ -373,6 +373,7 @@
     </div>
 </asp:Content>
 <asp:Content ID="Scripts" ContentPlaceHolderID="AdminScripts" runat="server">
+    <script src="<%= ResolveUrl("~/F_JavaScripts/PasswordStrength.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/Pages/Admin/ManageUser/ManageUserjs.js") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Pages/Admin/ManageUser/ManageUserjs.js")).Ticks %>" defer="defer">
     </script>
 </asp:Content>

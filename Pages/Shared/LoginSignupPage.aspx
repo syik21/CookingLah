@@ -15,6 +15,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <input type="hidden" id="adminEntryToken" value="<%= Session["SignupViewStateKey"] %>" />
 
         <header>
             <a class="logo" id="loginLogo" href="<%= ResolveUrl("~/Main.aspx") %>" data-admin-login-url="<%= ResolveUrl("~/Pages/Admin/LoginPage/AdminLoginPage.aspx") %>" aria-label="Cooking Lah home">
@@ -201,6 +202,7 @@
         </dialog>
     </form>
 
-    <script src="<%= ResolveUrl("~/F_JavaScripts/LoginSignupPage.js") %>?v=loading-state-3" defer></script>
+    <script src="<%= ResolveUrl("~/F_JavaScripts/PasswordStrength.js") %>" defer></script>
+    <script src="<%= ResolveUrl("~/F_JavaScripts/LoginSignupPage.js") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/F_JavaScripts/LoginSignupPage.js")).Ticks %>" defer></script>
 </body>
 </html>

@@ -140,7 +140,7 @@
                                 <label for="txtNewPassword">New password</label>
                                 <asp:TextBox ID="txtNewPassword" runat="server" ClientIDMode="Static"
                                     TextMode="Password" autocomplete="new-password" MaxLength="128" />
-                                <small>Use at least 8 characters and at most 72 UTF-8 bytes.</small>
+                                <small>Use at least 8 characters including a letter, number and symbol (maximum 72 UTF-8 bytes).</small>
                             </div>
                             <div class="profile-field">
                                 <label for="txtConfirmPassword">Confirm new password</label>
@@ -219,5 +219,6 @@
 
 <%-- Profile page JavaScript --%>
 <asp:Content ID="ProfileScripts" ContentPlaceHolderID="ProfileScripts" runat="server">
+    <script src="<%= ResolveUrl("~/F_JavaScripts/PasswordStrength.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/Pages/Shared/Profile/Profile.js") %>" defer></script>
 </asp:Content>

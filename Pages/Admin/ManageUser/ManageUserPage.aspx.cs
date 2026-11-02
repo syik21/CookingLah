@@ -277,9 +277,9 @@ namespace CookingLah.Pages.Admin.ManageUser
                     return;
                 }
                 string password = Request.Form["password"] ?? "";
-                if (action == "create" && (password.Length < 8 || Encoding.UTF8.GetByteCount(password) > 72))
+                if (action == "create" && (!PasswordManager.MeetsPasswordPolicy(password)))
                 {
-                    ErrorMessage = "Use a password with at least 8 characters and no more than 72 UTF-8 bytes.";
+                    ErrorMessage = "Use at least 8 characters including a letter, number and symbol, and no more than 72 UTF-8 bytes.";
                     return;
                 }
                 if (action == "create" && password != Request.Form["confirmPassword"])

@@ -1,12 +1,15 @@
 (function () {
     "use strict";
 
+    function renderChart() {
     var chart = document.getElementById("registrationChart");
     var dataField = document.querySelector("input[id$='hfTrendData']");
     if (!chart || !dataField) {
         return;
     }
 
+    chart.replaceChildren();
+    chart.classList.remove("ur-inline-empty");
     var points;
     try {
         points = JSON.parse(dataField.value || "[]");
@@ -50,4 +53,7 @@
     });
 
     chart.setAttribute("aria-label", "New user registrations. " + summary.join(", "));
+    }
+    if (window.Sys && Sys.Application) Sys.Application.add_load(renderChart);
+    else renderChart();
 }());

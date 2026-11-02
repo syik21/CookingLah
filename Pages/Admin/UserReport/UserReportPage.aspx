@@ -3,6 +3,9 @@
     <link href="<%= ResolveUrl("~/Pages/Admin/UserReport/UserReportPage.css") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Pages/Admin/UserReport/UserReportPage.css")).Ticks %>" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="UserReportContent" ContentPlaceHolderID="AdminContent" runat="server">
+    <asp:ScriptManager ID="ReportScriptManager" runat="server" />
+    <asp:UpdatePanel ID="ReportUpdatePanel" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
     <div class="user-report">
         <header class="ur-page-heading">
             <p class="ur-eyebrow">COMMUNITY / ANALYTICS</p>
@@ -184,6 +187,8 @@
             </section>
         </asp:Panel>
     </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>
 <asp:Content ID="UserReportScripts" ContentPlaceHolderID="AdminScripts" runat="server">
     <script src="<%= ResolveUrl("~/Pages/Admin/UserReport/UserReportPage.js") %>?v=<%= System.IO.File.GetLastWriteTimeUtc(Server.MapPath("~/Pages/Admin/UserReport/UserReportPage.js")).Ticks %>" defer></script>

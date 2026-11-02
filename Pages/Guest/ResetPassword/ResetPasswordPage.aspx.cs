@@ -42,8 +42,8 @@ namespace CookingLah.Pages.Guest.ResetPassword
             string confirmation = txtConfirmPassword.Text;
             if (password.Length == 0 || confirmation.Length == 0) { ShowError("Enter and confirm your new password."); return; }
             if (password != confirmation) { ShowError("The passwords do not match. Please enter them again."); return; }
-            if (password.Length < 8 || Encoding.UTF8.GetByteCount(password) > 72)
-            { ShowError("Use at least 8 characters and at most 72 UTF-8 bytes for your password."); return; }
+            if (!PasswordManager.MeetsPasswordPolicy(password))
+            { ShowError("Use at least 8 characters including a letter, number and symbol, and at most 72 UTF-8 bytes for your password."); return; }
 
             try
             {

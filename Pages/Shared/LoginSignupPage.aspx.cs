@@ -49,6 +49,14 @@ namespace CookingLah.Pages.Shared
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.HttpMethod == "POST" &&
+                !string.IsNullOrEmpty(Request.Form["adminEntryToken"]) &&
+                Request.Form["adminEntryToken"] == Convert.ToString(Session["SignupViewStateKey"]))
+            {
+                Session["AdminLoginEntryExpiresUtc"] = DateTime.UtcNow.AddMinutes(10);
+                Response.Redirect("~/Pages/Admin/LoginPage/AdminLoginPage.aspx");
+                return;
+            }
             lblLoginError.Visible = false;
             lblSignupError.Visible = false;
             if (!IsPostBack && Session["UserId"] != null)
@@ -270,9 +278,9 @@ namespace CookingLah.Pages.Shared
                 return;
             }
 
-            if (pw.Length < 8 || Encoding.UTF8.GetByteCount(pw) > 72)
+            if (!PasswordManager.MeetsPasswordPolicy(pw))
             {
-                Err(lblSignupError, "Use at least 8 characters and at most 72 UTF-8 bytes for your password.");
+                Err(lblSignupError, "Use at least 8 characters including a letter, number and symbol, and at most 72 UTF-8 bytes for your password.");
                 return;
             }
 

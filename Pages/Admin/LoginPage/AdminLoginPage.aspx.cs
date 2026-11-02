@@ -20,7 +20,22 @@ namespace CookingLah.Pages.Admin.LoginPage
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Remember to add a validation before come to this page if invalid return to MainPage
+            if (!IsPostBack)
+            {
+                var entryExpiry = Session["AdminLoginEntryExpiresUtc"] as DateTime?;
+                Session.Remove("AdminLoginEntryExpiresUtc");
+                ViewState["AdminEntryAllowed"] = entryExpiry.HasValue && entryExpiry.Value > DateTime.UtcNow;
+                if ((bool)ViewState["AdminEntryAllowed"])
+                    ViewState["AdminEntryExpiresUtc"] = entryExpiry.Value;
+            }
+
+            var formExpiry = ViewState["AdminEntryExpiresUtc"] as DateTime?;
+            if (!Equals(ViewState["AdminEntryAllowed"], true) ||
+                !formExpiry.HasValue || formExpiry.Value <= DateTime.UtcNow)
+            {
+                Response.Redirect("~/Pages/Shared/LoginSignupPage.aspx");
+                return;
+            }
 
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();

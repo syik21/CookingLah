@@ -114,7 +114,6 @@ namespace CookingLah.Pages.LiveSessionPage
             bool hasResults = streams.Rows.Count > 0;
             pnlNoLiveStreams.Visible = !hasSearch && !hasResults;
             pnlNoSearchResults.Visible = hasSearch && !hasResults;
-            litSearchTerm.Text = Server.HtmlEncode(searchText);
 
             lblResultSummary.Text = hasSearch
                 ? string.Format("{0} {1} for “{2}”", streams.Rows.Count, streams.Rows.Count == 1 ? "result" : "results", Server.HtmlEncode(searchText))

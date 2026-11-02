@@ -25,7 +25,7 @@
                             <asp:TextBox ID="txtNewPassword" runat="server" ClientIDMode="Static" TextMode="Password" autocomplete="new-password" aria-describedby="passwordHelp" required="required" />
                             <button type="button" class="reset-toggle" data-target="txtNewPassword" aria-label="Show new password">Show</button>
                         </div>
-                        <small id="passwordHelp">Use at least 8 characters and at most 72 UTF-8 bytes.</small>
+                        <small id="passwordHelp">Use at least 8 characters including a letter, number and symbol (maximum 72 UTF-8 bytes).</small>
                     </div>
                     <div class="reset-field">
                         <label for="txtConfirmPassword">Confirm Password</label>
@@ -52,6 +52,7 @@
             </section>
         </main>
     </form>
+    <script src="<%= ResolveUrl("~/F_JavaScripts/PasswordStrength.js") %>" defer></script>
     <script src="<%= ResolveUrl("~/Pages/Guest/ResetPassword/ResetPasswordPage.js") %>" defer></script>
 </body>
 </html>

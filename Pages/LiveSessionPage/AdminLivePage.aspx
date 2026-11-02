@@ -84,7 +84,7 @@
         <asp:HiddenField ID="hfAdminDisplayName" runat="server" ClientIDMode="Static" />
         <asp:HiddenField ID="hfJitsiDomain" runat="server" ClientIDMode="Static" />
 
-        <dialog id="warningDialog" class="admin-moderation-dialog" aria-labelledby="warningDialogTitle">
+        <asp:Literal runat="server" Mode="PassThrough" Text='<dialog id="warningDialog" class="admin-moderation-dialog" aria-labelledby="warningDialogTitle">' />
             <div class="admin-moderation-dialog__body">
                 <h2 id="warningDialogTitle">Issue warning</h2>
                 <p>The livestream will continue. The Chef and viewers will see the warning.</p>
@@ -96,9 +96,9 @@
                     <button type="button" id="btnSubmitWarning" class="btn admin-action--warning">Issue Warning</button>
                 </div>
             </div>
-        </dialog>
+        <asp:Literal runat="server" Mode="PassThrough" Text="&lt;/dialog&gt;" />
 
-        <dialog id="suspensionDialog" class="admin-moderation-dialog" aria-labelledby="suspensionDialogTitle">
+        <asp:Literal runat="server" Mode="PassThrough" Text='<dialog id="suspensionDialog" class="admin-moderation-dialog" aria-labelledby="suspensionDialogTitle">' />
             <div class="admin-moderation-dialog__body">
                 <h2 id="suspensionDialogTitle">Suspend livestream</h2>
                 <p>This immediately ends the broadcast and blocks the Chef from streaming for two hours.</p>
@@ -110,7 +110,7 @@
                     <button type="button" id="btnSubmitSuspension" class="btn admin-action--danger">Suspend Live</button>
                 </div>
             </div>
-        </dialog>
+        <asp:Literal runat="server" Mode="PassThrough" Text="&lt;/dialog&gt;" />
     </main>
 </asp:Content>
 

@@ -326,12 +326,12 @@ namespace CookingLah.Pages.Shared.Profile
 
             string next = txtNewPassword.Text;
             string confirmation = txtConfirmPassword.Text;
-            if (next.Length < 8 || Encoding.UTF8.GetByteCount(next) > 72 || next != confirmation)
+            if (!PasswordManager.MeetsPasswordPolicy(next) || next != confirmation)
             {
                 pnlPasswordStart.Visible = false;
                 pnlPasswordVerify.Visible = false;
                 pnlPasswordNew.Visible = true;
-                PasswordFeedback = "Use at least 8 characters and at most 72 UTF-8 bytes, and make sure both new passwords match.";
+                PasswordFeedback = "Use at least 8 characters including a letter, number and symbol, and at most 72 UTF-8 bytes, and make sure both new passwords match.";
                 ScriptManager.GetCurrent(Page).SetFocus(txtNewPassword);
                 return;
             }

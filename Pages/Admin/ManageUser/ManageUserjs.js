@@ -59,7 +59,6 @@
     var confirmPassword = document.getElementById('confirmPassword');
     if (password && confirmPassword) {
         var validatePassword = function () {
-            password.setCustomValidity(new TextEncoder().encode(password.value).length > 72 ? 'Use a password of no more than 72 UTF-8 bytes.' : '');
             confirmPassword.setCustomValidity(confirmPassword.value !== password.value ? 'The passwords do not match.' : '');
         };
         password.addEventListener('input', validatePassword);
@@ -99,4 +98,3 @@
         if (initialFocus) initialFocus.focus();
     }
 }());
-

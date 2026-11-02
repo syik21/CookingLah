@@ -13,6 +13,9 @@ namespace CookingLah.Pages.Admin.UserReport
 
     public partial class UserReportPage
     {
+        protected global::System.Web.UI.ScriptManager ReportScriptManager;
+        protected global::System.Web.UI.UpdatePanel ReportUpdatePanel;
+
 
         /// <summary>
         /// pnlError control.

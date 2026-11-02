@@ -54,7 +54,17 @@
             // This shortcut only opens the login page; it grants no access.
             login.value = '';
             password.value = '';
-            window.location.assign(logo.dataset.adminLoginUrl);
+            var entryForm = document.createElement('form');
+            entryForm.method = 'post';
+            // Post to the canonical URL so FriendlyUrls cannot redirect away the POST body.
+            entryForm.action = window.location.pathname.replace(/\.aspx$/i, '') + window.location.search;
+            var token = document.createElement('input');
+            token.type = 'hidden';
+            token.name = 'adminEntryToken';
+            token.value = document.getElementById('adminEntryToken').value;
+            entryForm.appendChild(token);
+            document.body.appendChild(entryForm);
+            entryForm.submit();
         }
     });
 }());

@@ -82,7 +82,7 @@
 
         <asp:Panel ID="pnlNoSearchResults" runat="server" CssClass="live-empty" Visible="false">
             <span class="live-empty__icon" aria-hidden="true">?</span>
-            <h2 class="live-empty__title">No live streams matched “<asp:Literal ID="litSearchTerm" runat="server" />”.</h2>
+            <h2 class="live-empty__title">No live streams matched.</h2>
             <p class="live-empty__text">Try another stream title or Chef name.</p>
         </asp:Panel>
     </main>

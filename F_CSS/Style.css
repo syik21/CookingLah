@@ -271,8 +271,10 @@ mark, .highlight {
         box-shadow: var(--shadow-sm-hover);
     }
 
+/* Explicit button variants must override page-level base and hover backgrounds. */
 .btn-primary {
-    background: var(--color-primary);
+    background: var(--color-primary) !important;
+    color: var(--color-bg);
 }
 
 .btn-secondary {
@@ -1028,7 +1030,7 @@ body.map-dialog-open {
     vertical-align: -.12em;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.8;
+    stroke-width: 1.8px;
     stroke-linecap: round;
     stroke-linejoin: round;
 }

@@ -249,6 +249,7 @@
     <Content Include="F_CSS\SiteMaster.css" />
     <Content Include="F_JavaScripts\SiteMaster.js" />
     <Content Include="F_JavaScripts\LoginSignupPage.js" />
+    <Content Include="F_JavaScripts\PasswordStrength.js" />
     <Content Include="Global.asax" />
     <Content Include="F_CSS\LoginSignupPage.css" />
     <Content Include="Main.aspx" />
